@@ -6,7 +6,8 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "lint": "tslint --project ."
+    "lint": "tslint --project .",
+    "dev-debug": "node --inspect node_modules/nuxt-ts-edge/bin/nuxt-ts"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",

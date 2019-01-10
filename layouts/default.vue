@@ -33,24 +33,28 @@
       <v-toolbar-title class="text-uppercase font-weight-regular">STE App</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn class="hidden-sm-and-up" icon nuxt to="/users">
-          <v-avatar size="24px">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
-          </v-avatar>
-        </v-btn>
-        <v-btn class="hidden-xs-only" flat nuxt to="/users">John Doe
-          <br>
-          <v-avatar size="24px">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
-          </v-avatar>
-        </v-btn>
         <v-menu bottom left>
           <v-btn slot="activator" icon>
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
           <v-list>
             <v-list-tile>
-              <v-list-tile-title>Logout</v-list-tile-title>
+              <v-list-tile-action>
+                <v-icon>mdi-settings</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title>Settings</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-action>
+                <v-icon>mdi-refresh</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title>Reboot</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-action>
+                <v-icon>mdi-power</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title>Power Off</v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>
