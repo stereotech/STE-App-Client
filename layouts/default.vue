@@ -4,8 +4,10 @@
       app
       clipped
       hide-overlay
-      :permanent="!$vuetify.breakpoint.xs"
-      :mini-variant.sync="$vuetify.breakpoint.sm"
+      :value="!$vuetify.breakpoint.xs"
+      :mini-variant.sync="$vuetify.breakpoint.smOnly || miniVariant"
+      stateless
+      touchless
     >
       <v-list>
         <v-list-tile
@@ -26,7 +28,10 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="white" app clipped-left>
+    <v-toolbar color="secondary" app clipped-left>
+      <v-btn class="hidden-sm-and-down" icon @click.stop="miniVariant = !miniVariant">
+        <v-icon v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'"></v-icon>
+      </v-btn>
       <v-avatar size="36px">
         <img src="/ste-logo.png" alt="Logo">
       </v-avatar>
@@ -68,7 +73,7 @@
       </v-container>
     </v-content>
 
-    <v-bottom-nav app :value="$vuetify.breakpoint.xs" color="secondary">
+    <v-bottom-nav app :value="$vuetify.breakpoint.xsOnly" color="secondary">
       <v-btn
         flat
         v-for="menuItem in mainMenu"
@@ -101,5 +106,6 @@
         link: '/printers'
       }
     ]
+    private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
   }
 </script>
