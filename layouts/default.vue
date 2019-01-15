@@ -66,10 +66,8 @@
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
-      <v-container>
-        <v-layout>
-          <nuxt/>
-        </v-layout>
+      <v-container fluid grid-list-md>
+        <nuxt/>
       </v-container>
     </v-content>
 

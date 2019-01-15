@@ -1,14 +1,12 @@
 <template>
-  <v-container fluid grid-list-md>
-    <v-layout row wrap>
-      <PrintersPanel/>
-      <DoneJobs/>
-      <Queue/>
-      <Storage local/>
-      <Storage name="ST-AAA"/>
-      <Storage name="ST-BBB"/>
-    </v-layout>
-  </v-container>
+  <v-layout row wrap>
+    <PrintersPanel/>
+    <DoneJobs/>
+    <Queue/>
+    <Storage local/>
+    <Storage name="ST-AAA"/>
+    <Storage name="ST-BBB"/>
+  </v-layout>
 </template>
 
 <script lang="ts">
