@@ -2,9 +2,9 @@
   <v-flex xl3 lg4 md6 sm6 xs12>
     <v-card>
       <v-toolbar flat color="secondary">
-      <v-card-title>
-        <span class="headline font-weight-light">Done Jobs</span>
-      </v-card-title>
+        <v-card-title>
+          <span class="headline font-weight-light">Done Jobs</span>
+        </v-card-title>
       </v-toolbar>
       <v-list two-line style="max-height: 486px" class="scroll-y">
         <v-list-tile v-for="doneJob in data" :key="doneJob.id">

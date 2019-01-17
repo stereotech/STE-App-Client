@@ -35,7 +35,10 @@
       <v-avatar size="36px">
         <img src="/ste-logo.png" alt="Logo">
       </v-avatar>
-      <v-toolbar-title class="text-uppercase font-weight-regular">STE App</v-toolbar-title>
+      <v-toolbar-title>
+        <span class="text-uppercase font-weight-regular">STE App</span>
+        <span class="text-uppercase font-weight-medium">{{ currentPage }}</span>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-menu bottom left>
@@ -43,12 +46,13 @@
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
           <v-list>
-            <v-list-tile>
+            <v-list-tile @click="settingsDialog = true" ripple>
               <v-list-tile-action>
                 <v-icon>mdi-settings</v-icon>
               </v-list-tile-action>
               <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile>
+            <SettingsDialog v-model="settingsDialog"/>
             <v-list-tile>
               <v-list-tile-action>
                 <v-icon>mdi-refresh</v-icon>
@@ -89,10 +93,15 @@
 
 <script lang="ts">
   import { Vue, Component } from 'nuxt-property-decorator'
+  import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 
-  @Component
+  @Component({
+    components: {
+      SettingsDialog
+    }
+  })
   export default class extends Vue {
-    private readonly mainMenu: any[] = [
+    private readonly mainMenu: MenuItem[] = [
       {
         icon: 'mdi-view-dashboard',
         title: 'Dashboard',
@@ -105,5 +114,28 @@
       }
     ]
     private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
+
+    private settingsDialog: boolean = false
+
+    get currentPage (): string | undefined {
+      const name = this.mainMenu.find(obj => {
+        return obj.link.includes(this.$route.fullPath.substring(0, 4))
+      })
+      if (name) {
+        return name.title
+      }
+      return undefined
+    }
+  }
+
+  class MenuItem {
+    icon: string
+    title: string
+    link: string
+    constructor (icon: string, title: string, link: string) {
+      this.icon = icon
+      this.title = title
+      this.link = link
+    }
   }
 </script>
