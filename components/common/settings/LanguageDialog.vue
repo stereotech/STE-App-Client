@@ -1,25 +1,8 @@
 <template>
-  <v-dialog
-    v-model="isOpen"
-    max-width="425"
-    persistent
-    :fullscreen="$vuetify.breakpoint.xs"
-    scrollable
-  >
-    <v-card>
-      <v-toolbar dark color="primary">
-        <v-btn icon dark @click="closeDialog">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <v-toolbar-title>
-          <slot name="title"></slot>
-        </v-toolbar-title>
-      </v-toolbar>
-      <v-card-text style="height: 1000px;">
-        <slot></slot>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
+  <SettingsDialog v-model="isOpen" @input="closeDialog">
+    <template slot="title">Language</template>
+    <v-select :items="avaliableLangs" v-model="currentLang" box label="Select language"></v-select>
+  </SettingsDialog>
 </template>
 
 <script lang="ts">
@@ -27,6 +10,9 @@
   import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 
   @Component({
+    components: {
+      SettingsDialog
+    }
   })
   export default class extends Vue {
     @Model('input', { type: Boolean, default: false }) value!: boolean
@@ -35,6 +21,10 @@
     }
 
     private isOpen: boolean = this.value
+
+    private currentLang: string = 'English'
+
+    private avaliableLangs: string[] = ['English', 'Русский']
 
     private closeDialog () {
       this.$emit('input', false)

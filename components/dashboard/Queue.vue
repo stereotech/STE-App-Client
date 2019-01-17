@@ -7,7 +7,7 @@
         </v-card-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn small fab outline dark color="primary" @click="createJob">
+          <v-btn small fab depressed  dark color="primary" @click="createJob">
             <v-icon dark>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar-items>
@@ -18,7 +18,7 @@
             <v-list-tile-title>{{ job.name }}</v-list-tile-title>
             <v-list-tile-sub-title
               class="text--primary"
-            >Printer: {{ job.printer ? job.printer : '-' }}</v-list-tile-sub-title>
+            >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
             <v-list-tile-action-text>{{ job.created | moment("from") }}</v-list-tile-action-text>
@@ -63,13 +63,24 @@
               <v-flex xs12>
                 <v-text-field label="Job name" box clearable v-model="editedJob.name"></v-text-field>
                 <v-autocomplete
-                  lable="Printer assignment"
+                  label="Printer assignment"
                   box
+                  chips
+                  multiple
                   :items="avaliablePrinters"
-                  v-model="editedJob.printer"
-                ></v-autocomplete>
+                  v-model="editedJob.printers"
+                >
+                  <template slot="selection" slot-scope="data">
+                    <v-chip
+                      :selected="data.selected"
+                      close
+                      class="chip--select-multi"
+                      @input="removePrinter(data.item)"
+                    >{{ data.item }}</v-chip>
+                  </template>
+                </v-autocomplete>
                 <v-autocomplete
-                  lable="File assignment"
+                  label="File assignment"
                   box
                   :items="avaliableFiles"
                   v-model="editedJob.file"
@@ -101,54 +112,55 @@
       {
         id: 1,
         name: 'Printjob_1',
-        printer: 'ST-AAA',
+        printers: ['ST-AAA', 'ST-BBB'],
         created: Date.now()
       },
       {
         id: 2,
         name: 'Printjob_1',
-        printer: 'ST-AAA',
+        printers: ['ST-AAA'],
         created: Date.now()
       },
       {
         id: 3,
         name: 'Printjob_1',
+        printers: [],
         created: Date.now()
       },
       {
         id: 4,
         name: 'Printjob_1',
-        printer: 'ST-BBB',
+        printers: ['ST-BBB'],
         created: Date.now()
       },
       {
         id: 5,
         name: 'Printjob_1',
-        printer: 'ST-AAA',
+        printers: ['ST-AAA'],
         created: Date.now()
       },
       {
         id: 6,
         name: 'Printjob_1',
-
+        printers: [],
         created: Date.now()
       },
       {
         id: 7,
         name: 'Printjob_1',
-
+        printers: [],
         created: Date.now()
       },
       {
         id: 8,
         name: 'Printjob_1',
-
+        printers: [],
         created: Date.now()
       },
       {
         id: 9,
         name: 'Printjob_1',
-
+        printers: [],
         created: Date.now()
       }
 
@@ -161,7 +173,6 @@
     private editedJob: any = {}
 
     private avaliablePrinters: string[] = [
-      'Not assigned',
       'ST-AAA',
       'ST-BBB',
       'ST-CCC'
@@ -198,6 +209,11 @@
     private removeJob (job: any) {
       this.confirmation = true
       this.editedJob = job
+    }
+
+    private removePrinter (item: any) {
+      const index = this.editedJob.printers.indexOf(item)
+      if (index >= 0) this.editedJob.printers.splice(index, 1)
     }
 
     private closeDialog (add: boolean = false) {

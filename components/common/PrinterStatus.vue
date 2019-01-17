@@ -95,26 +95,26 @@
             </v-container>
           </v-flex>
           <v-flex d-flex md4 xs12 sm6 v-else>
-            <v-btn color="accent" round large>
+            <v-btn color="accent" round large depressed>
               <v-icon>mdi-cached</v-icon>Try to reconnect
             </v-btn>
           </v-flex>
           <v-flex d-flex md4 xs12 sm12>
             <v-container fluid grid-list-md>
-              <v-layout row wrap v-if="isPrinting">
+              <v-layout row wrap v-if="isPrinting || isPaused">
                 <v-flex xs12 sm8 md12>
                   <p class="title text-truncate">Current file:</p>
                   <p class="title text-truncate">{{ file }}</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-btn-toggle mandatory>
-                    <v-btn flat>
+                  <v-btn-toggle mandatory block depressed>
+                    <v-btn flat block depressed>
                       <v-icon color="success">mdi-play</v-icon>
                     </v-btn>
-                    <v-btn flat>
+                    <v-btn flat block depressed>
                       <v-icon color="warning">mdi-pause</v-icon>
                     </v-btn>
-                    <v-btn flat>
+                    <v-btn flat block depressed>
                       <v-icon color="error">mdi-stop</v-icon>
                     </v-btn>
                   </v-btn-toggle>
@@ -130,15 +130,21 @@
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else-if="isIdle">
-                <v-flex xs12>
+                <v-flex xs12 sm8 md12>
                   <p class="title text-truncate">Printer is waiting</p>
                   <p class="title text-truncate">for printjob</p>
                 </v-flex>
+                <v-flex xs12 sm4 md12>
+                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                </v-flex>
               </v-layout>
               <v-layout row wrap v-else-if="isMaintenance">
-                <v-flex xs12>
+                <v-flex xs12 sm8 md12>
                   <p class="title text-truncate">Printer is ready</p>
                   <p class="title text-truncate">for maintenance</p>
+                </v-flex>
+                <v-flex xs12 sm4 md12>
+                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
                 </v-flex>
               </v-layout>
             </v-container>

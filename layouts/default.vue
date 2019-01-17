@@ -52,7 +52,7 @@
               </v-list-tile-action>
               <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile>
-            <SettingsDialog v-model="settingsDialog"/>
+            <MainSettingsDialog v-model="settingsDialog"/>
             <v-list-tile>
               <v-list-tile-action>
                 <v-icon>mdi-refresh</v-icon>
@@ -93,11 +93,11 @@
 
 <script lang="ts">
   import { Vue, Component } from 'nuxt-property-decorator'
-  import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+  import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
 
   @Component({
     components: {
-      SettingsDialog
+      MainSettingsDialog
     }
   })
   export default class extends Vue {

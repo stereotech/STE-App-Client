@@ -24,8 +24,8 @@ const config = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/hello',
-    '~/plugins/moment'
+    '~/plugins/moment',
+    '~/plugins/prettyBytes'
   ],
   /*
    ** Nuxt.js modules
