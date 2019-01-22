@@ -18,7 +18,9 @@
     "vue-filter-pretty-bytes": "^0.1.2",
     "vue-moment": "^4.0.0",
     "vuetify": "^1.4.1",
-    "vuetify-loader": "^1.1.1"
+    "vuetify-loader": "^1.1.1",
+    "vuex-class": "^0.3.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@mdi/font": "^3.3.92",

@@ -1,7 +1,6 @@
 <template>
-  <WizardStep :step="step">
-    <v-card class="mb-5" color="grey lighten-1" height="200px">Step 1</v-card>
-    <v-btn block flat @click="next(2)">Start</v-btn>
+  <WizardStep :step="step" :image="image" :description="description">
+    <v-btn block large flat @click="next(2)">Start</v-btn>
   </WizardStep>
 </template>
 
@@ -21,6 +20,9 @@
     }
     private step?: number = 1
     private curStep?: number = this.currentStep
+
+    private image: string = '/wizards/bed_leveling.png'
+    private description: string = 'This wizard will help you to calibrate the build plate for good adhesion of the print to the build plate.'
 
 
     private next (step: number) {

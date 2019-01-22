@@ -1,13 +1,5 @@
 <template>
-  <v-flex xs12>
-    <v-toolbar color="primary" flat>
-      <v-btn flat icon @click="$router.back()">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-      <span class="headline font-weight-light">Bed Leveling</span>
-    </v-toolbar>
-    <bedLevelingStepper/>
-  </v-flex>
+  <bedLevelingStepper/>
 </template>
 
 <script lang="ts">
@@ -21,7 +13,7 @@
     }
   })
   export default class extends Vue {
-    
+
   }
 </script>
 

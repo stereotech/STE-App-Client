@@ -1,19 +1,29 @@
 <template>
-  <v-stepper
-    v-model="currentStep"
-    @input="$emit('change', currentStep)"
-    class="primary elevation-0"
-  >
-    <v-stepper-header class="elevation-0">
-      <template v-for="idx in stepCount">
-        <v-stepper-step color="accent" :complete="currentStep > idx" :step="idx" :key="idx"></v-stepper-step>
-      </template>
-    </v-stepper-header>
+  <v-flex xs12>
+    <v-toolbar color="primary" flat>
+      <v-btn flat icon @click="$router.back()" v-if="currentStep == 1">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <span class="headline font-weight-light">
+        <slot name="title"></slot>
+      </span>
+    </v-toolbar>
+    <v-stepper
+      v-model="currentStep"
+      @input="$emit('change', currentStep)"
+      class="primary elevation-0"
+    >
+      <v-stepper-header class="elevation-0">
+        <template v-for="idx in stepCount">
+          <v-stepper-step color="accent" :complete="currentStep > idx" :step="idx" :key="idx"></v-stepper-step>
+        </template>
+      </v-stepper-header>
 
-    <v-stepper-items>
-      <slot></slot>
-    </v-stepper-items>
-  </v-stepper>
+      <v-stepper-items>
+        <slot></slot>
+      </v-stepper-items>
+    </v-stepper>
+  </v-flex>
 </template>
 
 <script lang="ts">

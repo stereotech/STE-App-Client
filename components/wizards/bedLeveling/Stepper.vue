@@ -1,5 +1,6 @@
 <template>
   <WizardStepper :stepCount="3" v-model="currentStep">
+    <template slot="title">Bed leveling</template>
     <Step1 v-model="currentStep"/>
     <Step2 v-model="currentStep"/>
     <Step3 v-model="currentStep"/>
