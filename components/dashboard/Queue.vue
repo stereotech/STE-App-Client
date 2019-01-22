@@ -7,33 +7,33 @@
         </v-card-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn small fab depressed  dark color="primary" @click="createJob">
+          <v-btn small fab depressed dark color="primary" @click="createJob">
             <v-icon dark>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-list two-line style="max-height: 486px" class="scroll-y">
-        <v-list-tile v-for="job in data" :key="job.id" avatar>
+        <v-list-tile v-for="job in queuedJobs" :key="job.id" avatar>
           <v-list-tile-content>
             <v-list-tile-title>{{ job.name }}</v-list-tile-title>
             <v-list-tile-sub-title
-              class="text--primary"
+              class="body-1"
             >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
-            <v-list-tile-action-text>{{ job.created | moment("from") }}</v-list-tile-action-text>
+            <v-list-tile-action-text>{{ job.creationTime | moment("from") }}</v-list-tile-action-text>
             <v-menu bottom left>
               <v-btn slot="activator" icon>
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
               <v-list>
-                <v-list-tile @click="editJob(job)">
+                <v-list-tile @click="startEditJob(job)">
                   <v-list-tile-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-tile-action>
                   <v-list-tile-title>Edit</v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="removeJob(job)">
+                <v-list-tile @click="startRemoveJob(job)">
                   <v-list-tile-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-tile-action>
@@ -48,13 +48,13 @@
     <v-dialog v-model="dialog" max-width="425" persistent :fullscreen="$vuetify.breakpoint.xs">
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click="closeDialog">
+          <v-btn icon dark @click="closeDialog(undefined)">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ editMode ? 'Edit' : 'Create' }} job</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="closeDialog(true)">Save</v-btn>
+            <v-btn dark flat @click="closeDialog(!editMode)">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-form>
@@ -69,22 +69,14 @@
                   multiple
                   :items="avaliablePrinters"
                   v-model="editedJob.printers"
-                >
-                  <template slot="selection" slot-scope="data">
-                    <v-chip
-                      :selected="data.selected"
-                      close
-                      class="chip--select-multi"
-                      @input="removePrinter(data.item)"
-                    >{{ data.item }}</v-chip>
-                  </template>
-                </v-autocomplete>
+                ></v-autocomplete>
                 <v-autocomplete
                   label="File assignment"
                   box
                   :items="avaliableFiles"
-                  v-model="editedJob.file"
+                  v-model="editedJob.fileUri"
                 ></v-autocomplete>
+                <v-textarea box label="Description" auto-grow v-model="editedJob.description"></v-textarea>
               </v-flex>
             </v-layout>
           </v-container>
@@ -96,7 +88,7 @@
         <v-card-title class="headline">Do you want to remove job?</v-card-title>
         <v-card-actions>
           <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" flat @click="confirmation = false">Yes</v-btn>
+          <v-btn color="primary" flat @click="endRemoveJob">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -105,72 +97,30 @@
 
 <script lang="ts">
   import { Vue, Component } from 'nuxt-property-decorator'
+  import { Action, Getter, namespace } from 'vuex-class'
+  import { PrintJob } from '~/types/PrintJob'
+
+  const printJobs = namespace('printJobsState')
 
   @Component
   export default class extends Vue {
-    private data: any[] = [
-      {
-        id: 1,
-        name: 'Printjob_1',
-        printers: ['ST-AAA', 'ST-BBB'],
-        created: Date.now()
-      },
-      {
-        id: 2,
-        name: 'Printjob_1',
-        printers: ['ST-AAA'],
-        created: Date.now()
-      },
-      {
-        id: 3,
-        name: 'Printjob_1',
-        printers: [],
-        created: Date.now()
-      },
-      {
-        id: 4,
-        name: 'Printjob_1',
-        printers: ['ST-BBB'],
-        created: Date.now()
-      },
-      {
-        id: 5,
-        name: 'Printjob_1',
-        printers: ['ST-AAA'],
-        created: Date.now()
-      },
-      {
-        id: 6,
-        name: 'Printjob_1',
-        printers: [],
-        created: Date.now()
-      },
-      {
-        id: 7,
-        name: 'Printjob_1',
-        printers: [],
-        created: Date.now()
-      },
-      {
-        id: 8,
-        name: 'Printjob_1',
-        printers: [],
-        created: Date.now()
-      },
-      {
-        id: 9,
-        name: 'Printjob_1',
-        printers: [],
-        created: Date.now()
-      }
-
-    ]
+    @printJobs.Getter queuedJobs?: PrintJob[]
+    @printJobs.Action removeJob: any
+    @printJobs.Action editJob: any
+    @printJobs.Action addJob: any
 
     private dialog: boolean = false
     private editMode: boolean = false
     private confirmation: boolean = false
 
-    private editedJob: any = {}
+    private editedJob: PrintJob = {
+      id: 0,
+      name: '',
+      description: '',
+      creationTime: 0,
+      fileUri: '',
+      printers: []
+    }
 
     private avaliablePrinters: string[] = [
       'ST-AAA',
@@ -194,31 +144,56 @@
     private createJob () {
       this.dialog = true
       this.editedJob = {
+        id: 3,
         name: 'Printjob_' + Date.now(),
-        printer: this.avaliablePrinters[0],
-        file: this.avaliableFiles[0]
+        description: '',
+        printers: [],
+        fileUri: '',
+        creationTime: Date.now()
       }
     }
 
-    private editJob (job: any) {
+    private startEditJob (job: PrintJob) {
       this.dialog = true
       this.editMode = true
-      this.editedJob = job
+      Object.assign(this.editedJob, job)
     }
 
-    private removeJob (job: any) {
+    private startRemoveJob (job: PrintJob) {
       this.confirmation = true
       this.editedJob = job
     }
 
-    private removePrinter (item: any) {
-      const index = this.editedJob.printers.indexOf(item)
-      if (index >= 0) this.editedJob.printers.splice(index, 1)
+    private endRemoveJob () {
+      this.confirmation = false
+      this.removeJob(this.editedJob)
     }
 
-    private closeDialog (add: boolean = false) {
+    private removePrinter (item: string) {
+      if (this.editedJob != null) {
+        const index = this.editedJob.printers.indexOf(item)
+        if (index >= 0) this.editedJob.printers.splice(index, 1)
+      }
+    }
+
+    private closeDialog (add: boolean | undefined) {
       this.dialog = false
-      this.editedJob = {}
+      if (add !== undefined) {
+        if (add) {
+          this.addJob(this.editedJob)
+        }
+        else {
+          this.editJob(this.editedJob)
+        }
+      }
+      this.editedJob = {
+        id: 0,
+        name: '',
+        description: '',
+        creationTime: 0,
+        fileUri: '',
+        printers: []
+      }
     }
   }
 </script>

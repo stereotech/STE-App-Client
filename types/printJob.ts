@@ -2,8 +2,9 @@ export interface PrintJob {
   id: number
   name: string
   description: string
-  creationTime: Date
+  creationTime: number
   fileUri: string
-  lastPrint?: Date
+  printers: string[]
+  lastPrint?: number
   succesful?: boolean
 }
