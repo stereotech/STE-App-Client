@@ -1,6 +1,9 @@
-import { StoreOptions } from 'vuex'
-import { RootState } from './types/RootState'
+import { Store } from 'vuex'
 
-export const state: StoreOptions<RootState> = {
+export interface RootState {
 
 }
+
+export const state = (): RootState => ({
+
+})
