@@ -1,5 +1,5 @@
 const config = {
-  mode: 'universal',
+  mode: 'spa',
   head: {
     title: 'STE App',
     meta: [

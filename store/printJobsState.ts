@@ -1,12 +1,10 @@
-import { ActionTree, MutationTree, GetterTree, ActionContext } from 'vuex'
+import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrintJob } from '~/types/printJob'
 import { RootState } from '.'
 
 export interface PrintJobsState {
   jobs: PrintJob[]
 }
-
-export const namespaced = true
 
 export const state = (): PrintJobsState => ({
   jobs: []

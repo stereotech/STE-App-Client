@@ -4,8 +4,8 @@
     <DoneJobs/>
     <Queue/>
     <Storage local/>
-    <Storage name="ST-AAA"/>
-    <Storage name="ST-BBB"/>
+    <Storage name="st-aaa"/>
+    <Storage name="st-bbb"/>
   </v-layout>
 </template>
 
@@ -26,8 +26,26 @@
     }
   })
   export default class Dashboard extends Vue {
+    private polling: any
+
+    private pollData () {
+      this.polling = setInterval(() => {
+        this.$store.dispatch('printJobsState/fetchJobs')
+        this.$store.dispatch('storageState/fetchLocal')
+        this.$store.dispatch('storageState/fetchUsbs')
+      }, 5000)
+    }
+
     async fetch ({ store, params }) {
-      await store.dispatch('printJobsState/fetchJobs')
+
+    }
+
+    mounted () {
+      this.pollData()
+    }
+
+    beforeDestroy () {
+      clearInterval(this.polling)
     }
   }
 </script>

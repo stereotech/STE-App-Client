@@ -1,6 +1,6 @@
 <template>
   <v-flex xl3 lg4 md6 sm6 xs12>
-    <v-card>
+    <v-card  transition="slide-y-reverse-transition">
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">Done Jobs</span>

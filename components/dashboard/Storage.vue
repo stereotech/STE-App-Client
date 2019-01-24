@@ -10,42 +10,45 @@
         <v-toolbar-items></v-toolbar-items>
       </v-toolbar>
 
-      <v-list v-if="local" two-line style="max-height: 336px" class="scroll-y">
-        <v-list-tile v-for="file in data" :key="file.id">
+      <v-list v-if="dataStorage" two-line :style="styleObj" class="scroll-y">
+        <v-list-tile v-for="file in dataStorage.children" :key="file.hash">
           <v-list-tile-content>
-            <v-list-tile-title class="subheading">{{ file.name }}</v-list-tile-title>
-            <v-list-tile-sub-title class="body-1">Uploaded {{ file.uploaded | moment("lll") }}</v-list-tile-sub-title>
+            <v-list-tile-title class="subheading">{{ file.display }}</v-list-tile-title>
+            <v-list-tile-sub-title class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
-            <StorageMenu :id="file.id"/>
+            <v-menu bottom left>
+              <v-btn slot="activator" icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+              <v-list>
+                <v-list-tile @click="deleteFile(file)">
+                  <v-list-tile-action>
+                    <v-icon>mdi-delete</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-title>Remove</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
-      <v-list v-else two-line style="max-height: 486px" class="scroll-y">
-        <v-list-tile v-for="file in data" :key="file.id">
-          <v-list-tile-content>
-            <v-list-tile-title class="subheading">{{ file.name }}</v-list-tile-title>
-            <v-list-tile-sub-title class="body-1">Uploaded {{ file.uploaded | moment("lll") }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <StorageMenu :id="file.id"/>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list>
-      <dropzone v-if="local" id="dropzone" ref="el" :options="options" :destroyDropzone="true"></dropzone>
+      <dropzone v-if="local" id="dropzone" ref="el" :options="options" :destroyDropzone="true" ></dropzone>
     </v-card>
   </v-flex>
 </template>
 
 <script lang="ts">
   import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import StorageMenu from '~/components/dashboard/StorageMenu.vue'
+  import { State, Action, Getter, namespace } from 'vuex-class'
+  import { FileOrFolder } from '~/types/fileOrFolder'
   import Dropzone from 'nuxt-dropzone'
   import 'nuxt-dropzone/dropzone.css'
 
+  const storage = namespace('storageState')
+
   @Component({
     components: {
-      StorageMenu,
       Dropzone
     }
   })
@@ -53,8 +56,29 @@
     @Prop({ type: Boolean, default: false }) local?: boolean
     @Prop({ type: String }) name?: string
 
+    @storage.Getter localStorage!: FileOrFolder
+    @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
+
+    @storage.Action deleteFile: any
+
+    private styleObj: any = {
+      maxHeight: this.local ? '336px' : '486px'
+    }
+
     options: any = {
-      url: '/upload'
+      url: '/local',
+      uploadMultiple: true
+    }
+
+    get dataStorage (): FileOrFolder | undefined {
+      if (this.local) {
+        return this.localStorage
+      }
+      else {
+        if (this.name !== undefined) {
+          return this.usbStorage(this.name)
+        }
+      }
     }
 
     private data: any[] = [
@@ -113,6 +137,8 @@
     mounted () {
       // Everything is mounted and you can access the dropzone instance
       const instance = this.$refs['el']
+
+
     }
   }
 </script>
