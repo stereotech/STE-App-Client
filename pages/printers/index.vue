@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <PrinterStatus
+      <PrinterCard
         toolbar
         controlPanel
         :id="printer.id"
@@ -27,12 +27,12 @@
 
 <script lang="ts">
   import { Vue, Component } from 'nuxt-property-decorator'
-  import PrinterStatus from '~/components/common/PrinterStatus.vue'
+  import PrinterCard from '~/components/common/PrinterCard.vue'
   import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
 
   @Component({
     components: {
-      PrinterStatus,
+      PrinterCard,
       AddPrinterDialog
     }
   })

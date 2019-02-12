@@ -26,17 +26,19 @@
     }
   })
   export default class Dashboard extends Vue {
-    private polling: any
+    private pollingStorageAndJobs!: NodeJS.Timeout
+    private pollingStatus!: NodeJS.Timeout
 
     private pollData () {
-      this.polling = setInterval(() => {
+      this.$store.dispatch('printersState/fetchPrinters')
+      this.pollingStatus = setInterval(async () => {
+        await this.$store.dispatch('printersState/fetchStatus')
+      }, 1000)
+      this.pollingStorageAndJobs = setInterval(() => {
         this.$store.dispatch('printJobsState/fetchJobs')
         this.$store.dispatch('storageState/fetchLocal')
         this.$store.dispatch('storageState/fetchUsbs')
       }, 5000)
-    }
-
-    async fetch ({ store, params }) {
 
     }
 
@@ -45,7 +47,9 @@
     }
 
     beforeDestroy () {
-      clearInterval(this.polling)
+      clearInterval(this.pollingStorageAndJobs)
+      clearInterval(this.pollingStatus)
     }
+
   }
 </script>

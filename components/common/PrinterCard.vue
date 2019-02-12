@@ -9,7 +9,12 @@
         <v-btn flat icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn v-if="!host" flat icon @click="confirmation = true">
+        <v-btn
+          v-if="!computedPrinter.isLocal && !controlPanel"
+          flat
+          icon
+          @click="confirmation = true"
+        >
           <v-icon>mdi-delete</v-icon>
         </v-btn>
       </v-toolbar>
@@ -19,7 +24,11 @@
             <v-container fluid grid-list-md>
               <v-layout row wrap>
                 <v-flex xs4>
-                  <v-img class="elevation-1" :src="'/printers/'+ model +'.png'" alt="Avatar">
+                  <v-img
+                    class="elevation-1"
+                    :src="'/printers/'+ computedPrinter.model +'.png'"
+                    alt="Avatar"
+                  >
                     <div v-if="isPrinting" class="fill-height repeating-gradient-blue"></div>
                     <div
                       v-else-if="isPaused || isMaintenance"
@@ -31,19 +40,27 @@
                   </v-img>
                 </v-flex>
                 <v-flex xs8>
-                  <v-badge color="primary" v-if="host">
+                  <v-badge color="primary" v-if="computedPrinter.isLocal">
                     <v-icon slot="badge" dark>mdi-server</v-icon>
-                    <p class="title">{{ name }}</p>
+                    <p class="title">{{ computedPrinter.name }}</p>
                   </v-badge>
-                  <p v-else class="title">{{ name }}</p>
-                  <p class="body-2">{{ model }}</p>
-                  <p class="title" v-if="isPrinting">Printing...{{ progress }}%</p>
-                  <p class="warning--text title" v-if="isPaused">Paused at {{ progress }}%</p>
+                  <p v-else class="title">{{ computedPrinter.name }}</p>
+                  <p class="body-2">{{ computedPrinter.model }}</p>
+                  <p class="title" v-if="isPrinting">Printing...{{ computedStatus.progress.completion | currency('', 1) }}%</p>
+                  <p
+                    class="warning--text title"
+                    v-if="isPaused"
+                  >Paused at {{ computedStatus.progress.completion }}%</p>
                   <p class="title" v-else-if="isIdle">Idle</p>
                   <p class="warning--text title" v-else-if="isMaintenance">Maintenance</p>
                   <p class="success--text title" v-else-if="isDone">Printing Done!</p>
                   <p class="error--text title" v-else-if="isOffline">Offline</p>
-                  <v-progress-linear v-if="isPrinting" value="68"></v-progress-linear>
+                  <v-progress-linear v-if="isPrinting" :value="computedStatus.progress.completion"></v-progress-linear>
+                  <v-progress-linear
+                    v-if="isPaused"
+                    :value="computedStatus.progress.completion"
+                    color="warning"
+                  ></v-progress-linear>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -53,33 +70,33 @@
               <v-layout row wrap>
                 <v-flex :xs3="chamber" :xs4="chamber">
                   <p class="body-1 text-truncate">E1 Target:</p>
-                  <p class="body-1">{{ e1Target }}&deg;C</p>
+                  <p class="body-1">{{ computedStatus.tool0.target }}&deg;C</p>
                   <v-progress-circular
                     size="48"
                     rotate="-90"
-                    :value="e1Temp / 3.2"
+                    :value="computedStatus.tool0.actual / 3.2"
                     :color="e1Color"
-                  >{{ e1Temp }}</v-progress-circular>
+                  >{{ computedStatus.tool0.actual | currency('', 1) }}</v-progress-circular>
                 </v-flex>
                 <v-flex :xs3="chamber" :xs4="chamber">
                   <p class="body-1 text-truncate">E2 Target:</p>
-                  <p class="body-1">{{ e2Target }}&deg;C</p>
+                  <p class="body-1">{{ computedStatus.tool1.target }}&deg;C</p>
                   <v-progress-circular
                     size="48"
                     rotate="-90"
-                    :value="e2Temp / 3.2"
+                    :value="computedStatus.tool1.actual / 3.2"
                     :color="e2Color"
-                  >{{ e2Temp }}</v-progress-circular>
+                  >{{ computedStatus.tool1.actual | currency('', 1) }}</v-progress-circular>
                 </v-flex>
                 <v-flex :xs3="chamber" :xs4="chamber">
                   <p class="body-1 text-truncate">Bed Target:</p>
-                  <p class="body-1">{{ bedTarget }}&deg;C</p>
+                  <p class="body-1">{{ computedStatus.bed.target }}&deg;C</p>
                   <v-progress-circular
                     size="48"
                     rotate="-90"
-                    :value="bedTemp / 1.5"
+                    :value="computedStatus.bed.actual / 1.5"
                     :color="bedColor"
-                  >{{ bedTemp }}</v-progress-circular>
+                  >{{ computedStatus.bed.actual | currency('', 1) }}</v-progress-circular>
                 </v-flex>
                 <v-flex xs3 v-if="chamber">
                   <p class="body-1 text-truncate">Chamber Target:</p>
@@ -89,7 +106,7 @@
                     rotate="-90"
                     :value="chamberTemp"
                     :color="bedColor"
-                  >{{ chamberTemp }}</v-progress-circular>
+                  >{{ chamberTemp | currency('', 1) }}</v-progress-circular>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -104,7 +121,7 @@
               <v-layout row wrap v-if="isPrinting || isPaused">
                 <v-flex xs12 sm8 md12>
                   <p class="title text-truncate">Current file:</p>
-                  <p class="title text-truncate">{{ file }}</p>
+                  <p class="title text-truncate">{{ computedStatus.job.file.display }}</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-btn-toggle mandatory block depressed>
@@ -154,7 +171,9 @@
     </v-card>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">Do you want to remove {{ name }} from cluster?</v-card-title>
+        <v-card-title
+          class="headline"
+        >Do you want to remove {{ computedPrinter.name }} from cluster?</v-card-title>
         <v-card-actions>
           <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
           <v-btn color="primary" flat @click="confirmation = false">Yes</v-btn>
@@ -166,60 +185,106 @@
 
 <script lang="ts">
   import { Vue, Component, Prop } from 'nuxt-property-decorator'
+  import { Action, Getter, namespace } from 'vuex-class'
+  import { PrinterStatus, PrinterInfo } from 'types/printer'
+
+  const printers = namespace('printersState')
 
   @Component
   export default class extends Vue {
-    @Prop({ default: false, type: Boolean }) toolbar?: boolean
-    @Prop({ default: false, type: Boolean }) controlPanel?: boolean
-    @Prop({ default: false, type: Boolean }) host?: boolean
+    @Prop({ default: false, type: Boolean }) toolbar!: boolean
+    @Prop({ default: false, type: Boolean }) controlPanel!: boolean
+
+    @Prop({ default: '', type: String, required: true }) id!: string
+
+    @printers.Getter printer!: (id: string) => PrinterInfo | undefined
+    @printers.Getter status!: (id: string) => PrinterStatus | undefined
+    @printers.Action deletePrinter: any
+
     @Prop({ default: false, type: Boolean }) chamber?: boolean
-    @Prop({ default: '', type: String }) model?: string
-    @Prop({ default: '', type: String }) name?: string
-    @Prop({ default: '', type: String }) status?: string
-    @Prop({ default: '', type: String }) file?: string
-    @Prop({ default: 0, type: Number }) id?: number
-    @Prop({ default: 0, type: Number }) progress?: number
-    @Prop({ default: 0, type: Number }) e1Temp?: number
-    @Prop({ default: 0, type: Number }) e2Temp?: number
-    @Prop({ default: 0, type: Number }) bedTemp?: number
     @Prop({ default: 0, type: Number }) chamberTemp?: number
-    @Prop({ default: 0, type: Number }) e1Target?: number
-    @Prop({ default: 0, type: Number }) e2Target?: number
-    @Prop({ default: 0, type: Number }) bedTarget?: number
     @Prop({ default: 0, type: Number }) chamberTarget?: number
 
+    get computedStatus () {
+      return this.status(this.id)
+    }
+
+    get computedPrinter () {
+      return this.printer(this.id)
+    }
+
     get e1Color (): string {
-      if (this.e1Target && this.e1Temp) {
-        return this.e1Target > 0 && this.e1Temp < this.e1Target ? 'error' : 'primary'
+      if (this.computedStatus !== undefined) {
+        if (this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual) {
+          return this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual < this.computedStatus.tool0.target ? 'error' : 'primary'
+        }
       }
       return 'primary'
     }
 
     get e2Color (): string {
-      if (this.e2Target && this.e2Temp) {
-
-        return this.e2Target > 0 && this.e2Temp < this.e2Target ? 'error' : 'primary'
+      if (this.computedStatus !== undefined) {
+        if (this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual) {
+          return this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual < this.computedStatus.tool1.target ? 'error' : 'primary'
+        }
       }
       return 'primary'
     }
 
     get bedColor (): string {
-      if (this.bedTarget && this.bedTemp) {
-        return this.bedTarget > 0 && this.bedTemp < this.bedTarget ? 'error' : 'accent'
+      if (this.computedStatus !== undefined) {
+        if (this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual) {
+          return this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual < this.computedStatus.bed.target ? 'error' : 'accent'
+        }
       }
       return 'accent'
     }
 
     private printerStatus: string = 'Maintenance'
 
-    private isPrinting: boolean = this.status === 'Printing'
-    private isPaused: boolean = this.status === 'Paused'
-    private isIdle: boolean = this.status === 'Idle'
-    private isMaintenance: boolean = this.status === 'Maintenance'
-    private isDone: boolean = this.status === 'Done'
-    private isOffline: boolean = this.status === 'Offline'
+    get isPrinting (): boolean {
+      if (this.status(this.id) !== undefined) {
+        return this.status(this.id)!.stateText === 'Printing'
+      }
+      return false
+    }
+    get isPaused (): boolean {
+      if (this.status(this.id) !== undefined) {
+        return this.status(this.id)!.stateText === 'Paused'
+      }
+      return false
+    }
+    get isIdle (): boolean {
+      if (this.status(this.id) !== undefined) {
+        return this.status(this.id)!.stateText === 'Idle'
+      }
+      return false
+    }
+    get isMaintenance (): boolean {
+      if (this.status(this.id) !== undefined) {
+        return this.status(this.id)!.stateText === 'Maintenance'
+      }
+      return false
+    }
+    get isDone (): boolean {
+      if (this.status(this.id) !== undefined) {
+        return this.status(this.id)!.stateText === 'Done'
+      }
+      return false
+    }
+    get isOffline (): boolean {
+      if (this.status(this.id) !== undefined) {
+        return this.status(this.id)!.stateText === 'Offline'
+      }
+      return false
+    }
 
     private confirmation: boolean = false
+
+    private removePrinter (printer: PrinterInfo) {
+      this.confirmation = false
+      this.deletePrinter(this.computedPrinter)
+    }
   }
 </script>
 

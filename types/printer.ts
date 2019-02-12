@@ -1,3 +1,5 @@
+import { JobInfo, ProgressInfo } from './printJob'
+
 export interface PrinterInfo {
   id: string
   model: string
@@ -8,4 +10,20 @@ export interface PrinterInfo {
   apiKey: string
   octoApiKey: string
   address: string
+}
+
+export interface PrinterStatus {
+  id: string
+  stateText: string
+  bed: TemperatureData
+  tool0: TemperatureData
+  tool1: TemperatureData
+  job?: JobInfo
+  progress?: ProgressInfo
+}
+
+export interface TemperatureData {
+  actual: number
+  offset: number
+  target: number
 }

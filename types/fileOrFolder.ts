@@ -15,8 +15,8 @@ export interface ToolFilament {
 }
 
 export interface Filament {
-  tool0: ToolFilament
-  tool1: ToolFilament
+  tool0?: ToolFilament
+  tool1?: ToolFilament
 }
 
 export interface PrintingArea {
@@ -46,6 +46,6 @@ export interface FileOrFolder {
   path: string
   refs?: Refs
   size: number
-  type: string // USB or local
-  typePath: string[]
+  type?: string // USB or local
+  typePath?: string[]
 }

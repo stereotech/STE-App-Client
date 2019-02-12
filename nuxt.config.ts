@@ -25,6 +25,7 @@ const config = {
    */
   plugins: [
     '~/plugins/moment',
+    '~plugins/filters',
     '~/plugins/prettyBytes'
   ],
   /*
