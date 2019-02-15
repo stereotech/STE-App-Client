@@ -125,29 +125,5 @@ export const actions: ActionTree<PrintersState, RootState> = {
       }
     ]
     commit('setStatus', status)
-  },
-
-  async fetchOneStatus ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    const status: PrinterStatus = {
-      id: 'st-aaa',
-      stateText: 'Printing',
-      bed: {
-        actual: 60 + Math.random() * 5,
-        target: 60,
-        offset: 0
-      },
-      tool0: {
-        actual: 218 + Math.random() * 4,
-        target: 220,
-        offset: 0
-      },
-      tool1: {
-        actual: 43 + Math.random() * 4,
-        target: 0,
-        offset: 0
-      }
-    }
-    commit('setOneStatus', status)
   }
 }

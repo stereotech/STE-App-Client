@@ -30,10 +30,11 @@
     private pollingStatus!: NodeJS.Timeout
 
     private pollData () {
-      this.$store.dispatch('printersState/fetchPrinters')
       this.pollingStatus = setInterval(async () => {
         await this.$store.dispatch('printersState/fetchStatus')
       }, 1000)
+      this.$store.dispatch('printersState/fetchPrinters')
+      
       this.pollingStorageAndJobs = setInterval(() => {
         this.$store.dispatch('printJobsState/fetchJobs')
         this.$store.dispatch('storageState/fetchLocal')

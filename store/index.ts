@@ -10,5 +10,5 @@ export const state = (): RootState => ({
 })
 
 export const plugins = [
-  createPersistedState()
+  // createPersistedState()
 ]

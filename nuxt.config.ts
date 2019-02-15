@@ -10,9 +10,6 @@ const config = {
   },
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 
-  router: {
-    middleware: 'routeSave'
-  },
   /*
    ** Global CSS
    */

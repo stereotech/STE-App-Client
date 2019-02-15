@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12>
+  <v-flex xs12 v-if="computedStatus && computedPrinter">
     <v-card>
       <v-toolbar v-if="toolbar" flat dense color="secondary">
         <v-btn v-if="controlPanel" flat nuxt :to="'/printers/' + id" ripple>Control panel
@@ -46,7 +46,10 @@
                   </v-badge>
                   <p v-else class="title">{{ computedPrinter.name }}</p>
                   <p class="body-2">{{ computedPrinter.model }}</p>
-                  <p class="title" v-if="isPrinting">Printing...{{ computedStatus.progress.completion | currency('', 1) }}%</p>
+                  <p
+                    class="title"
+                    v-if="isPrinting"
+                  >Printing...{{ computedStatus.progress.completion | currency('', 1) }}%</p>
                   <p
                     class="warning--text title"
                     v-if="isPaused"
@@ -125,13 +128,13 @@
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-btn-toggle mandatory block depressed>
-                    <v-btn flat block depressed>
+                    <v-btn flat block depressed :value="isPrinting" @input="resumeJob">
                       <v-icon color="success">mdi-play</v-icon>
                     </v-btn>
-                    <v-btn flat block depressed>
+                    <v-btn flat block depressed :value="isPaused" @input="pauseJob">
                       <v-icon color="warning">mdi-pause</v-icon>
                     </v-btn>
-                    <v-btn flat block depressed>
+                    <v-btn flat block depressed @input="stopJob">
                       <v-icon color="error">mdi-stop</v-icon>
                     </v-btn>
                   </v-btn-toggle>
@@ -191,7 +194,7 @@
   const printers = namespace('printersState')
 
   @Component
-  export default class extends Vue {
+  export default class PrinterCard extends Vue {
     @Prop({ default: false, type: Boolean }) toolbar!: boolean
     @Prop({ default: false, type: Boolean }) controlPanel!: boolean
 
@@ -279,11 +282,41 @@
       return false
     }
 
+    get jobStateToggle (): number {
+      if (this.status(this.id) !== undefined) {
+        if (this.status(this.id)!.stateText === 'Printing') {
+          return 0
+        }
+        if (this.status(this.id)!.stateText === 'Paused') {
+          return 1
+        }
+      }
+      return 2
+    }
+
     private confirmation: boolean = false
 
     private removePrinter (printer: PrinterInfo) {
       this.confirmation = false
       this.deletePrinter(this.computedPrinter)
+    }
+
+    private resumeJob (toggle: boolean) {
+      if (toggle) {
+        console.log('resume')
+      }
+    }
+
+    private pauseJob (toggle: boolean) {
+      if (toggle) {
+        console.log('pause')
+      }
+    }
+
+    private stopJob (toggle: boolean) {
+      if (toggle) {
+        console.log('stop')
+      }
     }
   }
 </script>

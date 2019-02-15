@@ -4,20 +4,8 @@
       <PrinterCard
         toolbar
         controlPanel
+        v-for="printer in printers"
         :id="printer.id"
-        :host="printer.host"
-        :model="printer.model"
-        :name="printer.name"
-        :status="printer.status"
-        :file="printer.file"
-        :progress="printer.progress"
-        :e1Temp="printer.e1Temp"
-        :e1Target="printer.e1Target"
-        :e2Temp="printer.e2Temp"
-        :e2Target="printer.e2Target"
-        :bedTemp="printer.bedTemp"
-        :bedTarget="printer.bedTarget"
-        v-for="printer in data"
         :key="printer.id"
       />
       <AddPrinterDialog/>
@@ -29,6 +17,10 @@
   import { Vue, Component } from 'nuxt-property-decorator'
   import PrinterCard from '~/components/common/PrinterCard.vue'
   import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
+  import { Action, Getter, namespace } from 'vuex-class'
+  import { PrinterInfo, PrinterStatus } from 'types/printer'
+
+  const printers = namespace('printersState')
 
   @Component({
     components: {
@@ -36,44 +28,27 @@
       AddPrinterDialog
     }
   })
-  export default class extends Vue {
-    private data: any[] = [
-      {
-        id: 1,
-        name: 'ST-AAA',
-        model: 'STE320',
-        host: true,
-        status: 'Printing',
-        file: 'fnrvdnlvl.gcode',
-        progress: 68,
-        e1Temp: 218,
-        e1Target: 220,
-        e2Temp: 221,
-        e2Target: 220,
-        bedTemp: 60,
-        bedTarget: 60
-      },
-      {
-        id: 2,
-        name: 'ST-BBB',
-        model: 'STE320',
-        host: false,
-        status: 'Done',
-        e1Temp: 200,
-        e1Target: 220,
-        e2Temp: 80,
-        e2Target: 220,
-        bedTemp: 55,
-        bedTarget: 60
-      },
-      {
-        id: 3,
-        name: 'ST-CCC',
-        model: 'STE320',
-        host: false,
-        status: 'Offline'
-      }
-    ]
+  export default class PrintersPage extends Vue {
+    @printers.Getter printers!: PrinterInfo[]
+    @printers.Getter printersStatus!: PrinterStatus[]
+
+    private pollingStatus!: NodeJS.Timeout
+
+    private pollData () {
+      this.$store.dispatch('printersState/fetchPrinters')
+      this.pollingStatus = setInterval(async () => {
+        await this.$store.dispatch('printersState/fetchStatus')
+      }, 1000)
+    }
+
+    mounted () {
+      this.pollData()
+    }
+
+    beforeDestroy () {
+      clearInterval(this.pollingStatus)
+    }
+
 
   }
 </script>

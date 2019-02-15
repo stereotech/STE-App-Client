@@ -1,22 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <PrinterCard
-        toolbar
-        :id="printer.id"
-        :host="printer.host"
-        :model="printer.model"
-        :name="printer.name"
-        :status="printer.status"
-        :file="printer.file"
-        :progress="printer.progress"
-        :e1Temp="printer.e1Temp"
-        :e1Target="printer.e1Target"
-        :e2Temp="printer.e2Temp"
-        :e2Target="printer.e2Target"
-        :bedTemp="printer.bedTemp"
-        :bedTarget="printer.bedTarget"
-      />
+      <PrinterCard toolbar :id="$route.params.id"/>
     </v-flex>
     <v-flex xs12>
       <WizardsPanel/>
@@ -32,6 +17,10 @@
   import PrinterCard from '~/components/common/PrinterCard.vue'
   import WizardsPanel from '~/components/printers/WizardsPanel.vue'
   import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.vue'
+  import { Action, Getter, namespace } from 'vuex-class'
+  import { PrinterInfo, PrinterStatus } from 'types/printer'
+
+  const printers = namespace('printersState')
 
   @Component({
     components: {
@@ -40,34 +29,37 @@
       ManualControlPanel
     }
   })
-  export default class extends Vue {
+  export default class PrinterPage extends Vue {
+    @printers.Getter printer!: (id: string) => PrinterInfo | undefined
+    @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
-    private printer: any = {}
-
-    async asyncData ({ params }) {
-      return {
-        printer: {
-          id: 1,
-          name: 'ST-AAA',
-          model: 'STE320',
-          host: true,
-          status: 'Printing',
-          file: 'fnrvdnlvl.gcode',
-          progress: 68,
-          e1Temp: 218,
-          e1Target: 220,
-          e2Temp: 221,
-          e2Target: 220,
-          bedTemp: 60,
-          bedTarget: 60
-        }
+    mounted () {
+      this.$store.dispatch('printersState/fetchPrinters')
+      if (this.printer(this.$route.params.id) === undefined) {
+        this.$router.push('/printers')
       }
+      this.pollData()
     }
 
-    get isPrinting () {
-      return this.printer.status === 'Printing'
+    get isPrinting() : boolean {
+      if (this.status(this.$route.params.id) !== undefined) {
+        return this.status(this.$route.params.id)!.stateText === 'Printing'
+      }
+      return false
     }
 
+    private pollingStatus!: NodeJS.Timeout
+
+    private pollData () {
+
+      this.pollingStatus = setInterval(async () => {
+        await this.$store.dispatch('printersState/fetchStatus')
+      }, 1000)
+    }
+
+    beforeDestroy () {
+      clearInterval(this.pollingStatus)
+    }
   }
 </script>
 
