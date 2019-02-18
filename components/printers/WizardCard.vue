@@ -19,7 +19,7 @@
   import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
   @Component
-  export default class extends Vue {
+  export default class WizardCard extends Vue {
     @Prop({ default: 0, type: Number }) id?: number
     @Prop({ default: '', type: String }) name?: string
     @Prop({ default: '', type: String }) image?: string

@@ -6,7 +6,7 @@
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn flat icon>
+        <v-btn flat icon @click="findPrinter(id)">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-btn
@@ -204,6 +204,11 @@
     @printers.Getter status!: (id: string) => PrinterStatus | undefined
     @printers.Action deletePrinter: any
 
+    @printers.Action findPrinter: any
+    @printers.Action pausePrintJob: any
+    @printers.Action resumePrintJob: any
+    @printers.Action cancelPrintJob: any
+
     @Prop({ default: false, type: Boolean }) chamber?: boolean
     @Prop({ default: 0, type: Number }) chamberTemp?: number
     @Prop({ default: 0, type: Number }) chamberTarget?: number
@@ -303,19 +308,19 @@
 
     private resumeJob (toggle: boolean) {
       if (toggle) {
-        console.log('resume')
+        this.resumePrintJob(this.$route.params.id)
       }
     }
 
     private pauseJob (toggle: boolean) {
       if (toggle) {
-        console.log('pause')
+        this.pausePrintJob(this.$route.params.id)
       }
     }
 
     private stopJob (toggle: boolean) {
       if (toggle) {
-        console.log('stop')
+        this.cancelPrintJob(this.$route.params.id)
       }
     }
   }

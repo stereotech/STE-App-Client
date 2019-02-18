@@ -60,7 +60,7 @@
   const scannerResult = namespace('scannerResultState')
 
   @Component
-  export default class extends Vue {
+  export default class AddPrinterDialog extends Vue {
     @scannerResult.Getter results?: ScannerResult[]
     @scannerResult.Action fetchResults: any
     @scannerResult.Action connect: any

@@ -125,5 +125,67 @@ export const actions: ActionTree<PrintersState, RootState> = {
       }
     ]
     commit('setStatus', status)
+  },
+
+  async findPrinter ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async pausePrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async resumePrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async cancelPrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async ledCommand ({ commit }, { id, r, g, b }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async fanCommand ({ commit }, { id, fanId, fanValue }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async toolTempCommand ({ commit }, { id, tool0Temp, tool1Temp }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async bedTempCommand ({ commit }, { id, bedTemp }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async flowCommand ({ commit }, { id, flow }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async feedCommand ({ commit }, { id, feed }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async jogCommand ({ commit }, { id, x, y, z, a, b, c }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async homeCommand ({ commit }, { id, head, bed, rotary }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async extrudeCommand ({ commit }, { id, toolId, amount }) {
+    console.log(id, toolId, amount)
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async retractCommand ({ commit }, { id, toolId, amount }) {
+    console.log(id, toolId, amount)
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async customCommand ({ commit }, { id, command }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
   }
 }

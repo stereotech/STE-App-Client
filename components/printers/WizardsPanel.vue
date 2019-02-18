@@ -10,7 +10,7 @@
             :name="wizard.name"
             :image="wizard.image"
             :description="wizard.description"
-            :to="'/wizards/' + wizard.link"
+            :to="'/printers/' + $route.params.id + '/wizards/' + wizard.link"
           />
         </v-flex>
       </v-layout>
@@ -27,7 +27,7 @@
       WizardCard
     }
   })
-  export default class extends Vue {
+  export default class WizardsPanel extends Vue {
     private data: any[] = [
       {
         id: 1,
