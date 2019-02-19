@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'nuxt-property-decorator'
+  import { Vue, Component, Prop } from 'nuxt-property-decorator'
   import WizardCard from '~/components/printers/WizardCard.vue'
 
   @Component({
@@ -28,6 +28,9 @@
     }
   })
   export default class WizardsPanel extends Vue {
+
+    @Prop({ default: '', type: String }) id?: string
+
     private data: any[] = [
       {
         id: 1,

@@ -4,10 +4,10 @@
       <PrinterCard toolbar :id="$route.params.id"/>
     </v-flex>
     <v-flex xs12>
-      <WizardsPanel/>
+      <WizardsPanel :id="$route.params.id"/>
     </v-flex>
     <v-flex xs12>
-      <ManualControlPanel :printing="isPrinting"/>
+      <ManualControlPanel :id="$route.params.id"/>
     </v-flex>
   </v-layout>
 </template>
@@ -41,7 +41,7 @@
       this.pollData()
     }
 
-    get isPrinting() : boolean {
+    get isPrinting (): boolean {
       if (this.status(this.$route.params.id) !== undefined) {
         return this.status(this.$route.params.id)!.stateText === 'Printing'
       }

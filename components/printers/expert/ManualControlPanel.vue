@@ -6,16 +6,16 @@
     <v-container fluid grid-list-md>
       <v-layout row wrap>
         <v-flex xs12 md6 lg4>
-          <JogCard :printing="printing"/>
+          <JogCard :printing="printing" :id="id"/>
         </v-flex>
         <v-flex xs12 md6 lg4>
-          <ExtruderCard :printing="printing"/>
+          <ExtruderCard :printing="printing" :id="id"/>
         </v-flex>
         <v-flex xs12 md6 lg4>
-          <TemperatureFan chamberHeater chamberFan/>
+          <TemperatureFan chamberFan :id="id"/>
         </v-flex>
         <v-flex xs12 md6 lg4>
-          <MiscCard/>
+          <MiscCard :id="id"/>
         </v-flex>
       </v-layout>
     </v-container>
@@ -37,8 +37,9 @@
       MiscCard
     }
   })
-  export default class extends Vue {
+  export default class ManualControlPanel extends Vue {
     @Prop({ default: false, type: Boolean }) printing?: boolean
+    @Prop({ default: '', type: String }) id?: string
   }
 </script>
 

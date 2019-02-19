@@ -23,7 +23,7 @@
       PrinterCard
     }
   })
-  export default class extends Vue {
+  export default class PrintersPanel extends Vue {
     @printers.Getter printers!: PrinterInfo[]
     @printers.Getter printersStatus!: PrinterStatus[]
 

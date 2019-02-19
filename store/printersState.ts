@@ -28,6 +28,7 @@ export const getters: GetterTree<PrintersState, RootState> = {
   status (state: PrintersState) {
     return (id: string) => state.status.find(value => value.id === id)
   }
+
 }
 
 export const mutations: MutationTree<PrintersState> = {
@@ -152,6 +153,7 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async toolTempCommand ({ commit }, { id, tool0Temp, tool1Temp }) {
+    console.log(tool0Temp, tool1Temp)
     await new Promise(resolve => setTimeout(resolve, 500))
   },
 
@@ -176,16 +178,15 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async extrudeCommand ({ commit }, { id, toolId, amount }) {
-    console.log(id, toolId, amount)
     await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async retractCommand ({ commit }, { id, toolId, amount }) {
-    console.log(id, toolId, amount)
     await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async customCommand ({ commit }, { id, command }) {
+    console.log(command)
     await new Promise(resolve => setTimeout(resolve, 500))
   }
 }

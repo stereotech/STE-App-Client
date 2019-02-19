@@ -9,7 +9,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs10>
-          <v-slider label="Flow" thumb-label min="50" max="150" @change="setFlow"></v-slider>
+          <v-slider v-model="flow" label="Flow" thumb-label min="50" max="150" @change="setFlow"></v-slider>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
@@ -78,6 +78,7 @@
       }
     ]
     private selectedExtruder: number = 0
+    private flow: number = 100
 
     @printers.Action extrudeCommand: any
     @printers.Action retractCommand: any

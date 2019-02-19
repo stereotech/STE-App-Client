@@ -6,11 +6,16 @@
         <v-flex xs12>
           <v-text-field
             append-icon="mdi-send"
+            @click:append="misc"
+            @keydown.enter="misc"
+            @keydown.up="prevGCode"
+            @keydown.down="nextGCode"
             box
             clear-icon="mdi-close-circle"
             clearable
             label="G-Code Command"
             type="text"
+            v-model="gcodeString"
           ></v-text-field>
         </v-flex>
       </v-layout>
@@ -20,10 +25,42 @@
 
 <script lang="ts">
   import { Vue, Component, Prop } from 'nuxt-property-decorator'
+  import { Action, Getter, namespace } from 'vuex-class'
+
+  const printers = namespace('printersState')
 
   @Component
-  export default class extends Vue {
-    @Prop({ default: false, type: Boolean }) printing?: boolean
+  export default class MiscCard extends Vue {
+    @Prop({ default: false, type: Boolean }) printing!: boolean
+    @Prop({ default: '', type: String, required: true }) id!: string
+
+    @printers.Action customCommand: any
+
+    private previousGCode: string[] = []
+    private previousIndex: number = 0
+    private gcodeString: string = ''
+
+    private misc () {
+      this.customCommand({ id: this.id, command: this.gcodeString })
+      if (this.gcodeString != null && this.gcodeString !== '') {
+        this.previousGCode.push(this.gcodeString)
+        this.previousIndex = this.previousGCode.length
+      }
+      this.gcodeString = ''
+    }
+
+    private prevGCode () {
+      this.previousIndex--
+      if (this.previousIndex < 0) this.previousIndex = 0
+      this.gcodeString = this.previousGCode[this.previousIndex]
+    }
+
+    private nextGCode () {
+      this.previousIndex++
+      if (this.previousIndex > this.previousGCode.length) this.previousIndex = this.previousGCode.length
+      this.gcodeString = this.previousGCode[this.previousIndex]
+    }
+
   }
 </script>
 
