@@ -34,22 +34,20 @@
 
     private pollingStatus!: NodeJS.Timeout
 
-    private pollData () {
-      this.$store.dispatch('printersState/fetchPrinters')
+    private async pollData () {
+      await this.$store.dispatch('printersState/fetchPrinters')
       this.pollingStatus = setInterval(async () => {
         await this.$store.dispatch('printersState/fetchStatus')
       }, 1000)
     }
 
-    mounted () {
-      this.pollData()
+    async mounted () {
+      await this.pollData()
     }
 
     beforeDestroy () {
       clearInterval(this.pollingStatus)
     }
-
-
   }
 </script>
 

@@ -1,13 +1,23 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">Language</template>
-    <v-select :items="avaliableLangs" v-model="currentLang" box label="Select language"></v-select>
+    <v-select
+      :items="settings.avaliableLanguages"
+      :value="settings.language"
+      @input="sendLanguage"
+      box
+      label="Select language"
+    ></v-select>
   </SettingsDialog>
 </template>
 
 <script lang="ts">
   import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
   import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+  import { Settings } from '~/types/settings'
+  import { Action, Getter, State, namespace } from 'vuex-class'
+
+  const settings = namespace('settingsState')
 
   @Component({
     components: {
@@ -22,9 +32,8 @@
 
     private isOpen: boolean = this.value
 
-    private currentLang: string = 'English'
-
-    private avaliableLangs: string[] = ['English', 'Русский']
+    @settings.Getter settings!: Settings
+    @settings.Action sendLanguage: any
 
     private closeDialog () {
       this.$emit('input', false)

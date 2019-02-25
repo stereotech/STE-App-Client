@@ -17,6 +17,10 @@
 <script lang="ts">
   import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
   import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+  import { Settings } from '~/types/settings'
+  import { Action, Getter, State, namespace } from 'vuex-class'
+
+  const settings = namespace('settingsState')
 
   @Component({
     components: {
@@ -31,8 +35,15 @@
 
     private isOpen: boolean = this.value
 
-    private bytesTotal: number = 8500000000
-    private bytesOwned: number = 4505413000
+    @settings.Getter settings!: Settings
+
+    get bytesTotal (): number {
+      return this.settings.storageTotal
+    }
+
+    get bytesOwned (): number {
+      return this.settings.storageOwned
+    }
 
     get bytesAvaliable (): number {
       return this.bytesTotal - this.bytesOwned
@@ -41,8 +52,6 @@
     get percentOwned (): number {
       return (this.bytesOwned / this.bytesTotal) * 100
     }
-
-    private avaliableLangs: string[] = ['English', 'Русский']
 
     private closeDialog () {
       this.$emit('input', false)

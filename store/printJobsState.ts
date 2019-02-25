@@ -76,8 +76,8 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
         name: 'job2',
         description: '',
         creationTime: Date.now(),
-        fileUri: 'file.gcode',
-        printers: []
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
       }
     ]
     commit('setJobs', printJobs)

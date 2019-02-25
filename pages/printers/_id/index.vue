@@ -33,8 +33,8 @@
     @printers.Getter printer!: (id: string) => PrinterInfo | undefined
     @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
-    mounted () {
-      this.$store.dispatch('printersState/fetchPrinters')
+    async mounted () {
+      await this.$store.dispatch('printersState/fetchPrinters')
       if (this.printer(this.$route.params.id) === undefined) {
         this.$router.push('/printers')
       }

@@ -1,4 +1,3 @@
-import { Store } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 export interface RootState {

@@ -13,12 +13,27 @@ export const state = (): StorageState => ({
 })
 
 export const getters: GetterTree<StorageState, RootState> = {
-  localStorage (state): FileOrFolder {
+  localStorage (state: StorageState): FileOrFolder {
     return state.local[0]
   },
 
-  usbStorage (state) {
+  usbStorage (state: StorageState) {
     return (name: string) => state.usb.find(value => value.origin === name)
+  },
+
+  avaliableFiles (state: StorageState): string[] {
+    const result: string[] = []
+    if (state.local[0] !== undefined) {
+      if (state.local[0].children !== undefined) {
+        result.push(...state.local[0].children.map((element: FileOrFolder) => 'Storage/' + element.display))
+      }
+    }
+    state.usb.forEach(element => {
+      if (element.children !== undefined) {
+        result.push(...element.children.map((value: FileOrFolder) => 'USB at ' + element.origin.toUpperCase() + '/' + value.display))
+      }
+    })
+    return result
   }
 }
 

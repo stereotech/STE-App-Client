@@ -35,9 +35,7 @@
     @Model('change', { type: Number, required: true, default: 1 }) currentStep?: number
 
     @Prop({ type: Number, default: 0, required: true }) stepCount?: number
-
   }
-
 </script>
 
 <style>

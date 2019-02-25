@@ -22,7 +22,6 @@
     private step?: number = 3
     private curStep?: number = this.currentStep
 
-
     private next (step: number) {
       this.$emit('change', step)
       this.curStep = step

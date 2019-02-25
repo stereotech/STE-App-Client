@@ -25,7 +25,6 @@
   export default class extends Vue {
     private currentStep: number = 1
   }
-
 </script>
 
 <style>

@@ -42,10 +42,8 @@
 
     private misc () {
       this.customCommand({ id: this.id, command: this.gcodeString })
-      if (this.gcodeString != null && this.gcodeString !== '') {
-        this.previousGCode.push(this.gcodeString)
-        this.previousIndex = this.previousGCode.length
-      }
+      this.previousGCode.push(this.gcodeString)
+      this.previousIndex = this.previousGCode.length
       this.gcodeString = ''
     }
 

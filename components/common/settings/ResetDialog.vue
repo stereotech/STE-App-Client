@@ -14,9 +14,22 @@
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
         <v-card-title class="headline">Are you sure want to perform factory reset?</v-card-title>
+        <v-card-text>Printer will reboot after confirmation</v-card-text>
         <v-card-actions>
           <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="error" flat @click="confirmation = false">Yes</v-btn>
+          <v-btn color="error" flat @click="factoryReset">Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="confirmationForce" max-width="425">
+      <v-card>
+        <v-card-title
+          class="headline"
+        >Are you sure want to perform factory reset and clear all user data?</v-card-title>
+        <v-card-text>Printer will reboot after confirmation</v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" flat @click="confirmationForce = false">No</v-btn>
+          <v-btn color="error" flat @click="forceFactoryReset">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -26,6 +39,10 @@
 <script lang="ts">
   import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
   import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+  import { Settings } from '~/types/settings'
+  import { Action, Getter, State, namespace } from 'vuex-class'
+
+  const settings = namespace('settingsState')
 
   @Component({
     components: {
@@ -40,7 +57,20 @@
 
     private isOpen: boolean = this.value
 
+    @settings.Action sendFactoryReset: any
+
     private confirmation: boolean = false
+    private confirmationForce: boolean = false
+
+    private factoryReset () {
+      this.confirmation = false
+      this.sendFactoryReset(false)
+    }
+
+    private forceFactoryReset () {
+      this.confirmationForce = false
+      this.sendFactoryReset(true)
+    }
 
     private closeDialog () {
       this.$emit('input', false)

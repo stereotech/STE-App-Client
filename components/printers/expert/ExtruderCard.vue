@@ -70,7 +70,7 @@
     private extruders: any = [
       {
         key: 'Extruder 1',
-        value: 0,
+        value: 0
       },
       {
         key: 'Extruder 2',
@@ -92,8 +92,8 @@
       this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
     }
 
-    private setFlow(value: number) {
-      this.flowCommand({ id: this.id, flow: value})
+    private setFlow (value: number) {
+      this.flowCommand({ id: this.id, flow: value })
     }
 
     @Prop({ default: false, type: Boolean }) printing?: boolean

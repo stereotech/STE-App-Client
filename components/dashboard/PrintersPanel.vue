@@ -4,7 +4,6 @@
       v-for="printer in printers"
       :id="printer.id"
       :key="printer.id"
-
     />
   </v-flex>
 </template>
@@ -14,7 +13,6 @@
   import PrinterCard from '~/components/common/PrinterCard.vue'
   import { Action, Getter, namespace } from 'vuex-class'
   import { PrinterInfo, PrinterStatus } from 'types/printer'
-
 
   const printers = namespace('printersState')
 

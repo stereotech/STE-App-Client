@@ -67,7 +67,9 @@
                   box
                   chips
                   multiple
-                  :items="avaliablePrinters"
+                  :items="printers"
+                  item-text="name"
+                  item-value="id"
                   v-model="editedJob.printers"
                 ></v-autocomplete>
                 <v-autocomplete
@@ -99,15 +101,22 @@
   import { Vue, Component } from 'nuxt-property-decorator'
   import { Action, Getter, namespace } from 'vuex-class'
   import { PrintJob } from '~/types/PrintJob'
+  import { PrinterInfo } from '~/types/printer'
+  import { FileOrFolder } from "~/types/fileOrFolder";
 
   const printJobs = namespace('printJobsState')
+  const printers = namespace('printersState')
+  const storage = namespace('storageState')
 
   @Component
   export default class extends Vue {
-    @printJobs.Getter queuedJobs?: PrintJob[]
+    @printJobs.Getter queuedJobs!: PrintJob[]
     @printJobs.Action removeJob: any
     @printJobs.Action editJob: any
     @printJobs.Action addJob: any
+
+    @printers.Getter printers!: PrinterInfo[]
+    @storage.Getter avaliableFiles!: string[]
 
     private dialog: boolean = false
     private editMode: boolean = false
@@ -121,25 +130,6 @@
       fileUri: '',
       printers: []
     }
-
-    private avaliablePrinters: string[] = [
-      'ST-AAA',
-      'ST-BBB',
-      'ST-CCC'
-    ]
-
-    private avaliableFiles: string[] = [
-      'Storage/STE320_pulley_1.gcode',
-      'Storage/STE320_pulley_2.gcode',
-      'Storage/STE320_pulley_3.gcode',
-      'Storage/STE320_pulley_4.gcode',
-      'Storage/STE320_pulley_5.gcode',
-      'USB at ST-AAA/STE320_pulley_1.gcode',
-      'USB at ST-AAA/STE320_pulley_2.gcode',
-      'USB at ST-AAA/STE320_pulley_3.gcode',
-      'USB at ST-AAA/STE320_pulley_4.gcode',
-      'USB at ST-AAA/STE320_pulley_5.gcode'
-    ]
 
     private createJob () {
       this.dialog = true
@@ -170,10 +160,8 @@
     }
 
     private removePrinter (item: string) {
-      if (this.editedJob != null) {
-        const index = this.editedJob.printers.indexOf(item)
-        if (index >= 0) this.editedJob.printers.splice(index, 1)
-      }
+      const index = this.editedJob.printers.indexOf(item)
+      if (index >= 0) this.editedJob.printers.splice(index, 1)
     }
 
     private closeDialog (add: boolean | undefined) {
@@ -181,8 +169,7 @@
       if (add !== undefined) {
         if (add) {
           this.addJob(this.editedJob)
-        }
-        else {
+        } else {
           this.editJob(this.editedJob)
         }
       }

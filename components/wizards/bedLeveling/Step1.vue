@@ -24,7 +24,6 @@
     private image: string = '/wizards/bed_leveling.png'
     private description: string = 'This wizard will help you to calibrate the build plate for good adhesion of the print to the build plate.'
 
-
     private next (step: number) {
       this.$emit('change', step)
       this.curStep = step

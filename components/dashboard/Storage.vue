@@ -73,8 +73,7 @@
     get dataStorage (): FileOrFolder | undefined {
       if (this.local) {
         return this.localStorage
-      }
-      else {
+      } else {
         if (this.name !== undefined) {
           return this.usbStorage(this.name)
         }
@@ -137,8 +136,6 @@
     mounted () {
       // Everything is mounted and you can access the dropzone instance
       const instance = this.$refs['el']
-
-
     }
   }
 </script>

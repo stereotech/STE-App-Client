@@ -29,22 +29,22 @@
     private pollingStorageAndJobs!: NodeJS.Timeout
     private pollingStatus!: NodeJS.Timeout
 
-    private pollData () {
+    private async pollData () {
       this.pollingStatus = setInterval(async () => {
         await this.$store.dispatch('printersState/fetchStatus')
       }, 1000)
-      this.$store.dispatch('printersState/fetchPrinters')
-      
-      this.pollingStorageAndJobs = setInterval(() => {
-        this.$store.dispatch('printJobsState/fetchJobs')
-        this.$store.dispatch('storageState/fetchLocal')
-        this.$store.dispatch('storageState/fetchUsbs')
+      await this.$store.dispatch('printersState/fetchPrinters')
+
+      this.pollingStorageAndJobs = setInterval(async () => {
+        await this.$store.dispatch('printJobsState/fetchJobs')
+        await this.$store.dispatch('storageState/fetchLocal')
+        await this.$store.dispatch('storageState/fetchUsbs')
       }, 5000)
 
     }
 
-    mounted () {
-      this.pollData()
+    async mounted () {
+      await this.pollData()
     }
 
     beforeDestroy () {
