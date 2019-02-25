@@ -2,11 +2,12 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { Settings } from '~/types/settings'
 import { RootState } from '.'
 import { Networking, Network } from '~/types/networking'
+import { UpdateInfo } from '~/types/updating'
 
 export interface SettingsState {
   settings: Settings
   networking: Networking
-  // update
+  update: UpdateInfo
 }
 
 export const state = (): SettingsState => ({
@@ -21,6 +22,11 @@ export const state = (): SettingsState => ({
   networking: {
     connectedMethod: '',
     networks: []
+  },
+  update: {
+    currentVersion: 'v1.0',
+    newVersion: 'v1.0',
+    description: 'You have the latest version of the software'
   }
 })
 
@@ -41,6 +47,9 @@ export const getters: GetterTree<SettingsState, RootState> = {
   },
   currentNetwork (state: SettingsState): Network | undefined {
     return state.networking.networks.find((value: Network) => value.state === 'online')
+  },
+  avaliableUpdate (state: SettingsState): UpdateInfo {
+    return state.update
   }
 }
 
@@ -55,6 +64,10 @@ export const mutations: MutationTree<SettingsState> = {
 
   setNetworks (state: SettingsState, networks: Network[]) {
     state.networking.networks = networks
+  },
+
+  setUpdate (state: SettingsState, update: UpdateInfo) {
+    state.update = update
   }
 }
 
@@ -135,6 +148,22 @@ export const actions: ActionTree<SettingsState, RootState> = {
   },
 
   async forgetWifiNetwork ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async checkForUpdate ({ commit }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async downloadAndInstallUpdate ({ commit }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async rebootSystem ({ commit }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async poweroffSystem ({ commit }) {
     await new Promise(resolve => setTimeout(resolve, 500))
   }
 }
