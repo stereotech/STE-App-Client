@@ -102,7 +102,7 @@
   import { Action, Getter, namespace } from 'vuex-class'
   import { PrintJob } from '~/types/PrintJob'
   import { PrinterInfo } from '~/types/printer'
-  import { FileOrFolder } from "~/types/fileOrFolder";
+  import { FileOrFolder } from '~/types/fileOrFolder'
 
   const printJobs = namespace('printJobsState')
   const printers = namespace('printersState')

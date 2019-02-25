@@ -35,6 +35,12 @@ export const getters: GetterTree<SettingsState, RootState> = {
   time (state: SettingsState): string {
     const a = new Date(state.settings.dateTime * 1000)
     return a.toISOString().substr(11, 5)
+  },
+  avaliableNetworks (state: SettingsState): Network[] {
+    return state.networking.networks.filter((value: Network) => value.state !== 'online')
+  },
+  currentNetwork (state: SettingsState): Network | undefined {
+    return state.networking.networks.find((value: Network) => value.state === 'online')
   }
 }
 
@@ -45,6 +51,10 @@ export const mutations: MutationTree<SettingsState> = {
 
   setConnectedMethod (state: SettingsState, connectedMethod: string) {
     state.networking.connectedMethod = connectedMethod
+  },
+
+  setNetworks (state: SettingsState, networks: Network[]) {
+    state.networking.networks = networks
   }
 }
 
@@ -105,10 +115,26 @@ export const actions: ActionTree<SettingsState, RootState> = {
       {
         id: 'network_8484442',
         name: 'Wifi 1',
-        secutiry: true,
-        state: 'ready',
+        security: true,
+        state: 'online',
         strength: 85
+      },
+      {
+        id: 'network_8484443',
+        name: 'Wifi 2',
+        security: true,
+        state: 'ready',
+        strength: 50
       }
     ]
+    commit('setNetworks', networks)
+  },
+
+  async connectWifiNetwork ({ commit }, { name, passphrase }) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async forgetWifiNetwork ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
   }
 }

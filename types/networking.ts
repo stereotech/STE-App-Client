@@ -8,5 +8,5 @@ export interface Network {
   state: string
   name: string
   strength: number
-  secutiry: boolean
+  security: boolean
 }
