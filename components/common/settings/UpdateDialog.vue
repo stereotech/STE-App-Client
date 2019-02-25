@@ -29,7 +29,6 @@
 
   const settings = namespace('settingsState')
 
-
   @Component({
     components: {
       SettingsDialog

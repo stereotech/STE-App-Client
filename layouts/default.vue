@@ -53,13 +53,13 @@
               <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile>
             <MainSettingsDialog v-model="settingsDialog"/>
-            <v-list-tile>
+            <v-list-tile @click="rebootSystem">
               <v-list-tile-action>
                 <v-icon>mdi-refresh</v-icon>
               </v-list-tile-action>
               <v-list-tile-title>Reboot</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile>
+            <v-list-tile @click="poweroffSystem">
               <v-list-tile-action>
                 <v-icon>mdi-power</v-icon>
               </v-list-tile-action>
@@ -94,6 +94,9 @@
 <script lang="ts">
   import { Vue, Component } from 'nuxt-property-decorator'
   import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
+  import { Action, Getter, State, namespace } from 'vuex-class'
+
+  const settings = namespace('settingsState')
 
   @Component({
     components: {
@@ -101,6 +104,9 @@
     }
   })
   export default class extends Vue {
+    @settings.Action rebootSystem:any
+    @settings.Action poweroffSystem:any
+
     private readonly mainMenu: MenuItem[] = [
       {
         icon: 'mdi-view-dashboard',
