@@ -182,6 +182,7 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async retractCommand ({ commit }, { id, toolId, amount }) {
+    console.log(id, toolId, amount)
     await new Promise(resolve => setTimeout(resolve, 500))
   },
 

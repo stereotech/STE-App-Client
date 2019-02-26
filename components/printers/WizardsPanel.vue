@@ -10,7 +10,7 @@
             :name="wizard.name"
             :image="wizard.image"
             :description="wizard.description"
-            :to="'/printers/' + $route.params.id + '/wizards/' + wizard.link"
+            :to="'/printers/' + $route.params.id + '/' + wizard.link"
           />
         </v-flex>
       </v-layout>

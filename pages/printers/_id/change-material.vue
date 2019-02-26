@@ -1,11 +1,5 @@
 <template>
   <v-flex xs12>
-    <v-toolbar color="primary" flat>
-      <v-btn flat icon @click="$router.back()">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-      <span class="headline font-weight-light">Bed Leveling</span>
-    </v-toolbar>
     <changeMaterialStepper/>
   </v-flex>
 </template>
@@ -21,6 +15,21 @@
     }
   })
   export default class extends Vue {
+    private pollingStatus!: NodeJS.Timeout
+
+    private async pollData () {
+      this.pollingStatus = setInterval(async () => {
+        await this.$store.dispatch('printersState/fetchStatus')
+      }, 1000)
+    }
+
+    async mounted () {
+      await this.pollData()
+    }
+
+    beforeDestroy () {
+      clearInterval(this.pollingStatus)
+    }
   }
 </script>
 
