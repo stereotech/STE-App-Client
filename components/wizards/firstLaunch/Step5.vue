@@ -1,5 +1,5 @@
 <template>
-  <WizardStep :step="step" v-if="heating">
+ <WizardStep :step="step" v-if="heating">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
@@ -15,7 +15,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="next(5)">Next</v-btn>
+          <v-btn block large flat @click="next(6)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -26,9 +26,11 @@
   import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
   import WizardStep from '~/components/wizards/WizardStep.vue'
   import { Action, Getter, State, namespace } from 'vuex-class'
-  import { PrinterStatus } from 'types/printer'
+  import { PrinterStatus, PrinterInfo } from 'types/printer'
+  import { Settings } from 'types/settings'
 
   const printers = namespace('printersState')
+  const settings = namespace('settingsState')
 
   @Component({
     components: {
@@ -44,13 +46,14 @@
     @Watch('additionalData') onAdditionalDataChanged () {
       this.$emit('dataChanged', this.additionalData)
     }
-    private step?: number = 4
+    private step?: number = 5
     private curStep?: number = this.currentStep
 
-        @printers.Getter status!: (id: string) => PrinterStatus | undefined
+    @settings.Getter settings!: Settings
+    @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
     get computedStatus () {
-      return this.status(this.$route.params.id)
+      return this.status(this.settings.systemId)
     }
 
     get heating () {

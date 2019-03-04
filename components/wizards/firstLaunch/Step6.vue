@@ -1,21 +1,15 @@
 <template>
-  <WizardStep :step="step" v-if="heating">
+  <WizardStep :step="step" :image="image" :description="description">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
+          <v-btn block large flat @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12>
-          <p>Heating...</p>
+          <v-btn block large flat @click="load">Load</v-btn>
         </v-flex>
-      </v-layout>
-    </v-container>
-  </WizardStep>
-  <WizardStep v-else :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="next(5)">Next</v-btn>
+          <v-btn block large flat @click="next(7)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -44,10 +38,15 @@
     @Watch('additionalData') onAdditionalDataChanged () {
       this.$emit('dataChanged', this.additionalData)
     }
-    private step?: number = 4
+    private step?: number = 6
     private curStep?: number = this.currentStep
 
-        @printers.Getter status!: (id: string) => PrinterStatus | undefined
+    private image: string = '/wizards/bed_leveling.png'
+    private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
+
+    @printers.Action retractCommand: any
+    @printers.Action extrudeCommand: any
+    @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
     get computedStatus () {
       return this.status(this.$route.params.id)
@@ -66,8 +65,13 @@
       return true
     }
 
-    private image: string = '/wizards/bed_leveling.png'
-    private description: string = 'Load new spool, insert material into bowden tube and press Next button'
+    private repeat () {
+      this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
+    }
+
+    private load () {
+      this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+    }
 
     private next (step: number) {
       this.$emit('change', step)

@@ -1,19 +1,30 @@
 <template>
   <WizardStep :step="step" v-if="heating">
-    <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
-    <p>Heating...</p>
+    <v-container grid-list-xl>
+      <v-layout align-center justify-space-around column fill-height>
+        <v-flex xs12>
+          <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
+        </v-flex>
+        <v-flex xs12>
+          <p>Heating...</p>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </WizardStep>
   <WizardStep v-else :step="step" :image="image" :description="description">
-    <v-btn block large flat @click="repeat">Unload</v-btn>
-    <v-btn
-      v-if="additionalData.action === 0"
-      block
-      large
-      flat
-      nuxt
-      :to="'/printers/' + $route.params.id"
-    >Finish</v-btn>
-    <v-btn v-else block large flat @click="next(4)">Next</v-btn>
+    <v-container grid-list-xl>
+      <v-layout align-center justify-space-around column fill-height>
+        <v-flex xs12>
+          <v-btn block large flat @click="repeat">Unload</v-btn>
+        </v-flex>
+        <v-flex xs12 v-if="additionalData.action === 0">
+          <v-btn block large flat nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
+        </v-flex>
+        <v-flex xs12 v-else>
+          <v-btn block large flat @click="next(4)">Next</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </WizardStep>
 </template>
 
@@ -46,6 +57,7 @@
     private description: string = 'Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading'
 
     @printers.Action retractCommand: any
+    @printers.Action extrudeCommand: any
     @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
     get computedStatus () {
@@ -66,6 +78,7 @@
     }
 
     private repeat () {
+      this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
       this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
     }
 

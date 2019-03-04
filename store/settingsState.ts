@@ -12,6 +12,7 @@ export interface SettingsState {
 
 export const state = (): SettingsState => ({
   settings: {
+    systemId: 'st-aaa',
     firstLaunch: false,
     avaliableLanguages: [],
     dateTime: 0,
@@ -75,7 +76,8 @@ export const actions: ActionTree<SettingsState, RootState> = {
   async fetchSettings ({ commit }) {
     await new Promise(resolve => setTimeout(resolve, 50))
     const settings: Settings = {
-      firstLaunch: false,
+      systemId: 'st-aaa',
+      firstLaunch: true,
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,
@@ -89,7 +91,8 @@ export const actions: ActionTree<SettingsState, RootState> = {
     const newDate = Date.parse(time + ' ' + date) / 1000
     await new Promise(resolve => setTimeout(resolve, 50))
     const settings: Settings = {
-      firstLaunch: false,
+      systemId: 'st-aaa',
+      firstLaunch: true,
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,
@@ -102,7 +105,8 @@ export const actions: ActionTree<SettingsState, RootState> = {
   async sendLanguage ({ commit }, lang: string) {
     await new Promise(resolve => setTimeout(resolve, 50))
     const settings: Settings = {
-      firstLaunch: false,
+      systemId: 'st-aaa',
+      firstLaunch: true,
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,

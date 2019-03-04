@@ -2,7 +2,7 @@
   <v-stepper-content :step="step">
     <v-card class="elevation-0" color="primary">
       <v-container grid-list-md>
-        <v-layout align-center column>
+        <v-layout align-center justify-space-around column fill-height>
           <v-flex xs12 v-if="image != null">
             <v-card>
               <v-img height="320" width="260" :src="image"></v-img>

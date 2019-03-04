@@ -37,11 +37,11 @@
     @Watch('currentStep') onCurrentStepChanged (val: number) {
       this.curStep = val
     }
-    private step?: number = 1
+    private step?: number = 4
     private curStep?: number = this.currentStep
 
     private image: string = '/wizards/bed_leveling.png'
-    private description: string = 'Select the extruder, where you want change the material'
+    private description: string = 'Select the extruder, where you want insert the material'
 
     @printers.Action toolTempCommand: any
 
@@ -51,7 +51,7 @@
       } else {
         this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 240 })
       }
-      this.next(2)
+      this.next(5)
     }
 
     private next (step: number) {
