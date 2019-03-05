@@ -27,16 +27,16 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Model } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Model } from 'nuxt-property-decorator'
 
-  @Component({
-  })
-  export default class extends Vue {
-    @Model('change', { type: Number, required: true, default: 1 }) currentStep?: number
+@Component({
+})
+export default class extends Vue {
+  @Model('change', { type: Number, required: true, default: 1 }) currentStep?: number
 
-    @Prop({ type: Number, default: 0, required: true }) stepCount?: number
-    @Prop({ type: Boolean, default: true }) closeable?: boolean
-  }
+  @Prop({ type: Number, default: 0, required: true }) stepCount?: number
+  @Prop({ type: Boolean, default: true }) closeable?: boolean
+}
 </script>
 
 <style>

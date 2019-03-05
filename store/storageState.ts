@@ -23,14 +23,21 @@ export const getters: GetterTree<StorageState, RootState> = {
 
   avaliableFiles (state: StorageState): string[] {
     const result: string[] = []
-    if (state.local[0] !== undefined) {
-      if (state.local[0].children !== undefined) {
-        result.push(...state.local[0].children.map((element: FileOrFolder) => 'Storage/' + element.display))
-      }
+    if (state.local[0].children !== undefined) {
+      result.push(
+        ...state.local[0].children.map(
+          (element: FileOrFolder) => 'Storage/' + element.display
+        )
+      )
     }
     state.usb.forEach(element => {
       if (element.children !== undefined) {
-        result.push(...element.children.map((value: FileOrFolder) => 'USB at ' + element.origin.toUpperCase() + '/' + value.display))
+        result.push(
+          ...element.children.map(
+            (value: FileOrFolder) =>
+              'USB at ' + element.origin.toUpperCase() + '/' + value.display
+          )
+        )
       }
     })
     return result
@@ -82,17 +89,19 @@ export const actions: ActionTree<StorageState, RootState> = {
   async fetchLocal ({ commit }) {
     await new Promise(resolve => setTimeout(resolve, 500))
     const localStorage: FileOrFolder = {
-      children: [{
-        date: Date.now(),
-        display: 'File_1.gcode',
-        hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-        name: 'File_1.gcode',
-        size: 15315451,
-        origin: 'st_aaa',
-        path: '/Storage/File_1.gcode',
-        type: 'machinecode',
-        typePath: ['machinecode', 'gcode']
-      }],
+      children: [
+        {
+          date: Date.now(),
+          display: 'File_1.gcode',
+          hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+          name: 'File_1.gcode',
+          size: 15315451,
+          origin: 'st_aaa',
+          path: '/Storage/File_1.gcode',
+          type: 'machinecode',
+          typePath: ['machinecode', 'gcode']
+        }
+      ],
       display: 'Storage',
       name: 'Storage',
       origin: 'st-aaa',
@@ -108,17 +117,19 @@ export const actions: ActionTree<StorageState, RootState> = {
     await new Promise(resolve => setTimeout(resolve, 500))
     const usbs = [
       {
-        children: [{
-          date: Date.now(),
-          display: 'File_2.gcode',
-          hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-          name: 'File_2.gcode',
-          size: 15315451,
-          origin: 'st-aaa',
-          path: '/USB/File_2.gcode',
-          type: 'machinecode',
-          typePath: ['machinecode', 'gcode']
-        }],
+        children: [
+          {
+            date: Date.now(),
+            display: 'File_2.gcode',
+            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+            name: 'File_2.gcode',
+            size: 15315451,
+            origin: 'st-aaa',
+            path: '/USB/File_2.gcode',
+            type: 'machinecode',
+            typePath: ['machinecode', 'gcode']
+          }
+        ],
         display: 'Storage',
         name: 'Storage',
         origin: 'st-aaa',
@@ -128,17 +139,19 @@ export const actions: ActionTree<StorageState, RootState> = {
         typePath: ['folder']
       },
       {
-        children: [{
-          date: Date.now(),
-          display: 'File_2.gcode',
-          hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-          name: 'File_2.gcode',
-          size: 15315451,
-          origin: 'st-bbb',
-          path: '/USB/File_2.gcode',
-          type: 'machinecode',
-          typePath: ['machinecode', 'gcode']
-        }],
+        children: [
+          {
+            date: Date.now(),
+            display: 'File_2.gcode',
+            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+            name: 'File_2.gcode',
+            size: 15315451,
+            origin: 'st-bbb',
+            path: '/USB/File_2.gcode',
+            type: 'machinecode',
+            typePath: ['machinecode', 'gcode']
+          }
+        ],
         display: 'Storage',
         name: 'Storage',
         origin: 'st-bbb',

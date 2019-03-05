@@ -10,32 +10,32 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Model } from 'nuxt-property-decorator'
-  import WizardStepper from '~/components/wizards/WizardStepper.vue'
-  import Step1 from '~/components/wizards/changeMaterial/Step1.vue'
-  import Step2 from '~/components/wizards/changeMaterial/Step2.vue'
-  import Step3 from '~/components/wizards/changeMaterial/Step3.vue'
-  import Step4 from '~/components/wizards/changeMaterial/Step4.vue'
-  import Step5 from '~/components/wizards/changeMaterial/Step5.vue'
+import { Vue, Component, Model } from 'nuxt-property-decorator'
+import WizardStepper from '~/components/wizards/WizardStepper.vue'
+import Step1 from '~/components/wizards/changeMaterial/Step1.vue'
+import Step2 from '~/components/wizards/changeMaterial/Step2.vue'
+import Step3 from '~/components/wizards/changeMaterial/Step3.vue'
+import Step4 from '~/components/wizards/changeMaterial/Step4.vue'
+import Step5 from '~/components/wizards/changeMaterial/Step5.vue'
 
-  @Component({
-    components: {
-      WizardStepper,
-      Step1,
-      Step2,
-      Step3,
-      Step4,
-      Step5
-    }
-  })
-  export default class ChangeMaterialStepper extends Vue {
-    private currentStep: number = 1
-
-    private additionalData: { tool: number, action: number } = {
-      tool: 0,
-      action: 1
-    }
+@Component({
+  components: {
+    WizardStepper,
+    Step1,
+    Step2,
+    Step3,
+    Step4,
+    Step5
   }
+})
+export default class ChangeMaterialStepper extends Vue {
+  private currentStep: number = 1
+
+  private additionalData: { tool: number, action: number } = {
+    tool: 0,
+    action: 1
+  }
+}
 </script>
 
 <style>

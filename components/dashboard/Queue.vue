@@ -98,31 +98,82 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'nuxt-property-decorator'
-  import { Action, Getter, namespace } from 'vuex-class'
-  import { PrintJob } from '~/types/PrintJob'
-  import { PrinterInfo } from '~/types/printer'
-  import { FileOrFolder } from '~/types/fileOrFolder'
+import { Vue, Component } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
+import { PrintJob } from '~/types/PrintJob'
+import { PrinterInfo } from '~/types/printer'
+import { FileOrFolder } from '~/types/fileOrFolder'
 
-  const printJobs = namespace('printJobsState')
-  const printers = namespace('printersState')
-  const storage = namespace('storageState')
+const printJobs = namespace('printJobsState')
+const printers = namespace('printersState')
+const storage = namespace('storageState')
 
-  @Component
-  export default class extends Vue {
-    @printJobs.Getter queuedJobs!: PrintJob[]
-    @printJobs.Action removeJob: any
-    @printJobs.Action editJob: any
-    @printJobs.Action addJob: any
+@Component
+export default class extends Vue {
+  @printJobs.Getter queuedJobs!: PrintJob[]
+  @printJobs.Action removeJob: any
+  @printJobs.Action editJob: any
+  @printJobs.Action addJob: any
 
-    @printers.Getter printers!: PrinterInfo[]
-    @storage.Getter avaliableFiles!: string[]
+  @printers.Getter printers!: PrinterInfo[]
+  @storage.Getter avaliableFiles!: string[]
 
-    private dialog: boolean = false
-    private editMode: boolean = false
-    private confirmation: boolean = false
+  private dialog: boolean = false
+  private editMode: boolean = false
+  private confirmation: boolean = false
 
-    private editedJob: PrintJob = {
+  private editedJob: PrintJob = {
+    id: 0,
+    name: '',
+    description: '',
+    creationTime: 0,
+    fileUri: '',
+    printers: []
+  }
+
+  private createJob () {
+    this.dialog = true
+    this.editedJob = {
+      id: 3,
+      name: 'Printjob_' + Date.now(),
+      description: '',
+      printers: [],
+      fileUri: '',
+      creationTime: Date.now()
+    }
+  }
+
+  private startEditJob (job: PrintJob) {
+    this.dialog = true
+    this.editMode = true
+    Object.assign(this.editedJob, job)
+  }
+
+  private startRemoveJob (job: PrintJob) {
+    this.confirmation = true
+    this.editedJob = job
+  }
+
+  private endRemoveJob () {
+    this.confirmation = false
+    this.removeJob(this.editedJob)
+  }
+
+  private removePrinter (item: string) {
+    const index = this.editedJob.printers.indexOf(item)
+    if (index >= 0) this.editedJob.printers.splice(index, 1)
+  }
+
+  private closeDialog (add: boolean | undefined) {
+    this.dialog = false
+    if (add !== undefined) {
+      if (add) {
+        this.addJob(this.editedJob)
+      } else {
+        this.editJob(this.editedJob)
+      }
+    }
+    this.editedJob = {
       id: 0,
       name: '',
       description: '',
@@ -130,59 +181,8 @@
       fileUri: '',
       printers: []
     }
-
-    private createJob () {
-      this.dialog = true
-      this.editedJob = {
-        id: 3,
-        name: 'Printjob_' + Date.now(),
-        description: '',
-        printers: [],
-        fileUri: '',
-        creationTime: Date.now()
-      }
-    }
-
-    private startEditJob (job: PrintJob) {
-      this.dialog = true
-      this.editMode = true
-      Object.assign(this.editedJob, job)
-    }
-
-    private startRemoveJob (job: PrintJob) {
-      this.confirmation = true
-      this.editedJob = job
-    }
-
-    private endRemoveJob () {
-      this.confirmation = false
-      this.removeJob(this.editedJob)
-    }
-
-    private removePrinter (item: string) {
-      const index = this.editedJob.printers.indexOf(item)
-      if (index >= 0) this.editedJob.printers.splice(index, 1)
-    }
-
-    private closeDialog (add: boolean | undefined) {
-      this.dialog = false
-      if (add !== undefined) {
-        if (add) {
-          this.addJob(this.editedJob)
-        } else {
-          this.editJob(this.editedJob)
-        }
-      }
-      this.editedJob = {
-        id: 0,
-        name: '',
-        description: '',
-        creationTime: 0,
-        fileUri: '',
-        printers: []
-      }
-    }
   }
+}
 </script>
 
 <style>

@@ -1,4 +1,3 @@
-
 export default async function (context) {
   await context.store.dispatch('settingsState/fetchSettings')
   if (context.store.state.settingsState.settings.firstLaunch) {

@@ -23,24 +23,24 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import JogCard from '~/components/printers/expert/JogCard.vue'
-  import ExtruderCard from '~/components/printers/expert/ExtruderCard.vue'
-  import MiscCard from '~/components/printers/expert/MiscCard.vue'
-  import TemperatureFan from '~/components/printers/expert/TemperatureFan.vue'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import JogCard from '~/components/printers/expert/JogCard.vue'
+import ExtruderCard from '~/components/printers/expert/ExtruderCard.vue'
+import MiscCard from '~/components/printers/expert/MiscCard.vue'
+import TemperatureFan from '~/components/printers/expert/TemperatureFan.vue'
 
-  @Component({
-    components: {
-      JogCard,
-      ExtruderCard,
-      TemperatureFan,
-      MiscCard
-    }
-  })
-  export default class ManualControlPanel extends Vue {
-    @Prop({ default: false, type: Boolean }) printing?: boolean
-    @Prop({ default: '', type: String }) id?: string
+@Component({
+  components: {
+    JogCard,
+    ExtruderCard,
+    TemperatureFan,
+    MiscCard
   }
+})
+export default class ManualControlPanel extends Vue {
+  @Prop({ default: false, type: Boolean }) printing?: boolean
+  @Prop({ default: '', type: String }) id?: string
+}
 </script>
 
 <style>

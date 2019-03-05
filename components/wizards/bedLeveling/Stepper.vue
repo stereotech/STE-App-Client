@@ -8,23 +8,23 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Model } from 'nuxt-property-decorator'
-  import WizardStepper from '~/components/wizards/WizardStepper.vue'
-  import Step1 from '~/components/wizards/bedLeveling/Step1.vue'
-  import Step2 from '~/components/wizards/bedLeveling/Step2.vue'
-  import Step3 from '~/components/wizards/bedLeveling/Step3.vue'
+import { Vue, Component, Model } from 'nuxt-property-decorator'
+import WizardStepper from '~/components/wizards/WizardStepper.vue'
+import Step1 from '~/components/wizards/bedLeveling/Step1.vue'
+import Step2 from '~/components/wizards/bedLeveling/Step2.vue'
+import Step3 from '~/components/wizards/bedLeveling/Step3.vue'
 
-  @Component({
-    components: {
-      WizardStepper,
-      Step1,
-      Step2,
-      Step3
-    }
-  })
-  export default class extends Vue {
-    private currentStep: number = 1
+@Component({
+  components: {
+    WizardStepper,
+    Step1,
+    Step2,
+    Step3
   }
+})
+export default class extends Vue {
+  private currentStep: number = 1
+}
 </script>
 
 <style>

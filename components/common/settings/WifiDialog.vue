@@ -27,14 +27,12 @@
         </v-list-tile-action>
         <v-dialog v-model="forgetConfirmation" max-width="425">
           <v-card>
-            <v-card-title class="headline">
-              Forget {{ currentNetwork.name }} ? 
-            </v-card-title>
+            <v-card-title class="headline">Forget {{ currentNetwork.name }} ?</v-card-title>
             <v-card-actions>
               <v-card-actions>
-            <v-btn color="primary" flat @click="forgetConfirmation = false">Cancel</v-btn>
-            <v-btn color="primary" flat @click="startForgetting">Forget</v-btn>
-          </v-card-actions>
+                <v-btn color="primary" flat @click="forgetConfirmation = false">Cancel</v-btn>
+                <v-btn color="primary" flat @click="startForgetting">Forget</v-btn>
+              </v-card-actions>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -98,93 +96,93 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
-  import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
-  import { Network } from '~/types/networking'
-  import { Action, Getter, State, namespace } from 'vuex-class'
+import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+import { Network } from '~/types/networking'
+import { Action, Getter, State, namespace } from 'vuex-class'
 
-  const settings = namespace('settingsState')
+const settings = namespace('settingsState')
 
-  @Component({
-    components: {
-      SettingsDialog
-    }
-  })
-  export default class extends Vue {
-    @Model('input', { type: Boolean, default: false }) value!: boolean
-    @Watch('value') onValueChanged (val: boolean) {
-      this.isOpen = val
-    }
-
-    private isOpen: boolean = this.value
-
-    private confirmation: boolean = false
-    private forgetConfirmation: boolean = false
-    private showPassword: boolean = false
-    private password: string = ''
-    private rules: any = {
-      required: value => !!value || 'Required.',
-      min: v => {
-        if (v != null) {
-          return v.length >= 8 || 'Min 8 characters'
-        }
-        return 'Min 8 characters'
-      }
-    }
-
-    get isMin (): boolean {
-      return this.rules.min(this.password) !== true
-    }
-
-    private setupNetwork: Network = {
-      id: '',
-      state: '',
-      name: '',
-      security: false,
-      strength: 0
-    }
-
-    private closeDialog () {
-      this.$emit('input', false)
-      this.isOpen = false
-    }
-
-    @settings.Getter avaliableNetworks!: Network[]
-    @settings.Getter currentNetwork: Network | undefined
-    @settings.Action getWifiNetworks: any
-    @settings.Action connectWifiNetwork: any
-    @settings.Action forgetWifiNetwork: any
-
-    private startConnection (network: Network) {
-      if (network) {
-        if (network.security) {
-          this.confirmation = true
-        }
-        this.setupNetwork = network
-      }
-    }
-
-    private startConnecting () {
-      if (this.setupNetwork.security) {
-        this.connectWifiNetwork({ name: this.setupNetwork.name, passphrase: this.password })
-      } else {
-        this.connectWifiNetwork({ name: this.setupNetwork.name, passphrase: '' })
-      }
-      this.confirmation = false
-    }
-
-    private startForgetting () {
-      if (this.currentNetwork !== undefined) {
-        this.forgetWifiNetwork(this.currentNetwork.id)
-      }
-      this.forgetConfirmation = false
-    }
-
-    async mounted () {
-      await this.getWifiNetworks()
-    }
-
+@Component({
+  components: {
+    SettingsDialog
   }
+})
+export default class extends Vue {
+  @Model('input', { type: Boolean, default: false }) value!: boolean
+  @Watch('value') onValueChanged (val: boolean) {
+    this.isOpen = val
+  }
+
+  private isOpen: boolean = this.value
+
+  private confirmation: boolean = false
+  private forgetConfirmation: boolean = false
+  private showPassword: boolean = false
+  private password: string = ''
+  private rules: any = {
+    required: value => !!value || 'Required.',
+    min: v => {
+      if (v != null) {
+        return v.length >= 8 || 'Min 8 characters'
+      }
+      return 'Min 8 characters'
+    }
+  }
+
+  get isMin (): boolean {
+    return this.rules.min(this.password) !== true
+  }
+
+  private setupNetwork: Network = {
+    id: '',
+    state: '',
+    name: '',
+    security: false,
+    strength: 0
+  }
+
+  private closeDialog () {
+    this.$emit('input', false)
+    this.isOpen = false
+  }
+
+  @settings.Getter avaliableNetworks!: Network[]
+  @settings.Getter currentNetwork: Network | undefined
+  @settings.Action getWifiNetworks: any
+  @settings.Action connectWifiNetwork: any
+  @settings.Action forgetWifiNetwork: any
+
+  private startConnection (network: Network) {
+    if (network) {
+      if (network.security) {
+        this.confirmation = true
+      }
+      this.setupNetwork = network
+    }
+  }
+
+  private startConnecting () {
+    if (this.setupNetwork.security) {
+      this.connectWifiNetwork({ name: this.setupNetwork.name, passphrase: this.password })
+    } else {
+      this.connectWifiNetwork({ name: this.setupNetwork.name, passphrase: '' })
+    }
+    this.confirmation = false
+  }
+
+  private startForgetting () {
+    if (this.currentNetwork !== undefined) {
+      this.forgetWifiNetwork(this.currentNetwork.id)
+    }
+    this.forgetConfirmation = false
+  }
+
+  async mounted () {
+    await this.getWifiNetworks()
+  }
+
+}
 </script>
 
 <style>

@@ -28,7 +28,6 @@ export const getters: GetterTree<PrintersState, RootState> = {
   status (state: PrintersState) {
     return (id: string) => state.status.find(value => value.id === id)
   }
-
 }
 
 export const mutations: MutationTree<PrintersState> = {

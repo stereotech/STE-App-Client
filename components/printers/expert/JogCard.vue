@@ -158,76 +158,76 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import { Action, Getter, namespace } from 'vuex-class'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
 
-  const printers = namespace('printersState')
+const printers = namespace('printersState')
 
-  @Component
-  export default class JogCard extends Vue {
-    private selectedAmount: number = 1
-    private amount: number = 10
-    private feed: number = 100
+@Component
+export default class JogCard extends Vue {
+  private selectedAmount: number = 1
+  private amount: number = 10
+  private feed: number = 100
 
-    private jogXPlus () {
-      this.jogCommand({ id: this.id, x: this.amount })
-    }
-    private jogYPlus () {
-      this.jogCommand({ id: this.id, y: this.amount })
-    }
-    private jogZPlus () {
-      this.jogCommand({ id: this.id, z: this.amount })
-    }
-    private jogAPlus () {
-      this.jogCommand({ id: this.id, a: this.amount })
-    }
-    private jogBPlus () {
-      this.jogCommand({ id: this.id, b: this.amount })
-    }
-    private jogXMinus () {
-      this.jogCommand({ id: this.id, x: -this.amount })
-    }
-    private jogYMinus () {
-      this.jogCommand({ id: this.id, y: -this.amount })
-    }
-    private jogZMinus () {
-      this.jogCommand({ id: this.id, z: -this.amount })
-    }
-    private jogAMinus () {
-      this.jogCommand({ id: this.id, a: -this.amount })
-    }
-    private jogBMinus () {
-      this.jogCommand({ id: this.id, b: -this.amount })
-    }
-
-    private homeXY () {
-      this.homeCommand({ id: this.id, head: true })
-    }
-
-    private homeZ () {
-      this.homeCommand({ id: this.id, bed: true })
-    }
-
-    private homeA () {
-      this.homeCommand({ id: this.id, rotary: true })
-    }
-
-    private homeB () {
-      this.homeCommand({ id: this.id, rotary: true })
-    }
-
-    private setFeed (value: number) {
-      this.feedCommand({ id: this.id, feed: value })
-    }
-
-    @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
-    @Prop({ default: false, type: Boolean }) printing?: boolean
-    @Prop({ default: '', type: String }) id?: string
-
-    @printers.Action jogCommand: any
-    @printers.Action homeCommand: any
-    @printers.Action feedCommand: any
+  private jogXPlus () {
+    this.jogCommand({ id: this.id, x: this.amount })
   }
+  private jogYPlus () {
+    this.jogCommand({ id: this.id, y: this.amount })
+  }
+  private jogZPlus () {
+    this.jogCommand({ id: this.id, z: this.amount })
+  }
+  private jogAPlus () {
+    this.jogCommand({ id: this.id, a: this.amount })
+  }
+  private jogBPlus () {
+    this.jogCommand({ id: this.id, b: this.amount })
+  }
+  private jogXMinus () {
+    this.jogCommand({ id: this.id, x: -this.amount })
+  }
+  private jogYMinus () {
+    this.jogCommand({ id: this.id, y: -this.amount })
+  }
+  private jogZMinus () {
+    this.jogCommand({ id: this.id, z: -this.amount })
+  }
+  private jogAMinus () {
+    this.jogCommand({ id: this.id, a: -this.amount })
+  }
+  private jogBMinus () {
+    this.jogCommand({ id: this.id, b: -this.amount })
+  }
+
+  private homeXY () {
+    this.homeCommand({ id: this.id, head: true })
+  }
+
+  private homeZ () {
+    this.homeCommand({ id: this.id, bed: true })
+  }
+
+  private homeA () {
+    this.homeCommand({ id: this.id, rotary: true })
+  }
+
+  private homeB () {
+    this.homeCommand({ id: this.id, rotary: true })
+  }
+
+  private setFeed (value: number) {
+    this.feedCommand({ id: this.id, feed: value })
+  }
+
+  @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
+  @Prop({ default: false, type: Boolean }) printing?: boolean
+  @Prop({ default: '', type: String }) id?: string
+
+  @printers.Action jogCommand: any
+  @printers.Action homeCommand: any
+  @printers.Action feedCommand: any
+}
 </script>
 
 <style>

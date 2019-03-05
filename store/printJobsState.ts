@@ -16,7 +16,9 @@ export const getters: GetterTree<PrintJobsState, RootState> = {
   },
 
   queuedJobs (state): PrintJob[] {
-    return state.jobs.filter(value => value.succesful === undefined).sort((a: PrintJob, b: PrintJob) => a.id - b.id)
+    return state.jobs
+      .filter(value => value.succesful === undefined)
+      .sort((a: PrintJob, b: PrintJob) => a.id - b.id)
   }
 }
 
@@ -54,7 +56,6 @@ export const mutations: MutationTree<PrintJobsState> = {
       state.jobs[index].succesful = !state.jobs[index].succesful
     }
   }
-
 }
 
 export const actions: ActionTree<PrintJobsState, RootState> = {

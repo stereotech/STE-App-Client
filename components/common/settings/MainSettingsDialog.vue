@@ -24,83 +24,83 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
-  import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
-  import WifiDialog from '~/components/common/settings/WifiDialog.vue'
-  import DateTimeDialog from '~/components/common/settings/DateTimeDialog.vue'
-  import LanguageDialog from '~/components/common/settings/LanguageDialog.vue'
-  import StorageDialog from '~/components/common/settings/StorageDialog.vue'
-  import ResetDialog from '~/components/common/settings/ResetDialog.vue'
-  import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
+import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+import WifiDialog from '~/components/common/settings/WifiDialog.vue'
+import DateTimeDialog from '~/components/common/settings/DateTimeDialog.vue'
+import LanguageDialog from '~/components/common/settings/LanguageDialog.vue'
+import StorageDialog from '~/components/common/settings/StorageDialog.vue'
+import ResetDialog from '~/components/common/settings/ResetDialog.vue'
+import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
 
-  @Component({
-    components: {
-      SettingsDialog,
-      WifiDialog,
-      DateTimeDialog,
-      LanguageDialog,
-      StorageDialog,
-      ResetDialog,
-      UpdateDialog
-    }
-  })
-  export default class extends Vue {
-    @Model('input', { type: Boolean, default: false }) value!: boolean
-    @Watch('value') onValueChanged (val: boolean) {
-      this.isOpen = val
-    }
-
-    private isOpen: boolean = this.value
-
-    private closeDialog () {
-      this.$emit('input', false)
-      this.isOpen = false
-    }
-
-    private settings: Setting[] = [
-      {
-        icon: 'mdi-wifi',
-        title: 'Wi-Fi',
-        page: false
-      },
-      {
-        icon: 'mdi-clock-outline',
-        title: 'Date and Time',
-        page: false
-      },
-      {
-        icon: 'mdi-translate',
-        title: 'Language',
-        page: false
-      },
-      {
-        icon: 'mdi-sd   ',
-        title: 'Storage',
-        page: false
-      },
-      {
-        icon: 'mdi-backup-restore',
-        title: 'Reset and restore',
-        page: false
-      },
-      {
-        icon: 'mdi-update',
-        title: 'Update',
-        page: false
-      }
-    ]
+@Component({
+  components: {
+    SettingsDialog,
+    WifiDialog,
+    DateTimeDialog,
+    LanguageDialog,
+    StorageDialog,
+    ResetDialog,
+    UpdateDialog
+  }
+})
+export default class extends Vue {
+  @Model('input', { type: Boolean, default: false }) value!: boolean
+  @Watch('value') onValueChanged (val: boolean) {
+    this.isOpen = val
   }
 
-  class Setting {
-    icon: string
-    title: string
-    page: boolean
-    constructor (icon: string, title: string) {
-      this.icon = icon
-      this.title = title
-      this.page = false
-    }
+  private isOpen: boolean = this.value
+
+  private closeDialog () {
+    this.$emit('input', false)
+    this.isOpen = false
   }
+
+  private settings: Setting[] = [
+    {
+      icon: 'mdi-wifi',
+      title: 'Wi-Fi',
+      page: false
+    },
+    {
+      icon: 'mdi-clock-outline',
+      title: 'Date and Time',
+      page: false
+    },
+    {
+      icon: 'mdi-translate',
+      title: 'Language',
+      page: false
+    },
+    {
+      icon: 'mdi-sd   ',
+      title: 'Storage',
+      page: false
+    },
+    {
+      icon: 'mdi-backup-restore',
+      title: 'Reset and restore',
+      page: false
+    },
+    {
+      icon: 'mdi-update',
+      title: 'Update',
+      page: false
+    }
+  ]
+}
+
+class Setting {
+  icon: string
+  title: string
+  page: boolean
+  constructor (icon: string, title: string) {
+    this.icon = icon
+    this.title = title
+    this.page = false
+  }
+}
 </script>
 
 <style>

@@ -14,31 +14,31 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-  import WizardStep from '~/components/wizards/WizardStep.vue'
-  import { Action, Getter, State, namespace } from 'vuex-class'
-  import { PrinterStatus } from 'types/printer'
+import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Action, Getter, State, namespace } from 'vuex-class'
+import { PrinterStatus } from 'types/printer'
 
-  const printers = namespace('printersState')
+const printers = namespace('printersState')
 
-  @Component({
-    components: {
-      WizardStep
-    }
-  })
-  export default class extends Vue {
-    @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-    @Watch('currentStep') onCurrentStepChanged (val: number) {
-      this.curStep = val
-    }
-    private step?: number = 8
-    private curStep?: number = this.currentStep
-
-    private next (step: number) {
-      this.$emit('change', step)
-      this.curStep = step
-    }
+@Component({
+  components: {
+    WizardStep
   }
+})
+export default class extends Vue {
+  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Watch('currentStep') onCurrentStepChanged (val: number) {
+    this.curStep = val
+  }
+  private step?: number = 8
+  private curStep?: number = this.currentStep
+
+  private next (step: number) {
+    this.$emit('change', step)
+    this.curStep = step
+  }
+}
 </script>
 
 

@@ -52,56 +52,56 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
-  import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
-  import { Settings } from '~/types/settings'
-  import { Action, Getter, namespace } from 'vuex-class'
+import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+import { Settings } from '~/types/settings'
+import { Action, Getter, namespace } from 'vuex-class'
 
-  const settings = namespace('settingsState')
+const settings = namespace('settingsState')
 
-  @Component({
-    components: {
-      SettingsDialog
-    }
-  })
-  export default class extends Vue {
-    @Model('input', { type: Boolean, default: false }) value!: boolean
-    @Watch('value') onValueChanged (val: boolean) {
-      this.isOpen = val
-    }
-    private isOpen: boolean = this.value
-
-    private modal: boolean = false
-    private modal2: boolean = false
-    private closeDialog () {
-      this.$emit('input', false)
-      this.isOpen = false
-    }
-
-    @settings.Getter date!: string
-    @settings.Getter time!: string
-    @settings.Action sendDateTime: any
-
-    private dateModel: string = ''
-    private timeModel: string = ''
-
-    private setTime (value: string) {
-      this.sendDateTime({ date: this.dateModel, time: value })
-      const dialog = this.$refs.dialog as any
-      dialog.save(this.timeModel)
-    }
-
-    private setDate (value: string) {
-      this.sendDateTime({ date: value, time: this.timeModel })
-      const dialog = this.$refs.datedialog as any
-      dialog.save(this.dateModel)
-    }
-
-    mounted () {
-      this.dateModel = this.date
-      this.timeModel = this.time
-    }
+@Component({
+  components: {
+    SettingsDialog
   }
+})
+export default class extends Vue {
+  @Model('input', { type: Boolean, default: false }) value!: boolean
+  @Watch('value') onValueChanged (val: boolean) {
+    this.isOpen = val
+  }
+  private isOpen: boolean = this.value
+
+  private modal: boolean = false
+  private modal2: boolean = false
+  private closeDialog () {
+    this.$emit('input', false)
+    this.isOpen = false
+  }
+
+  @settings.Getter date!: string
+  @settings.Getter time!: string
+  @settings.Action sendDateTime: any
+
+  private dateModel: string = ''
+  private timeModel: string = ''
+
+  private setTime (value: string) {
+    this.sendDateTime({ date: this.dateModel, time: value })
+    const dialog = this.$refs.dialog as any
+    dialog.save(this.timeModel)
+  }
+
+  private setDate (value: string) {
+    this.sendDateTime({ date: value, time: this.timeModel })
+    const dialog = this.$refs.datedialog as any
+    dialog.save(this.dateModel)
+  }
+
+  mounted () {
+    this.dateModel = this.date
+    this.timeModel = this.time
+  }
+}
 </script>
 
 <style>

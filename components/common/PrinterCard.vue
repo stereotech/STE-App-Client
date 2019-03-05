@@ -187,143 +187,143 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import { Action, Getter, namespace } from 'vuex-class'
-  import { PrinterStatus, PrinterInfo } from 'types/printer'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
+import { PrinterStatus, PrinterInfo } from 'types/printer'
 
-  const printers = namespace('printersState')
+const printers = namespace('printersState')
 
-  @Component
-  export default class PrinterCard extends Vue {
-    @Prop({ default: false, type: Boolean }) toolbar!: boolean
-    @Prop({ default: false, type: Boolean }) controlPanel!: boolean
+@Component
+export default class PrinterCard extends Vue {
+  @Prop({ default: false, type: Boolean }) toolbar!: boolean
+  @Prop({ default: false, type: Boolean }) controlPanel!: boolean
 
-    @Prop({ default: '', type: String, required: true }) id!: string
+  @Prop({ default: '', type: String, required: true }) id!: string
 
-    @printers.Getter printer!: (id: string) => PrinterInfo | undefined
-    @printers.Getter status!: (id: string) => PrinterStatus | undefined
-    @printers.Action deletePrinter: any
+  @printers.Getter printer!: (id: string) => PrinterInfo | undefined
+  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Action deletePrinter: any
 
-    @printers.Action findPrinter: any
-    @printers.Action pausePrintJob: any
-    @printers.Action resumePrintJob: any
-    @printers.Action cancelPrintJob: any
+  @printers.Action findPrinter: any
+  @printers.Action pausePrintJob: any
+  @printers.Action resumePrintJob: any
+  @printers.Action cancelPrintJob: any
 
-    @Prop({ default: false, type: Boolean }) chamber?: boolean
-    @Prop({ default: 0, type: Number }) chamberTemp?: number
-    @Prop({ default: 0, type: Number }) chamberTarget?: number
+  @Prop({ default: false, type: Boolean }) chamber?: boolean
+  @Prop({ default: 0, type: Number }) chamberTemp?: number
+  @Prop({ default: 0, type: Number }) chamberTarget?: number
 
-    get computedStatus () {
-      return this.status(this.id)
-    }
+  get computedStatus () {
+    return this.status(this.id)
+  }
 
-    get computedPrinter () {
-      return this.printer(this.id)
-    }
+  get computedPrinter () {
+    return this.printer(this.id)
+  }
 
-    get e1Color (): string {
-      if (this.computedStatus !== undefined) {
-        if (this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual) {
-          return this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual < this.computedStatus.tool0.target ? 'error' : 'primary'
-        }
-      }
-      return 'primary'
-    }
-
-    get e2Color (): string {
-      if (this.computedStatus !== undefined) {
-        if (this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual) {
-          return this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual < this.computedStatus.tool1.target ? 'error' : 'primary'
-        }
-      }
-      return 'primary'
-    }
-
-    get bedColor (): string {
-      if (this.computedStatus !== undefined) {
-        if (this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual) {
-          return this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual < this.computedStatus.bed.target ? 'error' : 'accent'
-        }
-      }
-      return 'accent'
-    }
-
-    private printerStatus: string = 'Maintenance'
-
-    get isPrinting (): boolean {
-      if (this.status(this.id) !== undefined) {
-        return this.status(this.id)!.stateText === 'Printing'
-      }
-      return false
-    }
-    get isPaused (): boolean {
-      if (this.status(this.id) !== undefined) {
-        return this.status(this.id)!.stateText === 'Paused'
-      }
-      return false
-    }
-    get isIdle (): boolean {
-      if (this.status(this.id) !== undefined) {
-        return this.status(this.id)!.stateText === 'Idle'
-      }
-      return false
-    }
-    get isMaintenance (): boolean {
-      if (this.status(this.id) !== undefined) {
-        return this.status(this.id)!.stateText === 'Maintenance'
-      }
-      return false
-    }
-    get isDone (): boolean {
-      if (this.status(this.id) !== undefined) {
-        return this.status(this.id)!.stateText === 'Done'
-      }
-      return false
-    }
-    get isOffline (): boolean {
-      if (this.status(this.id) !== undefined) {
-        return this.status(this.id)!.stateText === 'Offline'
-      }
-      return false
-    }
-
-    get jobStateToggle (): number {
-      if (this.status(this.id) !== undefined) {
-        if (this.status(this.id)!.stateText === 'Printing') {
-          return 0
-        }
-        if (this.status(this.id)!.stateText === 'Paused') {
-          return 1
-        }
-      }
-      return 2
-    }
-
-    private confirmation: boolean = false
-
-    private removePrinter (printer: PrinterInfo) {
-      this.confirmation = false
-      this.deletePrinter(this.computedPrinter)
-    }
-
-    private resumeJob (toggle: boolean) {
-      if (toggle) {
-        this.resumePrintJob(this.$route.params.id)
+  get e1Color (): string {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual) {
+        return this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual < this.computedStatus.tool0.target ? 'error' : 'primary'
       }
     }
+    return 'primary'
+  }
 
-    private pauseJob (toggle: boolean) {
-      if (toggle) {
-        this.pausePrintJob(this.$route.params.id)
+  get e2Color (): string {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual) {
+        return this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual < this.computedStatus.tool1.target ? 'error' : 'primary'
       }
     }
+    return 'primary'
+  }
 
-    private stopJob (toggle: boolean) {
-      if (toggle) {
-        this.cancelPrintJob(this.$route.params.id)
+  get bedColor (): string {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual) {
+        return this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual < this.computedStatus.bed.target ? 'error' : 'accent'
       }
+    }
+    return 'accent'
+  }
+
+  private printerStatus: string = 'Maintenance'
+
+  get isPrinting (): boolean {
+    if (this.status(this.id) !== undefined) {
+      return this.status(this.id)!.stateText === 'Printing'
+    }
+    return false
+  }
+  get isPaused (): boolean {
+    if (this.status(this.id) !== undefined) {
+      return this.status(this.id)!.stateText === 'Paused'
+    }
+    return false
+  }
+  get isIdle (): boolean {
+    if (this.status(this.id) !== undefined) {
+      return this.status(this.id)!.stateText === 'Idle'
+    }
+    return false
+  }
+  get isMaintenance (): boolean {
+    if (this.status(this.id) !== undefined) {
+      return this.status(this.id)!.stateText === 'Maintenance'
+    }
+    return false
+  }
+  get isDone (): boolean {
+    if (this.status(this.id) !== undefined) {
+      return this.status(this.id)!.stateText === 'Done'
+    }
+    return false
+  }
+  get isOffline (): boolean {
+    if (this.status(this.id) !== undefined) {
+      return this.status(this.id)!.stateText === 'Offline'
+    }
+    return false
+  }
+
+  get jobStateToggle (): number {
+    if (this.status(this.id) !== undefined) {
+      if (this.status(this.id)!.stateText === 'Printing') {
+        return 0
+      }
+      if (this.status(this.id)!.stateText === 'Paused') {
+        return 1
+      }
+    }
+    return 2
+  }
+
+  private confirmation: boolean = false
+
+  private removePrinter (printer: PrinterInfo) {
+    this.confirmation = false
+    this.deletePrinter(this.computedPrinter)
+  }
+
+  private resumeJob (toggle: boolean) {
+    if (toggle) {
+      this.resumePrintJob(this.$route.params.id)
     }
   }
+
+  private pauseJob (toggle: boolean) {
+    if (toggle) {
+      this.pausePrintJob(this.$route.params.id)
+    }
+  }
+
+  private stopJob (toggle: boolean) {
+    if (toggle) {
+      this.cancelPrintJob(this.$route.params.id)
+    }
+  }
+}
 </script>
 
 <style scoped>

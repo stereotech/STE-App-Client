@@ -17,48 +17,48 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-  import WizardStep from '~/components/wizards/WizardStep.vue'
-  import { Action, Getter, State, namespace } from 'vuex-class'
+import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Action, Getter, State, namespace } from 'vuex-class'
 
-  const printers = namespace('printersState')
+const printers = namespace('printersState')
 
-  @Component({
-    components: {
-      WizardStep
-    }
-  })
-  export default class extends Vue {
-    @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-    @Prop({ type: Object, default: {} }) additionalData!: any
-    @Watch('additionalData') onAdditionalDataChanged () {
-      this.$emit('dataChanged', this.additionalData)
-    }
-    @Watch('currentStep') onCurrentStepChanged (val: number) {
-      this.curStep = val
-    }
-    private step?: number = 1
-    private curStep?: number = this.currentStep
-
-    private image: string = '/wizards/bed_leveling.png'
-    private description: string = 'Select the extruder, where you want change the material'
-
-    @printers.Action toolTempCommand: any
-
-    private nextStep () {
-      if (this.additionalData.tool === 0) {
-        this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 240, tool1Temp: 0 })
-      } else {
-        this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 240 })
-      }
-      this.next(2)
-    }
-
-    private next (step: number) {
-      this.$emit('change', step)
-      this.curStep = step
-    }
+@Component({
+  components: {
+    WizardStep
   }
+})
+export default class extends Vue {
+  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Watch('additionalData') onAdditionalDataChanged () {
+    this.$emit('dataChanged', this.additionalData)
+  }
+  @Watch('currentStep') onCurrentStepChanged (val: number) {
+    this.curStep = val
+  }
+  private step?: number = 1
+  private curStep?: number = this.currentStep
+
+  private image: string = '/wizards/bed_leveling.png'
+  private description: string = 'Select the extruder, where you want change the material'
+
+  @printers.Action toolTempCommand: any
+
+  private nextStep () {
+    if (this.additionalData.tool === 0) {
+      this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 240, tool1Temp: 0 })
+    } else {
+      this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 240 })
+    }
+    this.next(2)
+  }
+
+  private next (step: number) {
+    this.$emit('change', step)
+    this.curStep = step
+  }
+}
 </script>
 
 

@@ -53,38 +53,38 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'nuxt-property-decorator'
-  import { Getter, Action, Mutation, namespace } from 'vuex-class'
-  import { ScannerResult } from '~/types/scannerResult'
+import { Vue, Component } from 'nuxt-property-decorator'
+import { Getter, Action, Mutation, namespace } from 'vuex-class'
+import { ScannerResult } from '~/types/scannerResult'
 
-  const scannerResult = namespace('scannerResultState')
+const scannerResult = namespace('scannerResultState')
 
-  @Component
-  export default class AddPrinterDialog extends Vue {
-    @scannerResult.Getter results?: ScannerResult[]
-    @scannerResult.Action fetchResults: any
-    @scannerResult.Action connect: any
-    @scannerResult.Mutation clearResults: any
+@Component
+export default class AddPrinterDialog extends Vue {
+  @scannerResult.Getter results?: ScannerResult[]
+  @scannerResult.Action fetchResults: any
+  @scannerResult.Action connect: any
+  @scannerResult.Mutation clearResults: any
 
-    private dialog: boolean = false
-    private confirmation: boolean = false
+  private dialog: boolean = false
+  private confirmation: boolean = false
 
-    async startScan () {
-      this.dialog = true
-      await this.fetchResults()
-    }
-
-    async startConnection (printer: ScannerResult) {
-      this.confirmation = false
-      this.dialog = false
-      this.connect(printer)
-    }
-
-    private closeDialog () {
-      this.dialog = false
-      this.clearResults()
-    }
+  async startScan () {
+    this.dialog = true
+    await this.fetchResults()
   }
+
+  async startConnection (printer: ScannerResult) {
+    this.confirmation = false
+    this.dialog = false
+    this.connect(printer)
+  }
+
+  private closeDialog () {
+    this.dialog = false
+    this.clearResults()
+  }
+}
 </script>
 
 <style>

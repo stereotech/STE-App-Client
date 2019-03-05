@@ -23,24 +23,24 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
-  import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
+import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 
-  @Component({
-  })
-  export default class extends Vue {
-    @Model('input', { type: Boolean, default: false }) value!: boolean
-    @Watch('value') onValueChanged (val: boolean) {
-      this.isOpen = val
-    }
-
-    private isOpen: boolean = this.value
-
-    private closeDialog () {
-      this.$emit('input', false)
-      this.isOpen = false
-    }
+@Component({
+})
+export default class extends Vue {
+  @Model('input', { type: Boolean, default: false }) value!: boolean
+  @Watch('value') onValueChanged (val: boolean) {
+    this.isOpen = val
   }
+
+  private isOpen: boolean = this.value
+
+  private closeDialog () {
+    this.$emit('input', false)
+    this.isOpen = false
+  }
+}
 </script>
 
 <style>

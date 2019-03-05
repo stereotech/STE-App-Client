@@ -16,16 +16,16 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
-  @Component
-  export default class WizardCard extends Vue {
-    @Prop({ default: 0, type: Number }) id?: number
-    @Prop({ default: '', type: String }) name?: string
-    @Prop({ default: '', type: String }) image?: string
-    @Prop({ default: '', type: String }) description?: string
-    @Prop({ default: '', type: String }) to?: string
-  }
+@Component
+export default class WizardCard extends Vue {
+  @Prop({ default: 0, type: Number }) id?: number
+  @Prop({ default: '', type: String }) name?: string
+  @Prop({ default: '', type: String }) image?: string
+  @Prop({ default: '', type: String }) description?: string
+  @Prop({ default: '', type: String }) to?: string
+}
 </script>
 
 <style>

@@ -92,56 +92,56 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'nuxt-property-decorator'
-  import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
-  import { Action, Getter, State, namespace } from 'vuex-class'
+import { Vue, Component } from 'nuxt-property-decorator'
+import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
+import { Action, Getter, State, namespace } from 'vuex-class'
 
-  const settings = namespace('settingsState')
+const settings = namespace('settingsState')
 
-  @Component({
-    components: {
-      MainSettingsDialog
-    }
-  })
-  export default class extends Vue {
-    @settings.Action rebootSystem:any
-    @settings.Action poweroffSystem:any
-
-    private readonly mainMenu: MenuItem[] = [
-      {
-        icon: 'mdi-view-dashboard',
-        title: 'Dashboard',
-        link: '/'
-      },
-      {
-        icon: 'mdi-printer-3d',
-        title: 'Printers',
-        link: '/printers'
-      }
-    ]
-    private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
-
-    private settingsDialog: boolean = false
-
-    get currentPage (): string | undefined {
-      const name = this.mainMenu.find(obj => {
-        return obj.link.includes(this.$route.fullPath.substring(0, 4))
-      })
-      if (name) {
-        return name.title
-      }
-      return undefined
-    }
+@Component({
+  components: {
+    MainSettingsDialog
   }
+})
+export default class extends Vue {
+  @settings.Action rebootSystem: any
+  @settings.Action poweroffSystem: any
 
-  class MenuItem {
-    icon: string
-    title: string
-    link: string
-    constructor (icon: string, title: string, link: string) {
-      this.icon = icon
-      this.title = title
-      this.link = link
+  private readonly mainMenu: MenuItem[] = [
+    {
+      icon: 'mdi-view-dashboard',
+      title: 'Dashboard',
+      link: '/'
+    },
+    {
+      icon: 'mdi-printer-3d',
+      title: 'Printers',
+      link: '/printers'
     }
+  ]
+  private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
+
+  private settingsDialog: boolean = false
+
+  get currentPage (): string | undefined {
+    const name = this.mainMenu.find(obj => {
+      return obj.link.includes(this.$route.fullPath.substring(0, 4))
+    })
+    if (name) {
+      return name.title
+    }
+    return undefined
   }
+}
+
+class MenuItem {
+  icon: string
+  title: string
+  link: string
+  constructor (icon: string, title: string, link: string) {
+    this.icon = icon
+    this.title = title
+    this.link = link
+  }
+}
 </script>

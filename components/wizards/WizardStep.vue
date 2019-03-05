@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 
-  @Component
-  export default class extends Vue {
-    @Prop({ type: Number, default: 0, required: true }) step?: number
-    @Prop({ type: String, default: undefined }) image?: string
-    @Prop({ type: String, default: undefined }) description?: string
-  }
+@Component
+export default class extends Vue {
+  @Prop({ type: Number, default: 0, required: true }) step?: number
+  @Prop({ type: String, default: undefined }) image?: string
+  @Prop({ type: String, default: undefined }) description?: string
+}
 </script>
 
 

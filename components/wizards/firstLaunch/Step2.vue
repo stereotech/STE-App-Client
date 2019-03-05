@@ -11,30 +11,32 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-  import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
-  @Component({
-    components: {
-      WizardStep
-    }
-  })
-  export default class extends Vue {
-    @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-    @Watch('currentStep') onCurrentStepChanged (val: number) {
-      this.curStep = val
-    }
-    private step?: number = 2
-    private curStep?: number = this.currentStep
-
-    private image: string = '/wizards/bed_leveling.png'
-    private description: string = 'Please remove all the transportation fixtures and press Next'
-
-    private next (step: number) {
-      this.$emit('change', step)
-      this.curStep = step
-    }
+@Component({
+  components: {
+    WizardStep
   }
+})
+export default class extends Vue {
+  @Model('change', { type: Number, default: 1, required: true })
+  currentStep?: number
+  @Watch('currentStep') onCurrentStepChanged (val: number) {
+    this.curStep = val
+  }
+  private step?: number = 2
+  private curStep?: number = this.currentStep
+
+  private image: string = '/wizards/bed_leveling.png'
+  private description: string =
+    'Please remove all the transportation fixtures and press Next'
+
+  private next (step: number) {
+    this.$emit('change', step)
+    this.curStep = step
+  }
+}
 </script>
 
 <style>

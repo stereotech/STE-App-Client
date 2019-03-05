@@ -1,6 +1,6 @@
 <template>
   <v-flex xl3 lg4 md6 sm6 xs12>
-    <v-card  transition="slide-y-reverse-transition">
+    <v-card transition="slide-y-reverse-transition">
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">Done Jobs</span>
@@ -45,19 +45,19 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'nuxt-property-decorator'
-  import { Action, Getter, namespace } from 'vuex-class'
-  import { PrintJob } from '~/types/printJob'
+import { Vue, Component } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
+import { PrintJob } from '~/types/printJob'
 
-  const printJobs = namespace('printJobsState')
+const printJobs = namespace('printJobsState')
 
-  @Component
-  export default class extends Vue {
-    @printJobs.Getter doneJobs?: PrintJob[]
-    @printJobs.Action removeJob: any
-    @printJobs.Action revertJob: any
-    @printJobs.Action toggleSuccess: any
-  }
+@Component
+export default class extends Vue {
+  @printJobs.Getter doneJobs?: PrintJob[]
+  @printJobs.Action removeJob: any
+  @printJobs.Action revertJob: any
+  @printJobs.Action toggleSuccess: any
+}
 </script>
 
 <style>

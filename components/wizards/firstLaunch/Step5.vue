@@ -1,5 +1,5 @@
 <template>
- <WizardStep :step="step" v-if="heating">
+  <WizardStep :step="step" v-if="heating">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
@@ -23,60 +23,66 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-  import WizardStep from '~/components/wizards/WizardStep.vue'
-  import { Action, Getter, State, namespace } from 'vuex-class'
-  import { PrinterStatus, PrinterInfo } from 'types/printer'
-  import { Settings } from 'types/settings'
+import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Action, Getter, State, namespace } from 'vuex-class'
+import { PrinterStatus, PrinterInfo } from 'types/printer'
+import { Settings } from 'types/settings'
 
-  const printers = namespace('printersState')
-  const settings = namespace('settingsState')
+const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
-  @Component({
-    components: {
-      WizardStep
-    }
-  })
-  export default class extends Vue {
-    @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-    @Watch('currentStep') onCurrentStepChanged (val: number) {
-      this.curStep = val
-    }
-    @Prop({ type: Object, default: {} }) additionalData!: any
-    @Watch('additionalData') onAdditionalDataChanged () {
-      this.$emit('dataChanged', this.additionalData)
-    }
-    private step?: number = 5
-    private curStep?: number = this.currentStep
-
-    @settings.Getter settings!: Settings
-    @printers.Getter status!: (id: string) => PrinterStatus | undefined
-
-    get computedStatus () {
-      return this.status(this.settings.systemId)
-    }
-
-    get heating () {
-      if (this.computedStatus !== undefined) {
-        let deviation = 0
-        if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
-        } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
-        }
-        return deviation > 10
-      }
-      return true
-    }
-
-    private image: string = '/wizards/bed_leveling.png'
-    private description: string = 'Load new spool, insert material into bowden tube and press Next button'
-
-    private next (step: number) {
-      this.$emit('change', step)
-      this.curStep = step
-    }
+@Component({
+  components: {
+    WizardStep
   }
+})
+export default class extends Vue {
+  @Model('change', { type: Number, default: 1, required: true })
+  currentStep?: number
+  @Watch('currentStep') onCurrentStepChanged (val: number) {
+    this.curStep = val
+  }
+  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Watch('additionalData') onAdditionalDataChanged () {
+    this.$emit('dataChanged', this.additionalData)
+  }
+  private step?: number = 5
+  private curStep?: number = this.currentStep
+
+  @settings.Getter settings!: Settings
+  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+
+  get computedStatus () {
+    return this.status(this.settings.systemId)
+  }
+
+  get heating () {
+    if (this.computedStatus !== undefined) {
+      let deviation = 0
+      if (this.additionalData.tool === 0) {
+        deviation = Math.abs(
+          this.computedStatus.tool0.target - this.computedStatus.tool0.actual
+        )
+      } else {
+        deviation = Math.abs(
+          this.computedStatus.tool1.target - this.computedStatus.tool1.actual
+        )
+      }
+      return deviation > 10
+    }
+    return true
+  }
+
+  private image: string = '/wizards/bed_leveling.png'
+  private description: string =
+    'Load new spool, insert material into bowden tube and press Next button'
+
+  private next (step: number) {
+    this.$emit('change', step)
+    this.curStep = step
+  }
+}
 </script>
 
 

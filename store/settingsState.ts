@@ -44,10 +44,14 @@ export const getters: GetterTree<SettingsState, RootState> = {
     return a.toISOString().substr(11, 5)
   },
   avaliableNetworks (state: SettingsState): Network[] {
-    return state.networking.networks.filter((value: Network) => value.state !== 'online')
+    return state.networking.networks.filter(
+      (value: Network) => value.state !== 'online'
+    )
   },
   currentNetwork (state: SettingsState): Network | undefined {
-    return state.networking.networks.find((value: Network) => value.state === 'online')
+    return state.networking.networks.find(
+      (value: Network) => value.state === 'online'
+    )
   },
   avaliableUpdate (state: SettingsState): UpdateInfo {
     return state.update

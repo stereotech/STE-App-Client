@@ -24,42 +24,42 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import { Action, Getter, namespace } from 'vuex-class'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
 
-  const printers = namespace('printersState')
+const printers = namespace('printersState')
 
-  @Component
-  export default class MiscCard extends Vue {
-    @Prop({ default: false, type: Boolean }) printing!: boolean
-    @Prop({ default: '', type: String, required: true }) id!: string
+@Component
+export default class MiscCard extends Vue {
+  @Prop({ default: false, type: Boolean }) printing!: boolean
+  @Prop({ default: '', type: String, required: true }) id!: string
 
-    @printers.Action customCommand: any
+  @printers.Action customCommand: any
 
-    private previousGCode: string[] = []
-    private previousIndex: number = 0
-    private gcodeString: string = ''
+  private previousGCode: string[] = []
+  private previousIndex: number = 0
+  private gcodeString: string = ''
 
-    private misc () {
-      this.customCommand({ id: this.id, command: this.gcodeString })
-      this.previousGCode.push(this.gcodeString)
-      this.previousIndex = this.previousGCode.length
-      this.gcodeString = ''
-    }
-
-    private prevGCode () {
-      this.previousIndex--
-      if (this.previousIndex < 0) this.previousIndex = 0
-      this.gcodeString = this.previousGCode[this.previousIndex]
-    }
-
-    private nextGCode () {
-      this.previousIndex++
-      if (this.previousIndex > this.previousGCode.length) this.previousIndex = this.previousGCode.length
-      this.gcodeString = this.previousGCode[this.previousIndex]
-    }
-
+  private misc () {
+    this.customCommand({ id: this.id, command: this.gcodeString })
+    this.previousGCode.push(this.gcodeString)
+    this.previousIndex = this.previousGCode.length
+    this.gcodeString = ''
   }
+
+  private prevGCode () {
+    this.previousIndex--
+    if (this.previousIndex < 0) this.previousIndex = 0
+    this.gcodeString = this.previousGCode[this.previousIndex]
+  }
+
+  private nextGCode () {
+    this.previousIndex++
+    if (this.previousIndex > this.previousGCode.length) this.previousIndex = this.previousGCode.length
+    this.gcodeString = this.previousGCode[this.previousIndex]
+  }
+
+}
 </script>
 
 <style>

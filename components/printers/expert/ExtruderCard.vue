@@ -57,48 +57,48 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import { Action, Getter, namespace } from 'vuex-class'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
 
-  const printers = namespace('printersState')
+const printers = namespace('printersState')
 
-  @Component
-  export default class ExtruderCard extends Vue {
-    private selectedAmount: number = 1
-    private amount: number = 10
+@Component
+export default class ExtruderCard extends Vue {
+  private selectedAmount: number = 1
+  private amount: number = 10
 
-    private extruders: any = [
-      {
-        key: 'Extruder 1',
-        value: 0
-      },
-      {
-        key: 'Extruder 2',
-        value: 1
-      }
-    ]
-    private selectedExtruder: number = 0
-    private flow: number = 100
-
-    @printers.Action extrudeCommand: any
-    @printers.Action retractCommand: any
-    @printers.Action flowCommand: any
-
-    private extrude () {
-      this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
+  private extruders: any = [
+    {
+      key: 'Extruder 1',
+      value: 0
+    },
+    {
+      key: 'Extruder 2',
+      value: 1
     }
+  ]
+  private selectedExtruder: number = 0
+  private flow: number = 100
 
-    private retract () {
-      this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
-    }
+  @printers.Action extrudeCommand: any
+  @printers.Action retractCommand: any
+  @printers.Action flowCommand: any
 
-    private setFlow (value: number) {
-      this.flowCommand({ id: this.id, flow: value })
-    }
-
-    @Prop({ default: false, type: Boolean }) printing?: boolean
-    @Prop({ default: '', type: String }) id?: string
+  private extrude () {
+    this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
   }
+
+  private retract () {
+    this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
+  }
+
+  private setFlow (value: number) {
+    this.flowCommand({ id: this.id, flow: value })
+  }
+
+  @Prop({ default: false, type: Boolean }) printing?: boolean
+  @Prop({ default: '', type: String }) id?: string
+}
 </script>
 
 <style>

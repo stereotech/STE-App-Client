@@ -65,58 +65,59 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-  import WizardStep from '~/components/wizards/WizardStep.vue'
-  import { Settings } from '~/types/settings'
-  import { Action, Getter, State, namespace } from 'vuex-class'
+import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
+import { Action, Getter, State, namespace } from 'vuex-class'
 
-  const settings = namespace('settingsState')
+const settings = namespace('settingsState')
 
-  @Component({
-    components: {
-      WizardStep
-    }
-  })
-  export default class extends Vue {
-    @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-    @Watch('currentStep') onCurrentStepChanged (val: number) {
-      this.curStep = val
-    }
-    private step?: number = 3
-    private curStep?: number = this.currentStep
-
-    private modal: boolean = false
-    private modal2: boolean = false
-
-    @settings.Getter date!: string
-    @settings.Getter time!: string
-    @settings.Action sendDateTime: any
-
-    private dateModel: string = ''
-    private timeModel: string = ''
-
-    private setTime (value: string) {
-      this.sendDateTime({ date: this.dateModel, time: value })
-      const dialog = this.$refs.dialog as any
-      dialog.save(this.timeModel)
-    }
-
-    private setDate (value: string) {
-      this.sendDateTime({ date: value, time: this.timeModel })
-      const dialog = this.$refs.datedialog as any
-      dialog.save(this.dateModel)
-    }
-
-    mounted () {
-      this.dateModel = this.date
-      this.timeModel = this.time
-    }
-
-    private next (step: number) {
-      this.$emit('change', step)
-      this.curStep = step
-    }
+@Component({
+  components: {
+    WizardStep
   }
+})
+export default class extends Vue {
+  @Model('change', { type: Number, default: 1, required: true })
+  currentStep?: number
+  @Watch('currentStep') onCurrentStepChanged (val: number) {
+    this.curStep = val
+  }
+  private step?: number = 3
+  private curStep?: number = this.currentStep
+
+  private modal: boolean = false
+  private modal2: boolean = false
+
+  @settings.Getter date!: string
+  @settings.Getter time!: string
+  @settings.Action sendDateTime: any
+
+  private dateModel: string = ''
+  private timeModel: string = ''
+
+  private setTime (value: string) {
+    this.sendDateTime({ date: this.dateModel, time: value })
+    const dialog = this.$refs.dialog as any
+    dialog.save(this.timeModel)
+  }
+
+  private setDate (value: string) {
+    this.sendDateTime({ date: value, time: this.timeModel })
+    const dialog = this.$refs.datedialog as any
+    dialog.save(this.dateModel)
+  }
+
+  mounted () {
+    this.dateModel = this.date
+    this.timeModel = this.time
+  }
+
+  private next (step: number) {
+    this.$emit('change', step)
+    this.curStep = step
+  }
+}
 </script>
 
 <style>

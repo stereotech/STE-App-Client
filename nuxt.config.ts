@@ -16,18 +16,12 @@ const config = {
   /*
    ** Global CSS
    */
-  css: [
-    '@mdi/font/css/materialdesignicons.css'
-  ],
+  css: ['@mdi/font/css/materialdesignicons.css'],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~/plugins/moment',
-    '~plugins/filters',
-    '~/plugins/prettyBytes'
-  ],
+  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes'],
   /*
    ** Nuxt.js modules
    */

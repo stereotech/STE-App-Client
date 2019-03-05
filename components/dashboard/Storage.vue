@@ -33,111 +33,111 @@
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
-      <dropzone v-if="local" id="dropzone" ref="el" :options="options" :destroyDropzone="true" ></dropzone>
+      <dropzone v-if="local" id="dropzone" ref="el" :options="options" :destroyDropzone="true"></dropzone>
     </v-card>
   </v-flex>
 </template>
 
 <script lang="ts">
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
-  import { State, Action, Getter, namespace } from 'vuex-class'
-  import { FileOrFolder } from '~/types/fileOrFolder'
-  import Dropzone from 'nuxt-dropzone'
-  import 'nuxt-dropzone/dropzone.css'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { State, Action, Getter, namespace } from 'vuex-class'
+import { FileOrFolder } from '~/types/fileOrFolder'
+import Dropzone from 'nuxt-dropzone'
+import 'nuxt-dropzone/dropzone.css'
 
-  const storage = namespace('storageState')
+const storage = namespace('storageState')
 
-  @Component({
-    components: {
-      Dropzone
-    }
-  })
-  export default class extends Vue {
-    @Prop({ type: Boolean, default: false }) local?: boolean
-    @Prop({ type: String }) name?: string
+@Component({
+  components: {
+    Dropzone
+  }
+})
+export default class extends Vue {
+  @Prop({ type: Boolean, default: false }) local?: boolean
+  @Prop({ type: String }) name?: string
 
-    @storage.Getter localStorage!: FileOrFolder
-    @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
+  @storage.Getter localStorage!: FileOrFolder
+  @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
 
-    @storage.Action deleteFile: any
+  @storage.Action deleteFile: any
 
-    private styleObj: any = {
-      maxHeight: this.local ? '336px' : '486px'
-    }
+  private styleObj: any = {
+    maxHeight: this.local ? '336px' : '486px'
+  }
 
-    options: any = {
-      url: '/local',
-      uploadMultiple: true
-    }
+  options: any = {
+    url: '/local',
+    uploadMultiple: true
+  }
 
-    get dataStorage (): FileOrFolder | undefined {
-      if (this.local) {
-        return this.localStorage
-      } else {
-        if (this.name !== undefined) {
-          return this.usbStorage(this.name)
-        }
+  get dataStorage (): FileOrFolder | undefined {
+    if (this.local) {
+      return this.localStorage
+    } else {
+      if (this.name !== undefined) {
+        return this.usbStorage(this.name)
       }
-    }
-
-    private data: any[] = [
-      {
-        id: 1,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 2,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 3,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 4,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 5,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 6,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 7,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 8,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 9,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      },
-      {
-        id: 10,
-        name: 'STE320_pulley_1.gcode',
-        uploaded: Date.now()
-      }
-    ]
-
-    mounted () {
-      // Everything is mounted and you can access the dropzone instance
-      const instance = this.$refs['el']
     }
   }
+
+  private data: any[] = [
+    {
+      id: 1,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 2,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 3,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 4,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 5,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 6,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 7,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 8,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 9,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    },
+    {
+      id: 10,
+      name: 'STE320_pulley_1.gcode',
+      uploaded: Date.now()
+    }
+  ]
+
+  mounted () {
+    // Everything is mounted and you can access the dropzone instance
+    const instance = this.$refs['el']
+  }
+}
 </script>
 
 <style>
