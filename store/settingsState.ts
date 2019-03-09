@@ -81,7 +81,7 @@ export const actions: ActionTree<SettingsState, RootState> = {
     await new Promise(resolve => setTimeout(resolve, 50))
     const settings: Settings = {
       systemId: 'st-aaa',
-      firstLaunch: true,
+      firstLaunch: false,
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,
