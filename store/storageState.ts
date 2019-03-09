@@ -23,12 +23,15 @@ export const getters: GetterTree<StorageState, RootState> = {
 
   avaliableFiles (state: StorageState): string[] {
     const result: string[] = []
-    if (state.local[0].children !== undefined) {
-      result.push(
-        ...state.local[0].children.map(
-          (element: FileOrFolder) => 'Storage/' + element.display
+    // tslint:disable-next-line: strict-type-predicates
+    if (state.local[0] !== undefined) {
+      if (state.local[0].children !== undefined) {
+        result.push(
+          ...state.local[0].children.map(
+            (element: FileOrFolder) => 'Storage/' + element.display
+          )
         )
-      )
+      }
     }
     state.usb.forEach(element => {
       if (element.children !== undefined) {

@@ -52,7 +52,7 @@
               </v-list-tile-action>
               <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile>
-            <MainSettingsDialog v-model="settingsDialog"/>
+
             <v-list-tile @click="rebootSystem">
               <v-list-tile-action>
                 <v-icon>mdi-refresh</v-icon>
@@ -69,6 +69,7 @@
         </v-menu>
       </v-toolbar-items>
     </v-toolbar>
+    <MainSettingsDialog v-model="settingsDialog"/>
     <v-content>
       <v-container fluid grid-list-md>
         <nuxt/>
