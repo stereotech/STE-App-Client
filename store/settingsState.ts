@@ -17,7 +17,7 @@ export const state = (): SettingsState => ({
     avaliableLanguages: [],
     dateTime: 0,
     language: '',
-    storageOwned: 0,
+    storageFree: 0,
     storageTotal: 0
   },
   networking: {
@@ -85,7 +85,7 @@ export const actions: ActionTree<SettingsState, RootState> = {
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,
-      storageOwned: 3564684646846,
+      storageFree: 3564684646846,
       dateTime: 1550665494
     }
     commit('setSettings', settings)
@@ -100,7 +100,7 @@ export const actions: ActionTree<SettingsState, RootState> = {
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,
-      storageOwned: 3564684646846,
+      storageFree: 3564684646846,
       dateTime: 1550665494
     }
     commit('setSettings', settings)
@@ -114,7 +114,7 @@ export const actions: ActionTree<SettingsState, RootState> = {
       avaliableLanguages: ['English', 'Русский'],
       language: 'English',
       storageTotal: 6864843434384,
-      storageOwned: 3564684646846,
+      storageFree: 3564684646846,
       dateTime: 1550665494
     }
     commit('setSettings', settings)

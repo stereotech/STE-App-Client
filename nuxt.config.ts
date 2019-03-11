@@ -50,7 +50,10 @@ const config = {
     },
     iconfont: 'mdi'
   },
-  loading: { color: '#263238' }
+  loading: { color: '#263238' },
+  env: {
+    apiUrl: process.env.BASE_URL + '/api/'
+  }
 }
 
 export default config

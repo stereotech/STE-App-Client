@@ -42,11 +42,11 @@ export default class extends Vue {
   }
 
   get bytesOwned (): number {
-    return this.settings.storageOwned
+    return this.bytesTotal - this.bytesAvaliable
   }
 
   get bytesAvaliable (): number {
-    return this.bytesTotal - this.bytesOwned
+    return this.settings.storageFree
   }
 
   get percentOwned (): number {

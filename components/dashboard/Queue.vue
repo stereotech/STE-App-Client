@@ -76,6 +76,8 @@
                   label="File assignment"
                   box
                   :items="avaliableFiles"
+                  item-text="name"
+                  item-value="uri"
                   v-model="editedJob.fileUri"
                 ></v-autocomplete>
                 <v-textarea box label="Description" auto-grow v-model="editedJob.description"></v-textarea>
@@ -116,7 +118,7 @@ export default class extends Vue {
   @printJobs.Action addJob: any
 
   @printers.Getter printers!: PrinterInfo[]
-  @storage.Getter avaliableFiles!: string[]
+  @storage.Getter avaliableFiles!: { name: string, uri: string }[]
 
   private dialog: boolean = false
   private editMode: boolean = false

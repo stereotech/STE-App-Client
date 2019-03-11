@@ -5,5 +5,5 @@ export interface Settings {
   avaliableLanguages: string[]
   dateTime: number
   storageTotal: number
-  storageOwned: number
+  storageFree: number
 }

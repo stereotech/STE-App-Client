@@ -1,5 +1,5 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
-import { FileOrFolder } from '~/types/fileOrFolder'
+import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
 
 export interface StorageState {
@@ -21,14 +21,16 @@ export const getters: GetterTree<StorageState, RootState> = {
     return (name: string) => state.usb.find(value => value.origin === name)
   },
 
-  avaliableFiles (state: StorageState): string[] {
-    const result: string[] = []
+  avaliableFiles (state: StorageState): { name: string, uri: string }[] {
+    const result: { name: string, uri: string }[] = []
     // tslint:disable-next-line: strict-type-predicates
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
         result.push(
           ...state.local[0].children.map(
-            (element: FileOrFolder) => 'Storage/' + element.display
+            (element: FileOrFolder) => {
+              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '' }
+            }
           )
         )
       }
@@ -37,8 +39,9 @@ export const getters: GetterTree<StorageState, RootState> = {
       if (element.children !== undefined) {
         result.push(
           ...element.children.map(
-            (value: FileOrFolder) =>
-              'USB at ' + element.origin.toUpperCase() + '/' + value.display
+            (value: FileOrFolder) => {
+              return { name: 'USB at ' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '' }
+            }
           )
         )
       }
