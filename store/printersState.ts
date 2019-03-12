@@ -127,10 +127,6 @@ export const actions: ActionTree<PrintersState, RootState> = {
     commit('setStatus', status)
   },
 
-  async findPrinter ({ commit }, id: string) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-  },
-
   async pausePrintJob ({ commit }, id: string) {
     await new Promise(resolve => setTimeout(resolve, 500))
   },
@@ -140,6 +136,10 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async cancelPrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
+  },
+
+  async findPrinter ({ commit }, id: string) {
     await new Promise(resolve => setTimeout(resolve, 500))
   },
 

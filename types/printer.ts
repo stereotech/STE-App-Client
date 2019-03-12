@@ -15,9 +15,9 @@ export interface PrinterInfo {
 export interface PrinterStatus {
   id: string
   stateText: string
-  bed: TemperatureData
-  tool0: TemperatureData
-  tool1: TemperatureData
+  bed?: TemperatureData
+  tool0?: TemperatureData
+  tool1?: TemperatureData
   job?: JobInfo
   progress?: ProgressInfo
 }
