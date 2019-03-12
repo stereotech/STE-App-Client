@@ -1,5 +1,5 @@
 const config = {
-  mode: 'universal',
+  mode: 'spa',
   head: {
     title: 'STE App',
     meta: [
@@ -9,19 +9,19 @@ const config = {
     ]
   },
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+
+  router: {
+    middleware: 'firstLaunch'
+  },
   /*
    ** Global CSS
    */
-  css: [
-    '@mdi/font/css/materialdesignicons.css'
-  ],
+  css: ['@mdi/font/css/materialdesignicons.css'],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '~/plugins/hello'
-  ],
+  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes'],
   /*
    ** Nuxt.js modules
    */
@@ -50,7 +50,10 @@ const config = {
     },
     iconfont: 'mdi'
   },
-  loading: { color: '#263238' }
+  loading: { color: '#263238' },
+  env: {
+    apiUrl: process.env.BASE_URL + '/api/'
+  }
 }
 
 export default config
