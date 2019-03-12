@@ -1,0 +1,19 @@
+image: node:latest
+
+before_script:
+  - npm install
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - build
+  - test
+  - deploy
+
+build_script:
+  stage: build
+  script: npm run build
+  only: master
+  when: manual
