@@ -223,8 +223,10 @@ export default class PrinterCard extends Vue {
 
   get e1Color (): string {
     if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual) {
-        return this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual < this.computedStatus.tool0.target ? 'error' : 'primary'
+      if (this.computedStatus.tool0 !== undefined) {
+        if (this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual) {
+          return this.computedStatus.tool0.target > 0 && this.computedStatus.tool0.actual < this.computedStatus.tool0.target ? 'error' : 'primary'
+        }
       }
     }
     return 'primary'
@@ -232,8 +234,10 @@ export default class PrinterCard extends Vue {
 
   get e2Color (): string {
     if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual) {
-        return this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual < this.computedStatus.tool1.target ? 'error' : 'primary'
+      if (this.computedStatus.tool1 !== undefined) {
+        if (this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual) {
+          return this.computedStatus.tool1.target > 0 && this.computedStatus.tool1.actual < this.computedStatus.tool1.target ? 'error' : 'primary'
+        }
       }
     }
     return 'primary'
@@ -241,8 +245,10 @@ export default class PrinterCard extends Vue {
 
   get bedColor (): string {
     if (this.computedStatus !== undefined) {
-      if (this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual) {
-        return this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual < this.computedStatus.bed.target ? 'error' : 'accent'
+      if (this.computedStatus.bed !== undefined) {
+        if (this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual) {
+          return this.computedStatus.bed.target > 0 && this.computedStatus.bed.actual < this.computedStatus.bed.target ? 'error' : 'accent'
+        }
       }
     }
     return 'accent'

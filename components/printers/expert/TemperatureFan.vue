@@ -126,10 +126,10 @@ export default class TemperatureFanCard extends Vue {
   private chamberTargetSet: boolean = false
 
   mounted () {
-    this.e1Target = this.computedStatus !== undefined ? this.computedStatus.tool0.target : 100
-    this.e2Target = this.computedStatus !== undefined ? this.computedStatus.tool1.target : 100
-    this.chamberTarget = this.computedStatus !== undefined ? this.computedStatus.bed.target : 0
-    this.bedTarget = this.computedStatus !== undefined ? this.computedStatus.bed.target : 0
+    this.e1Target = this.computedStatus !== undefined ? this.computedStatus.tool0 !== undefined ? this.computedStatus.tool0.target : 100 : 100
+    this.e2Target = this.computedStatus !== undefined ? this.computedStatus.tool1 !== undefined ? this.computedStatus.tool1.target : 100 : 100
+    this.chamberTarget = this.computedStatus !== undefined ? this.computedStatus.bed !== undefined ? this.computedStatus.bed.target : 0 : 0
+    this.bedTarget = this.computedStatus !== undefined ? this.computedStatus.bed !== undefined ? this.computedStatus.bed.target : 0 : 0
     this.e1TargetSet = this.e1Target > 100
     this.e2TargetSet = this.e2Target > 100
     this.bedTargetSet = this.bedTarget > 30

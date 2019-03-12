@@ -59,17 +59,15 @@ export default class extends Vue {
 
   get heating () {
     if (this.computedStatus !== undefined) {
-      let deviation = 0
-      if (this.additionalData.tool === 0) {
-        deviation = Math.abs(
-          this.computedStatus.tool0.target - this.computedStatus.tool0.actual
-        )
-      } else {
-        deviation = Math.abs(
-          this.computedStatus.tool1.target - this.computedStatus.tool1.actual
-        )
+      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
+        let deviation = 0
+        if (this.additionalData.tool === 0) {
+          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
+        } else {
+          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
+        }
+        return deviation > 10
       }
-      return deviation > 10
     }
     return true
   }
