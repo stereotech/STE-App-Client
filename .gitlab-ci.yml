@@ -15,5 +15,6 @@ stages:
 build_script:
   stage: build
   script: npm run build
-  only: master
+  only: 
+    - master
   when: manual
