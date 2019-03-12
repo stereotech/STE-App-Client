@@ -15,6 +15,9 @@ stages:
 build_script:
   stage: build
   script: npm run build
+  artifacts:
+    paths:
+      - dist
   only: 
     - master
   when: manual
