@@ -118,6 +118,11 @@ export default class extends Vue {
       icon: 'mdi-printer-3d',
       title: 'Printers',
       link: '/printers'
+    },
+    {
+      icon: 'mdi-movie-roll',
+      title: 'Materials',
+      link: '/materials'
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
