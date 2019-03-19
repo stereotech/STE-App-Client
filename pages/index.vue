@@ -10,8 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Vue } from 'nuxt-property-decorator'
-import Component from 'nuxt-class-component'
+import { Vue, Component } from 'nuxt-property-decorator'
 import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'

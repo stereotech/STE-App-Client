@@ -9,12 +9,15 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import firstLaunchStepper from '~/components/wizards/firstLaunch/Stepper.vue'
 
 @Component({
-  layout: 'solid',
   components: {
     firstLaunchStepper
   }
 })
 export default class extends Vue {
+  layout () {
+    return 'solid'
+  }
+
   private pollingStatus!: NodeJS.Timeout
 
   private async pollData () {
