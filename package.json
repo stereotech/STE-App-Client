@@ -18,6 +18,7 @@
     "nuxt-ts": "latest",
     "vue-filter-pretty-bytes": "^0.1.2",
     "vue-moment": "^4.0.0",
+    "vue-swatches": "^1.0.3",
     "vue2-filters": "^0.4.1",
     "vuetify": "^1.5.4",
     "vuetify-loader": "^1.1.1",
