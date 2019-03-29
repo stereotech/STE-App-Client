@@ -1,6 +1,8 @@
 import { PrinterStatus, PrinterInfo } from '~/types/printer'
 import { PrintJob } from '~/types/printJob'
-import { ScannerResult } from '~/types/scannerResult';
+import { ScannerResult } from '~/types/scannerResult'
+import { Settings } from '~/types/settings'
+import { Network } from '~/types/networking';
 
 const status: PrinterStatus[] = [
     {
@@ -98,3 +100,32 @@ const results: ScannerResult[] = [
         ipAddress: '192.168.0.20'
     }
 ]
+
+const settings: Settings = {
+    systemId: 'st-aaa',
+    firstLaunch: false,
+    avaliableLanguages: ['English', 'Русский'],
+    language: 'English',
+    storageTotal: 6864843434384,
+    storageFree: 3564684646846,
+    dateTime: 1550665494
+}
+
+const networks: Network[] = [
+    {
+        id: 'network_8484442',
+        name: 'Wifi 1',
+        security: true,
+        state: 'online',
+        strength: 85
+    },
+    {
+        id: 'network_8484443',
+        name: 'Wifi 2',
+        security: true,
+        state: 'ready',
+        strength: 50
+    }
+]
+
+const connectedMethod = 'WIFI'
