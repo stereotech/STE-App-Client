@@ -1,5 +1,6 @@
 import { PrinterStatus, PrinterInfo } from '~/types/printer'
 import { PrintJob } from '~/types/printJob'
+import { ScannerResult } from '~/types/scannerResult';
 
 const status: PrinterStatus[] = [
     {
@@ -78,5 +79,22 @@ const printJobs: PrintJob[] = [
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
         printers: ['st-aaa']
+    }
+]
+
+const results: ScannerResult[] = [
+    {
+        id: 'st-ddd',
+        model: 'STE320',
+        name: 'ST-DDD',
+        role: 'host',
+        ipAddress: '192.168.0.200'
+    },
+    {
+        id: 'st-eee',
+        model: 'STE320',
+        name: 'ST-EEE',
+        role: 'host',
+        ipAddress: '192.168.0.20'
     }
 ]
