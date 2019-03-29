@@ -1,4 +1,5 @@
 import { PrinterStatus, PrinterInfo } from '~/types/printer'
+import { PrintJob } from '~/types/printJob'
 
 const status: PrinterStatus[] = [
     {
@@ -56,5 +57,26 @@ const printers: PrinterInfo[] = [
         apiKey: '',
         octoApiKey: '',
         role: 'host'
+    }
+]
+
+const printJobs: PrintJob[] = [
+    {
+        id: 1,
+        name: 'job1',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'file.gcode',
+        succesful: true,
+        lastPrint: Date.now(),
+        printers: []
+    },
+    {
+        id: 2,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
     }
 ]

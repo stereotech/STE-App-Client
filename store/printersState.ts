@@ -2,7 +2,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrinterInfo, PrinterStatus } from '~/types/printer'
 import { RootState } from '.'
 
-const apiEndpoint = 'printers/'
+const apiEndpoint = 'printers'
 
 export interface PrintersState {
   printers: PrinterInfo[]

@@ -2,6 +2,8 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrintJob } from '~/types/printJob'
 import { RootState } from '.'
 
+const jobsEndpoint = 'jobs'
+
 export interface PrintJobsState {
   jobs: PrintJob[]
 }
@@ -60,52 +62,45 @@ export const mutations: MutationTree<PrintJobsState> = {
 
 export const actions: ActionTree<PrintJobsState, RootState> = {
   async fetchJobs ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    const printJobs: PrintJob[] = [
-      {
-        id: 1,
-        name: 'job1',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'file.gcode',
-        succesful: true,
-        lastPrint: Date.now(),
-        printers: []
-      },
-      {
-        id: 2,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-      }
-    ]
-    commit('setJobs', printJobs)
+    let response = await this.$axios.get(this.state.apiUrl + jobsEndpoint)
+    if (response.status == 200) {
+      let jobs: PrintJob[] = response.data
+      commit('setJobs', jobs)
+    }
   },
 
   async removeJob ({ commit }, job: PrintJob) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    commit('removeJob', job)
+    let response = await this.$axios.delete(this.state.apiUrl + jobsEndpoint)
+    if (response.status == 204) {
+      commit('removeJob', job)
+    }
   },
 
   async addJob ({ commit }, job: PrintJob) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    commit('addJob', job)
+    let response = await this.$axios.post(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    if (response.status == 204) {
+      commit('addJob', job)
+    }
   },
 
   async editJob ({ commit }, job: PrintJob) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    commit('editJob', job)
+    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    if (response.status == 204) {
+      commit('editJob', job)
+    }
   },
 
   async revertJob ({ commit }, job: PrintJob) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    commit('revertJob', job)
+    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    if (response.status == 204) {
+      commit('revertJob', job)
+    }
   },
 
   async toggleSuccess ({ commit }, job: PrintJob) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    commit('toggleSuccess', job)
+    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    if (response.status == 204) {
+      commit('toggleSuccess', job)
+    }
   }
 }
