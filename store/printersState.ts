@@ -81,19 +81,19 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async setStatus ({ commit }, payload: { id: string, newStatus: string }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + 'state/' + payload.id, { params: { state: payload.newStatus } })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + 'state/' + payload.id, null, { params: { state: payload.newStatus } })
   },
 
   async pausePrintJob ({ commit }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', { params: { command: 'pause' } })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'pause' } })
   },
 
   async resumePrintJob ({ commit }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', { params: { command: 'resume' } })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'resume' } })
   },
 
   async cancelPrintJob ({ commit }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', { params: { command: 'cancel' } })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'cancel' } })
   },
 
   async findPrinter ({ commit }, id: string) {
