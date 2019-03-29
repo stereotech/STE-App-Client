@@ -3,6 +3,7 @@ import { PrintJob } from '~/types/printJob'
 import { ScannerResult } from '~/types/scannerResult'
 import { Settings } from '~/types/settings'
 import { Network } from '~/types/networking';
+import { FileOrFolder } from '~/types/fileOrFolder';
 
 const status: PrinterStatus[] = [
     {
@@ -129,3 +130,74 @@ const networks: Network[] = [
 ]
 
 const connectedMethod = 'WIFI'
+
+const localStorage: FileOrFolder = {
+    children: [
+        {
+            date: Date.now(),
+            display: 'File_1.gcode',
+            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+            name: 'File_1.gcode',
+            size: 15315451,
+            origin: 'st_aaa',
+            path: '/Storage/File_1.gcode',
+            type: 'machinecode',
+            typePath: ['machinecode', 'gcode']
+        }
+    ],
+    display: 'Storage',
+    name: 'Storage',
+    origin: 'st-aaa',
+    path: 'Storage',
+    size: 4354654843,
+    type: 'folder',
+    typePath: ['folder']
+}
+
+const usbs: FileOrFolder[] = [
+    {
+        children: [
+            {
+                date: Date.now(),
+                display: 'File_2.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_2.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode']
+            }
+        ],
+        display: 'Storage',
+        name: 'Storage',
+        origin: 'st-aaa',
+        path: 'USB',
+        size: 4354654843,
+        type: 'folder',
+        typePath: ['folder']
+    },
+    {
+        children: [
+            {
+                date: Date.now(),
+                display: 'File_2.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_2.gcode',
+                size: 15315451,
+                origin: 'st-bbb',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode']
+            }
+        ],
+        display: 'Storage',
+        name: 'Storage',
+        origin: 'st-bbb',
+        path: 'USB',
+        size: 4354654843,
+        type: 'folder',
+        typePath: ['folder']
+    }
+]
+
