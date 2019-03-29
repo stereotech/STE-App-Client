@@ -52,7 +52,7 @@ const config = {
   },
   loading: { color: '#263238' },
   env: {
-    apiUrl: process.env.BASE_URL + '/api/'
+    apiUrl: '/api/'
   }
 }
 

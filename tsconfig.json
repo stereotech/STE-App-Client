@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "lib": [
       "es2015",
+      "dom",
       "dom"
     ],
     "esModuleInterop": true,
@@ -22,10 +23,14 @@
     "paths": {
       "~/*": [
         "./*"
+      ],
+      "@/*": [
+        "./*"
       ]
     },
     "types": [
       "@types/node",
+      "@nuxtjs/axios",
       "vuetify",
       "moment"
     ]
