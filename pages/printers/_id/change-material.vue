@@ -23,7 +23,7 @@ export default class extends Vue {
   private async pollData () {
     this.pollingStatus = setInterval(async () => {
       await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
+    }, 2000)
   }
 
   async mounted () {

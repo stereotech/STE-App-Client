@@ -38,7 +38,7 @@ export default class PrintersPage extends Vue {
     await this.$store.dispatch('printersState/fetchPrinters')
     this.pollingStatus = setInterval(async () => {
       await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
+    }, 2000)
   }
 
   async mounted () {

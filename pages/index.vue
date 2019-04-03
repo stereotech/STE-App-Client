@@ -31,14 +31,16 @@ export default class Dashboard extends Vue {
   private async pollData () {
     this.pollingStatus = setInterval(async () => {
       await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
+    }, 2000)
     await this.$store.dispatch('printersState/fetchPrinters')
-
+    await this.$store.dispatch('printJobsState/fetchJobs')
+    await this.$store.dispatch('storageState/fetchLocal')
+    await this.$store.dispatch('storageState/fetchUsbs')
     this.pollingStorageAndJobs = setInterval(async () => {
       await this.$store.dispatch('printJobsState/fetchJobs')
       await this.$store.dispatch('storageState/fetchLocal')
       await this.$store.dispatch('storageState/fetchUsbs')
-    }, 5000)
+    }, 7000)
 
   }
 

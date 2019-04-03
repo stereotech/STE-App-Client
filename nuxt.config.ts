@@ -11,7 +11,7 @@ const config = {
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 
   router: {
-    middleware: 'firstLaunch'
+    middleware: 'firstLaunch',
   },
   /*
    ** Global CSS
@@ -28,6 +28,7 @@ const config = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/vuetify'
   ],
   /*
@@ -35,6 +36,8 @@ const config = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    proxy: true,
+    progress: false
   },
   vuetify: {
     treeShake: true,
@@ -51,9 +54,17 @@ const config = {
     iconfont: 'mdi'
   },
   loading: { color: '#263238' },
+  loadingIndicator: {
+    name: 'folding-cube',
+    color: '#ffffff',
+    background: '#0277bd'
+  },
   env: {
     apiUrl: '/api/'
-  }
+  },
+  serverMiddleware: [
+    { path: '/api', handler: '~/api/mock.js' },
+  ]
 }
 
 export default config

@@ -2,7 +2,8 @@
   <v-flex xs12 v-if="computedStatus && computedPrinter">
     <v-card>
       <v-toolbar v-if="toolbar" flat dense color="secondary">
-        <v-btn v-if="controlPanel" flat nuxt :to="'/printers/' + id" ripple>Control panel
+        <v-btn v-if="controlPanel" flat nuxt :to="'/printers/' + id" ripple>
+          Control panel
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
@@ -203,6 +204,7 @@ export default class PrinterCard extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => PrinterStatus | undefined
   @printers.Action deletePrinter: any
+  @printers.Action setStatus: any
 
   @printers.Action findPrinter: any
   @printers.Action pausePrintJob: any
@@ -303,6 +305,10 @@ export default class PrinterCard extends Vue {
       }
     }
     return 2
+  }
+
+  private setPrinterState (value: string) {
+    this.setStatus({ id: this.id, newStatus: value })
   }
 
   private confirmation: boolean = false

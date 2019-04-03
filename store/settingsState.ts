@@ -19,7 +19,7 @@ export const state = (): SettingsState => ({
     systemId: 'st-aaa',
     firstLaunch: false,
     avaliableLanguages: [],
-    dateTime: 0,
+    dateTime: 1,
     language: '',
     storageFree: 0,
     storageTotal: 0
@@ -54,7 +54,9 @@ export const getters: GetterTree<SettingsState, RootState> = {
   },
   currentNetwork (state: SettingsState): Network | undefined {
     return state.networking.networks.find(
-      (value: Network) => value.state === 'online'
+      (value: Network) => {
+        return value.state === 'online';
+      }
     )
   },
   avaliableUpdate (state: SettingsState): UpdateInfo {
@@ -83,7 +85,7 @@ export const mutations: MutationTree<SettingsState> = {
 export const actions: ActionTree<SettingsState, RootState> = {
   async fetchSettings ({ commit }) {
     let response = await this.$axios.get<Settings>(this.state.apiUrl + systemEndpoint)
-    if (response.status == 200) {
+    if (response.status === 200) {
       let settings: Settings = response.data
       commit('setSettings', response.data)
     }
@@ -92,14 +94,14 @@ export const actions: ActionTree<SettingsState, RootState> = {
   async sendDateTime ({ commit }, { date, time }) {
     const newDate = Date.parse(time + ' ' + date) / 1000
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { dateTime: newDate })
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setSettings', response.data)
     }
   },
 
   async sendLanguage ({ commit }, lang: string) {
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { language: lang })
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setSettings', response.data)
     }
   },
@@ -110,14 +112,14 @@ export const actions: ActionTree<SettingsState, RootState> = {
 
   async getConnectedMethod ({ commit }) {
     let response = await this.$axios.get<string>(this.state.apiUrl + networkEndpoint)
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setConnectedMethod', response.data)
     }
   },
 
   async getWifiNetworks ({ commit }) {
     let response = await this.$axios.get<Network[]>(this.state.apiUrl + networkEndpoint + '/wifi')
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setNetworks', response.data)
     }
   },
@@ -132,7 +134,7 @@ export const actions: ActionTree<SettingsState, RootState> = {
 
   async checkForUpdate ({ commit }) {
     let response = await this.$axios.get<UpdateInfo>(this.state.apiUrl + updateEndpoint)
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setUpdate', response.data)
     }
   },

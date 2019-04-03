@@ -2,8 +2,8 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
 
-const localStorageEndpoint = 'storage/local/'
-const usbStorageEndpoint = 'storage/usb/'
+const localStorageEndpoint = 'storage/local'
+const usbStorageEndpoint = 'storage/usb'
 
 export interface StorageState {
   local: FileOrFolder[]
@@ -97,26 +97,26 @@ export const mutations: MutationTree<StorageState> = {
 export const actions: ActionTree<StorageState, RootState> = {
   async fetchLocal ({ commit }) {
     let response = await this.$axios.get<FileOrFolder>(this.state.apiUrl + localStorageEndpoint)
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setLocal', response.data)
     }
   },
 
   async fetchUsbs ({ commit }) {
     let response = await this.$axios.get<FileOrFolder[]>(this.state.apiUrl + usbStorageEndpoint)
-    if (response.status == 200) {
+    if (response.status === 200) {
       commit('setUsbs', response.data)
     }
   },
 
   async deleteFile ({ commit }, file: FileOrFolder) {
     if (file.path.startsWith('/Storage')) {
-      let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + file.name)
-      if (response.status == 204) {
+      let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
+      if (response.status === 204) {
         commit('deleteLocalFile', file)
       } else {
-        let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + file.origin + '/' + file.name)
-        if (response.status == 204) {
+        let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
+        if (response.status === 204) {
           commit('deleteUsbFile', file)
         }
       }

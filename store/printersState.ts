@@ -73,7 +73,7 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async fetchStatus ({ commit }) {
-    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + 'state')
+    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + '/state')
     if (response.status == 200) {
       let state: PrinterStatus[] = response.data
       commit('setStatus', state)
