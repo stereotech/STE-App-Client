@@ -2,7 +2,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrinterInfo, PrinterStatus } from '~/types/printer'
 import { RootState } from '.'
 
-const apiEndpoint = 'printers'
+const apiEndpoint = 'printers/'
 
 export interface PrintersState {
   printers: PrinterInfo[]
@@ -73,7 +73,7 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async fetchStatus ({ commit }) {
-    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + '/state')
+    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + 'state')
     if (response.status == 200) {
       let state: PrinterStatus[] = response.data
       commit('setStatus', state)

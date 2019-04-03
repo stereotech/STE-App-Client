@@ -21,8 +21,10 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { PrinterStatus } from 'types/printer'
+import { Settings } from '../../../types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -48,8 +50,10 @@ export default class extends Vue {
   @printers.Action extrudeCommand: any
   @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
+  @settings.Getter settings!: Settings
+
   get computedStatus () {
-    return this.status(this.$route.params.id)
+    return this.status(this.settings.systemId)
   }
 
   get heating () {
@@ -68,11 +72,11 @@ export default class extends Vue {
   }
 
   private repeat () {
-    this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
+    this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 10 })
   }
 
   private load () {
-    this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+    this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private next (step: number) {

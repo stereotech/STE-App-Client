@@ -20,8 +20,10 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import { Settings } from '../../../types/settings';
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -46,17 +48,18 @@ export default class extends Vue {
     'Select the extruder, where you want insert the material'
 
   @printers.Action toolTempCommand: any
+  @settings.Getter settings!: Settings
 
   private nextStep () {
     if (this.additionalData.tool === 0) {
       this.toolTempCommand({
-        id: this.$route.params.id,
+        id: this.settings.systemId,
         tool0Temp: 240,
         tool1Temp: 0
       })
     } else {
       this.toolTempCommand({
-        id: this.$route.params.id,
+        id: this.settings.systemId,
         tool0Temp: 0,
         tool1Temp: 240
       })

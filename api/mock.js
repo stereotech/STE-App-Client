@@ -53,7 +53,7 @@ const scannerResults = [
 
 const settings = {
     systemId: 'st-aaa',
-    firstLaunch: false,
+    firstLaunch: true,
     avaliableLanguages: ['English', 'Русский'],
     language: 'English',
     storageTotal: 6864843434384,
