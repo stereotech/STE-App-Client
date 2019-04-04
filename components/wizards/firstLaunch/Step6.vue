@@ -48,6 +48,7 @@ export default class extends Vue {
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
+  @printers.Action toolTempCommand: any
   @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
   @settings.Getter settings!: Settings
@@ -80,6 +81,11 @@ export default class extends Vue {
   }
 
   private next (step: number) {
+    this.toolTempCommand({
+      id: this.settings.systemId,
+      tool0Temp: 0,
+      tool1Temp: 0
+    })
     this.$emit('change', step)
     this.curStep = step
   }

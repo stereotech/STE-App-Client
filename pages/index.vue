@@ -4,8 +4,11 @@
     <DoneJobs/>
     <Queue/>
     <Storage local/>
-    <Storage name="st-aaa"/>
-    <Storage name="st-bbb"/>
+    <Storage
+      v-for="usbStorage in allUsbStorages"
+      :key="usbStorage.origin"
+      :name="usbStorage.origin"
+    />
   </v-layout>
 </template>
 
@@ -15,6 +18,11 @@ import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
 import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
+import { State, Action, Getter, namespace } from 'vuex-class'
+import { StorageState } from '../store/storageState';
+import { FileOrFolder } from '../types/fileOrFolder';
+
+const storage = namespace('storageState')
 
 @Component({
   components: {
@@ -25,6 +33,8 @@ import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
   }
 })
 export default class Dashboard extends Vue {
+  @storage.Getter allUsbStorages!: FileOrFolder[]
+
   private pollingStorageAndJobs!: NodeJS.Timeout
   private pollingStatus!: NodeJS.Timeout
 

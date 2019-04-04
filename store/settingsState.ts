@@ -110,6 +110,10 @@ export const actions: ActionTree<SettingsState, RootState> = {
     await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'reset', removeStorageFiles: force })
   },
 
+  async sendFinishSetup ({ commit }) {
+    await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { firstLaunch: false })
+  },
+
   async getConnectedMethod ({ commit }) {
     let response = await this.$axios.get<string>(this.state.apiUrl + networkEndpoint)
     if (response.status === 200) {

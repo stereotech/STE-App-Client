@@ -24,6 +24,10 @@ export const getters: GetterTree<StorageState, RootState> = {
     return (name: string) => state.usb.find(value => value.origin === name)
   },
 
+  allUsbStorages (state: StorageState): FileOrFolder[] {
+    return state.usb
+  },
+
   avaliableFiles (state: StorageState): { name: string, uri: string }[] {
     const result: { name: string, uri: string }[] = []
     // tslint:disable-next-line: strict-type-predicates
@@ -110,14 +114,18 @@ export const actions: ActionTree<StorageState, RootState> = {
   },
 
   async deleteFile ({ commit }, file: FileOrFolder) {
-    if (file.path.startsWith('/Storage')) {
+
+    if (file.origin == 'local') {
+      console.log(file)
+      commit('deleteLocalFile', file)
       let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
       if (response.status === 204) {
-        commit('deleteLocalFile', file)
+
       } else {
+        commit('deleteUsbFile', file)
         let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
         if (response.status === 204) {
-          commit('deleteUsbFile', file)
+
         }
       }
     }

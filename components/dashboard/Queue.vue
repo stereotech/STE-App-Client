@@ -102,9 +102,9 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrintJob } from '~/types/PrintJob'
 import { PrinterInfo } from '~/types/printer'
 import { FileOrFolder } from '~/types/fileOrFolder'
+import { PrintJob } from '~/types/printJob';
 
 const printJobs = namespace('printJobsState')
 const printers = namespace('printersState')
@@ -134,6 +134,7 @@ export default class extends Vue {
   }
 
   private createJob () {
+    this.editMode = false
     this.dialog = true
     this.editedJob = {
       id: 3,

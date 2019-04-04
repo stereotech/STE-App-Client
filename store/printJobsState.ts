@@ -70,37 +70,42 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
   },
 
   async removeJob ({ commit }, job: PrintJob) {
-    let response = await this.$axios.delete(this.state.apiUrl + jobsEndpoint)
+    commit('removeJob', job)
+    let response = await this.$axios.delete(this.state.apiUrl + jobsEndpoint + '/' + job.id)
     if (response.status == 204) {
-      commit('removeJob', job)
+
     }
   },
 
   async addJob ({ commit }, job: PrintJob) {
-    let response = await this.$axios.post(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    commit('addJob', job)
+    let response = await this.$axios.post(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-      commit('addJob', job)
+
     }
   },
 
   async editJob ({ commit }, job: PrintJob) {
-    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    commit('editJob', job)
+    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-      commit('editJob', job)
+
     }
   },
 
   async revertJob ({ commit }, job: PrintJob) {
-    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    commit('revertJob', job)
+    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-      commit('revertJob', job)
+
     }
   },
 
   async toggleSuccess ({ commit }, job: PrintJob) {
-    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, jobsEndpoint)
+    commit('toggleSuccess', job)
+    let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-      commit('toggleSuccess', job)
+
     }
   }
 }

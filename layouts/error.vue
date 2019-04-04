@@ -2,7 +2,7 @@
   <v-flex xs12 v-if="error" text-xs-center>
     <h1 class="display-4">{{ error.statusCode }}</h1>
     <h4 class="display-1">{{ error.message }}</h4>
-    <v-btn flat large color="secondary" @click="refresh">Retry</v-btn>
+    <v-btn large color="accent" @click="refresh">Retry</v-btn>
   </v-flex>
 </template>
 
