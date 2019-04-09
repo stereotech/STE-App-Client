@@ -1,12 +1,12 @@
 <template>
   <v-flex xl3 lg4 md6 sm6 xs12>
-    <v-card transition="slide-y-reverse-transition">
+    <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">Done Jobs</span>
         </v-card-title>
       </v-toolbar>
-      <v-list two-line style="max-height: 486px" class="scroll-y">
+      <v-list two-line style="max-height: 486px" class="scroll-y" v-if="doneJobs.length > 0">
         <v-list-tile v-for="doneJob in doneJobs" :key="doneJob.id">
           <v-list-tile-action @click="toggleSuccess(doneJob)" ripple>
             <v-icon
@@ -40,6 +40,20 @@
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
+      <v-container grid-list-xs v-else>
+        <v-layout align-center justify-center column fill-height>
+          <v-flex xs12>
+            <v-img src="/empty-state/done-jobs.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
+          </v-flex>
+          <v-flex xs12>
+            <h6 class="title text-xs-center">
+              Here you will see done print jobs. You could set their state by pressing
+              <v-icon color="success">mdi-check</v-icon>&nbsp; or
+              <v-icon color="error">mdi-close</v-icon>
+            </h6>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-card>
   </v-flex>
 </template>

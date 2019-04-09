@@ -8,6 +8,7 @@
       v-for="usbStorage in allUsbStorages"
       :key="usbStorage.origin"
       :name="usbStorage.origin"
+      :display="printerName(usbStorage.origin)"
     />
   </v-layout>
 </template>
@@ -21,8 +22,10 @@ import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { StorageState } from '../store/storageState';
 import { FileOrFolder } from '../types/fileOrFolder';
+import { PrinterInfo } from '../types/printer';
 
 const storage = namespace('storageState')
+const printers = namespace('printersState')
 
 @Component({
   components: {
@@ -34,6 +37,18 @@ const storage = namespace('storageState')
 })
 export default class Dashboard extends Vue {
   @storage.Getter allUsbStorages!: FileOrFolder[]
+
+  @printers.Getter printers!: PrinterInfo[]
+
+  private get printerName () {
+    return (o: string) => {
+      let p = this.printers.find(pr => pr.id == o)
+      if (p !== undefined) {
+        return p.name
+      }
+      return ''
+    }
+  }
 
   private pollingStorageAndJobs!: NodeJS.Timeout
   private pollingStatus!: NodeJS.Timeout

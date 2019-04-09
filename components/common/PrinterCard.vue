@@ -129,13 +129,13 @@
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-btn-toggle mandatory block depressed>
-                    <v-btn flat block depressed :value="isPrinting" @input="resumeJob">
+                    <v-btn flat block depressed :value="isPrinting" @click="resumeJob">
                       <v-icon color="success">mdi-play</v-icon>
                     </v-btn>
-                    <v-btn flat block depressed :value="isPaused" @input="pauseJob">
+                    <v-btn flat block depressed :value="isPaused" @click="pauseJob">
                       <v-icon color="warning">mdi-pause</v-icon>
                     </v-btn>
-                    <v-btn flat block depressed @input="stopJob">
+                    <v-btn flat block depressed @click="stopJob">
                       <v-icon color="error">mdi-stop</v-icon>
                     </v-btn>
                   </v-btn-toggle>
@@ -156,7 +156,13 @@
                   <p class="title text-truncate">for printjob</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                  <v-select
+                    box
+                    :items="['Idle', 'Maintenance']"
+                    label="Select state"
+                    @change="setPrinterState"
+                    :value="computedStatus.stateText"
+                  ></v-select>
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else-if="isMaintenance">
@@ -165,7 +171,13 @@
                   <p class="title text-truncate">for maintenance</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                  <v-select
+                    box
+                    :items="['Idle', 'Maintenance']"
+                    label="Select state"
+                    @change="setPrinterState"
+                    :value="computedStatus.stateText"
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -259,48 +271,48 @@ export default class PrinterCard extends Vue {
   private printerStatus: string = 'Maintenance'
 
   get isPrinting (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Printing'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Printing'
     }
     return false
   }
   get isPaused (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Paused'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Paused'
     }
     return false
   }
   get isIdle (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Idle'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Idle'
     }
     return false
   }
   get isMaintenance (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Maintenance'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Maintenance'
     }
     return false
   }
   get isDone (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Done'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Done'
     }
     return false
   }
   get isOffline (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Offline'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Offline'
     }
     return false
   }
 
   get jobStateToggle (): number {
-    if (this.status(this.id) !== undefined) {
-      if (this.status(this.id)!.stateText === 'Printing') {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus!.stateText === 'Printing') {
         return 0
       }
-      if (this.status(this.id)!.stateText === 'Paused') {
+      if (this.computedStatus!.stateText === 'Paused') {
         return 1
       }
     }

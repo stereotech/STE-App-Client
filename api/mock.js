@@ -31,6 +31,70 @@ const printJobs = [
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
         printers: ['st-aaa']
+    },
+    {
+        id: 3,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 4,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 5,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 6,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 7,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 8,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 9,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+    },
+    {
+        id: 10,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
     }
 ]
 
@@ -53,7 +117,7 @@ const scannerResults = [
 
 const settings = {
     systemId: 'st-aaa',
-    firstLaunch: true,
+    firstLaunch: false,
     avaliableLanguages: ['English', 'Русский'],
     language: 'English',
     storageTotal: 6864843434384,
@@ -91,7 +155,10 @@ const localStorage = {
             origin: 'st_aaa',
             path: '/Storage/File_1.gcode',
             type: 'machinecode',
-            typePath: ['machinecode', 'gcode']
+            typePath: ['machinecode', 'gcode'],
+            refs: {
+                download: 'localhost:3000/file1.gcode',
+            }
         }
     ],
     display: 'Storage',
@@ -115,7 +182,10 @@ const usbs = [
                 origin: 'st-aaa',
                 path: '/USB/File_2.gcode',
                 type: 'machinecode',
-                typePath: ['machinecode', 'gcode']
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
             }
         ],
         display: 'Storage',
@@ -137,7 +207,10 @@ const usbs = [
                 origin: 'st-bbb',
                 path: '/USB/File_2.gcode',
                 type: 'machinecode',
-                typePath: ['machinecode', 'gcode']
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb1/file2.gcode',
+                }
             }
         ],
         display: 'Storage',
@@ -151,11 +224,12 @@ const usbs = [
 ]
 
 export default function (req, res, next) {
-    res.writeHead(200, { 'Content-Type': 'application/json' })
+    //res.writeHead(200, { 'Content-Type': 'application/json' })
     if (req.url === '/jobs') {
-        res.end(JSON.stringify(printJobs))
+        res.end(JSON.stringify([]))
+        //res.end(JSON.stringify(printJobs))
     }
-    else if (req.url === '/printers') {
+    else if (req.url === '/printers/') {
         res.end(JSON.stringify(printers))
     }
     else if (req.url === '/printers/state') {
@@ -213,6 +287,7 @@ export default function (req, res, next) {
         res.end(JSON.stringify(settings))
     }
     else if (req.url === '/storage/local') {
+        localStorage.children = []
         res.end(JSON.stringify(localStorage))
     }
     else if (req.url === '/storage/usb') {
@@ -224,5 +299,5 @@ export default function (req, res, next) {
     else if (req.url === '/network/wifi') {
         res.end(JSON.stringify(networks))
     }
-    next()
+    //next()
 }

@@ -36,8 +36,8 @@ export const mutations: MutationTree<PrintJobsState> = {
     }
   },
 
-  addJob (state: PrintJobsState, job: PrintJob) {
-    state.jobs.push(job)
+  addJob (state: PrintJobsState, jobs: PrintJob[]) {
+    state.jobs.push(...jobs)
   },
 
   editJob (state: PrintJobsState, job: PrintJob) {
@@ -77,9 +77,9 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
     }
   },
 
-  async addJob ({ commit }, job: PrintJob) {
-    commit('addJob', job)
-    let response = await this.$axios.post(this.state.apiUrl + jobsEndpoint, job)
+  async addJob ({ commit }, jobs: PrintJob[]) {
+    commit('addJob', jobs)
+    let response = await this.$axios.post(this.state.apiUrl + jobsEndpoint, jobs)
     if (response.status == 204) {
 
     }
