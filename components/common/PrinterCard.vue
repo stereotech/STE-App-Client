@@ -7,6 +7,14 @@
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
+        <v-btn-toggle mandatory>
+          <v-btn flat icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
+            <v-icon>mdi-lightbulb-on-outline</v-icon>
+          </v-btn>
+          <v-btn flat icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
+            <v-icon>mdi-lightbulb-outline</v-icon>
+          </v-btn>
+        </v-btn-toggle>
         <v-btn flat icon @click="findPrinter(id)">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
@@ -219,6 +227,7 @@ export default class PrinterCard extends Vue {
   @printers.Action setStatus: any
 
   @printers.Action findPrinter: any
+  @printers.Action ledCommand: any
   @printers.Action pausePrintJob: any
   @printers.Action resumePrintJob: any
   @printers.Action cancelPrintJob: any
@@ -346,6 +355,10 @@ export default class PrinterCard extends Vue {
     if (toggle) {
       this.cancelPrintJob(this.$route.params.id)
     }
+  }
+
+  private lightOff () {
+
   }
 }
 </script>

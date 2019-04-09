@@ -47,7 +47,7 @@
           </v-flex>
           <v-flex xs12>
             <h6 class="title text-xs-center">
-              Here you will see done print jobs. You could set their state by pressing
+              Here you will see done print jobs. You could set their state by clicking
               <v-icon color="success">mdi-check</v-icon>&nbsp; or
               <v-icon color="error">mdi-close</v-icon>
             </h6>

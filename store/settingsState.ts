@@ -143,8 +143,12 @@ export const actions: ActionTree<SettingsState, RootState> = {
     }
   },
 
-  async downloadAndInstallUpdate ({ commit }) {
-    await this.$axios.post(this.state.apiUrl + updateEndpoint)
+  async onlineUpdate ({ commit }) {
+    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/online')
+  },
+
+  async offlineUpdate ({ commit }) {
+    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/offline')
   },
 
   async rebootSystem ({ commit }) {

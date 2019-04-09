@@ -36,16 +36,28 @@
       <v-container grid-list-xs v-else>
         <v-layout align-center justify-center column fill-height>
           <v-flex xs12>
-            <v-img src="/empty-state/local-storage.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
+            <v-img
+              src="/empty-state/local-storage.svg"
+              height="192px"
+              width="192px"
+              aspect-ratio="1"
+            ></v-img>
           </v-flex>
           <v-flex xs12>
-            <h6 class="title text-xs-center">
-              You don't have any uploaded files yet. You could add new files using dropzone below
-            </h6>
+            <h6
+              class="title text-xs-center"
+            >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
           </v-flex>
         </v-layout>
       </v-container>
-      <dropzone v-if="local" id="dropzone" ref="el" :options="options" :destroyDropzone="true"></dropzone>
+      <dropzone
+        v-if="local"
+        id="dropzone"
+        :options="options"
+        :destroyDropzone="true"
+        :includeStyling="false"
+        :duplicateCheck="true"
+      ></dropzone>
     </v-card>
   </v-flex>
 </template>
@@ -79,8 +91,12 @@ export default class extends Vue {
   }
 
   options: any = {
-    url: '/local',
-    uploadMultiple: true
+    url: this.$store.state.apiUrl + 'storage/local',
+    uploadMultiple: false,
+    maxFilesize: 200,
+    createImageThumbnails: false,
+    thumbnailWidth: 50,
+    addRemoveLinks: true
   }
 
   get dataStorage (): FileOrFolder | undefined {
