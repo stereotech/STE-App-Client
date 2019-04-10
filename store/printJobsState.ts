@@ -14,12 +14,12 @@ export const state = (): PrintJobsState => ({
 
 export const getters: GetterTree<PrintJobsState, RootState> = {
   doneJobs (state): PrintJob[] {
-    return state.jobs.filter(value => value.succesful !== undefined)
+    return state.jobs.filter(value => value.successful !== undefined)
   },
 
   queuedJobs (state): PrintJob[] {
     return state.jobs
-      .filter(value => value.lastPrint === undefined)
+      .filter(value => value.lastPrintTime === undefined)
       .sort((a: PrintJob, b: PrintJob) => a.id - b.id)
   }
 }
@@ -47,15 +47,15 @@ export const mutations: MutationTree<PrintJobsState> = {
   revertJob (state: PrintJobsState, job: PrintJob) {
     const index = state.jobs.findIndex(value => value.id === job.id)
     if (index > -1) {
-      state.jobs[index].succesful = undefined
-      state.jobs[index].lastPrint = undefined
+      state.jobs[index].successful = undefined
+      state.jobs[index].lastPrintTime = undefined
     }
   },
 
   toggleSuccess (state: PrintJobsState, job: PrintJob) {
     const index = state.jobs.findIndex(value => value.id === job.id)
     if (index > -1) {
-      state.jobs[index].succesful = !state.jobs[index].succesful
+      state.jobs[index].successful = !state.jobs[index].successful
     }
   }
 }
@@ -70,7 +70,7 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
   },
 
   async removeJob ({ commit }, job: PrintJob) {
-    commit('removeJob', job)
+
     let response = await this.$axios.delete(this.state.apiUrl + jobsEndpoint + '/' + job.id)
     if (response.status == 204) {
 

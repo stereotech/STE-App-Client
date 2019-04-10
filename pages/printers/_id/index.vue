@@ -41,6 +41,10 @@ export default class PrinterPage extends Vue {
     this.pollData()
   }
 
+  head () {
+    return { title: 'STE App Printers' }
+  }
+
   get isPrinting (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
       return this.status(this.$route.params.id)!.stateText === 'Printing'

@@ -40,6 +40,10 @@ export default class Dashboard extends Vue {
 
   @printers.Getter printers!: PrinterInfo[]
 
+  head () {
+    return { title: 'STE App Dashboard' }
+  }
+
   private get printerName () {
     return (o: string) => {
       let p = this.printers.find(pr => pr.id == o)

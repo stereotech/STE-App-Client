@@ -71,8 +71,8 @@ const printJobs: PrintJob[] = [
         description: '',
         creationTime: Date.now(),
         fileUri: 'file.gcode',
-        succesful: true,
-        lastPrint: Date.now(),
+        successful: true,
+        lastPrintTime: Date.now(),
         printers: []
     },
     {
@@ -104,6 +104,7 @@ const results: ScannerResult[] = [
 
 const settings: Settings = {
     systemId: 'st-aaa',
+    role: 'host',
     firstLaunch: false,
     avaliableLanguages: ['English', 'Русский'],
     language: 'English',

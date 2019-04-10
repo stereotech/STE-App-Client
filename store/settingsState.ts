@@ -17,6 +17,7 @@ export interface SettingsState {
 export const state = (): SettingsState => ({
   settings: {
     systemId: 'st-aaa',
+    role: 'host',
     firstLaunch: false,
     avaliableLanguages: [],
     dateTime: 1,

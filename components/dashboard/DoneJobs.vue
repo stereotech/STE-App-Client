@@ -10,12 +10,14 @@
         <v-list-tile v-for="doneJob in doneJobs" :key="doneJob.id">
           <v-list-tile-action @click="toggleSuccess(doneJob)" ripple>
             <v-icon
-              :color="doneJob.succesful ? `success` : `error`"
-            >{{ doneJob.succesful ? 'mdi-check' : 'mdi-close' }}</v-icon>
+              :color="doneJob.successful ? `success` : `error`"
+            >{{ doneJob.successful ? 'mdi-check' : 'mdi-close' }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="subheading">{{ doneJob.name }}</v-list-tile-title>
-            <v-list-tile-sub-title class="body-1">Printed: {{ doneJob.lastPrint | moment("from") }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              class="body-1"
+            >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
             <v-menu bottom left>
@@ -67,7 +69,7 @@ const printJobs = namespace('printJobsState')
 
 @Component
 export default class extends Vue {
-  @printJobs.Getter doneJobs?: PrintJob[]
+  @printJobs.Getter doneJobs!: PrintJob[]
   @printJobs.Action removeJob: any
   @printJobs.Action revertJob: any
   @printJobs.Action toggleSuccess: any

@@ -62,7 +62,7 @@
                   <p
                     class="warning--text title"
                     v-if="isPaused"
-                  >Paused at {{ computedStatus.progress.completion }}%</p>
+                  >Paused at {{ computedStatus.progress.completion | currency('', 1) }}%</p>
                   <p class="title" v-else-if="isIdle">Idle</p>
                   <p class="warning--text title" v-else-if="isMaintenance">Maintenance</p>
                   <p class="success--text title" v-else-if="isDone">Printing Done!</p>
@@ -132,8 +132,10 @@
             <v-container fluid grid-list-md>
               <v-layout row wrap v-if="isPrinting || isPaused">
                 <v-flex xs12 sm8 md12>
-                  <p class="title text-truncate">Current file:</p>
-                  <p class="title text-truncate">{{ computedStatus.job.file.display }}</p>
+                  <p class="title text-truncate">Current printjob:</p>
+                  <p
+                    class="title text-truncate"
+                  >{{ computedStatus.job.file.display.substring(0, computedStatus.job.file.display.length - 6) }}</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-btn-toggle mandatory block depressed>
@@ -155,7 +157,12 @@
                   <p class="title text-truncate">and select state</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                  <v-select
+                    box
+                    :items="['Idle', 'Maintenance']"
+                    label="Select state"
+                    @change="setPrinterState"
+                  ></v-select>
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else-if="isIdle">
@@ -341,24 +348,20 @@ export default class PrinterCard extends Vue {
 
   private resumeJob (toggle: boolean) {
     if (toggle) {
-      this.resumePrintJob(this.$route.params.id)
+      this.resumePrintJob(this.id)
     }
   }
 
   private pauseJob (toggle: boolean) {
     if (toggle) {
-      this.pausePrintJob(this.$route.params.id)
+      this.pausePrintJob(this.id)
     }
   }
 
   private stopJob (toggle: boolean) {
     if (toggle) {
-      this.cancelPrintJob(this.$route.params.id)
+      this.cancelPrintJob(this.id)
     }
-  }
-
-  private lightOff () {
-
   }
 }
 </script>

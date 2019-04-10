@@ -21,7 +21,7 @@ const printJobs = [
         creationTime: Date.now(),
         fileUri: 'file.gcode',
         succesful: true,
-        lastPrint: Date.now(),
+        lastPrintTime: Date.now(),
         printers: []
     },
     {
