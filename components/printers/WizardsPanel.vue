@@ -22,6 +22,7 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import WizardCard from '~/components/printers/WizardCard.vue'
 
+
 @Component({
   components: {
     WizardCard

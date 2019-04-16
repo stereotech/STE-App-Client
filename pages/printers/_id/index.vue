@@ -3,11 +3,11 @@
     <v-flex xs12>
       <PrinterCard toolbar :id="$route.params.id"/>
     </v-flex>
-    <v-flex xs12>
+    <v-flex xs12 v-if="!isPrinting">
       <WizardsPanel :id="$route.params.id"/>
     </v-flex>
     <v-flex xs12>
-      <ManualControlPanel :id="$route.params.id"/>
+      <ManualControlPanel :printing="isPrinting" :id="$route.params.id"/>
     </v-flex>
   </v-layout>
 </template>

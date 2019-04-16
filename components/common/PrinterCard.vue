@@ -19,7 +19,7 @@
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-btn
-          v-if="!computedPrinter.isLocal && !controlPanel"
+          v-if="!computedPrinter.isLocal && isMaintenance"
           flat
           icon
           @click="confirmation = true"
@@ -207,7 +207,7 @@
         >Do you want to remove {{ computedPrinter.name }} from cluster?</v-card-title>
         <v-card-actions>
           <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" flat @click="confirmation = false">Yes</v-btn>
+          <v-btn color="primary" flat @click="removeFromCluster">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -362,6 +362,11 @@ export default class PrinterCard extends Vue {
     if (toggle) {
       this.cancelPrintJob(this.id)
     }
+  }
+
+  removeFromCluster () {
+    this.deletePrinter(this.computedPrinter)
+    this.confirmation = false
   }
 }
 </script>

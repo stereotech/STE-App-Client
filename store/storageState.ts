@@ -60,6 +60,14 @@ export const getters: GetterTree<StorageState, RootState> = {
 export const mutations: MutationTree<StorageState> = {
   setLocal (state: StorageState, localStorage: FileOrFolder) {
     state.local = []
+    if (localStorage.children !== undefined) {
+      localStorage.children.sort((a, b) => {
+        if (a.date !== undefined && b.date !== undefined) {
+          return b.date - a.date
+        }
+        return 0
+      })
+    }
     state.local.push(localStorage)
   },
 
@@ -113,19 +121,18 @@ export const actions: ActionTree<StorageState, RootState> = {
     }
   },
 
-  async deleteFile ({ commit }, file: FileOrFolder) {
+  async deleteFile ({ commit, dispatch }, file: FileOrFolder) {
 
     if (file.origin == 'local') {
-      console.log(file)
       commit('deleteLocalFile', file)
       let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
       if (response.status === 204) {
-
+        await dispatch('fetchLocal')
       } else {
         commit('deleteUsbFile', file)
         let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
         if (response.status === 204) {
-
+          await dispatch('fetchUsbs')
         }
       }
     }

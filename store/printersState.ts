@@ -80,20 +80,28 @@ export const actions: ActionTree<PrintersState, RootState> = {
     }
   },
 
-  async setStatus ({ commit }, payload: { id: string, newStatus: string }) {
+  async disconnectPrinter ({ commit }, apiKey: string) {
+    await this.$axios.delete('/api/private/connection', { headers: { Authorization: apiKey } })
+  },
+
+  async setStatus ({ commit, dispatch }, payload: { id: string, newStatus: string }) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + 'state/' + payload.id, null, { params: { state: payload.newStatus } })
+    await dispatch('fetchStatus')
   },
 
-  async pausePrintJob ({ commit }, id: string) {
+  async pausePrintJob ({ commit, dispatch }, id: string) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'pause' } })
+    await dispatch('fetchStatus')
   },
 
-  async resumePrintJob ({ commit }, id: string) {
+  async resumePrintJob ({ commit, dispatch }, id: string) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'resume' } })
+    await dispatch('fetchStatus')
   },
 
-  async cancelPrintJob ({ commit }, id: string) {
+  async cancelPrintJob ({ commit, dispatch }, id: string) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'cancel' } })
+    await dispatch('fetchStatus')
   },
 
   async findPrinter ({ commit }, id: string) {

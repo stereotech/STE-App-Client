@@ -36,10 +36,11 @@ export const actions: ActionTree<ScannerResultState, RootState> = {
     }
   },
 
-  async connect ({ commit }, printer: ScannerResult) {
+  async connect ({ commit, dispatch }, printer: ScannerResult) {
     let response = await this.$axios.post(this.state.apiUrl + scannerEndpoint, printer)
     if (response.status == 204) {
       commit('clearResults')
+      await dispatch('printersState/fetchPrinters', null, { root: true })
     }
   }
 }

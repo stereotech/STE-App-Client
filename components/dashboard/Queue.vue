@@ -140,6 +140,7 @@ const storage = namespace('storageState')
 @Component
 export default class extends Vue {
   @printJobs.Getter queuedJobs!: PrintJob[]
+  @printJobs.Getter jobsCount!: number
   @printJobs.Action removeJob: any
   @printJobs.Action editJob: any
   @printJobs.Action addJob: any
@@ -177,7 +178,7 @@ export default class extends Vue {
     this.dialog = true
     this.editedJob = {
       id: this.queuedJobs.length,
-      name: 'Printjob_' + this.queuedJobs.length,
+      name: 'Printjob_' + this.jobsCount,
       description: '',
       printers: [],
       fileUri: '',
@@ -217,14 +218,13 @@ export default class extends Vue {
           copiedJob.id += index
           jobsArray.push(copiedJob)
         }
-        console.log(jobsArray)
         this.addJob(jobsArray)
       } else {
         this.editJob(this.editedJob)
       }
     }
     this.editedJob = {
-      id: this.queuedJobs.length,
+      id: this.jobsCount,
       name: '',
       description: '',
       creationTime: 0,

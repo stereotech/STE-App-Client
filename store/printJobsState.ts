@@ -21,6 +21,10 @@ export const getters: GetterTree<PrintJobsState, RootState> = {
     return state.jobs
       .filter(value => value.lastPrintTime === undefined)
       .sort((a: PrintJob, b: PrintJob) => a.id - b.id)
+  },
+
+  jobsCount (state): number {
+    return state.jobs.length
   }
 }
 
@@ -69,43 +73,45 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
     }
   },
 
-  async removeJob ({ commit }, job: PrintJob) {
-
+  async removeJob ({ commit, dispatch }, job: PrintJob) {
+    commit('removeJob', job)
     let response = await this.$axios.delete(this.state.apiUrl + jobsEndpoint + '/' + job.id)
     if (response.status == 204) {
-
+      await dispatch('fetchJobs')
     }
   },
 
-  async addJob ({ commit }, jobs: PrintJob[]) {
+  async addJob ({ commit, dispatch }, jobs: PrintJob[]) {
     commit('addJob', jobs)
     let response = await this.$axios.post(this.state.apiUrl + jobsEndpoint, jobs)
     if (response.status == 204) {
-
+      await dispatch('fetchJobs')
     }
   },
 
-  async editJob ({ commit }, job: PrintJob) {
+  async editJob ({ commit, dispatch }, job: PrintJob) {
     commit('editJob', job)
     let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-
+      await dispatch('fetchJobs')
     }
   },
 
-  async revertJob ({ commit }, job: PrintJob) {
+  async revertJob ({ commit, dispatch }, job: PrintJob) {
     commit('revertJob', job)
+    job.successful = undefined
+    job.lastPrintTime = undefined
     let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-
+      await dispatch('fetchJobs')
     }
   },
 
-  async toggleSuccess ({ commit }, job: PrintJob) {
+  async toggleSuccess ({ commit, dispatch }, job: PrintJob) {
     commit('toggleSuccess', job)
     let response = await this.$axios.put(this.state.apiUrl + jobsEndpoint, job)
     if (response.status == 204) {
-
+      await dispatch('fetchJobs')
     }
   }
 }
