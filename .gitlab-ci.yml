@@ -2,9 +2,9 @@ image: node:latest
 
 variables:
   NODE_ENV: production
+  AWS_DEFAULT_REGION: eu-west-3
+  BUCKET_NAME: steapp
 
-before_script:
-  - npm install
 
 cache:
   paths:
@@ -12,10 +12,9 @@ cache:
 
 stages:
   - build
-  - test
   - deploy
 
-build_script:
+buildNuxt:
   stage: build
   script: npm run build
   artifacts:
@@ -24,3 +23,13 @@ build_script:
   only: 
     - master
   when: manual
+
+deploys3:
+  image: "python:latest"
+  stage: deploy
+  dependencies:
+    - buildNuxt
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 cp dist s3://${BUCKET_NAME}/${CI_COMMIT_REF_SLUG} --recursive
