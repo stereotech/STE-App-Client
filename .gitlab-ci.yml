@@ -8,10 +8,6 @@ variables:
 before_script:
   - npm install
 
-cache:
-  paths:
-    - node_modules/
-
 stages:
   - build
   - deploy
