@@ -4,7 +4,7 @@
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex xs2>
-          <v-btn flat icon color="primary" :disabled="printing" @click="retract">
+          <v-btn outline flat icon color="primary" :disabled="printing" @click="retract">
             <v-icon>mdi-chevron-double-up</v-icon>
           </v-btn>
         </v-flex>
@@ -13,12 +13,7 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap>
-        <v-flex xs2>
-          <v-btn flat icon color="primary" :disabled="printing" @click="retract">
-            <v-icon>mdi-chevron-up</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs10>
+        <v-flex xs10 offset-xs2>
           <v-select
             box
             :items="extruders"
@@ -32,14 +27,7 @@
       </v-layout>
       <v-layout row wrap>
         <v-flex xs2>
-          <v-btn flat icon color="primary" :disabled="printing" @click="extrude">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-btn flat icon color="primary" :disabled="printing" @click="extrude">
+          <v-btn outline flat icon color="primary" :disabled="printing" @click="extrude">
             <v-icon>mdi-chevron-double-down</v-icon>
           </v-btn>
         </v-flex>

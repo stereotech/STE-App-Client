@@ -3,11 +3,11 @@
     <v-flex xs12>
       <PrinterCard toolbar :id="$route.params.id"/>
     </v-flex>
-    <v-flex xs12>
+    <v-flex xs12 v-if="!isPrinting">
       <WizardsPanel :id="$route.params.id"/>
     </v-flex>
     <v-flex xs12>
-      <ManualControlPanel :id="$route.params.id"/>
+      <ManualControlPanel :printing="isPrinting" :id="$route.params.id"/>
     </v-flex>
   </v-layout>
 </template>
@@ -41,6 +41,10 @@ export default class PrinterPage extends Vue {
     this.pollData()
   }
 
+  head () {
+    return { title: 'STE App Printers' }
+  }
+
   get isPrinting (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
       return this.status(this.$route.params.id)!.stateText === 'Printing'
@@ -54,7 +58,7 @@ export default class PrinterPage extends Vue {
 
     this.pollingStatus = setInterval(async () => {
       await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
+    }, 2000)
   }
 
   beforeDestroy () {

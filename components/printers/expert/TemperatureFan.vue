@@ -7,14 +7,7 @@
           <v-switch color="error" hide-details v-model="e1TargetSet" @change="setE1"></v-switch>
         </v-flex>
         <v-flex xs10>
-          <v-slider
-            label="E1"
-            thumb-label
-            min="100"
-            max="350"
-            v-model="e1Target"
-            @change="changeE1"
-          ></v-slider>
+          <v-slider label="E1" thumb-label min="0" max="300" v-model="e1Target" @change="changeE1"></v-slider>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
@@ -22,14 +15,7 @@
           <v-switch color="error" hide-details v-model="e2TargetSet" @change="setE2"></v-switch>
         </v-flex>
         <v-flex xs10>
-          <v-slider
-            label="E2"
-            thumb-label
-            min="100"
-            max="350"
-            v-model="e2Target"
-            @change="changeE2"
-          ></v-slider>
+          <v-slider label="E2" thumb-label min="0" max="300" v-model="e2Target" @change="changeE2"></v-slider>
         </v-flex>
       </v-layout>
       <v-layout row wrap v-if="chamberHeater">
@@ -40,7 +26,7 @@
           <v-slider
             label="Chamber"
             thumb-label
-            min="30"
+            min="0"
             max="100"
             v-model="chamberTarget"
             @change="setBed"
@@ -55,8 +41,8 @@
           <v-slider
             label="Bed"
             thumb-label
-            min="30"
-            max="150"
+            min="0"
+            max="120"
             v-model="bedTarget"
             @change="changeBed"
           ></v-slider>
@@ -71,18 +57,6 @@
             max="100"
             v-model="coolingFanTarget"
             @change="setCoolingFan"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-if="chamberFan">
-        <v-flex xs12>
-          <v-slider
-            label="Chamber fan"
-            thumb-label
-            min="0"
-            max="100"
-            v-model="chamberFanTarget"
-            @change="setChamberFan"
           ></v-slider>
         </v-flex>
       </v-layout>
@@ -113,12 +87,11 @@ export default class TemperatureFanCard extends Vue {
     return this.status(this.id)
   }
 
-  private e1Target: number = 100
-  private e2Target: number = 100
+  private e1Target: number = 0
+  private e2Target: number = 0
   private chamberTarget: number = 0
   private bedTarget: number = 0
   private coolingFanTarget: number = 0
-  private chamberFanTarget: number = 0
 
   private e1TargetSet: boolean = false
   private e2TargetSet: boolean = false
@@ -137,11 +110,7 @@ export default class TemperatureFanCard extends Vue {
   }
 
   private setCoolingFan (value: number) {
-    this.fanCommand({ id: this.id, fanId: 0, fanValue: value })
-  }
-
-  private setChamberFan (value: number) {
-    this.fanCommand({ id: this.id, fanId: 1, fanValue: value })
+    this.fanCommand({ id: this.id, fanId: 0, fanValue: value * 100 / 255 })
   }
 
   private setE1 (value: boolean) {
@@ -160,7 +129,7 @@ export default class TemperatureFanCard extends Vue {
 
   private setE2 (value: boolean) {
     if (value) {
-      this.toolTempCommand({ id: this.id, tool1Temp: this.e1Target })
+      this.toolTempCommand({ id: this.id, tool1Temp: this.e2Target })
     } else {
       this.toolTempCommand({ id: this.id, tool1Temp: 0 })
     }

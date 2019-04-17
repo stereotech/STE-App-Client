@@ -3,7 +3,11 @@
     "target": "es5",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["es2015", "dom"],
+    "lib": [
+      "es2015",
+      "dom",
+      "dom"
+    ],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "allowJs": true,
@@ -17,11 +21,16 @@
     "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./*"
+      ]
     },
     "types": [
       "@types/node",
-      "@nuxt/vue-app-edge",
+      "@nuxtjs/axios",
       "vuetify",
       "moment"
     ]

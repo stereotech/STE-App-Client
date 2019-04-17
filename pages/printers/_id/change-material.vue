@@ -9,18 +9,21 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import changeMaterialStepper from '~/components/wizards/changeMaterial/Stepper.vue'
 
 @Component({
-  layout: 'solid',
   components: {
     changeMaterialStepper
   }
 })
 export default class extends Vue {
+  layout () {
+    return 'solid'
+  }
+
   private pollingStatus!: NodeJS.Timeout
 
   private async pollData () {
     this.pollingStatus = setInterval(async () => {
       await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
+    }, 2000)
   }
 
   async mounted () {

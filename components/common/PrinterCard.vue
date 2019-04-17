@@ -2,15 +2,24 @@
   <v-flex xs12 v-if="computedStatus && computedPrinter">
     <v-card>
       <v-toolbar v-if="toolbar" flat dense color="secondary">
-        <v-btn v-if="controlPanel" flat nuxt :to="'/printers/' + id" ripple>Control panel
+        <v-btn v-if="controlPanel" flat nuxt :to="'/printers/' + id" ripple>
+          Control panel
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
+        <v-btn-toggle mandatory>
+          <v-btn flat icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
+            <v-icon>mdi-lightbulb-on-outline</v-icon>
+          </v-btn>
+          <v-btn flat icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
+            <v-icon>mdi-lightbulb-outline</v-icon>
+          </v-btn>
+        </v-btn-toggle>
         <v-btn flat icon @click="findPrinter(id)">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-btn
-          v-if="!computedPrinter.isLocal && !controlPanel"
+          v-if="!computedPrinter.isLocal && isMaintenance && controlPanel"
           flat
           icon
           @click="confirmation = true"
@@ -53,7 +62,7 @@
                   <p
                     class="warning--text title"
                     v-if="isPaused"
-                  >Paused at {{ computedStatus.progress.completion }}%</p>
+                  >Paused at {{ computedStatus.progress.completion | currency('', 1) }}%</p>
                   <p class="title" v-else-if="isIdle">Idle</p>
                   <p class="warning--text title" v-else-if="isMaintenance">Maintenance</p>
                   <p class="success--text title" v-else-if="isDone">Printing Done!</p>
@@ -123,18 +132,20 @@
             <v-container fluid grid-list-md>
               <v-layout row wrap v-if="isPrinting || isPaused">
                 <v-flex xs12 sm8 md12>
-                  <p class="title text-truncate">Current file:</p>
-                  <p class="title text-truncate">{{ computedStatus.job.file.display }}</p>
+                  <p class="title text-truncate">Current printjob:</p>
+                  <p
+                    class="title text-truncate"
+                  >{{ computedStatus.job.file.display.substring(0, computedStatus.job.file.display.length - 6) }}</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-btn-toggle mandatory block depressed>
-                    <v-btn flat block depressed :value="isPrinting" @input="resumeJob">
+                    <v-btn flat block depressed :value="isPrinting" @click="resumeJob">
                       <v-icon color="success">mdi-play</v-icon>
                     </v-btn>
-                    <v-btn flat block depressed :value="isPaused" @input="pauseJob">
+                    <v-btn flat block depressed :value="isPaused" @click="pauseJob">
                       <v-icon color="warning">mdi-pause</v-icon>
                     </v-btn>
-                    <v-btn flat block depressed @input="stopJob">
+                    <v-btn flat block depressed @click="stopJob">
                       <v-icon color="error">mdi-stop</v-icon>
                     </v-btn>
                   </v-btn-toggle>
@@ -146,7 +157,12 @@
                   <p class="title text-truncate">and select state</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                  <v-select
+                    box
+                    :items="['Idle', 'Maintenance']"
+                    label="Select state"
+                    @change="setPrinterState"
+                  ></v-select>
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else-if="isIdle">
@@ -155,7 +171,13 @@
                   <p class="title text-truncate">for printjob</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                  <v-select
+                    box
+                    :items="['Idle', 'Maintenance']"
+                    label="Select state"
+                    @change="setPrinterState"
+                    :value="computedStatus.stateText"
+                  ></v-select>
                 </v-flex>
               </v-layout>
               <v-layout row wrap v-else-if="isMaintenance">
@@ -164,7 +186,13 @@
                   <p class="title text-truncate">for maintenance</p>
                 </v-flex>
                 <v-flex xs12 sm4 md12>
-                  <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
+                  <v-select
+                    box
+                    :items="['Idle', 'Maintenance']"
+                    label="Select state"
+                    @change="setPrinterState"
+                    :value="computedStatus.stateText"
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -179,7 +207,7 @@
         >Do you want to remove {{ computedPrinter.name }} from cluster?</v-card-title>
         <v-card-actions>
           <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" flat @click="confirmation = false">Yes</v-btn>
+          <v-btn color="primary" flat @click="removeFromCluster">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -203,8 +231,10 @@ export default class PrinterCard extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => PrinterStatus | undefined
   @printers.Action deletePrinter: any
+  @printers.Action setStatus: any
 
   @printers.Action findPrinter: any
+  @printers.Action ledCommand: any
   @printers.Action pausePrintJob: any
   @printers.Action resumePrintJob: any
   @printers.Action cancelPrintJob: any
@@ -257,52 +287,56 @@ export default class PrinterCard extends Vue {
   private printerStatus: string = 'Maintenance'
 
   get isPrinting (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Printing'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Printing'
     }
     return false
   }
   get isPaused (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Paused'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Paused'
     }
     return false
   }
   get isIdle (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Idle'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Idle'
     }
     return false
   }
   get isMaintenance (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Maintenance'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Maintenance'
     }
     return false
   }
   get isDone (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Done'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Done'
     }
     return false
   }
   get isOffline (): boolean {
-    if (this.status(this.id) !== undefined) {
-      return this.status(this.id)!.stateText === 'Offline'
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.stateText === 'Offline'
     }
     return false
   }
 
   get jobStateToggle (): number {
-    if (this.status(this.id) !== undefined) {
-      if (this.status(this.id)!.stateText === 'Printing') {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus!.stateText === 'Printing') {
         return 0
       }
-      if (this.status(this.id)!.stateText === 'Paused') {
+      if (this.computedStatus!.stateText === 'Paused') {
         return 1
       }
     }
     return 2
+  }
+
+  private setPrinterState (value: string) {
+    this.setStatus({ id: this.id, newStatus: value })
   }
 
   private confirmation: boolean = false
@@ -314,20 +348,25 @@ export default class PrinterCard extends Vue {
 
   private resumeJob (toggle: boolean) {
     if (toggle) {
-      this.resumePrintJob(this.$route.params.id)
+      this.resumePrintJob(this.id)
     }
   }
 
   private pauseJob (toggle: boolean) {
     if (toggle) {
-      this.pausePrintJob(this.$route.params.id)
+      this.pausePrintJob(this.id)
     }
   }
 
   private stopJob (toggle: boolean) {
     if (toggle) {
-      this.cancelPrintJob(this.$route.params.id)
+      this.cancelPrintJob(this.id)
     }
+  }
+
+  removeFromCluster () {
+    this.deletePrinter(this.computedPrinter)
+    this.confirmation = false
   }
 }
 </script>

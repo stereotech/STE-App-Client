@@ -4,6 +4,10 @@ import { RootState } from '.'
 import { Networking, Network } from '~/types/networking'
 import { UpdateInfo } from '~/types/updating'
 
+const systemEndpoint = 'system'
+const networkEndpoint = 'network'
+const updateEndpoint = 'update'
+
 export interface SettingsState {
   settings: Settings
   networking: Networking
@@ -13,9 +17,10 @@ export interface SettingsState {
 export const state = (): SettingsState => ({
   settings: {
     systemId: 'st-aaa',
+    role: 'host',
     firstLaunch: false,
     avaliableLanguages: [],
-    dateTime: 0,
+    dateTime: 1,
     language: '',
     storageFree: 0,
     storageTotal: 0
@@ -50,7 +55,9 @@ export const getters: GetterTree<SettingsState, RootState> = {
   },
   currentNetwork (state: SettingsState): Network | undefined {
     return state.networking.networks.find(
-      (value: Network) => value.state === 'online'
+      (value: Network) => {
+        return value.state === 'online';
+      }
     )
   },
   avaliableUpdate (state: SettingsState): UpdateInfo {
@@ -78,100 +85,78 @@ export const mutations: MutationTree<SettingsState> = {
 
 export const actions: ActionTree<SettingsState, RootState> = {
   async fetchSettings ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 50))
-    const settings: Settings = {
-      systemId: 'st-aaa',
-      firstLaunch: false,
-      avaliableLanguages: ['English', 'Русский'],
-      language: 'English',
-      storageTotal: 6864843434384,
-      storageFree: 3564684646846,
-      dateTime: 1550665494
+    let response = await this.$axios.get<Settings>(this.state.apiUrl + systemEndpoint)
+    if (response.status === 200) {
+      let settings: Settings = response.data
+      commit('setSettings', response.data)
     }
-    commit('setSettings', settings)
   },
 
   async sendDateTime ({ commit }, { date, time }) {
     const newDate = Date.parse(time + ' ' + date) / 1000
-    await new Promise(resolve => setTimeout(resolve, 50))
-    const settings: Settings = {
-      systemId: 'st-aaa',
-      firstLaunch: true,
-      avaliableLanguages: ['English', 'Русский'],
-      language: 'English',
-      storageTotal: 6864843434384,
-      storageFree: 3564684646846,
-      dateTime: 1550665494
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { dateTime: newDate })
+    if (response.status === 200) {
+      commit('setSettings', response.data)
     }
-    commit('setSettings', settings)
   },
 
   async sendLanguage ({ commit }, lang: string) {
-    await new Promise(resolve => setTimeout(resolve, 50))
-    const settings: Settings = {
-      systemId: 'st-aaa',
-      firstLaunch: true,
-      avaliableLanguages: ['English', 'Русский'],
-      language: 'English',
-      storageTotal: 6864843434384,
-      storageFree: 3564684646846,
-      dateTime: 1550665494
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { language: lang })
+    if (response.status === 200) {
+      commit('setSettings', response.data)
     }
-    commit('setSettings', settings)
   },
 
   async sendFactoryReset ({ commit }, force: boolean) {
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'reset', removeStorageFiles: force })
+  },
+
+  async sendFinishSetup ({ commit }) {
+    await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { firstLaunch: false })
   },
 
   async getConnectedMethod ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    const connectedMethod = 'WIFI'
-    commit('setConnectedMethod', connectedMethod)
+    let response = await this.$axios.get<string>(this.state.apiUrl + networkEndpoint)
+    if (response.status === 200) {
+      commit('setConnectedMethod', response.data)
+    }
   },
 
   async getWifiNetworks ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    const networks: Network[] = [
-      {
-        id: 'network_8484442',
-        name: 'Wifi 1',
-        security: true,
-        state: 'online',
-        strength: 85
-      },
-      {
-        id: 'network_8484443',
-        name: 'Wifi 2',
-        security: true,
-        state: 'ready',
-        strength: 50
-      }
-    ]
-    commit('setNetworks', networks)
+    let response = await this.$axios.get<Network[]>(this.state.apiUrl + networkEndpoint + '/wifi')
+    if (response.status === 200) {
+      commit('setNetworks', response.data)
+    }
   },
 
   async connectWifiNetwork ({ commit }, { name, passphrase }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await this.$axios.post(this.state.apiUrl + networkEndpoint + '/wifi', { ssid: name, passphrase: passphrase })
   },
 
   async forgetWifiNetwork ({ commit }, id: string) {
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await this.$axios.delete(this.state.apiUrl + networkEndpoint + '/wifi/' + id)
   },
 
   async checkForUpdate ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
+    let response = await this.$axios.get<UpdateInfo>(this.state.apiUrl + updateEndpoint)
+    if (response.status === 200) {
+      commit('setUpdate', response.data)
+    }
   },
 
-  async downloadAndInstallUpdate ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
+  async onlineUpdate ({ commit }) {
+    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/online')
+  },
+
+  async offlineUpdate ({ commit }) {
+    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/offline')
   },
 
   async rebootSystem ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'reboot' })
   },
 
   async poweroffSystem ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'shutdown' })
   }
 }

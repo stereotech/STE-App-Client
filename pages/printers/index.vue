@@ -34,11 +34,15 @@ export default class PrintersPage extends Vue {
 
   private pollingStatus!: NodeJS.Timeout
 
+  head () {
+    return { title: 'STE App Printers' }
+  }
+
   private async pollData () {
     await this.$store.dispatch('printersState/fetchPrinters')
     this.pollingStatus = setInterval(async () => {
       await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
+    }, 2000)
   }
 
   async mounted () {

@@ -6,7 +6,7 @@
           <h1 class="display-4">Done!</h1>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat nuxt to="/">Finish</v-btn>
+          <v-btn block large flat @click="finishSetup">Finish</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -20,6 +20,7 @@ import { Action, Getter, State, namespace } from 'vuex-class'
 import { PrinterStatus } from 'types/printer'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -31,12 +32,20 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
+
+  @settings.Action sendFinishSetup: any
+
   private step?: number = 8
   private curStep?: number = this.currentStep
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  private finishSetup () {
+    this.sendFinishSetup()
+    this.$router.push('/')
   }
 }
 </script>
