@@ -75,7 +75,10 @@ const config = {
   },
   serverMiddleware: [
     { path: '/api', handler: '~/api/mock.js' },
-  ]
+  ],
+  performance: {
+    hints: false
+  }
 }
 
 export default config
