@@ -21,7 +21,7 @@ buildNuxt:
   script: npm run build
   artifacts:
     paths:
-      - dist
+      - dist/
   only: 
     - master
 
