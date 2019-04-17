@@ -22,7 +22,6 @@ buildNuxt:
       - dist
   only: 
     - master
-  when: manual
 
 deploys3:
   image: "python:latest"
@@ -33,3 +32,6 @@ deploys3:
     - pip install awscli
   script:
     - aws s3 cp dist s3://${BUCKET_NAME}/${CI_COMMIT_REF_SLUG} --recursive
+  only: 
+    - master
+  when: manual
