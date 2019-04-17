@@ -20,10 +20,10 @@ buildNuxt:
   stage: build
   script:
     - npm run build
-    - ls -R -la
   artifacts:
     paths:
-      - dist/
+      - dist
+      - /root/.npm/_logs
   only: 
     - master
 
