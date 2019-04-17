@@ -5,9 +5,9 @@ export interface RootState {
 }
 
 export const state = (): RootState => ({
-  apiUrl: 'http://192.168.0.128/api/'
+  apiUrl: '/api/'
 })
 
 export const plugins = [
-  //createPersistedState()
+  createPersistedState()
 ]

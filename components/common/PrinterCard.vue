@@ -19,7 +19,7 @@
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-btn
-          v-if="!computedPrinter.isLocal && isMaintenance"
+          v-if="!computedPrinter.isLocal && isMaintenance && controlPanel"
           flat
           icon
           @click="confirmation = true"
