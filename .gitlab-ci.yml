@@ -39,3 +39,4 @@ deploys3:
   only: 
     - master
   when: manual
+
