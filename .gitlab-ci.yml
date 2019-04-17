@@ -1,9 +1,12 @@
-image: node:latest
+image: node
 
 variables:
   NODE_ENV: production
   AWS_DEFAULT_REGION: eu-west-3
   BUCKET_NAME: steapp
+
+before_script:
+  - npm install
 
 cache:
   paths:
@@ -15,8 +18,6 @@ stages:
 
 buildNuxt:
   stage: build
-  before_script:
-    - npm install
   script:
     - npm run build
   artifacts:
