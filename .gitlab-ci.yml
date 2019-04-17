@@ -16,7 +16,8 @@ stages:
 
 buildNuxt:
   stage: build
-  before_script: npm i
+  before_script: 
+    - npm i
   script: npm run build
   artifacts:
     paths:
