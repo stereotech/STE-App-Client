@@ -5,7 +5,6 @@ variables:
   AWS_DEFAULT_REGION: eu-west-3
   BUCKET_NAME: steapp
 
-
 cache:
   paths:
     - node_modules/
