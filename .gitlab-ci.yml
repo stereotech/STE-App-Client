@@ -16,9 +16,6 @@ buildNuxt:
   stage: build
   script:
     - npm run build
-  artifacts:
-    paths:
-      - public
   only: 
     - master
 
