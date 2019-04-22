@@ -17,6 +17,7 @@ buildNuxt:
   script:
     - npm run build
   artifacts:
+    name: "client"
     paths:
       - public
   only: 
