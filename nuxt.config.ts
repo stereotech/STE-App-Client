@@ -21,6 +21,9 @@ const config = {
   router: {
     middleware: 'firstLaunch',
   },
+  generate: {
+    dir: 'public'
+  },
   /*
    ** Global CSS
    */
