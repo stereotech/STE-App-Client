@@ -6,7 +6,7 @@ variables:
   BUCKET_NAME: steapp
 
 before_script:
-  - npm install
+  - npm install --dev
 
 stages:
   - build
