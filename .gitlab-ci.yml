@@ -16,7 +16,6 @@ buildNuxt:
   stage: build
   script:
     - npm run build
-    - npm run build
   only: 
     - master
 
