@@ -1,4 +1,6 @@
-const config = {
+import NuxtConfiguration from '@nuxt/config'
+
+const config: NuxtConfiguration = {
   mode: 'spa',
   head: {
     title: 'STE App',
