@@ -26,6 +26,7 @@ buildNuxt:
       - public
   only: 
     - master
+    - tags
 
 deployRelease:
   image: "python:latest"
