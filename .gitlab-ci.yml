@@ -34,6 +34,7 @@ deployRelease:
   dependencies:
     - buildNuxt
   before_script:
+    - apt-get install zip unzip
     - pip install awscli
   script:
     - zip -r client${CI_COMMIT_TAG}.zip public/
