@@ -4,6 +4,10 @@ variables:
   NODE_ENV: production
   AWS_DEFAULT_REGION: eu-west-3
   BUCKET_NAME: steapp
+  
+cache:
+  paths:
+    - node_modules
 
 before_script:
   - npm install --dev
