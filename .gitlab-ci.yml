@@ -35,8 +35,9 @@ deployRelease:
   before_script:
     - pip install awscli
   script:
-    - tar -cvf client${CI_COMMIT_TAG}.zip public/
-    - aws s3 cp client${CI_COMMIT_TAG}.zip s3://${BUCKET_NAME}/client/ --recursive
+    - tar -cvf client-${CI_COMMIT_TAG}.zip public/
+    - ls
+    - aws s3 cp client-${CI_COMMIT_TAG}.zip s3://${BUCKET_NAME}/client/ --recursive
   only: 
     - tags
   when: manual
