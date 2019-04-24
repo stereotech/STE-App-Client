@@ -27,7 +27,7 @@ buildNuxt:
   only: 
     - master
 
-deploys3:
+deployRelease:
   image: "python:latest"
   stage: deploy
   dependencies:
@@ -35,8 +35,9 @@ deploys3:
   before_script:
     - pip install awscli
   script:
-    - aws s3 cp public s3://${BUCKET_NAME}/${CI_COMMIT_REF_SLUG} --recursive
+    - zip -r client${CI_COMMIT_TAG}.zip public/
+    - aws s3 cp client${CI_COMMIT_TAG}.zip s3://${BUCKET_NAME}/client/ --recursive
   only: 
-    - master
+    - tags
   when: manual
 
