@@ -8,7 +8,7 @@
       v-for="usbStorage in allUsbStorages"
       :key="usbStorage.origin"
       :name="usbStorage.origin"
-      :display="printerName(usbStorage.origin)"
+      :display="usbStorage.origin"
     />
   </v-layout>
 </template>
@@ -42,16 +42,6 @@ export default class Dashboard extends Vue {
 
   head () {
     return { title: 'STE App Dashboard' }
-  }
-
-  private get printerName () {
-    return (o: string) => {
-      let p = this.printers.find(pr => pr.id == o)
-      if (p !== undefined) {
-        return p.name
-      }
-      return ''
-    }
   }
 
   private pollingStorageAndJobs!: NodeJS.Timeout

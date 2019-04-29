@@ -10,6 +10,8 @@
     "dev-debug": "node --inspect node_modules/nuxt-ts-edge/bin/nuxt-ts"
   },
   "dependencies": {
+    "@aspnet/signalr": "^1.1.4",
+    "@mdi/font": "^3.3.92",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/vuetify": "^0.5.0",
     "nuxt": "^2.5.1",
