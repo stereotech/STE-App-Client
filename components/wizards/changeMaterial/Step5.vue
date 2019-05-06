@@ -46,6 +46,7 @@ export default class extends Vue {
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
+  @printers.Action toolTempCommand: any
   @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
   get computedStatus () {
@@ -73,6 +74,11 @@ export default class extends Vue {
 
   private load () {
     this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+  }
+
+  private finish () {
+    this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 0 })
+    this.$router.push('/printers/' + this.$route.params.id)
   }
 
   private next (step: number) {

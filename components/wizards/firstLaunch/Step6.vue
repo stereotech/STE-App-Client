@@ -9,7 +9,7 @@
           <v-btn block large flat @click="load">Load</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="next(7)">Next</v-btn>
+          <v-btn block large flat @click="nextStep">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -78,6 +78,11 @@ export default class extends Vue {
 
   private load () {
     this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
+  }
+
+  private nextStep () {
+    this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
+    this.next(7)
   }
 
   private next (step: number) {
