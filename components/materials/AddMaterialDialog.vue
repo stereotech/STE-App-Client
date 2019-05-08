@@ -1,4 +1,4 @@
-<template>
+<template v-slot:items="addMaterial">
   <div>
     <v-btn color="primary" large round block @click="startScan">
       <v-icon>mdi-plus</v-icon>&nbsp;Add material
@@ -12,7 +12,7 @@
     >
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click="closeDialog">
+          <v-btn icon dark @click="closeDialog()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>Add material</v-toolbar-title>
@@ -30,21 +30,21 @@
                       Color code
                     </div>
                     <v-flex class="code_color">
-                      <swatches v-model="color"></swatches>
+                      <swatches v-model="material.metadata.color_code"></swatches>
                     </v-flex>
                   </v-layout>
 
-                  <v-text-field label="Brand"></v-text-field>
-                  <v-text-field label="Material"></v-text-field>
-                  <v-text-field label="Color"></v-text-field>
-                  <v-textarea label="Description" no-resize="1"></v-textarea>
-                  <v-text-field label="Adhesion info"></v-text-field>
+                  <v-text-field label="Brand" v-model="material.metadata.name.brand" ></v-text-field>
+                  <v-text-field label="Material" v-model="material.metadata.name.material"></v-text-field>
+                  <v-text-field label="Color" v-model="material.metadata.name.color"></v-text-field>
+                  <v-textarea label="Description" no-resize="1" v-model="material.metadata.description"></v-textarea>
+                  <v-text-field label="Adhesion info" v-model="material.metadata.adhesion_info"></v-text-field>
 
                   <v-layout>
                     <v-flex>
                       <v-slider
                               label="Density"
-                              v-model="densityVal"
+                              v-model="material.properties.density"
                               :max="15"
                               :min="1"
                               :step="0.1"
@@ -56,7 +56,7 @@
                     >
                       <v-text-field
                               class="slider_val"
-                              v-model="densityVal"
+                              v-model="material.properties.density"
                               hide-details
                               type="number"
                               :max="15"
@@ -70,7 +70,7 @@
                     <v-flex>
                       <v-slider
                               label="Diameter"
-                              v-model="diameterVal"
+                              v-model="material.properties.diameter"
                               :max="5"
                               :min="1"
                               :step="0.1"
@@ -82,7 +82,7 @@
                     >
                       <v-text-field
                               class="slider_val"
-                              v-model="diameterVal"
+                              v-model="material.properties.diameter"
                               hide-details
                               type="number"
                               :max="5"
@@ -101,50 +101,56 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Prop} from 'nuxt-property-decorator'
 import { Getter, Action, Mutation, namespace } from 'vuex-class'
 import { ScannerResult } from '~/types/scannerResult'
 
 import Swatches from 'vue-swatches'
 import "vue-swatches/dist/vue-swatches.min.css"
 
-const scannerResult = namespace('scannerResultState')
-
 @Component({
   components: {
     Swatches
-  },
-  data () {
-    return {
-      color: '#1CA085'
-    }
   }
 })
-export default class AddPrinterDialog extends Vue {
-  @scannerResult.Getter results?: ScannerResult[]
-  @scannerResult.Action fetchResults: any
-  @scannerResult.Action connect: any
-  @scannerResult.Mutation clearResults: any
+
+export default class AddMaterialDialog extends Vue {
+  @Prop({ type: Function }) addMaterial?: any
 
   private dialog: boolean = false
   private confirmation: boolean = false
   private densityVal: number = 1
   private diameterVal: number = 1.75
 
+  public material: any = {
+    "metadata": {
+      "name": {
+        "brand": "",
+        "material": "",
+        "color": ""
+      },
+      "GUID": "",
+      "version": "",
+      "color_code": "#ffc924",
+      "description": "",
+      "adhesion_info": ""
+    },
+    "properties": {
+      "density": "1.5",
+      "diameter": "1.5"
+    }
+  }
+
   async startScan () {
     this.dialog = true
-    await this.fetchResults()
   }
 
-  async startConnection (printer: ScannerResult) {
-    this.confirmation = false
-    this.dialog = false
-    this.connect(printer)
-  }
 
-  private closeDialog () {
-    this.dialog = false
-    this.clearResults()
+  private closeDialog (save = false) {
+    if (save){
+      this.addMaterial(this.material);
+    }
+    this.dialog = false;
   }
 }
 </script>

@@ -1,14 +1,9 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <PrinterCard
-        toolbar
-        controlPanel
-        v-for="printer in printers"
-        :id="printer.id"
-        :key="printer.id"
+      <AddMaterialDialog
+          :addMaterial="addMaterial"
       />
-      <AddMaterialDialog/>
       <v-data-table
               :headers="headers"
               :items="materials"
@@ -17,7 +12,7 @@
         <template v-slot:items="props">
           <td class="text-xs-right">{{ props.item["metadata"]["name"]["brand"] }}</td>
           <td class="text-xs-right">{{ props.item["metadata"]["name"]["material"] }}</td>
-          <td class="text-xs-right">{{ props.item["metadata"]["color_code"] }}</td>
+          <td class="text-xs-right">{{ props.item["metadata"]["name"]["color"] }}</td>
           <td class="text-xs-right">{{ props.item["metadata"]["version"] }}</td>
           <td class="text-xs-right">{{ props.item["metadata"]["color_code"] }}</td>
           <td class="text-xs-right">{{ props.item["metadata"]["description"] }}</td>
@@ -46,19 +41,14 @@ import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo, PrinterStatus } from 'types/printer'
 import fs from 'fs'
 
-const printers = namespace('materialsState');
 
 
 @Component({
   components: {
-    PrinterCard,
     AddMaterialDialog
   }
 })
-export default class PrintersPage extends Vue {
-  @printers.Getter printers!: PrinterInfo[];
-  @printers.Getter printersStatus!: PrinterStatus[];
-
+export default class MaterialsPages extends Vue {
   headers = [
     { text: 'Brand', value: 'brand' },
     { text: 'Material', value: 'material' },
@@ -71,7 +61,6 @@ export default class PrintersPage extends Vue {
     { text: 'Diameter', value: 'diameter' },
     { text: 'Admin', value: 'admin', sortable: false }
   ];
-  desserts = [] as any[];
   materials = [] as any[];
 
   private pollingStatus!: NodeJS.Timeout;
@@ -80,13 +69,17 @@ export default class PrintersPage extends Vue {
     this.getData();
   }
 
+  public addMaterial = (material)=>{
+    this.materials.push(material)
+  }
+
   private getData(){
     fetch('/jsons/material_model.json')
     .then(function(response) {
       return response.json();
     })
     .then((data) => {
-      for (var key in data) {
+      for (let key in data) {
         this.materials.push(data[key]);
       }
     }).catch( alert );
