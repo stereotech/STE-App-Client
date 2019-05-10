@@ -1,8 +1,9 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <AddMaterialDialog
+      <MaterialDialog
           :addMaterial="addMaterial"
+          :isAdded="true"
       />
       <v-data-table
               :headers="headers"
@@ -20,12 +21,17 @@
           <td class="text-xs-right">{{ props.item["properties"]["density"] }}</td>
           <td class="text-xs-right">{{ props.item["properties"]["diameter"] }}</td>
           <td class="justify-center layout px-0">
-            <v-icon small>
-              mdi-pencil
-            </v-icon>
-            <v-icon @click="deleteItem(props.item)" small>
-              mdi-delete
-            </v-icon>
+            <MaterialDialog
+                :updateMaterial="updateMaterial"
+                :isAdded="false"
+                :valMaterial="props.item"
+                :materialId="props.index"
+            />
+            <div class="crud_panel">
+              <v-icon @click="deleteItem(props.item)" small>
+                mdi-delete
+              </v-icon>
+            </div>
           </td>
         </template>
       </v-data-table>
@@ -35,17 +41,15 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/PrinterCard.vue'
-import AddMaterialDialog from '~/components/materials/AddMaterialDialog.vue'
+import MaterialDialog from '~/components/materials/MaterialDialog.vue'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, PrinterStatus } from 'types/printer'
 import fs from 'fs'
 
 
 
 @Component({
   components: {
-    AddMaterialDialog
+    MaterialDialog
   }
 })
 export default class MaterialsPages extends Vue {
@@ -73,6 +77,13 @@ export default class MaterialsPages extends Vue {
     this.materials.push(material)
   }
 
+  public updateMaterial= (material, index)=>{
+      console.log(material);
+    this.materials[index] = material
+  }
+
+
+
   private getData(){
     fetch('/jsons/material_model.json')
     .then(function(response) {
@@ -97,4 +108,7 @@ export default class MaterialsPages extends Vue {
 </script>
 
 <style>
+  .crud_panel {
+    margin-top:25px;
+  }
 </style>

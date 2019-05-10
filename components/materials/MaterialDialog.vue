@@ -1,8 +1,13 @@
-<template v-slot:items="addMaterial">
-  <div>
-    <v-btn color="primary" large round block @click="startScan">
-      <v-icon>mdi-plus</v-icon>&nbsp;Add material
+<template>
+  <div v-bind:class="{ crud_panel: !isAdded }">
+    <v-btn color="primary" large round block @click="showModal" v-if="isAdded">
+      <v-icon>mdi-plus</v-icon>&nbsp
+      Add material
     </v-btn>
+    <v-icon small @click="showModal" v-if="!isAdded">
+      mdi-pencil
+    </v-icon>
+
     <v-dialog
       v-model="dialog"
       max-width="425"
@@ -15,10 +20,11 @@
           <v-btn icon dark @click="closeDialog()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Add material</v-toolbar-title>
+          <v-toolbar-title v-if="isAdded">Add material</v-toolbar-title>
+          <v-toolbar-title v-if="!isAdded">Update material</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="closeDialog(!editMode)">Save</v-btn>
+            <v-btn dark flat @click="closeDialog(true)">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text style="height: 1000px;">
@@ -34,10 +40,10 @@
                     </v-flex>
                   </v-layout>
 
-                  <v-text-field label="Brand" v-model="material.metadata.name.brand" ></v-text-field>
+                  <v-text-field label="Brand" v-model="material.metadata.name.brand"></v-text-field>
                   <v-text-field label="Material" v-model="material.metadata.name.material"></v-text-field>
                   <v-text-field label="Color" v-model="material.metadata.name.color"></v-text-field>
-                  <v-textarea label="Description" no-resize="1" v-model="material.metadata.description"></v-textarea>
+                  <v-textarea label="Description" auto-grow v-model="material.metadata.description"></v-textarea>
                   <v-text-field label="Adhesion info" v-model="material.metadata.adhesion_info"></v-text-field>
 
                   <v-layout>
@@ -114,15 +120,17 @@ import "vue-swatches/dist/vue-swatches.min.css"
   }
 })
 
-export default class AddMaterialDialog extends Vue {
+export default class MaterialDialog extends Vue {
   @Prop({ type: Function }) addMaterial?: any
+  @Prop({ default: false, type: Boolean }) isAdded?: boolean
+
+  @Prop({ type: Function }) updateMaterial?: any
+  @Prop({ default: 0, type: Number }) materialId?: number
+  @Prop({ type: Object }) valMaterial?: any
 
   private dialog: boolean = false
-  private confirmation: boolean = false
-  private densityVal: number = 1
-  private diameterVal: number = 1.75
 
-  public material: any = {
+  private material: any = {
     "metadata": {
       "name": {
         "brand": "",
@@ -141,14 +149,24 @@ export default class AddMaterialDialog extends Vue {
     }
   }
 
-  async startScan () {
+
+  async showModal () {
     this.dialog = true
+    if (!this.isAdded){
+      this.setMaterial();
+    }
+  }
+
+  private setMaterial(){
+    this.material = Object.assign({}, this.valMaterial);
   }
 
 
   private closeDialog (save = false) {
-    if (save){
+    if (save && this.isAdded){
       this.addMaterial(this.material);
+    } else if (save && !this.isAdded){
+      this.updateMaterial(this.material, this.materialId)
     }
     this.dialog = false;
   }
