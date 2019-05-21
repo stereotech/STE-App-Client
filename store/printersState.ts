@@ -1,12 +1,12 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
-import { PrinterInfo, PrinterStatus } from '~/types/printer'
+import { PrinterInfo, CurrentState, TemperatureDataPoint } from '~/types/printer'
 import { RootState } from '.'
 
 const apiEndpoint = 'printers/'
 
 export interface PrintersState {
   printers: PrinterInfo[]
-  status: PrinterStatus[]
+  status: CurrentState[]
 }
 
 export const state = (): PrintersState => ({
@@ -29,6 +29,34 @@ export const getters: GetterTree<PrintersState, RootState> = {
 
   status (state: PrintersState) {
     return (id: string) => state.status.find(value => value.id === id)
+  },
+
+  lastTempDataPoint (state: PrintersState): (id: string) => TemperatureDataPoint {
+    return (id: string) => {
+      let point: TemperatureDataPoint = {
+        bed: { actual: 0, offset: 0, target: 0 },
+        tool0: { actual: 0, offset: 0, target: 0 },
+        tool1: { actual: 0, offset: 0, target: 0 }
+      }
+      let status = state.status.find(value => value.id === id)
+      if (status && status.temps.length > 0) {
+        let temp = status.temps[status.temps.length - 1]
+        if (temp) {
+          return temp
+        }
+      }
+      return point
+    }
+  },
+
+  printerLogs (state: PrintersState): (id: string) => string[] {
+    return (id: string) => {
+      let status = state.status.find(value => value.id === id)
+      if (status && status.logs.length > 0) {
+        return status.logs
+      }
+      return new Array<string>(0)
+    }
   }
 }
 
@@ -44,14 +72,32 @@ export const mutations: MutationTree<PrintersState> = {
     }
   },
 
-  setStatus (state: PrintersState, status: PrinterStatus[]) {
+  setStatus (state: PrintersState, status: CurrentState[]) {
     state.status = status
   },
 
-  setOneStatus (state: PrintersState, status: PrinterStatus) {
+  setOneStatus (state: PrintersState, status: CurrentState) {
     const index = state.status.findIndex(value => value.id === status.id)
     if (index > -1) {
-      state.status[index] = status
+      let current = state.status[index]
+      if (current.logs.length < 500) {
+        current.logs.push(...status.logs)
+      }
+      else {
+        current.logs.splice(0, status.logs.length)
+        current.logs.push(...status.logs)
+      }
+      if (current.temps.length < 20) {
+        current.temps.push(...status.temps)
+      }
+      else {
+        current.temps.splice(0, status.temps.length)
+        current.temps.push(...status.temps)
+      }
+      current.state = status.state
+    }
+    else {
+      state.status.push(status)
     }
   }
 }
@@ -72,36 +118,24 @@ export const actions: ActionTree<PrintersState, RootState> = {
     }
   },
 
-  async fetchStatus ({ commit }) {
-    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + 'state')
-    if (response.status == 200) {
-      let state: PrinterStatus[] = response.data
-      commit('setStatus', state)
-    }
-  },
-
   async disconnectPrinter ({ commit }, apiKey: string) {
     await this.$axios.delete('/api/private/connection', { headers: { Authorization: apiKey } })
   },
 
   async setStatus ({ commit, dispatch }, payload: { id: string, newStatus: string }) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + 'state/' + payload.id, null, { params: { state: payload.newStatus } })
-    await dispatch('fetchStatus')
   },
 
   async pausePrintJob ({ commit, dispatch }, id: string) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'pause' } })
-    await dispatch('fetchStatus')
   },
 
   async resumePrintJob ({ commit, dispatch }, id: string) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'resume' } })
-    await dispatch('fetchStatus')
   },
 
   async cancelPrintJob ({ commit, dispatch }, id: string) {
     await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'cancel' } })
-    await dispatch('fetchStatus')
   },
 
   async findPrinter ({ commit }, id: string) {

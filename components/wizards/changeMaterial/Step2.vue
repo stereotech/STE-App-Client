@@ -21,7 +21,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
+import { CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -46,11 +46,6 @@ export default class extends Vue {
   private description: string = 'Select the needed action'
 
   @printers.Action customCommand: any
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
-
-  get computedStatus () {
-    return this.status(this.$route.params.id)
-  }
 
   private nextStep () {
     this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })

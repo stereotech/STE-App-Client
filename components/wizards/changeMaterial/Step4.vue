@@ -26,7 +26,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
+import { CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -47,20 +47,29 @@ export default class extends Vue {
   private step?: number = 4
   private curStep?: number = this.currentStep
 
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
     return this.status(this.$route.params.id)
   }
 
   get heating () {
-    if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
         let deviation = 0
         if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
+            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+            deviation = Math.abs(target - actual)
+          }
+
         } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
+            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+            deviation = Math.abs(target - actual)
+          }
         }
         return deviation > 10
       }

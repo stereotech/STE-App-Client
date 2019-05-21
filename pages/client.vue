@@ -35,20 +35,6 @@ export default class extends Vue {
     let apiKey = this.printer(this.settings.systemId).apiKey
     this.disconnectPrinter(apiKey)
   }
-
-  private pollingStatus!: NodeJS.Timeout
-
-  private async pollData () {
-    this.$store.dispatch('printersState/fetchPrinters')
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
-  }
 }
 </script>
 

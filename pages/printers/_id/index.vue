@@ -14,11 +14,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/PrinterCard.vue'
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
 import WizardsPanel from '~/components/printers/WizardsPanel.vue'
 import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.vue'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, PrinterStatus } from 'types/printer'
+import { PrinterInfo, CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -31,14 +31,13 @@ const printers = namespace('printersState')
 })
 export default class PrinterPage extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Getter status!: (id: string) => CurrentState | undefined
 
   async mounted () {
     await this.$store.dispatch('printersState/fetchPrinters')
     if (this.printer(this.$route.params.id) === undefined) {
       this.$router.push('/printers')
     }
-    this.pollData()
   }
 
   head () {
@@ -47,23 +46,11 @@ export default class PrinterPage extends Vue {
 
   get isPrinting (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.stateText === 'Printing'
+      return this.status(this.$route.params.id)!.state.flags.printing
     }
     return false
   }
 
-  private pollingStatus!: NodeJS.Timeout
-
-  private pollData () {
-
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
-  }
 }
 </script>
 

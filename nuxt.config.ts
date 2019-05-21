@@ -48,7 +48,8 @@ const config = {
     progress: false
   },
   proxy: {
-    '/api/': { target: '*' }
+    '/api/': { target: '*' },
+    '/mainhub/': { target: '*' }
   },
   vuetify: {
     treeShake: true,

@@ -8,10 +8,17 @@
       </v-toolbar>
       <v-list two-line style="max-height: 486px" class="scroll-y" v-if="doneJobs.length > 0">
         <v-list-tile v-for="doneJob in doneJobs" :key="doneJob.id">
-          <v-list-tile-action @click="toggleSuccess(doneJob)" ripple>
+          <v-list-tile-action
+            v-if="doneJob.state == 'Completed'"
+            @click="toggleSuccess(doneJob)"
+            ripple
+          >
             <v-icon
               :color="doneJob.successful ? `success` : `error`"
             >{{ doneJob.successful ? 'mdi-check' : 'mdi-close' }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-action v-else-if="doneJob.state == 'Revert'">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title class="subheading">{{ doneJob.name }}</v-list-tile-title>

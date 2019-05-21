@@ -170,7 +170,10 @@ export default class extends Vue {
     description: '',
     creationTime: 0,
     fileUri: '',
-    printers: []
+    printers: [],
+    lastPrintTime: 0,
+    successful: false,
+    state: ''
   }
 
   private createJob () {
@@ -182,7 +185,10 @@ export default class extends Vue {
       description: '',
       printers: [],
       fileUri: '',
-      creationTime: Date.now()
+      creationTime: Date.now(),
+      lastPrintTime: 0,
+      successful: false,
+      state: ''
     }
   }
 
@@ -229,7 +235,10 @@ export default class extends Vue {
       description: '',
       creationTime: 0,
       fileUri: '',
-      printers: []
+      printers: [],
+      lastPrintTime: 0,
+      successful: false,
+      state: ''
     }
     this.copiesCount = 1
   }

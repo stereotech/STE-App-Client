@@ -44,32 +44,11 @@ export default class Dashboard extends Vue {
     return { title: 'STE App Dashboard' }
   }
 
-  private pollingStorageAndJobs!: NodeJS.Timeout
-  private pollingStatus!: NodeJS.Timeout
-
-  private async pollData () {
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
-    await this.$store.dispatch('printersState/fetchPrinters')
-    await this.$store.dispatch('printJobsState/fetchJobs')
-    await this.$store.dispatch('storageState/fetchLocal')
-    await this.$store.dispatch('storageState/fetchUsbs')
-    this.pollingStorageAndJobs = setInterval(async () => {
-      await this.$store.dispatch('printJobsState/fetchJobs')
-      await this.$store.dispatch('storageState/fetchLocal')
-      await this.$store.dispatch('storageState/fetchUsbs')
-    }, 7000)
-
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStorageAndJobs)
-    clearInterval(this.pollingStatus)
+  mounted () {
+    this.$store.dispatch('printersState/fetchPrinters')
+    this.$store.dispatch('storageState/fetchLocal')
+    this.$store.dispatch('storageState/fetchUsbs')
+    this.$store.dispatch('printJobsState/fetchJobs')
   }
 
 }

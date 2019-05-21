@@ -1,8 +1,30 @@
 <template>
   <v-card>
-    <v-card-title class="title">Misc</v-card-title>
+    <v-card-title class="title">Terminal</v-card-title>
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
+        <v-flex xs12>
+          <!--
+          <v-textarea
+            box
+            readonly
+            label="Terminal output"
+            :value="printerLogs(id)"
+            height="500"
+            no-resize
+          ></v-textarea>
+          -->
+          <v-card height="500">
+            <v-list dense style="max-height: 500px" class="scroll-y" id="terminal-list">
+              <v-list-tile v-for="(line, index) in printerLogs(id)" :key="index">
+                <v-list-tile-content>{{ line }}</v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-flex>
+        <v-flex xs12>
+          <v-btn flat color="primary" block @click="scrollToBottom">Scroll to bottom</v-btn>
+        </v-flex>
         <v-flex xs12>
           <v-text-field
             append-icon="mdi-send"
@@ -30,15 +52,24 @@ import { Action, Getter, namespace } from 'vuex-class'
 const printers = namespace('printersState')
 
 @Component
-export default class MiscCard extends Vue {
+export default class TerminalCard extends Vue {
   @Prop({ default: false, type: Boolean }) printing!: boolean
   @Prop({ default: '', type: String, required: true }) id!: string
 
   @printers.Action customCommand: any
+  @printers.Getter printerLogs!: (id: string) => string[]
 
   private previousGCode: string[] = []
   private previousIndex: number = 0
   private gcodeString: string = ''
+
+  private scrollToBottom () {
+    let container = this.$el.querySelector("#terminal-list")
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+
+  }
 
   private misc () {
     this.customCommand({ id: this.id, command: this.gcodeString })

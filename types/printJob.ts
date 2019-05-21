@@ -7,8 +7,9 @@ export interface PrintJob {
   creationTime: number
   fileUri: string
   printers: string[]
-  lastPrintTime?: number
-  successful?: boolean
+  lastPrintTime: number
+  successful: boolean
+  state: string
 }
 
 export interface JobInfo {
