@@ -12,11 +12,11 @@
           </v-img>
         </v-flex>
         <v-flex xs8>
-          <v-badge color="primary" v-if="local">
-            <v-icon slot="badge" dark>mdi-server</v-icon>
-            <p class="title">{{ name }}</p>
-          </v-badge>
-          <p v-else class="title">{{ name }}</p>
+          <p class="title">
+            {{ name }}
+            <v-chip color="primary" text-color="white" v-if="local" disabled>Host</v-chip>
+          </p>
+
           <p class="body-2">{{ model }}</p>
           <p class="title" v-if="printing">Printing...{{ progress | currency('', 1) }}%</p>
           <p class="warning--text title" v-if="paused">Paused at {{ progress | currency('', 1) }}%</p>
