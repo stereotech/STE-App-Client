@@ -5,14 +5,12 @@
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
-    <v-btn-toggle mandatory>
-      <v-btn flat icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
-        <v-icon>mdi-lightbulb-on-outline</v-icon>
-      </v-btn>
-      <v-btn flat icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
-        <v-icon>mdi-lightbulb-outline</v-icon>
-      </v-btn>
-    </v-btn-toggle>
+    <v-btn flat icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
+      <v-icon>mdi-lightbulb-on-outline</v-icon>
+    </v-btn>
+    <v-btn flat icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
+      <v-icon>mdi-lightbulb-outline</v-icon>
+    </v-btn>
     <v-btn flat icon @click="findPrinter(id)">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>

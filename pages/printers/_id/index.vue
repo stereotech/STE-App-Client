@@ -3,7 +3,7 @@
     <v-flex xs12>
       <PrinterCard toolbar :id="$route.params.id"/>
     </v-flex>
-    <v-flex xs12 v-if="!isPrinting">
+    <v-flex xs12 v-if="isMaintenance || isPaused">
       <WizardsPanel :id="$route.params.id"/>
     </v-flex>
     <v-flex xs12>
@@ -50,7 +50,18 @@ export default class PrinterPage extends Vue {
     }
     return false
   }
-
+  get isMaintenance (): boolean {
+    if (this.status(this.$route.params.id) !== undefined) {
+      return this.status(this.$route.params.id)!.state.text === 'Maintenance'
+    }
+    return false
+  }
+  get isPaused (): boolean {
+    if (this.status(this.$route.params.id) !== undefined) {
+      return this.status(this.$route.params.id)!.state.text === 'Paused'
+    }
+    return false
+  }
 }
 </script>
 

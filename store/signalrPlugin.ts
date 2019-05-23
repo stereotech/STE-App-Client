@@ -36,6 +36,9 @@ export const InitSignalR = store => {
         connection.on('JobEdited', () => {
             store.dispatch('printJobsState/fetchJobs')
         })
+        connection.on('JobDequeued', () => {
+            store.dispatch('printJobsState/fetchJobs')
+        })
         connection.on('JobRemoved', () => {
             store.dispatch('printJobsState/fetchJobs')
         })

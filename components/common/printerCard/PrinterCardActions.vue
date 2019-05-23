@@ -64,6 +64,14 @@
           ></v-select>
         </v-flex>
       </v-layout>
+      <v-layout row wrap v-else-if="loading">
+        <v-flex xs12 sm8 md12>
+          <p class="title text-truncate">Uploading prinjob...</p>
+        </v-flex>
+        <v-flex xs12 sm4 md12>
+          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </v-flex>
+      </v-layout>
     </v-container>
   </v-flex>
 </template>
@@ -88,6 +96,7 @@ export default class PrinterCardActions extends Vue {
   @Prop({ default: false, type: Boolean }) done!: boolean
   @Prop({ default: false, type: Boolean }) failed!: boolean
   @Prop({ default: false, type: Boolean }) offline!: boolean
+  @Prop({ default: false, type: Boolean }) loading!: boolean
 
   @printers.Action setStatus: any
   @printers.Action pausePrintJob: any
@@ -95,7 +104,10 @@ export default class PrinterCardActions extends Vue {
   @printers.Action cancelPrintJob: any
 
   get jobNameFomatted (): string {
-    return this.jobName.substring(0, this.jobName.length - 6)
+    if (this.jobName != null) {
+      return this.jobName.substring(0, this.jobName.length - 6)
+    }
+    return ''
   }
 
   private setPrinterState (value: string) {

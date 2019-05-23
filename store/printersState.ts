@@ -95,6 +95,8 @@ export const mutations: MutationTree<PrintersState> = {
         current.temps.push(...status.temps)
       }
       current.state = status.state
+      current.progress = status.progress
+      current.job = status.job
     }
     else {
       state.status.push(status)

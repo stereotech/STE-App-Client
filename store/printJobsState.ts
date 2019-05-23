@@ -85,7 +85,7 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
   },
 
   async revertJob ({ commit }, job: PrintJob) {
-    job.state = "Revert"
+    commit('revertJob', job)
     await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
   },
 

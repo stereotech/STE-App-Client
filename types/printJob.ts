@@ -4,6 +4,7 @@ export interface PrintJob {
   id: number
   name: string
   description: string
+  target?: string
   creationTime: number
   fileUri: string
   printers: string[]

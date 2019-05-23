@@ -21,6 +21,7 @@
             :done="isDone"
             :failed="isFailed"
             :offline="isOffline"
+            :loading="isLoading"
           />
           <PrinterCardTemps :id="id" :offline="isOffline"/>
           <PrinterCardActions
@@ -34,6 +35,7 @@
             :done="isDone"
             :failed="isFailed"
             :offline="isOffline"
+            :loading="isLoading"
           />
         </v-layout>
       </v-container>
@@ -117,6 +119,12 @@ export default class PrinterCard extends Vue {
   get isFailed (): boolean {
     if (this.computedStatus !== undefined) {
       return this.computedStatus!.state.text === 'Failed'
+    }
+    return false
+  }
+  get isLoading (): boolean {
+    if (this.computedStatus !== undefined) {
+      return this.computedStatus!.state.text === 'Loading'
     }
     return false
   }

@@ -16,13 +16,17 @@
         <v-list-tile v-for="job in queuedJobs" :key="job.id + job.name" avatar>
           <v-list-tile-content>
             <v-list-tile-title>{{ job.name }}</v-list-tile-title>
+            <v-list-tile-sub-title v-if="job.state === 'Dequeued'">
+              <v-progress-linear :indeterminate="true"></v-progress-linear>
+            </v-list-tile-sub-title>
             <v-list-tile-sub-title
               class="body-1"
+              v-else
             >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
             <v-list-tile-action-text>{{ job.creationTime | moment("from") }}</v-list-tile-action-text>
-            <v-menu bottom left>
+            <v-menu bottom left v-if="job.state === 'Queued'">
               <v-btn slot="activator" icon>
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
@@ -226,6 +230,10 @@ export default class extends Vue {
         }
         this.addJob(jobsArray)
       } else {
+        let emptyIdx = this.editedJob.printers.indexOf('')
+        if (emptyIdx > -1) {
+          this.editedJob.printers.splice(emptyIdx, 1)
+        }
         this.editJob(this.editedJob)
       }
     }
