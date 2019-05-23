@@ -16,6 +16,10 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>Add printer</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="startScan">
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
         </v-toolbar>
         <v-card-text style="height: 1000px;">
           <v-container grid-list-md fluid>
