@@ -1,5 +1,6 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrinterInfo, CurrentState, TemperatureDataPoint } from '~/types/printer'
+import { Error } from '~/types/error'
 import { RootState } from '.'
 
 const apiEndpoint = 'printers/'
@@ -76,6 +77,13 @@ export const mutations: MutationTree<PrintersState> = {
     state.status = status
   },
 
+  setError (state: PrintersState, error: Error) {
+    const index = state.status.findIndex(value => value.id === error.id)
+    if (index > -1) {
+      state.status[index].error = error.message
+    }
+  },
+
   setOneStatus (state: PrintersState, status: CurrentState) {
     const index = state.status.findIndex(value => value.id === status.id)
     if (index > -1) {
@@ -113,11 +121,16 @@ export const actions: ActionTree<PrintersState, RootState> = {
     }
   },
 
-  async deletePrinter ({ commit }, printer: PrinterInfo) {
-    let response = await this.$axios.delete(this.state.apiUrl + apiEndpoint + printer.id)
-    if (response.status == 204) {
-      commit('deletePrinter', printer)
+  async fetchStatus ({ commit }) {
+    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + 'state')
+    if (response.status == 200) {
+      let status: CurrentState[] = response.data
+      commit('setStatus', status)
     }
+  },
+
+  async deletePrinter ({ commit }, printer: PrinterInfo) {
+    await this.$axios.delete(this.state.apiUrl + apiEndpoint + printer.id)
   },
 
   async disconnectPrinter ({ commit }, apiKey: string) {

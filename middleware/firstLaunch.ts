@@ -11,5 +11,7 @@ export default async function (context) {
     if ((context.route.path as string).indexOf('client') < 0) {
       return context.redirect('/client')
     }
+  } else if ((context.route.path as string).indexOf('firstlaunch') > 0) {
+    return context.redirect('/')
   }
 }

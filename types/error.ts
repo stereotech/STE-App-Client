@@ -1,3 +1,4 @@
 export interface Error {
-    message?: string
+    id: string
+    message: string
 }

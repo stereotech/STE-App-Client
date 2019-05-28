@@ -3,7 +3,7 @@ import { CurrentState } from '~/types/printer'
 
 export const InitSignalR = store => {
     if (store.state.apiUrl) {
-        let connection = new HubConnectionBuilder().withUrl(store.state.apiUrl + 'mainhub').configureLogging(LogLevel.Debug).build()
+        let connection = new HubConnectionBuilder().withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets }).configureLogging(LogLevel.Debug).build()
 
         connection.onclose(() => {
         })
@@ -41,6 +41,15 @@ export const InitSignalR = store => {
         })
         connection.on('JobRemoved', () => {
             store.dispatch('printJobsState/fetchJobs')
+        })
+        connection.on('PrinterAdded', () => {
+            store.dispatch('printersState/fetchPrinters')
+        })
+        connection.on('PrinterRemoved', () => {
+            store.dispatch('printersState/fetchPrinters')
+        })
+        connection.on('PrinterError', () => {
+            store.commit('printersState/setError')
         })
         connection.start();
     }

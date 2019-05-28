@@ -13,7 +13,7 @@ export interface RootState {
 }
 
 export const state = (): RootState => ({
-  apiUrl: 'http://192.168.0.123/api/'
+  apiUrl: 'http://192.168.0.104/api/'
 })
 
 export const mutations: MutationTree<RootState> = {

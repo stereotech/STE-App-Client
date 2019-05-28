@@ -34,7 +34,7 @@ export default class PrinterPage extends Vue {
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
   async mounted () {
-    await this.$store.dispatch('printersState/fetchPrinters')
+    this.$store.dispatch('printersState/fetchPrinters')
     if (this.printer(this.$route.params.id) === undefined) {
       this.$router.push('/printers')
     }

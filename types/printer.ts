@@ -61,4 +61,5 @@ export interface CurrentState {
   state: State
   currentZ: number | null
   progress: ProgressInfo
+  error?: string
 }
