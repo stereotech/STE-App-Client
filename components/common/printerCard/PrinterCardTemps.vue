@@ -38,11 +38,13 @@
       </v-layout>
     </v-container>
   </v-flex>
+  <!--
   <v-flex d-flex md4 xs12 sm6 v-else>
     <v-btn color="accent" round large depressed>
       <v-icon>mdi-cached</v-icon>Try to reconnect
     </v-btn>
   </v-flex>
+  -->
 </template>
 
 <script lang="ts">

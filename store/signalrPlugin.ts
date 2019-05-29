@@ -24,6 +24,9 @@ export const InitSignalR = store => {
             }
             store.commit('printersState/setOneStatus', current)
         })
+        connection.on('PrinterStateChanged', (id, state) => {
+
+        })
         connection.on('LocalStorageChanged', () => {
             store.dispatch('storageState/fetchLocal')
         })
@@ -45,8 +48,10 @@ export const InitSignalR = store => {
         connection.on('PrinterAdded', () => {
             store.dispatch('printersState/fetchPrinters')
         })
-        connection.on('PrinterRemoved', () => {
+        connection.on('PrinterRemoved', (id) => {
+            store.commit('printersState/clearHistory', id)
             store.dispatch('printersState/fetchPrinters')
+
         })
         connection.on('PrinterError', () => {
             store.commit('printersState/setError')

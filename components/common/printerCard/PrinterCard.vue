@@ -1,18 +1,18 @@
 <template>
-  <v-flex xs12 v-if="computedStatus && computedPrinter">
+  <v-flex xs12 v-if="computedPrinter">
     <v-card>
       <PrinterCardToolbar
         :id="id"
         :toolbar="toolbar"
         :controlPanel="controlPanel"
-        :removable="!computedPrinter.isLocal && isMaintenance && controlPanel"
+        :removable="!computedPrinter.isLocal && (isMaintenance || !isAvaliable) && controlPanel"
       />
       <v-container fluid grid-list-md>
         <v-layout row wrap>
           <PrinterCardInfo
             :name="computedPrinter.name"
             :model="computedPrinter.model"
-            :progress="computedStatus.progress.completion"
+            :progress="computedStatus ? computedStatus.progress.completion : 0"
             :local="computedPrinter.isLocal"
             :paused="isPaused"
             :maintenance="isMaintenance"
@@ -22,12 +22,13 @@
             :failed="isFailed"
             :offline="isOffline"
             :loading="isLoading"
+            :notAvaliable="!isAvaliable"
           />
-          <PrinterCardTemps :id="id" :offline="isOffline"/>
+          <PrinterCardTemps v-if="isAvaliable" :id="id" :offline="isOffline"/>
           <PrinterCardActions
             :id="id"
-            :jobName="computedStatus.job.file.display"
-            :stateText="computedStatus.state.text"
+            :jobName="computedStatus ? computedStatus.job.file.display : ''"
+            :stateText="computedStatus ? computedStatus.state.text : ''"
             :paused="isPaused"
             :maintenance="isMaintenance"
             :idle="isIdle"
@@ -36,6 +37,7 @@
             :failed="isFailed"
             :offline="isOffline"
             :loading="isLoading"
+            :notAvaliable="!isAvaliable"
           />
         </v-layout>
       </v-container>
@@ -127,6 +129,10 @@ export default class PrinterCard extends Vue {
       return this.computedStatus!.state.text === 'Loading'
     }
     return false
+  }
+
+  get isAvaliable (): boolean {
+    return (this.computedStatus !== undefined && this.computedPrinter !== undefined)
   }
 
 }

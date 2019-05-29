@@ -66,10 +66,16 @@
       </v-layout>
       <v-layout row wrap v-else-if="loading">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Uploading printjob...</p>
+          <p class="title text-truncate">Waiting...</p>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap v-else-if="notAvaliable">
+        <v-flex xs12 sm8 md12>
+          <p class="title text-truncate">Printer is not avaliable</p>
+          <p class="title text-truncate">in the current network</p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -97,6 +103,7 @@ export default class PrinterCardActions extends Vue {
   @Prop({ default: false, type: Boolean }) failed!: boolean
   @Prop({ default: false, type: Boolean }) offline!: boolean
   @Prop({ default: false, type: Boolean }) loading!: boolean
+  @Prop({ default: false, type: Boolean }) notAvaliable!: boolean
 
   @printers.Action setStatus: any
   @printers.Action pausePrintJob: any

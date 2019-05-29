@@ -1,8 +1,24 @@
 <template>
   <v-toolbar v-if="toolbar" flat dense color="secondary">
-    <v-btn v-if="controlPanel" flat nuxt :to="'/printers/' + id" ripple>
+    <v-btn
+      v-if="controlPanel && $vuetify.breakpoint.smAndUp"
+      flat
+      nuxt
+      :to="'/printers/' + id"
+      ripple
+    >
       Control panel
       <v-icon>mdi-chevron-right</v-icon>
+    </v-btn>
+    <v-btn
+      v-if="controlPanel && $vuetify.breakpoint.xsOnly"
+      flat
+      icon
+      nuxt
+      :to="'/printers/' + id"
+      ripple
+    >
+      <v-icon>mdi-camera-control</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
     <v-btn flat icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">

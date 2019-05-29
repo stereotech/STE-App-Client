@@ -26,6 +26,7 @@
           <p class="error--text title" v-else-if="failed">Printing Failed</p>
           <p class="error--text title" v-else-if="offline">Offline</p>
           <p class="primary--text title" v-else-if="loading">Loading...</p>
+          <p class="error--text title" v-else-if="notAvaliable">Not Avaliable</p>
           <v-progress-linear v-if="printing" :value="progress"></v-progress-linear>
           <v-progress-linear v-if="paused" :value="progress" color="warning"></v-progress-linear>
           <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
@@ -52,6 +53,7 @@ export default class PrinterCardInfo extends Vue {
   @Prop({ default: false, type: Boolean }) failed!: boolean
   @Prop({ default: false, type: Boolean }) offline!: boolean
   @Prop({ default: false, type: Boolean }) loading!: boolean
+  @Prop({ default: false, type: Boolean }) notAvaliable!: boolean
 }
 
 </script>

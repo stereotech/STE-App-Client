@@ -84,6 +84,13 @@ export const mutations: MutationTree<PrintersState> = {
     }
   },
 
+  clearHistory (state: PrintersState, id) {
+    const index = state.status.findIndex(value => value.id === id)
+    if (index > -1) {
+      state.status.splice(index, 1)
+    }
+  },
+
   setOneStatus (state: PrintersState, status: CurrentState) {
     const index = state.status.findIndex(value => value.id === status.id)
     if (index > -1) {
@@ -108,6 +115,13 @@ export const mutations: MutationTree<PrintersState> = {
     }
     else {
       state.status.push(status)
+    }
+  },
+
+  setNewState (state: PrintersState, { id, newState }) {
+    const index = state.status.findIndex(value => value.id === id)
+    if (index > -1) {
+      state.status[index].state.text = newState
     }
   }
 }
