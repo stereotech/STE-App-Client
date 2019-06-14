@@ -59,7 +59,7 @@ const config = {
       secondary: '#ffffff',
       accent: '#263238',
       error: '#FF5252',
-      info: '#42A5F5',
+      info: '#9C27B0',
       success: '#4CAF50',
       warning: '#FFC107'
     },
