@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
+import PrinterCard from '~/components/common/PrinterCard.vue'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo } from 'types/printer'
+import { PrinterInfo, PrinterStatus } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -19,6 +19,7 @@ const printers = namespace('printersState')
 })
 export default class PrintersPanel extends Vue {
   @printers.Getter printers!: PrinterInfo[]
+  @printers.Getter printersStatus!: PrinterStatus[]
 
 }
 </script>

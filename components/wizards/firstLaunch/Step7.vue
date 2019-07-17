@@ -75,6 +75,7 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { Network } from '~/types/networking'
+import { PrinterStatus } from 'types/printer'
 
 const settings = namespace('settingsState')
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn color="primary" large round block @click="startScan">
-      <v-icon>mdi-plus</v-icon>&nbsp;Add printer
+      <v-icon>mdi-plus</v-icon>&nbsp;{{$t('printers.addPrinterDialog.title')}}
     </v-btn>
     <v-dialog
       v-model="dialog"
@@ -15,11 +15,7 @@
           <v-btn icon dark @click="closeDialog">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Add printer</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="startScan">
-            <v-icon>mdi-refresh</v-icon>
-          </v-btn>
+          <v-toolbar-title>{{$t('printers.addPrinterDialog.title')}}</v-toolbar-title>
         </v-toolbar>
         <v-card-text style="height: 1000px;">
           <v-container grid-list-md fluid>
@@ -29,14 +25,14 @@
                   <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar"/>
                   <p class="title text-xs-center">{{ printer.name }}</p>
                   <p class="body-1 text-xs-center">{{ printer.model }}</p>
-                  <p class="body-1 text-xs-center">Address: {{ printer.ipAddress }}</p>
+                  <p class="body-1 text-xs-center">{{$t('printers.addPrinterDialog.address')}} {{ printer.ipAddress }}</p>
                 </v-card>
                 <v-dialog v-model="confirmation" max-width="425">
                   <v-card>
                     <v-card-title class="headline">Do you want to add {{ printer.name }} to cluster?</v-card-title>
                     <v-card-actions>
-                      <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-                      <v-btn color="primary" flat @click="startConnection(printer)">Yes</v-btn>
+                      <v-btn color="primary" flat @click="confirmation = false">{{$t('frequentlyUsed.no')}}</v-btn>
+                      <v-btn color="primary" flat @click="startConnection(printer)">{{$t('frequentlyUsed.yes')}}</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>

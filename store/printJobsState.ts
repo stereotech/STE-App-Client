@@ -2,8 +2,6 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrintJob } from '~/types/printJob'
 import { RootState } from '.'
 
-const jobsEndpoint = 'jobs'
-
 export interface PrintJobsState {
   jobs: PrintJob[]
 }
@@ -14,17 +12,13 @@ export const state = (): PrintJobsState => ({
 
 export const getters: GetterTree<PrintJobsState, RootState> = {
   doneJobs (state): PrintJob[] {
-    return state.jobs.filter(value => value.state === ("Completed" || "Revert"))
+    return state.jobs.filter(value => value.succesful !== undefined)
   },
 
   queuedJobs (state): PrintJob[] {
     return state.jobs
-      .filter(value => value.state === ("Queued" || "Dequeued"))
+      .filter(value => value.lastPrint === undefined)
       .sort((a: PrintJob, b: PrintJob) => a.id - b.id)
-  },
-
-  jobsCount (state): number {
-    return state.jobs.length
   }
 }
 
@@ -40,8 +34,8 @@ export const mutations: MutationTree<PrintJobsState> = {
     }
   },
 
-  addJob (state: PrintJobsState, jobs: PrintJob[]) {
-    state.jobs.push(...jobs)
+  addJob (state: PrintJobsState, job: PrintJob) {
+    state.jobs.push(job)
   },
 
   editJob (state: PrintJobsState, job: PrintJob) {
@@ -51,45 +45,67 @@ export const mutations: MutationTree<PrintJobsState> = {
   revertJob (state: PrintJobsState, job: PrintJob) {
     const index = state.jobs.findIndex(value => value.id === job.id)
     if (index > -1) {
-      state.jobs[index].state = "Revert"
+      state.jobs[index].succesful = undefined
+      state.jobs[index].lastPrint = undefined
     }
   },
 
   toggleSuccess (state: PrintJobsState, job: PrintJob) {
     const index = state.jobs.findIndex(value => value.id === job.id)
     if (index > -1) {
-      state.jobs[index].successful = !state.jobs[index].successful
+      state.jobs[index].succesful = !state.jobs[index].succesful
     }
   }
 }
 
 export const actions: ActionTree<PrintJobsState, RootState> = {
   async fetchJobs ({ commit }) {
-    let response = await this.$axios.get(this.state.apiUrl + jobsEndpoint)
-    if (response.status == 200) {
-      let jobs: PrintJob[] = response.data
-      commit('setJobs', jobs)
-    }
+    await new Promise(resolve => setTimeout(resolve, 200))
+    const printJobs: PrintJob[] = [
+      {
+        id: 1,
+        name: 'job1',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'file.gcode',
+        succesful: true,
+        lastPrint: Date.now(),
+        printers: []
+      },
+      {
+        id: 2,
+        name: 'job2',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        printers: ['st-aaa']
+      }
+    ]
+    commit('setJobs', printJobs)
   },
 
   async removeJob ({ commit }, job: PrintJob) {
-    await this.$axios.$delete(this.state.apiUrl + jobsEndpoint + '/' + job.id)
+    await new Promise(resolve => setTimeout(resolve, 200))
+    commit('removeJob', job)
   },
 
-  async addJob ({ commit }, jobs: PrintJob[]) {
-    await this.$axios.$post(this.state.apiUrl + jobsEndpoint, jobs)
+  async addJob ({ commit }, job: PrintJob) {
+    await new Promise(resolve => setTimeout(resolve, 200))
+    commit('addJob', job)
   },
 
   async editJob ({ commit }, job: PrintJob) {
-    await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
+    await new Promise(resolve => setTimeout(resolve, 200))
+    commit('editJob', job)
   },
 
   async revertJob ({ commit }, job: PrintJob) {
+    await new Promise(resolve => setTimeout(resolve, 200))
     commit('revertJob', job)
-    await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
   },
 
   async toggleSuccess ({ commit }, job: PrintJob) {
-    await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
+    await new Promise(resolve => setTimeout(resolve, 200))
+    commit('toggleSuccess', job)
   }
 }

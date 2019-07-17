@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="headline font-weight-light">Manual control</span>
+      <span class="headline font-weight-light">{{$t('printers.expert.manualControlPanel.title')}}</span>
     </v-card-title>
     <v-container fluid grid-list-md>
       <v-layout row wrap>
@@ -15,7 +15,7 @@
           <TemperatureFan chamberFan :id="id"/>
         </v-flex>
         <v-flex xs12 md6 lg4>
-          <TerminalCard :id="id"/>
+          <MiscCard :id="id"/>
         </v-flex>
       </v-layout>
     </v-container>
@@ -26,7 +26,7 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import JogCard from '~/components/printers/expert/JogCard.vue'
 import ExtruderCard from '~/components/printers/expert/ExtruderCard.vue'
-import TerminalCard from '~/components/printers/expert/TerminalCard.vue'
+import MiscCard from '~/components/printers/expert/MiscCard.vue'
 import TemperatureFan from '~/components/printers/expert/TemperatureFan.vue'
 
 @Component({
@@ -34,7 +34,7 @@ import TemperatureFan from '~/components/printers/expert/TemperatureFan.vue'
     JogCard,
     ExtruderCard,
     TemperatureFan,
-    TerminalCard
+    MiscCard
   }
 })
 export default class ManualControlPanel extends Vue {

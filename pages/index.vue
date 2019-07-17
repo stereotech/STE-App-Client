@@ -4,12 +4,8 @@
     <DoneJobs/>
     <Queue/>
     <Storage local/>
-    <Storage
-      v-for="usbStorage in allUsbStorages"
-      :key="usbStorage.origin"
-      :name="usbStorage.origin"
-      :display="usbStorage.origin"
-    />
+    <Storage name="st-aaa"/>
+    <Storage name="st-bbb"/>
   </v-layout>
 </template>
 
@@ -19,13 +15,7 @@ import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
 import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
-import { State, Action, Getter, namespace } from 'vuex-class'
-import { StorageState } from '../store/storageState';
-import { FileOrFolder } from '../types/fileOrFolder';
-import { PrinterInfo } from '../types/printer';
 
-const storage = namespace('storageState')
-const printers = namespace('printersState')
 
 @Component({
   components: {
@@ -36,19 +26,36 @@ const printers = namespace('printersState')
   }
 })
 export default class Dashboard extends Vue {
-  @storage.Getter allUsbStorages!: FileOrFolder[]
+  
+  private pollingStorageAndJobs!: NodeJS.Timeout
+  private pollingStatus!: NodeJS.Timeout
+  private pollingLang!: NodeJS.Timeout //незнаю что делаю. Типо пытаюсь заказать языки
 
-  @printers.Getter printers!: PrinterInfo[]
+  private async pollData () {
+    this.pollingStatus = setInterval(async () => {
+      await this.$store.dispatch('printersState/fetchStatus')
+    }, 1000)
+    await this.$store.dispatch('printersState/fetchPrinters')
 
-  head () {
-    return { title: 'STE App Dashboard' }
+    this.pollingStorageAndJobs = setInterval(async () => {
+      await this.$store.dispatch('printJobsState/fetchJobs')
+      await this.$store.dispatch('storageState/fetchLocal')
+      await this.$store.dispatch('storageState/fetchUsbs')
+    }, 5000)
+
+    // this.pollingLang = setInterval(async ()=>{
+    //   await this.$store.dispatch('settingsState/')
+    // })
+
   }
 
-  mounted () {
-    this.$store.dispatch('printersState/fetchPrinters')
-    this.$store.dispatch('storageState/fetchLocal')
-    this.$store.dispatch('storageState/fetchUsbs')
-    this.$store.dispatch('printJobsState/fetchJobs')
+  async mounted () {
+    await this.pollData()
+  }
+
+  beforeDestroy () {
+    clearInterval(this.pollingStorageAndJobs)
+    clearInterval(this.pollingStatus)
   }
 
 }

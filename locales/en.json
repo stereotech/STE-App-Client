@@ -1,0 +1,136 @@
+{
+    
+        "frequentlyUsed":{
+          "no": "No",
+          "yes": "Yes",
+          "cancel": "Cancel",
+          "ok": "OK",
+          "forget": "Forget",
+          "connect": "Connect",
+          "remove": "Remove",
+          "save": "Save"
+      },
+        "common":{
+          "printerCard": {
+            "title": "Control Panel",
+            "printing" : "Printing...",
+            "paused": "Paused at",
+            "maintenance": "Maintenance",
+            "printingDone": "Printing Done!",
+            "offline": "Offline",
+            "e1Target": "E1 Target",
+            "e2Target": "E2 Target",
+            "bedTarget": "Bed Target:",
+            "chamberTarget": "Chamber Target",
+            "tryToReconnect": "Try to reconnect",
+            "currentFile": "Current file:",
+            "currentPrintjob": "Current printjob:",
+            "cleanTheBuildplate": "Clean the buildplate and select state",
+            "printerIsWaiting": "Printer is waiting for printjob",
+            "printerIsReady": "Printer is ready for maintenance",
+            "doYouWantToRemove": "Do you want to remove {{ computedPrinter.name }} from cluster?",
+            "no": "No",
+            "yes": "Yes"
+          },
+          "settings": {
+            "settingsTitle": ["Wi-fi","Date and time","Language","Storage","Restore","Updates"],
+              "dateTimeDialog":{
+                "title": "Date And Time"
+            },
+            "languageDialog":{
+                "title": "Language"
+            },
+            "mainSettingsDialog":{
+                "title": "Settings"
+            },
+            "resetDialog":{
+                "title": "Reset And restore",
+                "factoryReset": "Factory Reset",
+                "factoryResetClearStorage": "Factory reste (clear storage)",
+                "sureFactoryReset": "Are you sure want to make factory reset?",
+                "sureFactoryResetClear": "Are you sure want to make factory reset and clear all user data?",
+                "rebootMessage": "Printer will reboot after confirmation"
+            },
+            "settingsDialog":{
+                "title": "Settings",
+                "reboot": "Reboot",
+                "powerOff": "Power Off"
+            },
+            "storageDialog":{
+                "title": "Storage"
+            },
+            "updateDialog":{
+                "title": "Sistem updates",
+                "currentVersion": "Current version:",
+                "checkForUpdate": "Check for update",
+                "downloadAndInstall": "download and install"
+            },
+            "wifiDialog":{
+                "title": "Wi-fi Setup",
+                "currentNetwork": "Current Network",
+                "forgetNetworkName": "Forget",
+                "avaliableNetworks": "Avaliable networks",
+                "enterWifiPassword": "Enter Wi-Fi passord",
+                "connectToNetwork": "Connect to network?"
+            }
+          } 
+      },
+      "dashboard":{
+        "doneJobs":{
+          "title": "Done Jobs",
+          "printed": "Printed:",
+          "revert": "Revert"
+        },
+        "printersPanel":{
+
+        },
+        "queue":{
+          "title": "Queue",
+          "edit": "Edit",
+          "removeJob": "Do you want to remove the job?"
+        },
+        "storage":{
+          "title": "",
+          "uploaded": "Uploaded "
+        }
+      },
+      "materials":{
+        "materialDialog": {
+          "title": "Add Material",
+          "updateMaterial": "Update material"
+        }
+      },
+      "printers":{
+        "expert":{
+          "extruderCard":{
+            "title": "Extruder"
+          },
+          "jogCard":{
+            "title": "Jog"
+          },
+          "manualControlPanel":{
+            "title": "Manual Control"
+          },
+          "miscCard":{
+            "title": "Misc"
+          },
+          "temperatureFan":{
+            "title": "Temperature And Fan"
+          }
+        },
+        "addPrinterDialog":{
+          "title": "Add printer",
+          "address": "Address:",
+          "": ""
+        },
+        "wizardCard":{
+          
+        },
+        "wizardsPanel":{
+          "title": "Wizard"
+        }
+      },
+      "navigationPanel":["Dashboard","Printers","Materials"]
+     
+
+}

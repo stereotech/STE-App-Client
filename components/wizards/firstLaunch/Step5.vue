@@ -26,7 +26,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterInfo, CurrentState } from 'types/printer'
+import { PrinterStatus, PrinterInfo } from 'types/printer'
 import { Settings } from 'types/settings'
 
 const printers = namespace('printersState')
@@ -51,29 +51,20 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   @settings.Getter settings!: Settings
-  @printers.Getter status!: (id: string) => CurrentState | undefined
+  @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
   get computedStatus () {
     return this.status(this.settings.systemId)
   }
 
   get heating () {
-    if (this.computedStatus) {
-      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
         let deviation = 0
         if (this.additionalData.tool === 0) {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
-            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-            deviation = Math.abs(target - actual)
-          }
-
+          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
         } else {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
-            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-            deviation = Math.abs(target - actual)
-          }
+          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
         }
         return deviation > 10
       }

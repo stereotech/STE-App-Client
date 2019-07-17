@@ -15,10 +15,10 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
+import PrinterCard from '~/components/common/PrinterCard.vue'
 import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, CurrentState } from 'types/printer'
+import { PrinterInfo, PrinterStatus } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -30,13 +30,23 @@ const printers = namespace('printersState')
 })
 export default class PrintersPage extends Vue {
   @printers.Getter printers!: PrinterInfo[]
+  @printers.Getter printersStatus!: PrinterStatus[]
 
-  head () {
-    return { title: 'STE App Printers' }
+  private pollingStatus!: NodeJS.Timeout
+
+  private async pollData () {
+    await this.$store.dispatch('printersState/fetchPrinters')
+    this.pollingStatus = setInterval(async () => {
+      await this.$store.dispatch('printersState/fetchStatus')
+    }, 1000)
   }
 
-  mounted () {
-    this.$store.dispatch('printersState/fetchPrinters')
+  async mounted () {
+    await this.pollData()
+  }
+
+  beforeDestroy () {
+    clearInterval(this.pollingStatus)
   }
 }
 </script>

@@ -1,13 +1,10 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
-import { PrinterInfo, CurrentState, TemperatureDataPoint } from '~/types/printer'
-import { Error } from '~/types/error'
+import { PrinterInfo, PrinterStatus } from '~/types/printer'
 import { RootState } from '.'
-
-const apiEndpoint = 'printers/'
 
 export interface PrintersState {
   printers: PrinterInfo[]
-  status: CurrentState[]
+  status: PrinterStatus[]
 }
 
 export const state = (): PrintersState => ({
@@ -30,34 +27,6 @@ export const getters: GetterTree<PrintersState, RootState> = {
 
   status (state: PrintersState) {
     return (id: string) => state.status.find(value => value.id === id)
-  },
-
-  lastTempDataPoint (state: PrintersState): (id: string) => TemperatureDataPoint {
-    return (id: string) => {
-      let point: TemperatureDataPoint = {
-        bed: { actual: 0, offset: 0, target: 0 },
-        tool0: { actual: 0, offset: 0, target: 0 },
-        tool1: { actual: 0, offset: 0, target: 0 }
-      }
-      let status = state.status.find(value => value.id === id)
-      if (status && status.temps.length > 0) {
-        let temp = status.temps[status.temps.length - 1]
-        if (temp) {
-          return temp
-        }
-      }
-      return point
-    }
-  },
-
-  printerLogs (state: PrintersState): (id: string) => string[] {
-    return (id: string) => {
-      let status = state.status.find(value => value.id === id)
-      if (status && status.logs.length > 0) {
-        return status.logs
-      }
-      return new Array<string>(0)
-    }
   }
 }
 
@@ -73,145 +42,151 @@ export const mutations: MutationTree<PrintersState> = {
     }
   },
 
-  setStatus (state: PrintersState, status: CurrentState[]) {
+  setStatus (state: PrintersState, status: PrinterStatus[]) {
     state.status = status
   },
 
-  setError (state: PrintersState, error: Error) {
-    const index = state.status.findIndex(value => value.id === error.id)
-    if (index > -1) {
-      state.status[index].error = error.message
-    }
-  },
-
-  clearHistory (state: PrintersState, id) {
-    const index = state.status.findIndex(value => value.id === id)
-    if (index > -1) {
-      state.status.splice(index, 1)
-    }
-  },
-
-  setOneStatus (state: PrintersState, status: CurrentState) {
+  setOneStatus (state: PrintersState, status: PrinterStatus) {
     const index = state.status.findIndex(value => value.id === status.id)
     if (index > -1) {
-      let current = state.status[index]
-      if (current.logs.length < 500) {
-        current.logs.push(...status.logs)
-      }
-      else {
-        current.logs.splice(0, status.logs.length)
-        current.logs.push(...status.logs)
-      }
-      if (current.temps.length < 20) {
-        current.temps.push(...status.temps)
-      }
-      else {
-        current.temps.splice(0, status.temps.length)
-        current.temps.push(...status.temps)
-      }
-      current.state = status.state
-      current.progress = status.progress
-      current.job = status.job
-    }
-    else {
-      state.status.push(status)
-    }
-  },
-
-  setNewState (state: PrintersState, { id, newState }) {
-    const index = state.status.findIndex(value => value.id === id)
-    if (index > -1) {
-      state.status[index].state.text = newState
+      state.status[index] = status
     }
   }
 }
 
 export const actions: ActionTree<PrintersState, RootState> = {
   async fetchPrinters ({ commit }) {
-    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint)
-    if (response.status == 200) {
-      let printers: PrinterInfo[] = response.data
-      commit('setPrinters', printers)
-    }
-  },
-
-  async fetchStatus ({ commit }) {
-    let response = await this.$axios.get(this.state.apiUrl + apiEndpoint + 'state')
-    if (response.status == 200) {
-      let status: CurrentState[] = response.data
-      commit('setStatus', status)
-    }
+    await new Promise(resolve => setTimeout(resolve, 500))
+    const printers: PrinterInfo[] = [
+      {
+        id: 'st-aaa',
+        model: 'STE320',
+        name: 'ST-AAA',
+        isLocal: true,
+        address: '192.168.0.100',
+        apiKey: '',
+        octoApiKey: '',
+        role: 'host'
+      }
+    ]
+    commit('setPrinters', printers)
   },
 
   async deletePrinter ({ commit }, printer: PrinterInfo) {
-    await this.$axios.delete(this.state.apiUrl + apiEndpoint + printer.id)
+    await new Promise(resolve => setTimeout(resolve, 500))
+    commit('deletePrinter', printer)
   },
 
-  async disconnectPrinter ({ commit }, apiKey: string) {
-    await this.$axios.delete('/api/private/connection', { headers: { Authorization: apiKey } })
+  async fetchStatus ({ commit }) {
+    await new Promise(resolve => setTimeout(resolve, 200))
+    const status: PrinterStatus[] = [
+      {
+        id: 'st-aaa',
+        stateText: 'Printing',
+        bed: {
+          actual: 60 + Math.random() * 5,
+          target: 60,
+          offset: 0
+        },
+        tool0: {
+          actual: 218 + Math.random() * 4,
+          target: 220,
+          offset: 0
+        },
+        tool1: {
+          actual: 43 + Math.random() * 4,
+          target: 0,
+          offset: 0
+        },
+        job: {
+          estimatedPrintTime: 4453.447533993765,
+          filment: {
+            tool0: {
+              length: 3482.341989999999,
+              volume: 0
+            }
+          },
+          file: {
+            date: 1548750780,
+            display: 'CFFFP_крышка.gcode',
+            name: 'CFFFP_крышка.gcode',
+            origin: 'st-aaa',
+            path: 'Storage/CFFFP_крышка.gcode',
+            size: 1124869
+          }
+        },
+        progress: {
+          completion: 88.58151482528189,
+          filepos: 996426,
+          printTime: 4488,
+          printTimeLeft: 543,
+          printTimeLeftOrigin: 'estimate'
+        }
+      }
+    ]
+    commit('setStatus', status)
   },
 
-  async setStatus ({ commit, dispatch }, payload: { id: string, newStatus: string }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + 'state/' + payload.id, null, { params: { state: payload.newStatus } })
+  async pausePrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
-  async pausePrintJob ({ commit, dispatch }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'pause' } })
+  async resumePrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
-  async resumePrintJob ({ commit, dispatch }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'resume' } })
-  },
-
-  async cancelPrintJob ({ commit, dispatch }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/job', null, { params: { command: 'cancel' } })
+  async cancelPrintJob ({ commit }, id: string) {
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async findPrinter ({ commit }, id: string) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'find' })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async ledCommand ({ commit }, { id, r, g, b }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'led', red: r, green: g, blue: b })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async fanCommand ({ commit }, { id, fanId, fanValue }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'fan', fanId: fanId, fanValue: fanValue })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async toolTempCommand ({ commit }, { id, tool0Temp, tool1Temp }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'tool_temp', tool0Temp: tool0Temp, tool1Temp: tool1Temp })
+    console.log(tool0Temp, tool1Temp)
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async bedTempCommand ({ commit }, { id, bedTemp }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'tool_bed', bedTemp: bedTemp })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async flowCommand ({ commit }, { id, flow }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'flow', flow: flow })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async feedCommand ({ commit }, { id, feed }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'feed', feed: feed })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async jogCommand ({ commit }, { id, x, y, z, a, b, c }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'jog', x: x, y: y, z: z, a: a, b: b, c: c })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async homeCommand ({ commit }, { id, head, bed, rotary }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'home', homeHead: head, homeBed: bed, homeRotary: rotary })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async extrudeCommand ({ commit }, { id, toolId, amount }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'extrude', toolId: toolId, ExtrudeAmount: amount })
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async retractCommand ({ commit }, { id, toolId, amount }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'retract', toolId: toolId, retractAmount: amount })
+    console.log(id, toolId, amount)
+    await new Promise(resolve => setTimeout(resolve, 500))
   },
 
   async customCommand ({ commit }, { id, command }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'command', commandString: command })
+    console.log(command)
+    await new Promise(resolve => setTimeout(resolve, 500))
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Date and time</template>
+    <template slot="title">{{$t('common.settings.dateTimeDialog.title')}}</template>
     <v-dialog
       ref="datedialog"
       v-model="modal"
@@ -21,8 +21,8 @@
       ></v-text-field>
       <v-date-picker v-model="dateModel" scrollable>
         <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="setDate(dateModel)">OK</v-btn>
+        <v-btn flat color="primary" @click="modal = false">{{$t('frequentlyUsed.cancel')}}</v-btn>
+        <v-btn flat color="primary" @click="setDate(dateModel)">{{$t('frequentlyUsed.ok')}}</v-btn>
       </v-date-picker>
     </v-dialog>
     <v-dialog
@@ -44,8 +44,8 @@
       ></v-text-field>
       <v-time-picker v-if="modal2" v-model="timeModel" full-width format="24hr">
         <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="setTime(timeModel)">OK</v-btn>
+        <v-btn flat color="primary" @click="modal2 = false">{{$t('frequentlyUsed.cancel')}}</v-btn>
+        <v-btn flat color="primary" @click="setTime(timeModel)">{{$t('frequentlyUsed.ok')}}</v-btn>
       </v-time-picker>
     </v-dialog>
   </SettingsDialog>

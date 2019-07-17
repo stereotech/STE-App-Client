@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">Temp and Fans</v-card-title>
+    <v-card-title class="title">{{$t('printers.expert.temperatureFan.title')}}</v-card-title>
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex xs2>
@@ -10,9 +10,8 @@
           <v-slider
             label="E1"
             thumb-label
-            min="0"
-            max="300"
-            step="5"
+            min="100"
+            max="350"
             v-model="e1Target"
             @change="changeE1"
           ></v-slider>
@@ -26,9 +25,8 @@
           <v-slider
             label="E2"
             thumb-label
-            min="0"
-            max="300"
-            step="5"
+            min="100"
+            max="350"
             v-model="e2Target"
             @change="changeE2"
           ></v-slider>
@@ -42,9 +40,8 @@
           <v-slider
             label="Chamber"
             thumb-label
-            min="0"
+            min="30"
             max="100"
-            step="5"
             v-model="chamberTarget"
             @change="setBed"
           ></v-slider>
@@ -58,9 +55,8 @@
           <v-slider
             label="Bed"
             thumb-label
-            min="0"
-            max="120"
-            step="5"
+            min="30"
+            max="150"
             v-model="bedTarget"
             @change="changeBed"
           ></v-slider>
@@ -73,9 +69,20 @@
             thumb-label
             min="0"
             max="100"
-            step="5"
             v-model="coolingFanTarget"
             @change="setCoolingFan"
+          ></v-slider>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap v-if="chamberFan">
+        <v-flex xs12>
+          <v-slider
+            label="Chamber fan"
+            thumb-label
+            min="0"
+            max="100"
+            v-model="chamberFanTarget"
+            @change="setChamberFan"
           ></v-slider>
         </v-flex>
       </v-layout>
@@ -86,7 +93,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
-import { CurrentState, TemperatureDataPoint } from 'types/printer'
+import { PrinterStatus } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -97,16 +104,21 @@ export default class TemperatureFanCard extends Vue {
   @Prop({ default: false, type: Boolean }) chamberFan!: boolean
   @Prop({ default: '', type: String, required: true }) id!: string
 
-  @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
+  @printers.Getter status!: (id: string) => PrinterStatus | undefined
   @printers.Action fanCommand: any
   @printers.Action toolTempCommand: any
   @printers.Action bedTempCommand: any
 
-  private e1Target: number = 0
-  private e2Target: number = 0
+  get computedStatus () {
+    return this.status(this.id)
+  }
+
+  private e1Target: number = 100
+  private e2Target: number = 100
   private chamberTarget: number = 0
   private bedTarget: number = 0
   private coolingFanTarget: number = 0
+  private chamberFanTarget: number = 0
 
   private e1TargetSet: boolean = false
   private e2TargetSet: boolean = false
@@ -114,19 +126,22 @@ export default class TemperatureFanCard extends Vue {
   private chamberTargetSet: boolean = false
 
   mounted () {
-    this.e1Target = this.lastTempDataPoint(this.id).tool0.target
-    this.e2Target = this.lastTempDataPoint(this.id).tool1.target
-    this.bedTarget = this.lastTempDataPoint(this.id).bed.target
-    this.chamberTarget = this.lastTempDataPoint(this.id).bed.target
-
-    this.e1TargetSet = this.e1Target > 0
-    this.e2TargetSet = this.e2Target > 0
-    this.bedTargetSet = this.bedTarget > 0
-    this.chamberTargetSet = this.chamberTarget > 0
+    this.e1Target = this.computedStatus !== undefined ? this.computedStatus.tool0 !== undefined ? this.computedStatus.tool0.target : 100 : 100
+    this.e2Target = this.computedStatus !== undefined ? this.computedStatus.tool1 !== undefined ? this.computedStatus.tool1.target : 100 : 100
+    this.chamberTarget = this.computedStatus !== undefined ? this.computedStatus.bed !== undefined ? this.computedStatus.bed.target : 0 : 0
+    this.bedTarget = this.computedStatus !== undefined ? this.computedStatus.bed !== undefined ? this.computedStatus.bed.target : 0 : 0
+    this.e1TargetSet = this.e1Target > 100
+    this.e2TargetSet = this.e2Target > 100
+    this.bedTargetSet = this.bedTarget > 30
+    this.chamberTargetSet = this.chamberTarget > 30
   }
 
   private setCoolingFan (value: number) {
-    this.fanCommand({ id: this.id, fanId: 0, fanValue: Math.round(value * 255 / 100) })
+    this.fanCommand({ id: this.id, fanId: 0, fanValue: value })
+  }
+
+  private setChamberFan (value: number) {
+    this.fanCommand({ id: this.id, fanId: 1, fanValue: value })
   }
 
   private setE1 (value: boolean) {
@@ -145,7 +160,7 @@ export default class TemperatureFanCard extends Vue {
 
   private setE2 (value: boolean) {
     if (value) {
-      this.toolTempCommand({ id: this.id, tool1Temp: this.e2Target })
+      this.toolTempCommand({ id: this.id, tool1Temp: this.e1Target })
     } else {
       this.toolTempCommand({ id: this.id, tool1Temp: 0 })
     }

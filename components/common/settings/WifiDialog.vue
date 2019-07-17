@@ -1,8 +1,8 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Wi-Fi Setup</template>
+    <template slot="title">{{$t('common.settings.wifiDialog.title')}}</template>
     <v-list>
-      <v-subheader>Current network</v-subheader>
+      <v-subheader>{{$t('common.settings.wifiDialog.currentNetwork')}}</v-subheader>
       <v-list-tile avatar v-if="currentNetwork" @click="forgetConfirmation = true">
         <v-list-tile-action v-if="currentNetwork.strength > 81">
           <v-icon>mdi-wifi-strength-4</v-icon>
@@ -27,17 +27,17 @@
         </v-list-tile-action>
         <v-dialog v-model="forgetConfirmation" max-width="425">
           <v-card>
-            <v-card-title class="headline">Forget {{ currentNetwork.name }} ?</v-card-title>
+            <v-card-title class="headline"> {{$t('common.settings.wifiDialog.forgetNetworkName')}} {{ currentNetwork.name }} ?</v-card-title>
             <v-card-actions>
               <v-card-actions>
-                <v-btn color="primary" flat @click="forgetConfirmation = false">Cancel</v-btn>
-                <v-btn color="primary" flat @click="startForgetting">Forget</v-btn>
+                <v-btn color="primary" flat @click="forgetConfirmation = false">{{$t('frequentlyUsed.cancel')}}</v-btn>
+                <v-btn color="primary" flat @click="startForgetting">{{$t('frequentlyUsed.forget')}}</v-btn>
               </v-card-actions>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-list-tile>
-      <v-subheader>Avaliable networks</v-subheader>
+      <v-subheader>{{$t('common.settings.wifiDialog.avaliableNetworks')}}</v-subheader>
       <template v-for="(network, index) in avaliableNetworks">
         <v-list-tile avatar :key="network.id" @click="startConnection(network)">
           <v-list-tile-action v-if="network.strength > 81">
@@ -69,8 +69,8 @@
           <v-card-title
             v-if="setupNetwork.security"
             class="headline"
-          >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
-          <v-card-title v-else class="headline">Connect to network?</v-card-title>
+          >{{$t('common.settings.wifiDialog.enterWifiPassword')}} {{ setupNetwork.name }}</v-card-title>
+          <v-card-title v-else class="headline">{{$t('common.settings.wifiDialog.connectToNetwork')}}</v-card-title>
           <v-container grid-list-md v-if="setupNetwork.security">
             <v-text-field
               box
@@ -86,8 +86,8 @@
           </v-container>
 
           <v-card-actions>
-            <v-btn color="primary" flat @click="confirmation = false">Cancel</v-btn>
-            <v-btn color="primary" flat @click="startConnecting" :disabled="isMin">Connect</v-btn>
+            <v-btn color="primary" flat @click="confirmation = false">{{$t('frequentlyUsed.cancel')}}</v-btn>
+            <v-btn color="primary" flat @click="startConnecting" :disabled="isMin">{{$t('frequentlyUsed.connect')}}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

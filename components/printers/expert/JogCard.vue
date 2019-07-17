@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">Jog</v-card-title>
+    <v-card-title class="title">{{$t('printers.expert.jogCard.title')}}</v-card-title>
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex xs2 offset-xs2 v-if="fiveAxis">
@@ -24,116 +24,116 @@
       </v-layout>
       <v-layout row wrap>
         <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogYPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogYPlus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 offset-xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogYPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogYPlus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogZMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogZMinus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 offset-xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogZMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogZMinus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogAMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogAMinus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogBMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogBMinus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogXMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogXMinus">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogXMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogXMinus">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="homeXY">
+          <v-btn flat icon color="primary" :disabled="printing" @click="homeXY">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="homeXY">
+          <v-btn flat icon color="primary" :disabled="printing" @click="homeXY">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogXPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogXPlus">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogXPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogXPlus">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="homeZ">
+          <v-btn flat icon color="primary" :disabled="printing" @click="homeZ">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="homeZ">
+          <v-btn flat icon color="primary" :disabled="printing" @click="homeZ">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="homeA">
+          <v-btn flat icon color="primary" :disabled="printing" @click="homeA">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="homeB">
+          <v-btn flat icon color="primary" :disabled="printing" @click="homeB">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
         <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogYMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogYMinus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 offset-xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogYMinus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogYMinus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogZPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogZPlus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs3 offset-xs3 v-else>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogZPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogZPlus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogAPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogAPlus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs2 v-if="fiveAxis">
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="jogAPlus">
+          <v-btn flat icon color="primary" :disabled="printing" @click="jogAPlus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>

@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Settings</template>
+    <template slot="title">{{$t("common.settings.mainSettingsDialog.title", settings.language)}}</template>
     <v-list>
       <template v-for="(setting, index) in settings">
         <v-list-tile avatar :key="setting.title" @click="setting.page = true">
@@ -8,7 +8,7 @@
             <v-icon>{{ setting.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="setting.title"></v-list-tile-title>
+            <v-list-tile-title v-text="$t(`common.settings.settingsTitle[${setting.title}]`)"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider inset :key="index"></v-divider>
@@ -60,32 +60,32 @@ export default class extends Vue {
   private settings: Setting[] = [
     {
       icon: 'mdi-wifi',
-      title: 'Wi-Fi',
+      title: 0,
       page: false
     },
     {
       icon: 'mdi-clock-outline',
-      title: 'Date and Time',
+      title: 1,
       page: false
     },
     {
       icon: 'mdi-translate',
-      title: 'Language',
+      title: 2,
       page: false
     },
     {
       icon: 'mdi-sd   ',
-      title: 'Storage',
+      title: 3,
       page: false
     },
     {
       icon: 'mdi-backup-restore',
-      title: 'Reset and restore',
+      title: 4,
       page: false
     },
     {
       icon: 'mdi-update',
-      title: 'Update',
+      title: 5,
       page: false
     }
   ]
@@ -93,9 +93,9 @@ export default class extends Vue {
 
 class Setting {
   icon: string
-  title: string
+  title: number
   page: boolean
-  constructor (icon: string, title: string) {
+  constructor (icon: string, title: number) {
     this.icon = icon
     this.title = title
     this.page = false

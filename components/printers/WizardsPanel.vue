@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="headline font-weight-light">Wizards</span>
+      <span class="headline font-weight-light">{{$t('printers.wizardsPanel.title')}}</span>
     </v-card-title>
     <v-container fluid grid-list-md>
       <v-layout row wrap>
@@ -21,7 +21,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import WizardCard from '~/components/printers/WizardCard.vue'
-
 
 @Component({
   components: {

@@ -4,13 +4,11 @@ export interface PrintJob {
   id: number
   name: string
   description: string
-  target?: string
   creationTime: number
   fileUri: string
   printers: string[]
-  lastPrintTime: number
-  successful: boolean
-  state: string
+  lastPrint?: number
+  succesful?: boolean
 }
 
 export interface JobInfo {

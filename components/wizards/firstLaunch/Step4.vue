@@ -11,9 +11,6 @@
         <v-flex xs12>
           <v-btn block large flat @click="nextStep">Next</v-btn>
         </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat @click="next(7)">Skip</v-btn>
-        </v-flex>
       </v-layout>
     </v-container>
   </WizardStep>
@@ -23,10 +20,8 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { Settings } from '../../../types/settings';
 
 const printers = namespace('printersState')
-const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -51,18 +46,17 @@ export default class extends Vue {
     'Select the extruder, where you want insert the material'
 
   @printers.Action toolTempCommand: any
-  @settings.Getter settings!: Settings
 
   private nextStep () {
     if (this.additionalData.tool === 0) {
       this.toolTempCommand({
-        id: this.settings.systemId,
+        id: this.$route.params.id,
         tool0Temp: 240,
         tool1Temp: 0
       })
     } else {
       this.toolTempCommand({
-        id: this.settings.systemId,
+        id: this.$route.params.id,
         tool0Temp: 0,
         tool1Temp: 240
       })

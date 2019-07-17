@@ -22,7 +22,8 @@
           </v-list-tile-action>
 
           <v-list-tile-content>
-            <v-list-tile-title>{{ menuItem.title }}</v-list-tile-title>
+            <!-- <v-list-tile-title>{{ menuItem.title }}</v-list-tile-title> -->
+            <v-list-tile-title>{{$t(`navigationPanel[${menuItem.titleTranslation}]`)}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -50,20 +51,20 @@
               <v-list-tile-action>
                 <v-icon>mdi-settings</v-icon>
               </v-list-tile-action>
-              <v-list-tile-title>Settings</v-list-tile-title>
+              <v-list-tile-title>{{$t('common.settings.settingsDialog.title')}}</v-list-tile-title>
             </v-list-tile>
 
             <v-list-tile @click="rebootSystem">
               <v-list-tile-action>
                 <v-icon>mdi-refresh</v-icon>
               </v-list-tile-action>
-              <v-list-tile-title>Reboot</v-list-tile-title>
+              <v-list-tile-title>{{$t('common.settings.settingsDialog.reboot')}}</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="poweroffSystem">
               <v-list-tile-action>
                 <v-icon>mdi-power</v-icon>
               </v-list-tile-action>
-              <v-list-tile-title>Power Off</v-list-tile-title>
+              <v-list-tile-title>{{$t('common.settings.settingsDialog.powerOff')}}</v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>
@@ -85,7 +86,8 @@
         :to="menuItem.link"
         color="primary"
       >
-        <span>{{ menuItem.title }}</span>
+        <!-- <span>{{ menuItem.title }}</span> -->
+        <span>{{$t(`navigationPanel[${menuItem.titleTranslation}]`)}}</span>
         <v-icon>{{ menuItem.icon }}</v-icon>
       </v-btn>
     </v-bottom-nav>
@@ -112,12 +114,20 @@ export default class extends Vue {
     {
       icon: 'mdi-view-dashboard',
       title: 'Dashboard',
-      link: '/'
+      link: '/',
+      titleTranslation: 0
     },
     {
       icon: 'mdi-printer-3d',
       title: 'Printers',
-      link: '/printers'
+      link: '/printers',
+      titleTranslation: 1
+    },
+    {
+      icon: 'mdi-movie-roll',
+      title: 'Materials',
+      link: '/materials',
+      titleTranslation: 2
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
@@ -139,10 +149,12 @@ class MenuItem {
   icon: string
   title: string
   link: string
-  constructor (icon: string, title: string, link: string) {
+  titleTranslation: number
+  constructor (icon: string, title: string, link: string, titleTranslation: number) {
     this.icon = icon
     this.title = title
     this.link = link
+    this.titleTranslation = titleTranslation
   }
 }
 </script>

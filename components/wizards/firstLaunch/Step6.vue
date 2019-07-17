@@ -9,7 +9,7 @@
           <v-btn block large flat @click="load">Load</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large flat @click="next(7)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -20,11 +20,9 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { CurrentState } from 'types/printer'
-import { Settings } from '../../../types/settings'
+import { PrinterStatus } from 'types/printer'
 
 const printers = namespace('printersState')
-const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -48,33 +46,20 @@ export default class extends Vue {
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
-  @printers.Action toolTempCommand: any
-  @printers.Getter status!: (id: string) => CurrentState | undefined
-
-  @settings.Getter settings!: Settings
+  @printers.Getter status!: (id: string) => PrinterStatus | undefined
 
   get computedStatus () {
-    return this.status(this.settings.systemId)
+    return this.status(this.$route.params.id)
   }
 
   get heating () {
-
-    if (this.computedStatus) {
-      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
+    if (this.computedStatus !== undefined) {
+      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
         let deviation = 0
         if (this.additionalData.tool === 0) {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
-            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-            deviation = Math.abs(target - actual)
-          }
-
+          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
         } else {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
-            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-            deviation = Math.abs(target - actual)
-          }
+          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
         }
         return deviation > 10
       }
@@ -83,24 +68,14 @@ export default class extends Vue {
   }
 
   private repeat () {
-    this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 10 })
+    this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
   }
 
   private load () {
-    this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
-  }
-
-  private nextStep () {
-    this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
-    this.next(7)
+    this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private next (step: number) {
-    this.toolTempCommand({
-      id: this.settings.systemId,
-      tool0Temp: 0,
-      tool1Temp: 0
-    })
     this.$emit('change', step)
     this.curStep = step
   }

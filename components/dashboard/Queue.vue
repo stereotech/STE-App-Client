@@ -1,9 +1,9 @@
 <template>
   <v-flex xl3 lg4 md6 sm6 xs12>
-    <v-card transition="slide-y-reverse-transition" min-height="550">
+    <v-card>
       <v-toolbar flat color="secondary">
         <v-card-title>
-          <span class="headline font-weight-light">Queue</span>
+          <span class="headline font-weight-light">{{$t('dashboard.queue.title')}}</span>
         </v-card-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
@@ -12,21 +12,17 @@
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
-      <v-list two-line style="max-height: 486px" class="scroll-y" v-if="queuedJobs.length > 0">
-        <v-list-tile v-for="job in queuedJobs" :key="job.id + job.name" avatar>
+      <v-list two-line style="max-height: 486px" class="scroll-y">
+        <v-list-tile v-for="job in queuedJobs" :key="job.id" avatar>
           <v-list-tile-content>
             <v-list-tile-title>{{ job.name }}</v-list-tile-title>
-            <v-list-tile-sub-title v-if="job.state === 'Dequeued'">
-              <v-progress-linear :indeterminate="true"></v-progress-linear>
-            </v-list-tile-sub-title>
             <v-list-tile-sub-title
               class="body-1"
-              v-else
             >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
             <v-list-tile-action-text>{{ job.creationTime | moment("from") }}</v-list-tile-action-text>
-            <v-menu bottom left v-if="job.state === 'Queued'">
+            <v-menu bottom left>
               <v-btn slot="activator" icon>
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
@@ -35,32 +31,19 @@
                   <v-list-tile-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-tile-action>
-                  <v-list-tile-title>Edit</v-list-tile-title>
+                  <v-list-tile-title>{{$t('dashboard.queue.edit')}}</v-list-tile-title>
                 </v-list-tile>
                 <v-list-tile @click="startRemoveJob(job)">
                   <v-list-tile-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-tile-action>
-                  <v-list-tile-title>Remove</v-list-tile-title>
+                  <v-list-tile-title>{{$t('frequentlyUsed.remove')}}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
-      <v-container grid-list-xs v-else>
-        <v-layout align-center justify-center column fill-height>
-          <v-flex xs12>
-            <v-img src="/empty-state/queue.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
-          </v-flex>
-          <v-flex xs12>
-            <h6 class="title text-xs-center">
-              There are no queued print jobs yet. Add new one by clicking
-              <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
-            </h6>
-          </v-flex>
-        </v-layout>
-      </v-container>
     </v-card>
     <v-dialog v-model="dialog" max-width="425" persistent :fullscreen="$vuetify.breakpoint.xs">
       <v-card>
@@ -71,20 +54,14 @@
           <v-toolbar-title>{{ editMode ? 'Edit' : 'Create' }} job</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn :disabled="!valid" dark flat @click="closeDialog(!editMode)">Save</v-btn>
+            <v-btn dark flat @click="closeDialog(!editMode)">{{$t('frequentlyUsed.save')}}</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-form v-model="valid">
+        <v-form>
           <v-container>
             <v-layout row wrap>
               <v-flex xs12>
-                <v-text-field
-                  label="Job name"
-                  box
-                  clearable
-                  v-model="editedJob.name"
-                  :rules="nameRules"
-                ></v-text-field>
+                <v-text-field label="Job name" box clearable v-model="editedJob.name"></v-text-field>
                 <v-autocomplete
                   label="Printer assignment"
                   box
@@ -102,14 +79,6 @@
                   item-text="name"
                   item-value="uri"
                   v-model="editedJob.fileUri"
-                  :rules="fileRules"
-                ></v-autocomplete>
-                <v-autocomplete
-                  v-if="!editMode"
-                  label="Copies"
-                  box
-                  :items="Array.from(new Array(100),(val,index)=>index+1)"
-                  v-model="copiesCount"
                 ></v-autocomplete>
                 <v-textarea box label="Description" auto-grow v-model="editedJob.description"></v-textarea>
               </v-flex>
@@ -120,10 +89,10 @@
     </v-dialog>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">Do you want to remove job?</v-card-title>
+        <v-card-title class="headline">{{$t('dashboard.queue.removeJob')}}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" flat @click="endRemoveJob">Yes</v-btn>
+          <v-btn color="primary" flat @click="confirmation = false">{{$t('frequentlyUsed.no')}}</v-btn>
+          <v-btn color="primary" flat @click="endRemoveJob">{{$t('frequentlyUsed.yes')}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -133,9 +102,9 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
+import { PrintJob } from '~/types/PrintJob'
 import { PrinterInfo } from '~/types/printer'
 import { FileOrFolder } from '~/types/fileOrFolder'
-import { PrintJob } from '~/types/printJob';
 
 const printJobs = namespace('printJobsState')
 const printers = namespace('printersState')
@@ -144,7 +113,6 @@ const storage = namespace('storageState')
 @Component
 export default class extends Vue {
   @printJobs.Getter queuedJobs!: PrintJob[]
-  @printJobs.Getter jobsCount!: number
   @printJobs.Action removeJob: any
   @printJobs.Action editJob: any
   @printJobs.Action addJob: any
@@ -156,43 +124,24 @@ export default class extends Vue {
   private editMode: boolean = false
   private confirmation: boolean = false
 
-  private copiesCount: number = 1;
-
-  private valid: boolean = false
-
-  private nameRules = [
-    v => !!v || 'Name is required'
-  ]
-
-  private fileRules = [
-    v => !!v || 'File should be selected'
-  ]
-
   private editedJob: PrintJob = {
     id: 0,
     name: '',
     description: '',
     creationTime: 0,
     fileUri: '',
-    printers: [],
-    lastPrintTime: 0,
-    successful: false,
-    state: ''
+    printers: []
   }
 
   private createJob () {
-    this.editMode = false
     this.dialog = true
     this.editedJob = {
-      id: this.queuedJobs.length,
-      name: 'Printjob_' + this.jobsCount,
+      id: 3,
+      name: 'Printjob_' + Date.now(),
       description: '',
       printers: [],
       fileUri: '',
-      creationTime: Date.now(),
-      lastPrintTime: 0,
-      successful: false,
-      state: ''
+      creationTime: Date.now()
     }
   }
 
@@ -221,34 +170,19 @@ export default class extends Vue {
     this.dialog = false
     if (add !== undefined) {
       if (add) {
-        let jobsArray: PrintJob[] = [this.editedJob]
-        for (let index = 1; index < this.copiesCount; index++) {
-          let copiedJob: PrintJob = Object.assign({}, this.editedJob)
-          copiedJob.name = copiedJob.name + '_' + index
-          copiedJob.id += index
-          jobsArray.push(copiedJob)
-        }
-        this.addJob(jobsArray)
+        this.addJob(this.editedJob)
       } else {
-        let emptyIdx = this.editedJob.printers.indexOf('')
-        if (emptyIdx > -1) {
-          this.editedJob.printers.splice(emptyIdx, 1)
-        }
         this.editJob(this.editedJob)
       }
     }
     this.editedJob = {
-      id: this.jobsCount,
+      id: 0,
       name: '',
       description: '',
       creationTime: 0,
       fileUri: '',
-      printers: [],
-      lastPrintTime: 0,
-      successful: false,
-      state: ''
+      printers: []
     }
-    this.copiesCount = 1
   }
 }
 </script>
