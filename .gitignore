@@ -79,3 +79,5 @@ dist
 
 # IDE
 .idea
+deps.txt
+material_model.json
