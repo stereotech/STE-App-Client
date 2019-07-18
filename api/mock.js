@@ -117,7 +117,7 @@ const scannerResults = [
 
 const settings = {
     systemId: 'st-aaa',
-    role: 'client',
+    role: 'host',
     hostname: 'st-aaa',
     firstLaunch: false,
     avaliableLanguages: ['English', 'Русский'],
