@@ -29,7 +29,7 @@
                 </v-card>
                 <v-dialog v-model="confirmation" max-width="425">
                   <v-card>
-                    <v-card-title class="headline">Do you want to add {{ printer.name }} to cluster?</v-card-title>
+                    <v-card-title class="headline">{{$t('printers.addPrinterDialog.doYouWantToAdd', [printer.name])}}</v-card-title>
                     <v-card-actions>
                       <v-btn color="primary" flat @click="confirmation = false">{{$t('frequentlyUsed.no')}}</v-btn>
                       <v-btn color="primary" flat @click="startConnection(printer)">{{$t('frequentlyUsed.yes')}}</v-btn>

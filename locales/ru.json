@@ -1,5 +1,4 @@
 {
-    
         "frequentlyUsed":{
             "no": "Нет",
             "yes": "Да",
@@ -8,7 +7,8 @@
             "forget": "Забыть",
             "connect": "Подключиться",
             "remove": "Удалить",
-            "save": "Сохранить"
+            "save": "Сохранить",
+            "next": "Далее"
         },
         "common":{
           "printerCard": {
@@ -16,11 +16,11 @@
             "printing": "Печатаем...",
             "paused": "Приостановлено",
             "maintenance": "Поддержка",
-            "printingDone": "Печать готова",
+            "printingDone": "Печать готова !",
             "offline": "Не в сети",
-            "e1Target": "Цель E1",
-            "e2Target": "Цель E2",
-            "bedTarget": "Цель подставки",
+            "e1Target": "Т экструдера1",
+            "e2Target": "Т экструдера 2",
+            "bedTarget": "Температура подставки",
             "chamberTarget": "Целевая плата",
             "tryToReconnect": "Попробуйте переподключиться",
             "currentFile": "Текущий файл:",
@@ -28,7 +28,7 @@
             "cleanTheBuildplate": "Очистите пластину сборки и выбирите состояние",
             "printerIsWaiting": "Принтер ожидает работы",
             "printerIsReady": "Принтер готов к обслуживанию",
-            "doYouWantToRemove": "Хотите убрать {{ computedPrinter.name }} из кластера?",
+            "doYouWantToRemove": "Хотите убрать {0} из кластера?",
             "no": "Нет",
             "yes": "Да"
           },
@@ -97,7 +97,8 @@
         "materials":{
           "materialDialog": {
             "title": "Добавить материал",
-            "updateMaterial": "Обновить материал"
+            "updateMaterial": "Обновить материал",
+            "colorCode": "Код цвета"
           }
         },
         "printers":{
@@ -121,7 +122,7 @@
           "addPrinterDialog":{
             "title": "Добавить принтер",
             "address": "Адрес:",
-            "": ""
+            "doYouWantToAdd": "Вы хотите добавить {0} в кластер?"
           },
           "wizardCard":{
             
@@ -130,6 +131,23 @@
             "title": "Maстер установки"
           }
         },
-        "navigationPanel":["Приборная панель","Принтеры","Материалы"]
+        "navigationPanel":["Приборная панель","Принтеры","Материалы"],
+        "wizards":{
+          "load": "Загрузить",
+          "loadMaterial": "Загрузить материал",
+          "unload": "Разгрузить",
+          "unloadMaterial": "Разгрузить материал",
+          "heating": "Подогрев",
+          "changeMaterial": "Поменять материал",
+          "changeMaterialDescription": "Выберите экструдер, где вы хотите изменить материал",
+          "changeMaterialDescription2": "Выберите необходимое действие",
+          "start": "Старт",
+          "bedLeveling": "Выравнивание подставки",
+          "bedLevelingDescription": "Этот мастер поможет вам откалибровать пластину сборки для хорошей адгезии печати к пластине сборки.",
+          "wizardsPanel":{
+            "wizardName": ["Поменять материал", "Выравнивание подставки"],
+            "wizardDescription":["Этот мастер поможет вам изменить, вставить или удалить материал", "Этот мастер поможет вам откалибровать пластину сборки для хорошей адгезии печати к пластине сборки."]
+          }
+        }
       
 }

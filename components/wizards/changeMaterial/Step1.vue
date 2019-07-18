@@ -1,5 +1,5 @@
 <template>
-  <WizardStep :step="step" :image="image" :description="description">
+  <WizardStep :step="step" :image="image" :description="$t('wizards.changeMaterialDescription')">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
@@ -9,7 +9,7 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large flat @click="nextStep">{{$t('frequentlyUsed.next')}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

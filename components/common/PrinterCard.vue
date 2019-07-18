@@ -55,9 +55,9 @@
                     v-if="isPaused"
                   >{{$t("common.printerCard.paused")}} {{ computedStatus.progress.completion }}%</p>
                   <p class="title" v-else-if="isIdle">Idle</p>
-                  <p class="warning--text title" v-else-if="isMaintenance">Maintenance</p>
-                  <p class="success--text title" v-else-if="isDone">Printing Done!</p>
-                  <p class="error--text title" v-else-if="isOffline">Offline</p>
+                  <p class="warning--text title" v-else-if="isMaintenance">{{$t("common.printerCard.maintenance")}}</p>
+                  <p class="success--text title" v-else-if="isDone">{{$t("common.printerCard.printingDone")}}</p>
+                  <p class="error--text title" v-else-if="isOffline">{{$t("common.printerCard.offline")}}</p>
                   <v-progress-linear v-if="isPrinting" :value="computedStatus.progress.completion"></v-progress-linear>
                   <v-progress-linear
                     v-if="isPaused"
@@ -143,7 +143,7 @@
               <v-layout row wrap v-else-if="isDone">
                 <v-flex xs12 sm8 md12>
                   <p class="title text-truncate">{{$t('common.printerCard.cleanTheBuildplate')}}</p>
-                  <p class="title text-truncate">and select state</p>
+                  <!-- <p class="title text-truncate">and select state</p> -->
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
@@ -151,8 +151,8 @@
               </v-layout>
               <v-layout row wrap v-else-if="isIdle">
                 <v-flex xs12 sm8 md12>
-                  <p class="title text-truncate">Printer is waiting</p>
-                  <p class="title text-truncate">for printjob</p>
+                  <p class="title text-truncate">{{$t('common.printerCard.printerIsWaiting')}}</p>
+                  <!-- <p class="title text-truncate">for printjob</p> -->
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
@@ -160,8 +160,8 @@
               </v-layout>
               <v-layout row wrap v-else-if="isMaintenance">
                 <v-flex xs12 sm8 md12>
-                  <p class="title text-truncate">Printer is ready</p>
-                  <p class="title text-truncate">for maintenance</p>
+                  <p class="title text-truncate">{{$t('common.printerCard.printerIsReady')}}</p>
+                  <!-- <p class="title text-truncate">for maintenance</p> -->
                 </v-flex>
                 <v-flex xs12 sm4 md12>
                   <v-select box :items="['Idle', 'Maintenance']" label="Select state"></v-select>
@@ -176,7 +176,7 @@
       <v-card>
         <v-card-title
           class="headline"
-        >Do you want to remove {{ computedPrinter.name }} from cluster?</v-card-title>
+        >{{$t('common.printerCard.doYouWantToRemove', [ computedPrinter.name ])}}</v-card-title>
         <v-card-actions>
           <v-btn color="primary" flat @click="confirmation = false">{{$t('frequentlyUsed.no')}}</v-btn>
           <v-btn color="primary" flat @click="confirmation = false">{{$t('frequentlyUsed.yes')}}</v-btn>

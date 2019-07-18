@@ -28,7 +28,7 @@
             "cleanTheBuildplate": "Clean the buildplate and select state",
             "printerIsWaiting": "Printer is waiting for printjob",
             "printerIsReady": "Printer is ready for maintenance",
-            "doYouWantToRemove": "Do you want to remove {{ computedPrinter.name }} from cluster?",
+            "doYouWantToRemove": "Do you want to remove {0} from cluster?",
             "no": "No",
             "yes": "Yes"
           },
@@ -121,7 +121,7 @@
         "addPrinterDialog":{
           "title": "Add printer",
           "address": "Address:",
-          "": ""
+          "doYouWantToAdd": "Do you want to add {0} to cluster?"
         },
         "wizardCard":{
           
@@ -130,7 +130,22 @@
           "title": "Wizard"
         }
       },
-      "navigationPanel":["Dashboard","Printers","Materials"]
+      "navigationPanel":["Dashboard","Printers","Materials"],
+      "wizards":{
+        "load": "Load",
+        "unload": "Unload",
+        "heating": "Heating...",
+        "changeMaterial": "Change Material",
+        "changeMaterialDescription": "Select the extruder, where you want change the material",
+        "changeMaterialDescription2": "Select the needed action",
+        "start": "Start",
+        "bedLeveling": "Bed leveling",
+        "bedLevelingDescription": "This wizard will help you to calibrate the build plate for good adhesion of the print to the build plate.",
+        "wizardsPanel":{
+          "wizardName": ["Change Material", "Bed leveling"],
+          "wizardDescription":["This wizard will help you to change, insert or remove the material", "This wizard will help you to calibrate the build plate for good adhesion of the print to the build plate."]
+        }
+      }
      
 
 }

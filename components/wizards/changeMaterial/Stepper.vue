@@ -1,6 +1,6 @@
 <template>
   <WizardStepper :stepCount="5" v-model="currentStep">
-    <template slot="title">Change material</template>
+    <template slot="title">{{$t('wizards.changeMaterial')}}</template>
     <Step1 v-model="currentStep" :additional-data="additionalData"/>
     <Step2 v-model="currentStep" :additional-data="additionalData"/>
     <Step3 v-model="currentStep" :additional-data="additionalData"/>

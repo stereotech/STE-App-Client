@@ -7,9 +7,9 @@
       <v-layout row wrap>
         <v-flex xs6 sm3 lg2 v-for="wizard in data" :key="wizard.id">
           <WizardCard
-            :name="wizard.name"
+            :name="$t(`wizards.wizardsPanel.wizardName[${wizard.id-1}]`)"
             :image="wizard.image"
-            :description="wizard.description"
+            :description="$t(`wizards.wizardsPanel.wizardDescription[${wizard.id-1}]`)"
             :to="'/printers/' + $route.params.id + '/' + wizard.link"
           />
         </v-flex>

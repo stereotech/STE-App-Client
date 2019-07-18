@@ -10,16 +10,13 @@ export default ({ app }) => {
     // This way we can use it in middleware and pages asyncData/fetch
     
     app.i18n = new VueI18n({
-
-      locale: "ru", //язык меять тут
-  
+      locale: "ru", //язык менять тут
       fallbackLocale: "en",
       silentTranslationWarn: true,
       messages: {
         'en': require('~/locales/en.json'),
         'ru': require('~/locales/ru.json')
       }
-      
     });
     
   

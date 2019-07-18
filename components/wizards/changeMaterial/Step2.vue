@@ -1,16 +1,16 @@
 <template>
-  <WizardStep :step="step" :image="image" :description="description">
+  <WizardStep :step="step" :image="image" :description="$t('wizards.changeMaterialDescription2')">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
           <v-radio-group v-model="additionalData.action" mandatory>
-            <v-radio label="Unload material" :value="0" color="secondary"></v-radio>
+            <v-radio label="Unload material" :value="0" color="secondary">sdgdg</v-radio>
             <v-radio label="Change material" :value="1" color="secondary"></v-radio>
             <v-radio label="Load material" :value="2" color="secondary"></v-radio>
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large flat @click="nextStep">{{$t('frequentlyUsed.next')}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

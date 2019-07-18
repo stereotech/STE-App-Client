@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step">
     <v-card class="mb-5" color="grey lighten-1" height="200px">Step 2</v-card>
-    <v-btn block flat @click="$router.go(-1)">Start</v-btn>
+    <v-btn block flat @click="$router.go(-1)">{{$t('wizards.start')}}</v-btn>
   </WizardStep>
 </template>
 

@@ -33,7 +33,7 @@
                 <div class="title text-xs-center">
                   <v-layout>
                     <div class="code_color_txt">
-                      Color code
+                      {{$t('materials.materialDialog.colorCode')}}
                     </div>
                     <v-flex class="code_color">
                       <swatches v-model="material.metadata.color_code"></swatches>

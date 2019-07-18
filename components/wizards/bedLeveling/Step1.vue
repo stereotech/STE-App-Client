@@ -1,6 +1,6 @@
 <template>
-  <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block large flat @click="next(2)">Start</v-btn>
+  <WizardStep :step="step" :image="image" :description="$t('wizards.bedLevelingDescription')">
+    <v-btn block large flat @click="next(2)">{{$t('wizards.start')}}</v-btn>
   </WizardStep>
 </template>
 
