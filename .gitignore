@@ -82,3 +82,6 @@ public
 .idea
 deps.txt
 material_model.json
+
+//PWA
+sw.*
