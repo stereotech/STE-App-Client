@@ -4,7 +4,7 @@
     <h5
       class="headline font-weight-light text-xs-center"
     >Current version: {{ avaliableUpdate.currentVersion }}</h5>
-    <v-btn @click="checkForUpdate" round block color="primary" dark>Check for update</v-btn>
+    <v-btn @click="checkForUpdate" rounded block color="primary" dark>Check for update</v-btn>
     <v-card>
       <v-card-text>
         <p
@@ -15,7 +15,7 @@
         <v-btn
           @click="onlineUpdate"
           v-if="isNewVersion"
-          round
+          rounded
           block
           color="accent"
           dark

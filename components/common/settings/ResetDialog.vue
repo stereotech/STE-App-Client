@@ -2,13 +2,13 @@
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">Reset and restore</template>
     <v-list>
-      <v-list-tile avatar @click="confirmation = true">
-        <v-list-tile-title class="error--text">Factory reset</v-list-tile-title>
-      </v-list-tile>
+      <v-list-item avatar @click="confirmation = true">
+        <v-list-item-title class="error--text">Factory reset</v-list-item-title>
+      </v-list-item>
       <v-divider></v-divider>
-      <v-list-tile avatar @click="confirmation = true">
-        <v-list-tile-title class="error--text font-weight-bold">Factory reset (clear storage)</v-list-tile-title>
-      </v-list-tile>
+      <v-list-item avatar @click="confirmation = true">
+        <v-list-item-title class="error--text font-weight-bold">Factory reset (clear storage)</v-list-item-title>
+      </v-list-item>
       <v-divider></v-divider>
     </v-list>
     <v-dialog v-model="confirmation" max-width="425">
@@ -16,8 +16,8 @@
         <v-card-title class="headline">Are you sure want to perform factory reset?</v-card-title>
         <v-card-text>Printer will reboot after confirmation</v-card-text>
         <v-card-actions>
-          <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="error" flat @click="factoryReset">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
+          <v-btn color="error" text @click="factoryReset">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -28,8 +28,8 @@
         >Are you sure want to perform factory reset and clear all user data?</v-card-title>
         <v-card-text>Printer will reboot after confirmation</v-card-text>
         <v-card-actions>
-          <v-btn color="primary" flat @click="confirmationForce = false">No</v-btn>
-          <v-btn color="error" flat @click="forceFactoryReset">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmationForce = false">No</v-btn>
+          <v-btn color="error" text @click="forceFactoryReset">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step">
-    <v-card class="mb-5" color="grey lighten-1" height="200px">Step 2</v-card>
-    <v-btn block flat @click="next(3)">Start</v-btn>
+    <v-card class="mb-12" color="grey lighten-1" height="200px">Step 2</v-card>
+    <v-btn block text @click="next(3)">Start</v-btn>
   </WizardStep>
 </template>
 

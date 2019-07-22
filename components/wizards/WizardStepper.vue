@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12>
     <v-toolbar color="primary" flat>
-      <v-btn flat icon @click="$router.back()" v-if="closeable && currentStep == 1">
+      <v-btn text icon @click="$router.back()" v-if="closeable && currentStep == 1">
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <span class="headline font-weight-light">
@@ -10,7 +10,7 @@
     </v-toolbar>
     <v-stepper
       v-model="currentStep"
-      @input="$emit('change', currentStep)"
+      @change="$emit('change', currentStep)"
       class="primary elevation-0"
     >
       <v-stepper-header class="elevation-0">

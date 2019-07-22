@@ -10,7 +10,7 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large text @click="nextStep">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

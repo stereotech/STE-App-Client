@@ -6,47 +6,52 @@
           <span class="headline font-weight-light">Queue</span>
         </v-card-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn small fab depressed dark color="primary" @click="createJob">
-            <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
-        </v-toolbar-items>
+        <v-btn small fab depressed dark color="primary" @click="createJob">
+          <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
       </v-toolbar>
-      <v-list two-line style="max-height: 486px" class="scroll-y" v-if="queuedJobs.length > 0">
-        <v-list-tile v-for="job in queuedJobs" :key="job.id + job.name" avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ job.name }}</v-list-tile-title>
-            <v-list-tile-sub-title v-if="job.state === 'Dequeued'">
+      <v-list
+        two-line
+        style="max-height: 486px"
+        class="overflow-y-auto"
+        v-if="queuedJobs.length > 0"
+      >
+        <v-list-item v-for="job in queuedJobs" :key="job.id + job.name" avatar>
+          <v-list-item-content>
+            <v-list-item-title>{{ job.name }}</v-list-item-title>
+            <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true"></v-progress-linear>
-            </v-list-tile-sub-title>
-            <v-list-tile-sub-title
+            </v-list-item-subtitle>
+            <v-list-item-subtitle
               class="body-1"
               v-else
-            >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-list-tile-action-text>{{ job.creationTime | moment("from") }}</v-list-tile-action-text>
+            >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
             <v-menu bottom left v-if="job.state === 'Queued'">
-              <v-btn slot="activator" icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
-                <v-list-tile @click="startEditJob(job)">
-                  <v-list-tile-action>
+                <v-list-item @click="startEditJob(job)">
+                  <v-list-item-action>
                     <v-icon>mdi-pencil</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Edit</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="startRemoveJob(job)">
-                  <v-list-tile-action>
+                  </v-list-item-action>
+                  <v-list-item-title>Edit</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="startRemoveJob(job)">
+                  <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Remove</v-list-tile-title>
-                </v-list-tile>
+                  </v-list-item-action>
+                  <v-list-item-title>Remove</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-menu>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
       <v-container grid-list-xs v-else>
         <v-layout align-center justify-center column fill-height>
@@ -70,24 +75,22 @@
           </v-btn>
           <v-toolbar-title>{{ editMode ? 'Edit' : 'Create' }} job</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn :disabled="!valid" dark flat @click="closeDialog(!editMode)">Save</v-btn>
-          </v-toolbar-items>
+          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">Save</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
-          <v-container>
+          <v-container fluid grid-list-md>
             <v-layout row wrap>
               <v-flex xs12>
                 <v-text-field
                   label="Job name"
-                  box
+                  filled
                   clearable
                   v-model="editedJob.name"
                   :rules="nameRules"
                 ></v-text-field>
                 <v-autocomplete
                   label="Printer assignment"
-                  box
+                  filled
                   chips
                   multiple
                   :items="printers"
@@ -97,7 +100,7 @@
                 ></v-autocomplete>
                 <v-autocomplete
                   label="File assignment"
-                  box
+                  filled
                   :items="avaliableFiles"
                   item-text="name"
                   item-value="uri"
@@ -107,11 +110,11 @@
                 <v-autocomplete
                   v-if="!editMode"
                   label="Copies"
-                  box
+                  filled
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   v-model="copiesCount"
                 ></v-autocomplete>
-                <v-textarea box label="Description" auto-grow v-model="editedJob.description"></v-textarea>
+                <v-textarea filled label="Description" auto-grow v-model="editedJob.description"></v-textarea>
               </v-flex>
             </v-layout>
           </v-container>
@@ -122,8 +125,8 @@
       <v-card>
         <v-card-title class="headline">Do you want to remove job?</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" flat @click="endRemoveJob">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
+          <v-btn color="primary" text @click="endRemoveJob">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

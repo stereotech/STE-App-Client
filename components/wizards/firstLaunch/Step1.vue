@@ -15,7 +15,7 @@
           ></v-select>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="next(2)">Start</v-btn>
+          <v-btn block large text @click="next(2)">Start</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

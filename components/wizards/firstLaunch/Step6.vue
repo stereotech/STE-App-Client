@@ -3,13 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="repeat">Unload</v-btn>
+          <v-btn block large text @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="load">Load</v-btn>
+          <v-btn block large text @click="load">Load</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large text @click="nextStep">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

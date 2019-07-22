@@ -4,7 +4,7 @@
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex xs2>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="retract">
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="retract">
             <v-icon>mdi-chevron-double-up</v-icon>
           </v-btn>
         </v-flex>
@@ -15,7 +15,7 @@
       <v-layout row wrap>
         <v-flex xs10 offset-xs2>
           <v-select
-            box
+            filled
             :items="extruders"
             label="Select extruder"
             item-text="key"
@@ -27,16 +27,16 @@
       </v-layout>
       <v-layout row wrap>
         <v-flex xs2>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="extrude">
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="extrude">
             <v-icon>mdi-chevron-double-down</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs10 d-flex>
-          <v-btn-toggle mandatory v-model="selectedAmount">
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
+        <v-flex xs10 d-flex class="text-center">
+          <v-btn-toggle mandatory v-model="selectedAmount" rounded>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-flex>
       </v-layout>

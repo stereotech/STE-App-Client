@@ -7,31 +7,37 @@
           <span v-if="name" class="headline font-weight-light">&nbsp;at {{ display }}</span>
         </v-card-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items></v-toolbar-items>
       </v-toolbar>
 
-      <v-list v-if="dataStorage.children.length > 0" two-line :style="styleObj" class="scroll-y">
-        <v-list-tile v-for="file in dataStorage.children" :key="file.hash">
-          <v-list-tile-content>
-            <v-list-tile-title class="subheading">{{ file.display }}</v-list-tile-title>
-            <v-list-tile-sub-title class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
+      <v-list
+        v-if="dataStorage.children.length > 0"
+        two-line
+        :style="styleObj"
+        class="overflow-y-auto"
+      >
+        <v-list-item v-for="file in dataStorage.children" :key="file.hash">
+          <v-list-item-content>
+            <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
+            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
             <v-menu bottom left>
-              <v-btn slot="activator" icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
-                <v-list-tile @click="deleteFile(file)">
-                  <v-list-tile-action>
+                <v-list-item @click="deleteFile(file)">
+                  <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Remove</v-list-tile-title>
-                </v-list-tile>
+                  </v-list-item-action>
+                  <v-list-item-title>Remove</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-menu>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
       <v-container grid-list-xs v-else>
         <v-layout align-center justify-center column fill-height>
@@ -50,14 +56,13 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <dropzone
-        v-if="local"
-        id="dropzone"
-        :options="options"
-        :destroyDropzone="true"
-        :includeStyling="false"
-        :duplicateCheck="true"
-      ></dropzone>
+      <v-container grid-list-xs>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-file-input chips multiple display-size label="Upload G-Code Files" accept=".gcode"></v-file-input>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-card>
   </v-flex>
 </template>
