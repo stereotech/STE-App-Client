@@ -5,18 +5,11 @@ const config = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'STE App Client' },
-      { name: 'msapplication-TileColor', content: '#0277bd' },
-      { name: 'theme-color', content: '#0277bd' }
+      { hid: 'description', name: 'description', content: 'STE App Client' }
     ]
   },
   link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-    { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-    { rel: 'manifest', href: '/site.webmanifest' },
-    { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#0277bd' }
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
   ],
   router: {
     middleware: 'firstLaunch',
@@ -37,7 +30,8 @@ const config = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/pwa'
   ],
   /*
    ** Axios module configuration
@@ -70,6 +64,16 @@ const config = {
     name: 'folding-cube',
     color: '#ffffff',
     background: '#0277bd'
+  },
+  manifest: {
+
+    "name": "STE App",
+    "short_name": "STE App",
+    "theme_color": "#0277bd",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/"
   },
   env: {
     apiUrl: '/api/'

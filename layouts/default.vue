@@ -33,7 +33,7 @@
         <v-icon v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'"></v-icon>
       </v-btn>
       <v-avatar size="36px">
-        <img src="/ste-logo.png" alt="Logo">
+        <img src="/icon.png" alt="Logo">
       </v-avatar>
       <v-toolbar-title>
         <span class="text-uppercase font-weight-regular">STE App</span>
