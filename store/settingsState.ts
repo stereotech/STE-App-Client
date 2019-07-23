@@ -148,8 +148,10 @@ export const actions: ActionTree<SettingsState, RootState> = {
     await this.$axios.post(this.state.apiUrl + updateEndpoint + '/online')
   },
 
-  async offlineUpdate ({ commit }) {
-    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/offline')
+  async offlineUpdate ({ commit }, file: File) {
+    let data = new FormData()
+    data.append('file', file, file.name)
+    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/offline', data, { headers: { 'Content-Type': 'multipart/form-data' } })
   },
 
   async rebootSystem ({ commit }) {

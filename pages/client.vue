@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 text-xs-center>
+  <v-flex xs12 text-center>
     <h1 class="display-4">Client 3D Printer</h1>
     <h4
       class="display-1"

@@ -14,7 +14,7 @@
         <v-flex xs8>
           <p class="title">
             {{ name }}
-            <v-chip color="primary" text-color="white" v-if="local" disabled>Host</v-chip>
+            <v-chip color="primary" text-color="white" v-if="local">Host</v-chip>
           </p>
 
           <p class="body-2">{{ model }}</p>

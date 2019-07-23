@@ -1,9 +1,9 @@
 <template>
-  <v-app class="light-blue darken-3" dark>
-    <v-content>
+  <v-app>
+    <v-content class="light-blue darken-3">
       <v-container fluid fill-height>
         <v-layout column wrap>
-          <nuxt/>
+          <nuxt />
         </v-layout>
       </v-container>
     </v-content>
@@ -14,7 +14,14 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
-export default class extends Vue {
+export default class Solid extends Vue {
+  mounted () {
+    this.$vuetify.theme.dark = true
+  }
+
+  beforeDestroy () {
+    this.$vuetify.theme.dark = false
+  }
 }
 </script>
 

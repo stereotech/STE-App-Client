@@ -129,5 +129,13 @@ export const actions: ActionTree<StorageState, RootState> = {
       commit('deleteUsbFile', file)
       let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
     }
+  },
+
+  async uploadFiles ({ commit }, files: File[]) {
+    let data = new FormData()
+    files.forEach(file => {
+      data.append("file", file, file.name)
+    });
+    await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
 }

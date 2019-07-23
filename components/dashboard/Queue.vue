@@ -59,7 +59,7 @@
             <v-img src="/empty-state/queue.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
           </v-flex>
           <v-flex xs12>
-            <h6 class="title text-xs-center">
+            <h6 class="title text-center">
               There are no queued print jobs yet. Add new one by clicking
               <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
             </h6>

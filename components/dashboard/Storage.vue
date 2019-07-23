@@ -51,17 +51,30 @@
           </v-flex>
           <v-flex xs12>
             <h6
-              class="title text-xs-center"
+              class="title text-center"
             >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container grid-list-xs>
+      <v-container grid-list-xs v-if="local">
         <v-layout row wrap>
           <v-flex xs12>
-            <v-file-input chips multiple display-size label="Upload G-Code Files" accept=".gcode"></v-file-input>
+            <v-file-input
+              chips
+              multiple
+              display-size
+              label="Upload G-Code Files"
+              accept=".gcode"
+              v-model="files"
+            ></v-file-input>
+          </v-flex>
+          <v-flex xs12>
+            <v-btn depressed block color="primary" @click="upload">Upload</v-btn>
           </v-flex>
         </v-layout>
+        <v-overlay :value="overlay" absolute>
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
       </v-container>
     </v-card>
   </v-flex>
@@ -71,16 +84,10 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { FileOrFolder } from '~/types/fileOrFolder'
-import Dropzone from 'nuxt-dropzone'
-import 'nuxt-dropzone/dropzone.css'
 
 const storage = namespace('storageState')
 
-@Component({
-  components: {
-    Dropzone
-  }
-})
+@Component
 export default class extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
@@ -89,19 +96,22 @@ export default class extends Vue {
   @storage.Getter localStorage!: FileOrFolder
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
 
+  @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
 
   private styleObj: any = {
     maxHeight: this.local ? '336px' : '486px'
   }
 
-  options: any = {
-    url: this.$store.state.apiUrl + 'storage/local',
-    uploadMultiple: false,
-    maxFilesize: 200,
-    createImageThumbnails: false,
-    thumbnailWidth: 50,
-    addRemoveLinks: true
+  private overlay: boolean = false
+
+  private files: File[] = []
+
+  private async upload () {
+    this.overlay = true
+    await this.uploadFiles(this.files)
+    this.files = []
+    this.overlay = false
   }
 
   get dataStorage (): FileOrFolder | undefined {
@@ -112,11 +122,6 @@ export default class extends Vue {
         return this.usbStorage(this.name)
       }
     }
-  }
-
-  mounted () {
-    // Everything is mounted and you can access the dropzone instance
-    const instance = this.$refs['el']
   }
 }
 </script>

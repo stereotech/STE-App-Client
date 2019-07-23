@@ -57,7 +57,7 @@
             <v-img src="/empty-state/done-jobs.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
           </v-flex>
           <v-flex xs12>
-            <h6 class="title text-xs-center">
+            <h6 class="title text-center">
               Here you will see done print jobs. Succesful prints marked with
               <v-icon color="success">mdi-check</v-icon>&nbsp;
             </h6>

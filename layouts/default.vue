@@ -79,7 +79,12 @@
       </v-container>
     </v-content>
 
-    <v-bottom-navigation app :input-value="bottomNav" background-color="secondary" grow>
+    <v-bottom-navigation
+      app
+      :input-value="bottomNav"
+      background-color="secondary"
+      grow
+    >
       <v-btn
         text
         v-for="menuItem in mainMenu"
