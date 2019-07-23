@@ -8,13 +8,13 @@
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-btn-toggle mandatory block depressed>
-            <v-btn flat block depressed :value="printing" @click="resumeJob">
+            <v-btn text block depressed :value="printing" @click="resumeJob">
               <v-icon color="success">mdi-play</v-icon>
             </v-btn>
-            <v-btn flat block depressed :value="paused" @click="pauseJob">
+            <v-btn text block depressed :value="paused" @click="pauseJob">
               <v-icon color="warning">mdi-pause</v-icon>
             </v-btn>
-            <v-btn flat block depressed @click="stopJob">
+            <v-btn text block depressed @click="stopJob">
               <v-icon color="error">mdi-stop</v-icon>
             </v-btn>
           </v-btn-toggle>
@@ -27,7 +27,7 @@
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
-            box
+            filled
             :items="['Idle', 'Maintenance']"
             label="Select state"
             @change="setPrinterState"
@@ -41,7 +41,7 @@
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
-            box
+            filled
             :items="['Idle', 'Maintenance']"
             label="Select state"
             @change="setPrinterState"
@@ -56,7 +56,7 @@
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
-            box
+            filled
             :items="['Idle', 'Maintenance']"
             label="Select state"
             @change="setPrinterState"

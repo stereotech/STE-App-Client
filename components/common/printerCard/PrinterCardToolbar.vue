@@ -2,7 +2,7 @@
   <v-toolbar v-if="toolbar" flat dense color="secondary">
     <v-btn
       v-if="controlPanel && $vuetify.breakpoint.smAndUp"
-      flat
+      text
       nuxt
       :to="'/printers/' + id"
       ripple
@@ -12,7 +12,7 @@
     </v-btn>
     <v-btn
       v-if="controlPanel && $vuetify.breakpoint.xsOnly"
-      flat
+      text
       icon
       nuxt
       :to="'/printers/' + id"
@@ -21,16 +21,16 @@
       <v-icon>mdi-camera-control</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
-    <v-btn flat icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
+    <v-btn text icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
       <v-icon>mdi-lightbulb-on-outline</v-icon>
     </v-btn>
-    <v-btn flat icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
+    <v-btn text icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
       <v-icon>mdi-lightbulb-outline</v-icon>
     </v-btn>
-    <v-btn flat icon @click="findPrinter(id)">
+    <v-btn text icon @click="findPrinter(id)">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <v-btn v-if="removable" flat icon @click="confirmation = true">
+    <v-btn v-if="removable" text icon @click="confirmation = true">
       <v-icon>mdi-delete</v-icon>
     </v-btn>
     <v-dialog v-model="confirmation" max-width="425">
@@ -39,8 +39,8 @@
           class="headline"
         >Do you want to remove {{ printer(id) ? printer(id).name : ''}} from cluster?</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" flat @click="removeFromCluster">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
+          <v-btn color="primary" text @click="removeFromCluster">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

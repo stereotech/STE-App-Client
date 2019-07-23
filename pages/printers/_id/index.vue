@@ -1,14 +1,12 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12>
-      <PrinterCard toolbar :id="$route.params.id"/>
+      <PrinterCard toolbar :id="$route.params.id" />
     </v-flex>
-    <v-flex xs12 v-if="isMaintenance || isPaused">
-      <WizardsPanel :id="$route.params.id"/>
-    </v-flex>
-    <v-flex xs12>
-      <ManualControlPanel :printing="isPrinting" :id="$route.params.id"/>
-    </v-flex>
+    <v-expansion-panels multiple v-model="panel">
+      <WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />
+      <ManualControlPanel :printing="isPrinting" :id="$route.params.id" />
+    </v-expansion-panels>
   </v-layout>
 </template>
 
@@ -43,6 +41,8 @@ export default class PrinterPage extends Vue {
   head () {
     return { title: 'STE App Printers' }
   }
+
+  panel: number[] = [0, 1]
 
   get isPrinting (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {

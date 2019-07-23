@@ -7,31 +7,37 @@
           <span v-if="name" class="headline font-weight-light">&nbsp;at {{ display }}</span>
         </v-card-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items></v-toolbar-items>
       </v-toolbar>
 
-      <v-list v-if="dataStorage.children.length > 0" two-line :style="styleObj" class="scroll-y">
-        <v-list-tile v-for="file in dataStorage.children" :key="file.hash">
-          <v-list-tile-content>
-            <v-list-tile-title class="subheading">{{ file.display }}</v-list-tile-title>
-            <v-list-tile-sub-title class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
+      <v-list
+        v-if="dataStorage.children.length > 0"
+        two-line
+        :style="styleObj"
+        class="overflow-y-auto"
+      >
+        <v-list-item v-for="file in dataStorage.children" :key="file.hash">
+          <v-list-item-content>
+            <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
+            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
             <v-menu bottom left>
-              <v-btn slot="activator" icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
-                <v-list-tile @click="deleteFile(file)">
-                  <v-list-tile-action>
+                <v-list-item @click="deleteFile(file)">
+                  <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Remove</v-list-tile-title>
-                </v-list-tile>
+                  </v-list-item-action>
+                  <v-list-item-title>Remove</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-menu>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
       <v-container grid-list-xs v-else>
         <v-layout align-center justify-center column fill-height>
@@ -45,19 +51,31 @@
           </v-flex>
           <v-flex xs12>
             <h6
-              class="title text-xs-center"
+              class="title text-center"
             >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
           </v-flex>
         </v-layout>
       </v-container>
-      <dropzone
-        v-if="local"
-        id="dropzone"
-        :options="options"
-        :destroyDropzone="true"
-        :includeStyling="false"
-        :duplicateCheck="true"
-      ></dropzone>
+      <v-container grid-list-xs v-if="local">
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-file-input
+              chips
+              multiple
+              display-size
+              label="Upload G-Code Files"
+              accept=".gcode"
+              v-model="files"
+            ></v-file-input>
+          </v-flex>
+          <v-flex xs12>
+            <v-btn depressed block color="primary" @click="upload">Upload</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-overlay :value="overlay" absolute>
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
+      </v-container>
     </v-card>
   </v-flex>
 </template>
@@ -66,16 +84,10 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { FileOrFolder } from '~/types/fileOrFolder'
-import Dropzone from 'nuxt-dropzone'
-import 'nuxt-dropzone/dropzone.css'
 
 const storage = namespace('storageState')
 
-@Component({
-  components: {
-    Dropzone
-  }
-})
+@Component
 export default class extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
@@ -84,19 +96,22 @@ export default class extends Vue {
   @storage.Getter localStorage!: FileOrFolder
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
 
+  @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
 
   private styleObj: any = {
     maxHeight: this.local ? '336px' : '486px'
   }
 
-  options: any = {
-    url: this.$store.state.apiUrl + 'storage/local',
-    uploadMultiple: false,
-    maxFilesize: 200,
-    createImageThumbnails: false,
-    thumbnailWidth: 50,
-    addRemoveLinks: true
+  private overlay: boolean = false
+
+  private files: File[] = []
+
+  private async upload () {
+    this.overlay = true
+    await this.uploadFiles(this.files)
+    this.files = []
+    this.overlay = false
   }
 
   get dataStorage (): FileOrFolder | undefined {
@@ -107,11 +122,6 @@ export default class extends Vue {
         return this.usbStorage(this.name)
       }
     }
-  }
-
-  mounted () {
-    // Everything is mounted and you can access the dropzone instance
-    const instance = this.$refs['el']
   }
 }
 </script>

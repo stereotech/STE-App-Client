@@ -15,7 +15,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="next(6)">Next</v-btn>
+          <v-btn block large text @click="next(6)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

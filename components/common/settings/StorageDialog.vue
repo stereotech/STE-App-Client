@@ -1,9 +1,9 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">Storage</template>
-    <v-text-field label="Total" box readonly :value="bytesTotal | prettyBytes"></v-text-field>
-    <v-text-field label="Owned" box readonly :value="bytesOwned | prettyBytes"></v-text-field>
-    <v-text-field label="Avaliable" box readonly :value="bytesAvaliable | prettyBytes"></v-text-field>
+    <v-text-field label="Total" filled readonly :value="bytesTotal | prettyBytes"></v-text-field>
+    <v-text-field label="Owned" filled readonly :value="bytesOwned | prettyBytes"></v-text-field>
+    <v-text-field label="Avaliable" filled readonly :value="bytesAvaliable | prettyBytes"></v-text-field>
     <v-progress-circular
       :rotate="-90"
       :width="50"

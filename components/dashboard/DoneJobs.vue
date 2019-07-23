@@ -6,48 +6,50 @@
           <span class="headline font-weight-light">Done Jobs</span>
         </v-card-title>
       </v-toolbar>
-      <v-list two-line style="max-height: 486px" class="scroll-y" v-if="doneJobs.length > 0">
-        <v-list-tile v-for="doneJob in doneJobs" :key="doneJob.id">
-          <v-list-tile-action v-if="doneJob.state == 'Completed'" ripple>
+      <v-list two-line style="max-height: 486px" class="overflow-y-auto" v-if="doneJobs.length > 0">
+        <v-list-item v-for="doneJob in doneJobs" :key="doneJob.id">
+          <v-list-item-action v-if="doneJob.state == 'Completed'" ripple>
             <v-icon
               :color="doneJob.successful ? `success` : `error`"
             >{{ doneJob.successful ? 'mdi-check' : 'mdi-close' }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-action v-else-if="doneJob.state == 'Revert'">
+          </v-list-item-action>
+          <v-list-item-action v-else-if="doneJob.state == 'Revert'">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title class="subheading">{{ doneJob.name }}</v-list-tile-title>
-            <v-list-tile-sub-title v-if="doneJob.state === 'Revert'">
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="subheading">{{ doneJob.name }}</v-list-item-title>
+            <v-list-item-subtitle v-if="doneJob.state === 'Revert'">
               <v-progress-linear :indeterminate="true"></v-progress-linear>
-            </v-list-tile-sub-title>
-            <v-list-tile-sub-title
+            </v-list-item-subtitle>
+            <v-list-item-subtitle
               class="body-1"
               v-else
-            >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
+            >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
             <v-menu bottom left>
-              <v-btn slot="activator" icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
-                <v-list-tile @click="revertJob(doneJob)">
-                  <v-list-tile-action>
+                <v-list-item @click="revertJob(doneJob)">
+                  <v-list-item-action>
                     <v-icon>mdi-refresh</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Revert</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="removeJob(doneJob)">
-                  <v-list-tile-action>
+                  </v-list-item-action>
+                  <v-list-item-title>Revert</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="removeJob(doneJob)">
+                  <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Remove</v-list-tile-title>
-                </v-list-tile>
+                  </v-list-item-action>
+                  <v-list-item-title>Remove</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-menu>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
       <v-container grid-list-xs v-else>
         <v-layout align-center justify-center column fill-height>
@@ -55,7 +57,7 @@
             <v-img src="/empty-state/done-jobs.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
           </v-flex>
           <v-flex xs12>
-            <h6 class="title text-xs-center">
+            <h6 class="title text-center">
               Here you will see done print jobs. Succesful prints marked with
               <v-icon color="success">mdi-check</v-icon>&nbsp;
             </h6>

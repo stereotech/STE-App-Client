@@ -1,6 +1,6 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block large flat @click="next(2)">Start</v-btn>
+    <v-btn block large text @click="next(2)">Start</v-btn>
   </WizardStep>
 </template>
 

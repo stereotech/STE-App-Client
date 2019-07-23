@@ -15,13 +15,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="repeat">Unload</v-btn>
+          <v-btn block large text @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12 v-if="additionalData.action === 0">
-          <v-btn block large flat nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
+          <v-btn block large text nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
         </v-flex>
         <v-flex xs12 v-else>
-          <v-btn block large flat @click="next(4)">Next</v-btn>
+          <v-btn block large text @click="next(4)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

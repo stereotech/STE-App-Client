@@ -6,7 +6,7 @@
         <v-flex xs12>
           <!--
           <v-textarea
-            box
+            filled
             readonly
             label="Terminal output"
             :value="printerLogs(id)"
@@ -15,15 +15,15 @@
           ></v-textarea>
           -->
           <v-card height="500">
-            <v-list dense style="max-height: 500px" class="scroll-y" id="terminal-list">
-              <v-list-tile v-for="(line, index) in printerLogs(id)" :key="index">
-                <v-list-tile-content>{{ line }}</v-list-tile-content>
-              </v-list-tile>
+            <v-list dense style="max-height: 500px" class="overflow-y-auto" id="terminal-list">
+              <v-list-item v-for="(line, index) in printerLogs(id)" :key="index">
+                <v-list-item-content>{{ line }}</v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-card>
         </v-flex>
         <v-flex xs12>
-          <v-btn flat color="primary" block @click="scrollToBottom">Scroll to bottom</v-btn>
+          <v-btn text color="primary" block @click="scrollToBottom">Scroll to bottom</v-btn>
         </v-flex>
         <v-flex xs12>
           <v-text-field
@@ -32,7 +32,7 @@
             @keydown.enter="misc"
             @keydown.up="prevGCode"
             @keydown.down="nextGCode"
-            box
+            filled
             clear-icon="mdi-close-circle"
             clearable
             label="G-Code Command"

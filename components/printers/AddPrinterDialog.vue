@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn color="primary" large round block @click="startScan">
+    <v-btn color="primary" large rounded block @click="startScan">
       <v-icon>mdi-plus</v-icon>&nbsp;Add printer
     </v-btn>
     <v-dialog
@@ -26,17 +26,17 @@
             <v-layout row wrap v-if="results.length > 0">
               <v-flex d-flex xs6 v-for="printer in results" :key="printer.id">
                 <v-card hover ripple @click="confirmation = true">
-                  <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar"/>
-                  <p class="title text-xs-center">{{ printer.name }}</p>
-                  <p class="body-1 text-xs-center">{{ printer.model }}</p>
-                  <p class="body-1 text-xs-center">Address: {{ printer.ipAddress }}</p>
+                  <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" />
+                  <p class="title text-center">{{ printer.name }}</p>
+                  <p class="body-1 text-center">{{ printer.model }}</p>
+                  <p class="body-1 text-center">Address: {{ printer.ipAddress }}</p>
                 </v-card>
                 <v-dialog v-model="confirmation" max-width="425">
                   <v-card>
                     <v-card-title class="headline">Do you want to add {{ printer.name }} to cluster?</v-card-title>
                     <v-card-actions>
-                      <v-btn color="primary" flat @click="confirmation = false">No</v-btn>
-                      <v-btn color="primary" flat @click="startConnection(printer)">Yes</v-btn>
+                      <v-btn color="primary" text @click="confirmation = false">No</v-btn>
+                      <v-btn color="primary" text @click="startConnection(printer)">Yes</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -44,7 +44,7 @@
             </v-layout>
             <v-layout row wrap v-else>
               <v-flex d-flex xs12>
-                <div class="title text-xs-center">
+                <div class="title text-center">
                   <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
                 </div>
               </v-flex>

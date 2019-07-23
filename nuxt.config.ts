@@ -49,13 +49,26 @@ const config = {
     treeShake: true,
     materialIcons: false,
     theme: {
-      primary: '#0277bd',
-      secondary: '#ffffff',
-      accent: '#263238',
-      error: '#FF5252',
-      info: '#9C27B0',
-      success: '#4CAF50',
-      warning: '#FFC107'
+      themes: {
+        light: {
+          primary: '#0277bd',
+          secondary: '#ffffff',
+          accent: '#263238',
+          error: '#FF5252',
+          info: '#9C27B0',
+          success: '#4CAF50',
+          warning: '#FFC107'
+        },
+        dark: {
+          primary: '#0277bd',
+          secondary: '#ffffff',
+          accent: '#263238',
+          error: '#FF5252',
+          info: '#9C27B0',
+          success: '#4CAF50',
+          warning: '#FFC107'
+        }
+      }
     },
     iconfont: 'mdi'
   },

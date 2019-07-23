@@ -1,21 +1,23 @@
 <template>
-  <v-card>
-    <v-card-title>
+  <v-expansion-panel>
+    <v-expansion-panel-header>
       <span class="headline font-weight-light">Wizards</span>
-    </v-card-title>
-    <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs6 sm3 lg2 v-for="wizard in data" :key="wizard.id">
-          <WizardCard
-            :name="wizard.name"
-            :image="wizard.image"
-            :description="wizard.description"
-            :to="'/printers/' + $route.params.id + '/' + wizard.link"
-          />
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-card>
+    </v-expansion-panel-header>
+    <v-expansion-panel-content>
+      <v-container fluid grid-list-md>
+        <v-layout row wrap>
+          <v-flex xs6 sm3 lg2 v-for="wizard in data" :key="wizard.id">
+            <WizardCard
+              :name="wizard.name"
+              :image="wizard.image"
+              :description="wizard.description"
+              :to="'/printers/' + $route.params.id + '/' + wizard.link"
+            />
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-expansion-panel-content>
+  </v-expansion-panel>
 </template>
 
 <script lang="ts">
