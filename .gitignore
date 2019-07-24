@@ -84,3 +84,5 @@ public
 .vscode
 deps.txt
 material_model.json
+
+sw.*
