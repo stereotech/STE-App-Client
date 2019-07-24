@@ -23,7 +23,7 @@ buildNuxt:
   artifacts:
     name: "client"
     paths:
-      - dist/
+      - dist/*
   only: 
     - develop
     - master
