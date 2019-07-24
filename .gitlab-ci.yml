@@ -25,6 +25,8 @@ buildNuxt:
     paths:
       - public
   only: 
+    - develop
+    - master
     - tags
 
 deployRelease:
@@ -39,5 +41,4 @@ deployRelease:
     - aws s3 cp client-${CI_COMMIT_TAG}.zip s3://${BUCKET_NAME}/client/
   only: 
     - tags
-  when: manual
 
