@@ -10,7 +10,7 @@ cache:
     - node_modules
 
 before_script:
-  - npm install --dev
+  - npm install
 
 stages:
   - build
