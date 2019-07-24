@@ -16,14 +16,14 @@
           -->
           <v-card height="500">
             <v-list dense style="max-height: 500px" class="overflow-y-auto" id="terminal-list">
-              <v-list-item v-for="(line, index) in printerLogs(id)" :key="index">
-                <v-list-item-content>{{ line }}</v-list-item-content>
-              </v-list-item>
+              <template v-for="(line, index) in printerLogs(id)">
+                <TerminalString :key="index" @mounted="scrollToBottom">{{line}}</TerminalString>
+              </template>
             </v-list>
           </v-card>
         </v-flex>
         <v-flex xs12>
-          <v-btn text color="primary" block @click="scrollToBottom">Scroll to bottom</v-btn>
+          <v-checkbox label="Autoscroll" v-model="autoscroll"></v-checkbox>
         </v-flex>
         <v-flex xs12>
           <v-text-field
@@ -48,10 +48,16 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
+import { VuetifyGoToOptions } from 'vuetify/types/services/goto'
+import TerminalString from '~/components/printers/expert/TerminalString.vue'
 
 const printers = namespace('printersState')
 
-@Component
+@Component({
+  components: {
+    TerminalString
+  }
+})
 export default class TerminalCard extends Vue {
   @Prop({ default: false, type: Boolean }) printing!: boolean
   @Prop({ default: '', type: String, required: true }) id!: string
@@ -63,13 +69,21 @@ export default class TerminalCard extends Vue {
   private previousIndex: number = 0
   private gcodeString: string = ''
 
-  private scrollToBottom () {
-    let container = this.$el.querySelector("#terminal-list")
-    if (container) {
-      container.scrollTop = container.scrollHeight;
-    }
+  private autoscroll: boolean = true
+  private temperature: boolean = false
 
+
+  private scrollToBottom () {
+    if (!this.autoscroll) {
+      return
+    }
+    let options: VuetifyGoToOptions = {
+      container: '#terminal-list'
+    }
+    this.$vuetify.goTo(9999999, options)
   }
+
+
 
   private misc () {
     this.customCommand({ id: this.id, command: this.gcodeString })

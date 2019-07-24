@@ -12,7 +12,6 @@
             :return-value.sync="dateModel"
             @update:return-value="setDate"
             persistent
-            lazy
             full-width
             width="290px"
           >
@@ -39,7 +38,6 @@
             v-model="modal2"
             :return-value.sync="timeModel"
             persistent
-            lazy
             full-width
             width="290px"
           >

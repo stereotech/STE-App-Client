@@ -11,7 +11,7 @@
       bottom
       :expand-on-hover="$vuetify.breakpoint.smOnly || miniVariant"
     >
-      <v-list>
+      <v-list shaped nav>
         <v-list-item
           v-for="menuItem in mainMenu"
           :key="menuItem.title"
@@ -79,12 +79,7 @@
       </v-container>
     </v-content>
 
-    <v-bottom-navigation
-      app
-      :input-value="bottomNav"
-      background-color="secondary"
-      grow
-    >
+    <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
       <v-btn
         text
         v-for="menuItem in mainMenu"
@@ -129,10 +124,9 @@ export default class extends Vue {
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
+  private bottomNav: boolean = this.$vuetify.breakpoint.xsOnly
 
-  get bottomNav (): boolean {
-    return this.$vuetify.breakpoint.xsOnly
-  }
+
 
   private settingsDialog: boolean = false
 

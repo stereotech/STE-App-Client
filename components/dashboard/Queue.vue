@@ -16,7 +16,11 @@
         class="overflow-y-auto"
         v-if="queuedJobs.length > 0"
       >
-        <v-list-item v-for="job in queuedJobs" :key="job.id + job.name" avatar>
+        <v-list-item
+          v-for="job in queuedJobs"
+          :key="job.id + job.name"
+          @contextmenu="showContextMenu"
+        >
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
@@ -29,12 +33,16 @@
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
-            <v-menu bottom left v-if="job.state === 'Queued'">
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
+            <v-btn @click="showContextMenu" icon>
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+            <v-menu
+              v-if="job.state === 'Queued'"
+              absolute
+              v-model="showMenu"
+              :position-x="menuX"
+              :position-y="menuY"
+            >
               <v-list>
                 <v-list-item @click="startEditJob(job)">
                   <v-list-item-action>
@@ -197,6 +205,19 @@ export default class extends Vue {
       successful: false,
       state: ''
     }
+  }
+
+  showMenu: boolean = false
+  menuX: number = 0
+  menuY: number = 0
+  showContextMenu (e) {
+    e.preventDefault()
+    this.showMenu = false
+    this.menuX = e.clientX
+    this.menuY = e.clientY
+    this.$nextTick(() => {
+      this.showMenu = true
+    })
   }
 
   private startEditJob (job: PrintJob) {

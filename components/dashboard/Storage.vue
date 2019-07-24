@@ -15,18 +15,20 @@
         :style="styleObj"
         class="overflow-y-auto"
       >
-        <v-list-item v-for="file in dataStorage.children" :key="file.hash">
+        <v-list-item
+          v-for="(file, index) in dataStorage.children"
+          :key="index"
+          @contextmenu="showContextMenu"
+        >
           <v-list-item-content>
             <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
             <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-menu bottom left>
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
+            <v-btn @click="showContextMenu" icon>
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+            <v-menu absolute :position-x="menuX" :position-y="menuY" v-model="showMenu">
               <v-list>
                 <v-list-item @click="deleteFile(file)">
                   <v-list-item-action>
@@ -69,10 +71,16 @@
             ></v-file-input>
           </v-flex>
           <v-flex xs12>
-            <v-btn depressed block color="primary" @click="upload">Upload</v-btn>
+            <v-btn
+              depressed
+              block
+              color="primary"
+              @click="upload"
+              :disabled="files.length < 1"
+            >Upload</v-btn>
           </v-flex>
         </v-layout>
-        <v-overlay :value="overlay" absolute>
+        <v-overlay :value="overlay" absolute z-index="3">
           <v-progress-circular indeterminate size="64"></v-progress-circular>
         </v-overlay>
       </v-container>
@@ -106,6 +114,19 @@ export default class extends Vue {
   private overlay: boolean = false
 
   private files: File[] = []
+
+  showMenu: boolean = false
+  menuX: number = 0
+  menuY: number = 0
+  showContextMenu (e) {
+    e.preventDefault()
+    this.showMenu = false
+    this.menuX = e.clientX
+    this.menuY = e.clientY
+    this.$nextTick(() => {
+      this.showMenu = true
+    })
+  }
 
   private async upload () {
     this.overlay = true

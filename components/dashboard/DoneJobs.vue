@@ -7,7 +7,7 @@
         </v-card-title>
       </v-toolbar>
       <v-list two-line style="max-height: 486px" class="overflow-y-auto" v-if="doneJobs.length > 0">
-        <v-list-item v-for="doneJob in doneJobs" :key="doneJob.id">
+        <v-list-item v-for="doneJob in doneJobs" :key="doneJob.id" @contextmenu="showContextMenu">
           <v-list-item-action v-if="doneJob.state == 'Completed'" ripple>
             <v-icon
               :color="doneJob.successful ? `success` : `error`"
@@ -27,12 +27,10 @@
             >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-menu bottom left>
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
+            <v-btn @click="showContextMenu" icon>
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+            <v-menu absolute :position-x="menuX" :position-y="menuY" v-model="showMenu">
               <v-list>
                 <v-list-item @click="revertJob(doneJob)">
                   <v-list-item-action>
@@ -81,6 +79,19 @@ export default class extends Vue {
   @printJobs.Action removeJob: any
   @printJobs.Action revertJob: any
   @printJobs.Action toggleSuccess: any
+
+  showMenu: boolean = false
+  menuX: number = 0
+  menuY: number = 0
+  showContextMenu (e) {
+    e.preventDefault()
+    this.showMenu = false
+    this.menuX = e.clientX
+    this.menuY = e.clientY
+    this.$nextTick(() => {
+      this.showMenu = true
+    })
+  }
 }
 </script>
 

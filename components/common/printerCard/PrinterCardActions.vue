@@ -7,14 +7,14 @@
           <p class="title text-truncate">{{ jobNameFomatted }}</p>
         </v-flex>
         <v-flex xs12 sm4 md12>
-          <v-btn-toggle mandatory block depressed>
-            <v-btn text block depressed :value="printing" @click="resumeJob">
+          <v-btn-toggle mandatory depressed>
+            <v-btn text depressed :value="printing" @click="resumeJob">
               <v-icon color="success">mdi-play</v-icon>
             </v-btn>
-            <v-btn text block depressed :value="paused" @click="pauseJob">
+            <v-btn text depressed :value="paused" @click="pauseJob">
               <v-icon color="warning">mdi-pause</v-icon>
             </v-btn>
-            <v-btn text block depressed @click="stopJob">
+            <v-btn text depressed @click="stopJob">
               <v-icon color="error">mdi-stop</v-icon>
             </v-btn>
           </v-btn-toggle>

@@ -4,7 +4,7 @@
       <v-layout row wrap>
         <v-flex xs4>
           <v-img class="elevation-1" :src="'/printers/'+ model +'.png'" alt="Avatar">
-            <div v-if="printing" class="fill-height repeating-gradient-blue"></div>
+            <div v-if="printing" class="fill-height repeating-gradient-white"></div>
             <div v-else-if="paused || maintenance" class="fill-height repeating-gradient-warning"></div>
             <div v-else-if="done" class="fill-height repeating-gradient-success"></div>
             <div v-else-if="offline" class="fill-height repeating-gradient-error"></div>
@@ -14,7 +14,7 @@
         <v-flex xs8>
           <p class="title">
             {{ name }}
-            <v-chip color="primary" text-color="white" v-if="local">Host</v-chip>
+            <v-chip color="primary" v-if="local" outlined label>Host</v-chip>
           </p>
 
           <p class="body-2">{{ model }}</p>
@@ -59,13 +59,13 @@ export default class PrinterCardInfo extends Vue {
 </script>
 
 <style scoped>
-.repeating-gradient-blue {
+.repeating-gradient-white {
   background-image: repeating-linear-gradient(
     -45deg,
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0) 5px,
-    rgba(2, 119, 189, 0.1) 5px,
-    rgba(2, 119, 189, 0.1) 10px
+    rgba(255, 255, 255, 0.5) 5px,
+    rgba(255, 255, 255, 0.5) 10px
   );
 }
 
@@ -74,8 +74,8 @@ export default class PrinterCardInfo extends Vue {
     -45deg,
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0) 5px,
-    rgba(255, 82, 82, 0.25) 5px,
-    rgba(255, 82, 82, 0.25) 10px
+    rgba(255, 82, 82, 0.5) 5px,
+    rgba(255, 82, 82, 0.5) 10px
   );
 }
 
@@ -84,8 +84,8 @@ export default class PrinterCardInfo extends Vue {
     -45deg,
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0) 5px,
-    rgba(255, 193, 7, 0.25) 5px,
-    rgba(255, 193, 7, 0.25) 10px
+    rgba(255, 193, 7, 0.5) 5px,
+    rgba(255, 193, 7, 0.5) 10px
   );
 }
 
@@ -94,8 +94,8 @@ export default class PrinterCardInfo extends Vue {
     -45deg,
     rgba(0, 0, 0, 0),
     rgba(0, 0, 0, 0) 5px,
-    rgba(76, 175, 80, 0.25) 5px,
-    rgba(76, 175, 80, 0.25) 10px
+    rgba(76, 175, 80, 0.5) 5px,
+    rgba(76, 175, 80, 0.5) 10px
   );
 }
 </style>

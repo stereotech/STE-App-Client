@@ -134,7 +134,7 @@ export const actions: ActionTree<StorageState, RootState> = {
   async uploadFiles ({ commit }, files: File[]) {
     let data = new FormData()
     files.forEach(file => {
-      data.append("file", file, file.name)
+      data.append("files", file, file.name)
     });
     await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
