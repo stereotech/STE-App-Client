@@ -4,7 +4,7 @@
       <span class="headline font-weight-light">Manual control</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <v-container fluid grid-list-md>
+      <v-container fluid grid-list-xs>
         <v-layout row wrap>
           <v-flex xs12 md6 lg4>
             <JogCard :printing="printing" :id="id" />
@@ -46,4 +46,7 @@ export default class ManualControlPanel extends Vue {
 </script>
 
 <style>
+.v-expansion-panel-content__wrap {
+  padding: 0;
+}
 </style>

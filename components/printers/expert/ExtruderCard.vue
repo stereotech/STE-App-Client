@@ -2,18 +2,21 @@
   <v-card>
     <v-card-title class="title">Extruder</v-card-title>
     <v-container fluid grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs2>
+      <v-layout row wrap class="text-center">
+        <v-flex xs6 sm3 order-sm1>
           <v-btn outlined text icon color="primary" :disabled="printing" @click="retract">
             <v-icon>mdi-chevron-double-up</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs10>
+        <v-flex xs6 sm3 order-sm3>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="extrude">
+            <v-icon>mdi-chevron-double-down</v-icon>
+          </v-btn>
+        </v-flex>
+        <v-flex xs12 sm9 order-sm1 pt-6>
           <v-slider v-model="flow" label="Flow" thumb-label min="50" max="150" @change="setFlow"></v-slider>
         </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs10 offset-xs2>
+        <v-flex xs12 sm9 offset-sm3 order-sm-2>
           <v-select
             filled
             :items="extruders"
@@ -24,14 +27,7 @@
             :disabled="printing"
           ></v-select>
         </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-btn outlined text icon color="primary" :disabled="printing" @click="extrude">
-            <v-icon>mdi-chevron-double-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs10 d-flex class="text-center">
+        <v-flex xs12 sm9 order-sm3>
           <v-btn-toggle mandatory v-model="selectedAmount" rounded>
             <v-btn text color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
             <v-btn text color="primary" :disabled="printing" @input="amount = 1">1</v-btn>

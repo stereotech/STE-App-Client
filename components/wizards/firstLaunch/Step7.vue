@@ -7,7 +7,7 @@
             <v-list light>
               <v-subheader>Avaliable networks</v-subheader>
               <template v-for="(network, index) in avaliableNetworks">
-                <v-list-item avatar :key="network.id" @click="startConnection(network)">
+                <v-list-item :key="network.id" @click="startConnection(network)">
                   <v-list-item-action v-if="network.strength > 81">
                     <v-icon>mdi-wifi-strength-4</v-icon>
                   </v-list-item-action>

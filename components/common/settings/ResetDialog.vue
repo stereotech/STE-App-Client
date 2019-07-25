@@ -2,11 +2,11 @@
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">Reset and restore</template>
     <v-list>
-      <v-list-item avatar @click="confirmation = true">
+      <v-list-item @click="confirmation = true">
         <v-list-item-title class="error--text">Factory reset</v-list-item-title>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list-item avatar @click="confirmation = true">
+      <v-list-item @click="confirmation = true">
         <v-list-item-title class="error--text font-weight-bold">Factory reset (clear storage)</v-list-item-title>
       </v-list-item>
       <v-divider></v-divider>

@@ -1,9 +1,9 @@
 <template>
   <v-layout row wrap>
-    <PrintersPanel/>
-    <DoneJobs/>
-    <Queue/>
-    <Storage local/>
+    <PrintersPanel />
+    <DoneJobs />
+    <Queue />
+    <Storage local />
     <Storage
       v-for="usbStorage in allUsbStorages"
       :key="usbStorage.origin"
