@@ -1,16 +1,19 @@
-const config = {
+import NuxtConfiguration from '@nuxt/config'
+
+const config: NuxtConfiguration = {
   mode: 'spa',
   head: {
     title: 'STE App',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'STE App Client' }
-    ]
+      { hid: 'description', name: 'description', content: 'STE App Client' },
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
   },
-  link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-  ],
+
   router: {
     middleware: 'firstLaunch',
   },
@@ -89,11 +92,13 @@ const config = {
     "start_url": "/"
   },
   env: {
-    apiUrl: '/api/'
+    apiHost: ''
   },
   serverMiddleware: [
     { path: '/api', handler: '~/api/mock.js' },
-  ]
+  ],
 }
+
+
 
 export default config

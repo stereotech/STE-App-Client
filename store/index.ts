@@ -13,7 +13,7 @@ export interface RootState {
 }
 
 export const state = (): RootState => ({
-  apiUrl: '/api/'
+  apiUrl: process.env.apiHost + '/api/'
 })
 
 export const mutations: MutationTree<RootState> = {
