@@ -87,3 +87,8 @@ material_model.json
 sw.*
 
 .vscode
+
+//Cordova
+cordova/platforms
+cordova/plugins
+cordova/www
