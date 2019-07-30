@@ -30,8 +30,9 @@
     },
     "types": [
       "@types/node",
+      "@nuxt/vue-app",
+      "@nuxtjs/vuetify",
       "@nuxtjs/axios",
-      "vuetify",
       "moment"
     ]
   }

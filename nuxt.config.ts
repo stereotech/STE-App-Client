@@ -1,4 +1,5 @@
 import NuxtConfiguration from '@nuxt/config'
+require('dotenv').config()
 
 const config: NuxtConfiguration = {
   mode: 'spa',
@@ -6,16 +7,18 @@ const config: NuxtConfiguration = {
     title: 'STE App',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'STE App Client' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui' },
+      { hid: 'description', name: 'description', content: '3D printing management application' }
     ],
+    script: [{ src: 'cordova.js', type: 'text/javascript', innerHTML: '' }],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
   },
 
   router: {
-    middleware: 'firstLaunch',
+    mode: 'hash',
+    middleware: ['chooser', 'firstLaunch'],
   },
   /*
    ** Global CSS
@@ -25,12 +28,13 @@ const config: NuxtConfiguration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes'],
+  plugins: ['~/plugins/signalr', '~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova'],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
+    '@nuxtjs/dotenv',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/vuetify',
@@ -49,7 +53,7 @@ const config: NuxtConfiguration = {
     '/mainhub/': { target: '*' }
   },
   vuetify: {
-    treeShake: true,
+    treeShake: false,
     materialIcons: false,
     theme: {
       themes: {
@@ -91,13 +95,15 @@ const config: NuxtConfiguration = {
     "scope": "/",
     "start_url": "/"
   },
-  env: {
-    apiHost: ''
-  },
   serverMiddleware: [
     { path: '/api', handler: '~/api/mock.js' },
+    { path: '/nuxtfiles', handler: '~/servermiddleware/assets.js' }
   ],
+  build: {
+    publicPath: '/nuxtfiles/'
+  }
 }
+
 
 
 

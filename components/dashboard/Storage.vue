@@ -58,7 +58,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container grid-list-xs v-if="local">
+      <v-container grid-list-xs v-if="local && isWeb">
         <v-layout row wrap>
           <v-flex xs12>
             <v-file-input
@@ -106,6 +106,10 @@ export default class extends Vue {
 
   @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
+
+  get isWeb (): boolean {
+    return process.env.NUXT_ENV_PLATFORM == 'WEB'
+  }
 
   private styleObj: any = {
     maxHeight: this.local ? '336px' : '486px'
