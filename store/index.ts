@@ -13,12 +13,15 @@ export interface RootState {
 }
 
 export const state = (): RootState => ({
-  apiUrl: process.env.apiHost + '/api/'
+  apiUrl: '/api/'
 })
 
 export const mutations: MutationTree<RootState> = {
   setError (state, error: Error) {
     state.error = error
+  },
+  setApiUrl (state: RootState, newUrl: string) {
+    state.apiUrl = newUrl
   }
 }
 
@@ -29,5 +32,5 @@ export const actions: ActionTree<RootState, RootState> = {
 }
 
 export const plugins = [
-  InitSignalR
+  //InitSignalR
 ]

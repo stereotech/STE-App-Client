@@ -2,10 +2,16 @@ import { HubConnectionBuilder, HttpTransportType, LogLevel } from '@aspnet/signa
 import { CurrentState } from '~/types/printer'
 
 export const InitSignalR = store => {
-    if (store.state.apiUrl) {
+    let apiUrl = store.state.apiUrl as string
+    let canStart: boolean = true
+    if (process.env.NUXT_ENV_PLATFORM == 'MOBILE' && !apiUrl.startsWith('http://')) {
+        canStart = false
+    }
+    if (canStart) {
         let connection = new HubConnectionBuilder().withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets }).configureLogging(LogLevel.Debug).build()
 
         connection.onclose(() => {
+
         })
 
         connection.on("CurrentStateChanged", (id, state) => {
@@ -56,7 +62,7 @@ export const InitSignalR = store => {
         connection.on('PrinterError', () => {
             store.commit('printersState/setError')
         })
-        connection.start();
+        connection.start()
     }
 }
 

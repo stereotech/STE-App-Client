@@ -29,6 +29,19 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <template v-slot:append v-if="isMobile">
+        <v-list shaped nav>
+          <v-list-item nuxt ripple link to="/chooseprinter">
+            <v-list-item-action>
+              <v-icon>mdi-undo-variant</v-icon>
+            </v-list-item-action>
+
+            <v-list-item-content>
+              <v-list-item-title>Select cluster</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar background-color="secondary" app clipped-left>
@@ -69,6 +82,18 @@
             </v-list-item-action>
             <v-list-item-title>Power Off</v-list-item-title>
           </v-list-item>
+          <template v-if="isMobile">
+            <v-divider inset></v-divider>
+            <v-list-item nuxt link to="/chooseprinter">
+              <v-list-item-action>
+                <v-icon>mdi-undo-variant</v-icon>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Select cluster</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -110,6 +135,10 @@ const settings = namespace('settingsState')
 export default class extends Vue {
   @settings.Action rebootSystem: any
   @settings.Action poweroffSystem: any
+
+  get isMobile (): boolean {
+    return process.env.NUXT_ENV_PLATFORM == 'MOBILE'
+  }
 
   private readonly mainMenu: MenuItem[] = [
     {

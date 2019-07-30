@@ -18,7 +18,7 @@ const config: NuxtConfiguration = {
 
   router: {
     mode: 'hash',
-    middleware: 'firstLaunch',
+    middleware: ['chooser', 'firstLaunch'],
   },
   /*
    ** Global CSS
@@ -28,7 +28,7 @@ const config: NuxtConfiguration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova'],
+  plugins: ['~/plugins/signalr', '~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova'],
   /*
    ** Nuxt.js modules
    */
@@ -95,11 +95,8 @@ const config: NuxtConfiguration = {
     "scope": "/",
     "start_url": "/"
   },
-  env: {
-    apiHost: ''
-  },
   serverMiddleware: [
-    //{ path: '/api', handler: '~/api/mock.js' },
+    { path: '/api', handler: '~/api/mock.js' },
     { path: '/nuxtfiles', handler: '~/servermiddleware/assets.js' }
   ],
   build: {

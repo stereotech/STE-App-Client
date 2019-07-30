@@ -11,6 +11,7 @@
     <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
+    <allow-intent href="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -85,39 +86,6 @@
         <icon src="res/icon/windows/Wide310x150Logo.png" target="Wide310x150Logo" />
     </platform>
 
-    <platform name="android">
-    <!-- you can use any density that exists in the Android project -->
-    <splash src="res/screen/android/splash-land-hdpi.png" density="land-hdpi"/>
-    <splash src="res/screen/android/splash-land-ldpi.png" density="land-ldpi"/>
-    <splash src="res/screen/android/splash-land-mdpi.png" density="land-mdpi"/>
-    <splash src="res/screen/android/splash-land-xhdpi.png" density="land-xhdpi"/>
-
-    <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/>
-    <splash src="res/screen/android/splash-port-ldpi.png" density="port-ldpi"/>
-    <splash src="res/screen/android/splash-port-mdpi.png" density="port-mdpi"/>
-    <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/>
-</platform>
-
-<platform name="ios">
-    <!-- Storyboard method (supports all devices):
-       Important: If you use the storyboard method, legacy images are 
-       copied but ignored.
-       Note: images are determined by scale, idiom, and size traits. The following
-       are suggested based on current device form factors -->
-    <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
-    <splash src="res/screen/ios/Default@2x~universal~comany.png" />
-    <splash src="res/screen/ios/Default@2x~universal~comcom.png" />
-    <splash src="res/screen/ios/Default@3x~universal~anyany.png" />
-    <splash src="res/screen/ios/Default@3x~universal~anycom.png" />
-    <splash src="res/screen/ios/Default@3x~universal~comany.png" />
-
-</platform>
-
-<!-- Configuration using MRT concept (Recommended, see "Windows-specific information" section for details): -->
-<platform name="windows">
-    <splash src="res/screen/windows/splashscreen.png" target="SplashScreen"/>
-    <splash src="res/screen/windows/splashscreenphone.png" target="SplashScreenPhone"/>
-</platform>
     <preference name="SplashMaintainAspectRatio" value="true" />
 
     <preference name="StatusBarBackgroundColor" value="#ffffff" />
