@@ -20,33 +20,35 @@ export default (ctx, inject) => {
             }
 
             try {
-                console.log('Zeroconf start')
-                // @ts-ignore
-                var zeroconf = window.cordova.plugins.zeroconf
-                zeroconf.watch('_stereotech._tcp.', 'local.', function (result) {
-                    let action = result.action
-                    let service = result.service
-                    if (action == 'added') {
-                        console.log('service added', service);
-                    } else if (action == 'resolved') {
-                        console.log('service resolved', service);
-                        store.commit('clusterDiscoveryState/addAvaliable', service)
-                        /* service : {
-                        'domain' : 'local.',
-                        'type' : '_http._tcp.',
-                        'name': 'Becvert\'s iPad',
-                        'port' : 80,
-                        'hostname' : 'ipad-of-becvert.local',
-                        'ipv4Addresses' : [ '192.168.1.125' ], 
-                        'ipv6Addresses' : [ '2001:0:5ef5:79fb:10cb:1dbf:3f57:feb0' ],
-                        'txtRecord' : {
-                            'foo' : 'bar'
-                        } */
-                    } else {
-                        console.log('service removed', service);
-                        store.commit('clusterDiscoveryState/removeAvaliable', service)
-                    }
-                })
+                if (process.env.NUXT_ENV_PLATFORM == 'MOBILE') {
+                    console.log('Zeroconf start')
+                    // @ts-ignore
+                    var zeroconf = window.cordova.plugins.zeroconf
+                    zeroconf.watch('_stereotech._tcp.', 'local.', function (result) {
+                        let action = result.action
+                        let service = result.service
+                        if (action == 'added') {
+                            console.log('service added', service);
+                        } else if (action == 'resolved') {
+                            console.log('service resolved', service);
+                            store.commit('clusterDiscoveryState/addAvaliable', service)
+                            /* service : {
+                            'domain' : 'local.',
+                            'type' : '_http._tcp.',
+                            'name': 'Becvert\'s iPad',
+                            'port' : 80,
+                            'hostname' : 'ipad-of-becvert.local',
+                            'ipv4Addresses' : [ '192.168.1.125' ], 
+                            'ipv6Addresses' : [ '2001:0:5ef5:79fb:10cb:1dbf:3f57:feb0' ],
+                            'txtRecord' : {
+                                'foo' : 'bar'
+                            } */
+                        } else {
+                            console.log('service removed', service);
+                            store.commit('clusterDiscoveryState/removeAvaliable', service)
+                        }
+                    })
+                }
             } catch (err) {
                 console.error('zeroconf failed', err)
             }

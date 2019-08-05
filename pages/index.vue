@@ -10,6 +10,7 @@
       :name="usbStorage.origin"
       :display="usbStorage.origin"
     />
+    <BottomKeyboard v-model="keyboard" />
   </v-layout>
 </template>
 
@@ -19,6 +20,7 @@ import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
 import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
+import BottomKeyboard from '~/components/common/BottomKeyboard.vue'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { StorageState } from '../store/storageState';
 import { FileOrFolder } from '../types/fileOrFolder';
@@ -32,7 +34,8 @@ const printers = namespace('printersState')
     PrintersPanel,
     DoneJobs,
     Storage,
-    Queue
+    Queue,
+    BottomKeyboard
   }
 })
 export default class Dashboard extends Vue {
@@ -43,6 +46,8 @@ export default class Dashboard extends Vue {
   head () {
     return { title: 'STE App Dashboard' }
   }
+
+  keyboard: boolean = true
 
   mounted () {
     this.$store.dispatch('printersState/fetchPrinters')

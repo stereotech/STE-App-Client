@@ -179,6 +179,10 @@ export default class extends Vue {
     v => !!v || 'File should be selected'
   ]
 
+  openKeyboard () {
+    console.log('open keyboard')
+  }
+
   private editedJob: PrintJob = {
     id: 0,
     name: '',
