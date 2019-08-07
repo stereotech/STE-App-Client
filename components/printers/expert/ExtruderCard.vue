@@ -69,11 +69,11 @@ export default class ExtruderCard extends Vue {
   @printers.Action flowCommand: any
 
   private extrude () {
-    this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
+    this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.amount })
   }
 
   private retract () {
-    this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
+    this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.amount })
   }
 
   private setFlow (value: number) {

@@ -13,6 +13,8 @@
             :name="computedPrinter.name"
             :model="computedPrinter.model"
             :progress="computedStatus ? computedStatus.progress.completion : 0"
+            :printTime="computedStatus ? computedStatus.progress.printTime : 0"
+            :printTimeLeft="computedStatus ? computedStatus.progress.printTimeLeft : 0"
             :local="computedPrinter.isLocal"
             :paused="isPaused"
             :maintenance="isMaintenance"
@@ -24,7 +26,7 @@
             :loading="isLoading"
             :notAvaliable="!isAvaliable"
           />
-          <PrinterCardTemps v-if="isAvaliable" :id="id" :offline="isOffline"/>
+          <PrinterCardTemps v-if="isAvaliable" :id="id" :offline="isOffline" />
           <PrinterCardActions
             :id="id"
             :jobName="computedStatus ? computedStatus.job.file.display : ''"

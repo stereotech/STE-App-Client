@@ -3,8 +3,8 @@
     <v-container fluid grid-list-md>
       <v-layout row wrap>
         <v-flex xs4 v-if="lastTempDataPoint(id).tool0">
-          <p class="body-1 text-truncate">E1 Target:</p>
-          <p class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</p>
+          <div class="body-1 text-truncate">E1 Target:</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
@@ -13,8 +13,8 @@
           >{{ lastTempDataPoint(id).tool0.actual | currency('', 1) }}</v-progress-circular>
         </v-flex>
         <v-flex xs4 v-if="lastTempDataPoint(id).tool1">
-          <p class="body-1 text-truncate">E2 Target:</p>
-          <p class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</p>
+          <div class="body-1 text-truncate">E2 Target:</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
@@ -23,11 +23,11 @@
           >{{ lastTempDataPoint(id).tool1.actual | currency('', 1) }}</v-progress-circular>
         </v-flex>
         <v-flex xs4 v-if="lastTempDataPoint(id).bed">
-          <p class="body-1 text-truncate">Bed Target:</p>
-          <p
+          <div class="body-1 text-truncate">Bed Target:</div>
+          <div
             class="body-1"
             v-if="lastTempDataPoint(id).bed"
-          >{{ lastTempDataPoint(id).bed.target }}&deg;C</p>
+          >{{ lastTempDataPoint(id).bed.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"

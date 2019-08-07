@@ -1,6 +1,5 @@
 import createPersistedState from 'vuex-persistedstate'
 import { ActionTree, MutationTree, GetterTree, ActionContext } from 'vuex'
-import { InitSignalR } from './signalrPlugin'
 import { Error } from '~/types/error';
 
 export interface Actions<S, R> extends ActionTree<S, R> {
@@ -15,6 +14,16 @@ export interface RootState {
 export const state = (): RootState => ({
   apiUrl: '/api/'
 })
+
+export const getters: GetterTree<RootState, RootState> = {
+  api (state: RootState): string {
+    return state.apiUrl
+  },
+
+  isApiAbsolute (state: RootState): boolean {
+    return state.apiUrl.startsWith('http://') || state.apiUrl.startsWith('https://')
+  }
+}
 
 export const mutations: MutationTree<RootState> = {
   setError (state, error: Error) {

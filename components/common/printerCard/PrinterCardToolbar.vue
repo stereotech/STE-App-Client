@@ -25,7 +25,7 @@
       <v-icon>mdi-lightbulb-on-outline</v-icon>
     </v-btn>
     <v-btn text icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
-      <v-icon>mdi-lightbulb-outline</v-icon>
+      <v-icon>mdi-lightbulb-off-outline</v-icon>
     </v-btn>
     <v-btn text icon @click="findPrinter(id)">
       <v-icon>mdi-magnify</v-icon>

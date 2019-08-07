@@ -12,21 +12,25 @@
           </v-img>
         </v-flex>
         <v-flex xs8>
-          <p class="title">
+          <div class="title">
             {{ name }}
             <v-chip color="primary" v-if="local" outlined label>Host</v-chip>
-          </p>
+          </div>
 
-          <p class="body-2">{{ model }}</p>
-          <p class="title" v-if="printing">Printing...{{ progress | currency('', 1) }}%</p>
-          <p class="warning--text title" v-if="paused">Paused at {{ progress | currency('', 1) }}%</p>
-          <p class="title" v-else-if="idle">Idle</p>
-          <p class="warning--text title" v-else-if="maintenance">Maintenance</p>
-          <p class="success--text title" v-else-if="done">Printing Done!</p>
-          <p class="error--text title" v-else-if="failed">Printing Failed</p>
-          <p class="error--text title" v-else-if="offline">Offline</p>
-          <p class="primary--text title" v-else-if="loading">Loading...</p>
-          <p class="error--text title" v-else-if="notAvaliable">Not Avaliable</p>
+          <div class="caption">{{ model }}</div>
+          <div
+            class="caption"
+            v-if="printing || paused"
+          >Spent {{ [printTime, 'seconds'] | duration('humanize') }}, {{ [printTimeLeft, 'seconds'] | duration('humanize') }} left</div>
+          <div class="title" v-if="printing">Printing...{{ progress | currency('', 1) }}%</div>
+          <div class="warning--text title" v-if="paused">Paused at {{ progress | currency('', 1) }}%</div>
+          <div class="title" v-else-if="idle">Idle</div>
+          <div class="warning--text title" v-else-if="maintenance">Maintenance</div>
+          <div class="success--text title" v-else-if="done">Printing Done!</div>
+          <div class="error--text title" v-else-if="failed">Printing Failed</div>
+          <div class="error--text title" v-else-if="offline">Offline</div>
+          <div class="primary--text title" v-else-if="loading">Loading...</div>
+          <div class="error--text title" v-else-if="notAvaliable">Not Avaliable</div>
           <v-progress-linear v-if="printing" :value="progress"></v-progress-linear>
           <v-progress-linear v-if="paused" :value="progress" color="warning"></v-progress-linear>
           <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
@@ -42,6 +46,8 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 @Component
 export default class PrinterCardInfo extends Vue {
   @Prop({ default: 0, type: Number }) progress!: number
+  @Prop({ default: 0, type: Number }) printTime!: number
+  @Prop({ default: 0, type: Number }) printTimeLeft!: number
   @Prop({ default: '', type: String }) model!: number
   @Prop({ default: '', type: String }) name!: number
   @Prop({ default: false, type: Boolean }) local!: boolean

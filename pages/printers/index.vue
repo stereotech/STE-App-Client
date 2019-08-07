@@ -8,7 +8,7 @@
         :id="printer.id"
         :key="printer.id"
       />
-      <AddPrinterDialog/>
+      <AddPrinterDialog />
     </v-flex>
   </v-layout>
 </template>
@@ -29,6 +29,7 @@ const printers = namespace('printersState')
   }
 })
 export default class PrintersPage extends Vue {
+  [x: string]: any;
   @printers.Getter printers!: PrinterInfo[]
 
   head () {

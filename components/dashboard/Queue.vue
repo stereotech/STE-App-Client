@@ -95,6 +95,7 @@
                   clearable
                   v-model="editedJob.name"
                   :rules="nameRules"
+                  @input="nameWasChanged = true"
                 ></v-text-field>
                 <v-autocomplete
                   label="Printer assignment"
@@ -114,6 +115,7 @@
                   item-value="uri"
                   v-model="editedJob.fileUri"
                   :rules="fileRules"
+                  @input="changeNameFromFile"
                 ></v-autocomplete>
                 <v-autocomplete
                   v-if="!editMode"
@@ -167,7 +169,19 @@ export default class extends Vue {
   private editMode: boolean = false
   private confirmation: boolean = false
 
-  private copiesCount: number = 1;
+  private nameWasChanged: boolean = false
+
+  private changeNameFromFile (value: string) {
+    if (!this.nameWasChanged) {
+      let filenameWithExt = value.split('/').pop()
+      if (filenameWithExt) {
+        let filename = filenameWithExt.split('.').shift()
+        this.editedJob.name = `Print ${filename}`
+      }
+    }
+  }
+
+  private copiesCount: number = 1
 
   private valid: boolean = false
 
@@ -196,7 +210,7 @@ export default class extends Vue {
     this.dialog = true
     this.editedJob = {
       id: this.queuedJobs.length,
-      name: 'Printjob_' + this.jobsCount,
+      name: 'Printjob' + this.jobsCount,
       description: '',
       printers: [],
       fileUri: '',
@@ -243,12 +257,13 @@ export default class extends Vue {
 
   private closeDialog (add: boolean | undefined) {
     this.dialog = false
+    this.nameWasChanged = false
     if (add !== undefined) {
       if (add) {
         let jobsArray: PrintJob[] = [this.editedJob]
         for (let index = 1; index < this.copiesCount; index++) {
           let copiedJob: PrintJob = Object.assign({}, this.editedJob)
-          copiedJob.name = copiedJob.name + '_' + index
+          copiedJob.name = copiedJob.name + '(' + index + ')'
           copiedJob.id += index
           jobsArray.push(copiedJob)
         }

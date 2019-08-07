@@ -40,15 +40,21 @@ export default class Dashboard extends Vue {
 
   @printers.Getter printers!: PrinterInfo[]
 
+  @Getter isApiAbsolute!: boolean
+
   head () {
     return { title: 'STE App Dashboard' }
   }
 
   mounted () {
-    this.$store.dispatch('printersState/fetchPrinters')
-    this.$store.dispatch('storageState/fetchLocal')
-    this.$store.dispatch('storageState/fetchUsbs')
-    this.$store.dispatch('printJobsState/fetchJobs')
+    if (process.env.NUXT_ENV_PLATFORM === 'MOBILE' && !this.isApiAbsolute) {
+      this.$router.push('/chooseprinter')
+    } else {
+      this.$store.dispatch('printersState/fetchPrinters')
+      this.$store.dispatch('storageState/fetchLocal')
+      this.$store.dispatch('storageState/fetchUsbs')
+      this.$store.dispatch('printJobsState/fetchJobs')
+    }
   }
 
 }

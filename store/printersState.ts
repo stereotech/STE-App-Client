@@ -204,7 +204,7 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async extrudeCommand ({ commit }, { id, toolId, amount }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'extrude', toolId: toolId, ExtrudeAmount: amount })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'extrude', toolId: toolId, extrudeAmount: amount })
   },
 
   async retractCommand ({ commit }, { id, toolId, amount }) {

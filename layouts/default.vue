@@ -102,8 +102,15 @@
       <v-container fluid grid-list-md>
         <nuxt />
       </v-container>
+      <v-snackbar-queue :top="bottomNav" :bottom="!bottomNav" :right="!bottomNav" :timeout="3000">
+        <template slot="default" slot-scope="props">
+          <v-alert
+            :type="props.snackbar && props.snackbar.color"
+          >{{props.snackbar && props.snackbar.message}}</v-alert>
+        </template>
+      </v-snackbar-queue>
+      <v-dialog-queue></v-dialog-queue>
     </v-content>
-
     <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
       <v-btn
         text
@@ -168,6 +175,15 @@ export default class extends Vue {
     }
     return undefined
   }
+
+
+
+
+  mounted () {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission()
+    }
+  }
 }
 
 class MenuItem {
@@ -181,3 +197,9 @@ class MenuItem {
   }
 }
 </script>
+
+<style>
+.v-alert {
+  margin-bottom: 0px;
+}
+</style>

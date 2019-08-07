@@ -10,7 +10,7 @@ const config: NuxtConfiguration = {
       { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui' },
       { hid: 'description', name: 'description', content: '3D printing management application' }
     ],
-    script: [{ src: 'cordova.js', type: 'text/javascript', innerHTML: '' }],
+    script: process.env.NUXT_ENV_PLATFORM === 'MOBILE' ? [{ src: 'cordova.js', type: 'text/javascript', innerHTML: '' }] : [],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
@@ -28,7 +28,7 @@ const config: NuxtConfiguration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/signalr', '~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova'],
+  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
   /*
    ** Nuxt.js modules
    */
@@ -50,7 +50,6 @@ const config: NuxtConfiguration = {
   },
   proxy: {
     '/api/': { target: '*' },
-    '/mainhub/': { target: '*' }
   },
   vuetify: {
     treeShake: false,

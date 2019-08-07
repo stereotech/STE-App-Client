@@ -3,8 +3,8 @@
     <v-container fluid grid-list-md>
       <v-layout row wrap v-if="printing || paused">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Current printjob:</p>
-          <p class="title text-truncate">{{ jobNameFomatted }}</p>
+          <div class="title text-truncate">Current printjob:</div>
+          <div class="title text-truncate">{{ jobNameFomatted }}</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-btn-toggle mandatory depressed>
@@ -22,8 +22,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="done || failed">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Clean the buildplate</p>
-          <p class="title text-truncate">and select state</p>
+          <div class="title text-truncate">Clean the buildplate</div>
+          <div class="title text-truncate">and select state</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
@@ -36,8 +36,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="idle">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Printer is waiting</p>
-          <p class="title text-truncate">for printjob</p>
+          <div class="title text-truncate">Printer is waiting</div>
+          <div class="title text-truncate">for printjob</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
@@ -51,8 +51,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="maintenance">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Printer is ready</p>
-          <p class="title text-truncate">for maintenance</p>
+          <div class="title text-truncate">Printer is ready</div>
+          <div class="title text-truncate">for maintenance</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
@@ -66,7 +66,7 @@
       </v-layout>
       <v-layout row wrap v-else-if="loading">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Waiting...</p>
+          <div class="title text-truncate">Waiting...</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -74,8 +74,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="notAvaliable">
         <v-flex xs12 sm8 md12>
-          <p class="title text-truncate">Printer is not avaliable</p>
-          <p class="title text-truncate">in the current network</p>
+          <div class="title text-truncate">Printer is not avaliable</div>
+          <div class="title text-truncate">in the current network</div>
         </v-flex>
       </v-layout>
     </v-container>
