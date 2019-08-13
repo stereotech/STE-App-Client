@@ -6,15 +6,17 @@ export interface ScannerResult {
   ipAddress: string
   role: string
   hostname?: string
+  printers: number
+  updateTime?: number
 }
 
 export interface ResolvedDevice {
-  domain: string,
-  type: string,
-  name: string,
-  port: number,
-  hostname: string,
-  ipv4Addresses: string[],
-  ipv6Addresses: string[],
+  domain: string
+  type: string
+  name: string
+  port: number
+  hostname: string
+  ipv4Addresses: string[]
+  ipv6Addresses: string[]
   txtRecord: any
 }

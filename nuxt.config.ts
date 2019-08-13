@@ -23,7 +23,7 @@ const config: NuxtConfiguration = {
   /*
    ** Global CSS
    */
-  css: ['@mdi/font/css/materialdesignicons.css'],
+  css: ['@mdi/font/css/materialdesignicons.css', 'typeface-roboto/index.css'],
 
   /*
    ** Plugins to load before mounting the App

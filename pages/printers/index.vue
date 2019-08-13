@@ -1,6 +1,5 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
+  <v-layout row wrap>  
       <PrinterCard
         toolbar
         controlPanel
@@ -8,6 +7,7 @@
         :id="printer.id"
         :key="printer.id"
       />
+    <v-flex xs12 class="text-center">
       <AddPrinterDialog />
     </v-flex>
   </v-layout>

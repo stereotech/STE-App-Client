@@ -10,7 +10,7 @@
             rotate="-90"
             :value="lastTempDataPoint(id).tool0.actual / 3.2"
             :color="e1Color"
-          >{{ lastTempDataPoint(id).tool0.actual | currency('', 1) }}</v-progress-circular>
+          >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
         </v-flex>
         <v-flex xs4 v-if="lastTempDataPoint(id).tool1">
           <div class="body-1 text-truncate">E2 Target:</div>
@@ -20,7 +20,7 @@
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
-          >{{ lastTempDataPoint(id).tool1.actual | currency('', 1) }}</v-progress-circular>
+          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
         </v-flex>
         <v-flex xs4 v-if="lastTempDataPoint(id).bed">
           <div class="body-1 text-truncate">Bed Target:</div>
@@ -33,7 +33,7 @@
             rotate="-90"
             :value="lastTempDataPoint(id).bed.actual / 1.5"
             :color="bedColor"
-          >{{ lastTempDataPoint(id).bed.actual | currency('', 1) }}</v-progress-circular>
+          >{{ lastTempDataPoint(id).bed.actual | currency('', 0) }}</v-progress-circular>
         </v-flex>
       </v-layout>
     </v-container>

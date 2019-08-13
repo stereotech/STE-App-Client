@@ -27,7 +27,8 @@ export const mutations: MutationTree<ClusterDiscoveryState> = {
                 id: device.txtRecord.id,
                 model: device.txtRecord.model,
                 name: device.txtRecord.name,
-                role: device.txtRecord.role
+                role: device.txtRecord.role,
+                printers: device.txtRecord.printers,
             }
             if (newService.ipAddress) {
                 let existingIdx = state.avaliable.findIndex(s => s.id === newService.id)

@@ -204,11 +204,11 @@ export const actions: ActionTree<PrintersState, RootState> = {
   },
 
   async extrudeCommand ({ commit }, { id, toolId, amount }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'extrude', toolId: toolId, extrudeAmount: amount })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'extrude', toolId: toolId, ExtrudeAmount: amount })
   },
 
   async retractCommand ({ commit }, { id, toolId, amount }) {
-    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'retract', toolId: toolId, retractAmount: amount })
+    await this.$axios.post(this.state.apiUrl + apiEndpoint + id + '/misc', { command: 'retract', toolId: toolId, RetractAmount: amount })
   },
 
   async customCommand ({ commit }, { id, command }) {

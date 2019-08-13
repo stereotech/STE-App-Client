@@ -16,12 +16,14 @@
             <v-container grid-list-xs>
               <v-layout row wrap>
                 <v-flex xs12>
-                  <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" />
+                  <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" v-if="printer.printers === 1"/>
+                  <v-img :src="'/printers/Cluster.png'" alt="Avatar" v-else/>
                 </v-flex>
                 <v-flex xs12>
-                  <p class="title text-center">{{printer.name}}</p>
-                  <p class="body-1 text-center">{{ printer.model}}</p>
-                  <p class="body-1 text-center">Address: {{printer.ipAddress}}</p>
+                  <div class="title text-center">{{printer.name}}</div>
+                  <div class="body-1 text-center">{{ printer.model}}</div>
+                  <div class="body-1 text-center">{{ printer.printers}} printers</div>
+                  <div class="body-1 text-center">Address: {{printer.ipAddress}}</div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -64,7 +66,13 @@ export default class ChoosePrinter extends Vue {
 
   connectToPrinter (printer: ScannerResult) {
     this.setCluster({ cluster: printer, save: this.remember })
-    this.$router.push("/")
+    this.$router.push('/')
+  }
+
+  mounted() {
+    this.$store.commit('setApiUrl', '/api/')
+    //@ts-ignore
+    this.$stopHub()
   }
 }
 

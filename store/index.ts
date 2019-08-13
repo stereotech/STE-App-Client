@@ -1,4 +1,5 @@
 import createPersistedState from 'vuex-persistedstate'
+import { HubConnection } from '@aspnet/signalr'
 import { ActionTree, MutationTree, GetterTree, ActionContext } from 'vuex'
 import { Error } from '~/types/error';
 
@@ -9,6 +10,7 @@ export interface Actions<S, R> extends ActionTree<S, R> {
 export interface RootState {
   apiUrl: string
   error?: Error
+  hub?: HubConnection
 }
 
 export const state = (): RootState => ({
@@ -31,6 +33,9 @@ export const mutations: MutationTree<RootState> = {
   },
   setApiUrl (state: RootState, newUrl: string) {
     state.apiUrl = newUrl
+  },
+  setHub (state: RootState, hub: HubConnection) {
+    state.hub = hub
   }
 }
 

@@ -13,8 +13,8 @@ export const state = (): ScannerResultState => ({
 })
 
 export const getters: GetterTree<ScannerResultState, RootState> = {
-  results (state): ScannerResult[] {
-    return state.printers.filter(value => value.role === 'host')
+  results (state: ScannerResultState): ScannerResult[] {
+    return state.printers.filter(value => value.printers === 1)
   }
 }
 

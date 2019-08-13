@@ -27,8 +27,8 @@ export interface MiscCommandRequest {
   homeRotary?: boolean
 
   toolId?: number
-  extrudeAmount?: number
-  retractAmount?: number
+  ExtrudeAmount?: number
+  RetractAmount?: number
 
   commandString?: string
 }

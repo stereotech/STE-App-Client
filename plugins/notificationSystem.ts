@@ -6,7 +6,6 @@ export default ({ app }, inject) => {
         } else {
             if (process.env.NUXT_ENV_PLATFORM === 'WEB') {
                 app.$snackbar(message, type)
-
                 if (Notification.permission === "granted") {
                     new Notification(message, { icon: '/icon.png', badge: '/icon.png' })
                 }

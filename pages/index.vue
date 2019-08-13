@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <PrintersPanel />
+    <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index"/>
     <DoneJobs />
     <Queue />
     <Storage local />
@@ -18,7 +18,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
-import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { StorageState } from '../store/storageState';
 import { FileOrFolder } from '../types/fileOrFolder';
@@ -29,13 +29,14 @@ const printers = namespace('printersState')
 
 @Component({
   components: {
-    PrintersPanel,
+    PrinterCard,
     DoneJobs,
     Storage,
     Queue
   }
 })
 export default class Dashboard extends Vue {
+  
   @storage.Getter allUsbStorages!: FileOrFolder[]
 
   @printers.Getter printers!: PrinterInfo[]

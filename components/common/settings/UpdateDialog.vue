@@ -44,7 +44,6 @@ import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { UpdateInfo } from '~/types/updating'
 
 const settings = namespace('settingsState')
 
@@ -61,14 +60,8 @@ export default class extends Vue {
 
   private isOpen: boolean = this.value
 
-  @settings.Getter avaliableUpdate!: UpdateInfo
-  @settings.Action checkForUpdate: any
-  @settings.Action onlineUpdate: any
-  @settings.Action offlineUpdate: any
 
-  get isNewVersion (): boolean {
-    return this.avaliableUpdate.currentVersion !== this.avaliableUpdate.newVersion
-  }
+
 
   private closeDialog () {
     this.$emit('input', false)
@@ -81,7 +74,6 @@ export default class extends Vue {
 
   private async upload () {
     this.overlay = true
-    await this.offlineUpdate(this.file)
     this.file = []
     this.overlay = false
   }

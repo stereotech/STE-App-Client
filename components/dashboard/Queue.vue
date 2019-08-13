@@ -98,16 +98,6 @@
                   @input="nameWasChanged = true"
                 ></v-text-field>
                 <v-autocomplete
-                  label="Printer assignment"
-                  filled
-                  chips
-                  multiple
-                  :items="printers"
-                  item-text="name"
-                  item-value="id"
-                  v-model="editedJob.printers"
-                ></v-autocomplete>
-                <v-autocomplete
                   label="File assignment"
                   filled
                   :items="avaliableFiles"
@@ -116,6 +106,16 @@
                   v-model="editedJob.fileUri"
                   :rules="fileRules"
                   @input="changeNameFromFile"
+                ></v-autocomplete>
+                <v-autocomplete
+                  label="Printer assignment"
+                  filled
+                  chips
+                  multiple
+                  :items="printers"
+                  item-text="name"
+                  item-value="id"
+                  v-model="editedJob.printers"
                 ></v-autocomplete>
                 <v-autocomplete
                   v-if="!editMode"

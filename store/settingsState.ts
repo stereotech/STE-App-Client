@@ -2,7 +2,6 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { Settings } from '~/types/settings'
 import { RootState } from '.'
 import { Networking, Network } from '~/types/networking'
-import { UpdateInfo } from '~/types/updating'
 
 const systemEndpoint = 'system'
 const networkEndpoint = 'network'
@@ -11,7 +10,6 @@ const updateEndpoint = 'update'
 export interface SettingsState {
   settings: Settings
   networking: Networking
-  update: UpdateInfo
 }
 
 export const state = (): SettingsState => ({
@@ -28,11 +26,6 @@ export const state = (): SettingsState => ({
   networking: {
     connectedMethod: '',
     networks: []
-  },
-  update: {
-    currentVersion: 'v1.0',
-    newVersion: 'v1.0',
-    description: 'You have the latest version of the software'
   }
 })
 
@@ -60,9 +53,6 @@ export const getters: GetterTree<SettingsState, RootState> = {
       }
     )
   },
-  avaliableUpdate (state: SettingsState): UpdateInfo {
-    return state.update
-  }
 }
 
 export const mutations: MutationTree<SettingsState> = {
@@ -76,10 +66,6 @@ export const mutations: MutationTree<SettingsState> = {
 
   setNetworks (state: SettingsState, networks: Network[]) {
     state.networking.networks = networks
-  },
-
-  setUpdate (state: SettingsState, update: UpdateInfo) {
-    state.update = update
   }
 }
 
@@ -135,23 +121,6 @@ export const actions: ActionTree<SettingsState, RootState> = {
 
   async forgetWifiNetwork ({ commit }, id: string) {
     await this.$axios.delete(this.state.apiUrl + networkEndpoint + '/wifi/' + id)
-  },
-
-  async checkForUpdate ({ commit }) {
-    let response = await this.$axios.get<UpdateInfo>(this.state.apiUrl + updateEndpoint)
-    if (response.status === 200) {
-      commit('setUpdate', response.data)
-    }
-  },
-
-  async onlineUpdate ({ commit }) {
-    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/online')
-  },
-
-  async offlineUpdate ({ commit }, file: File) {
-    let data = new FormData()
-    data.append('file', file, file.name)
-    await this.$axios.post(this.state.apiUrl + updateEndpoint + '/offline', data, { headers: { 'Content-Type': 'multipart/form-data' } })
   },
 
   async rebootSystem ({ commit }) {

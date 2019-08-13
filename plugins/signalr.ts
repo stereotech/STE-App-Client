@@ -1,11 +1,10 @@
-import { HubConnectionBuilder, HttpTransportType, LogLevel, HubConnection } from '@aspnet/signalr'
-import { CurrentState } from '~/types/printer'
+import { HubConnectionBuilder, HttpTransportType, LogLevel, HubConnection, HubConnectionState } from '@aspnet/signalr'
+import { CurrentState } from '../types/printer'
+import moment, { version } from 'moment'
 
 export default ({ app, store }, inject) => {
-    function generateHub (): HubConnection {
+    function generateHub () {
         let hub = new HubConnectionBuilder().withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets }).configureLogging(LogLevel.Debug).build()
-
-        inject('hub', hub)
 
         hub.on("CurrentStateChanged", (id, state) => {
             let current: CurrentState = {
@@ -24,8 +23,48 @@ export default ({ app, store }, inject) => {
             store.commit('printersState/setOneStatus', current)
         })
         hub.on('PrinterStateChanged', (id, state) => {
-
         })
+
+        hub.on('PrintJobDone', (args: { id: string, printJobName: string, time: number }) => {
+            let duration: string = moment.duration(args.time, 'seconds').humanize()
+            app.$notify(`${args.printJobName} has been succesfully printed on ${args.id.toUpperCase()} for ${duration}`, 'success')
+        })
+
+        hub.on('PrintJobFailed', (args: { id: string, printJobName: string, time: number, reason: string }) => {
+            let duration: string = moment.duration(args.time, 'seconds').humanize()
+            app.$notify(`${args.printJobName} has been failed on ${args.id.toUpperCase()} for ${duration} cause of ${args.reason}`, 'error')
+        })
+
+
+        hub.on('UpdateProcedureStart', () => {
+            app.$notify('Update procedure start', 'info')
+        })
+
+        hub.on('PreUpdateSuccessful', () => {
+            app.$notify('Update succesfully prepared, please, reboot printer to install it', 'success')
+        })
+
+        hub.on('NewFirmwareVersionDetected', (version) => {
+            app.$notify(`New firmware version detected: ${version}`, 'info')
+        })
+
+        hub.on('FirmwareVersionLoadFailed', (version) => {
+            app.$notify(`Firmware version is failed to load: ${version}`, 'error')
+        })
+
+        hub.on('HasEqualFirmware', (version) => {
+            app.$notify(`You have the latest firmware: ${version}`, 'info')
+        })
+
+        hub.on('HasNewFirmware', (releaseType, version) => {
+            app.$notify(`A new ${releaseType} firmware update is avaliable. Update version: ${version}`, 'info')
+        })
+
+        hub.on('UpdateStateChanged', (state, downloadProgress) => {
+            app.$notify(`Downloading update... ${downloadProgress}%`, 'info')
+        })
+
+
         hub.on('LocalStorageChanged', () => {
             store.dispatch('storageState/fetchLocal')
         })
@@ -58,25 +97,24 @@ export default ({ app, store }, inject) => {
         })
 
         hub.onclose(async () => {
-            await start()
+            await startHub()
         })
-
-        return hub
+        store.commit('setHub', hub)
     }
 
-
-
-    async function start () {
+    async function startHub () {
         try {
             console.log('Attempting reconnect')
-            await generateHub().start()
+            generateHub()
+            store.state.hub.start()
         } catch (err) {
             console.log(err)
-            setTimeout(() => start(), 3000)
+            setTimeout(() => startHub(), 3000)
         }
     }
 
-    start()
+    inject('startHub', () => startHub())
+    inject('stopHub', () => store.state.hub.stop())
 
-
+    startHub()
 }
