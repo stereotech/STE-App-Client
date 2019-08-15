@@ -19,3 +19,20 @@ buildWeb:
   only:
     - develop
     - master
+
+buildPanel:
+  image: node
+  stage: build
+  cache:
+    paths:
+      - node_modules
+  before_script:
+    - npm install --dev
+  script:
+    - npm run build-panel
+  artifacts:
+    paths:
+      - cordova/platforms/electron/build
+  only:
+    - develop
+    - master
