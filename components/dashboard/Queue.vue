@@ -75,7 +75,7 @@
         </v-layout>
       </v-container>
     </v-card>
-    <v-dialog v-model="dialog" max-width="425" persistent :fullscreen="$vuetify.breakpoint.xs">
+    <v-dialog v-model="dialog" max-width="425" persistent :fullscreen="$vuetify.breakpoint.smAndDown">
       <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="closeDialog(undefined)">
@@ -86,9 +86,9 @@
           <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">Save</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
-          <v-container fluid grid-list-md>
+          <v-container fluid grid-list-sm>
             <v-layout row wrap>
-              <v-flex xs12>
+              <v-flex xs12 sm6 md12>
                 <v-text-field
                   label="Job name"
                   filled
@@ -97,6 +97,7 @@
                   :rules="nameRules"
                   @input="nameWasChanged = true"
                 ></v-text-field>
+              </v-flex><v-flex xs12 sm6 md12>
                 <v-autocomplete
                   label="File assignment"
                   filled
@@ -107,6 +108,7 @@
                   :rules="fileRules"
                   @input="changeNameFromFile"
                 ></v-autocomplete>
+                </v-flex><v-flex xs12 sm6 md12>
                 <v-autocomplete
                   label="Printer assignment"
                   filled
@@ -117,6 +119,7 @@
                   item-value="id"
                   v-model="editedJob.printers"
                 ></v-autocomplete>
+                </v-flex><v-flex xs12 sm6 md12>
                 <v-autocomplete
                   v-if="!editMode"
                   label="Copies"
@@ -124,6 +127,7 @@
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   v-model="copiesCount"
                 ></v-autocomplete>
+                </v-flex><v-flex xs12 >
                 <v-textarea filled label="Description" auto-grow v-model="editedJob.description"></v-textarea>
               </v-flex>
             </v-layout>
