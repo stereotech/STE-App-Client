@@ -13,11 +13,11 @@
     "android": {
         "debug": {
             "keystore": "./keystore.jks",
-            "alias": "upload",
+            "alias": "upload"
         },
         "release": {
             "keystore": "./keystore.jks",
-            "alias": "upload",
+            "alias": "upload"
         }
     }
 }

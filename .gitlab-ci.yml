@@ -38,8 +38,11 @@ buildAndroid:
     - cd ..
   script:
     - npm run build-android
+    - cd cordova
+    - cordova build android --release -- --storePassword=$STORE_PASSWORD --password=$KEY_PASSWORD
+    - cd ..
   after_script:
-    - cp -r cordova/platforms/android android-build
+    - cp -r cordova/platforms/android/app/build/outputs/apk/release android-build
   artifacts:
     paths:
       - android-build
