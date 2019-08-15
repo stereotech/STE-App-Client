@@ -1,11 +1,11 @@
 {
     "electron": {
         "linux": {
-            "package": [
-                "dir"
-            ],
-            "arch": [
-                "armv71"
+            "target": [
+                {
+                    "target": "zip",
+                    "arch": "arm64"
+                }
             ]
         }
     }
