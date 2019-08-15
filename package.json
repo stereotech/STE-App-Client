@@ -12,7 +12,7 @@
     "build-android": "npm run build-for-mobile && npm run replace-relative-paths && npm run copy-cordova && npm run build-for-android",
     "build-panel": "npm run build-for-panel && npm run replace-relative-paths && npm run copy-cordova && npm run build-electron",
     "build-for-android": "cd cordova && cordova prepare android",
-    "build-electron": "cd cordova && cordova build electron",
+    "build-electron": "cd cordova && cordova build electron --release",
     "replace-relative-paths": "node replace-in-files.js",
     "copy-cordova": "cp -R dist/* cordova/www/",
     "clear-cordova": "rm -R cordova/www/*"
