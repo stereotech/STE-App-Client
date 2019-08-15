@@ -1,5 +1,4 @@
 import NuxtConfiguration from '@nuxt/config'
-require('dotenv').config()
 
 const config: NuxtConfiguration = {
   mode: 'spa',
@@ -34,7 +33,6 @@ const config: NuxtConfiguration = {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/dotenv',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/vuetify',
@@ -99,7 +97,13 @@ const config: NuxtConfiguration = {
     { path: '/nuxtfiles', handler: '~/servermiddleware/assets.js' }
   ],
   build: {
-    publicPath: '/nuxtfiles/'
+    publicPath: '/nuxtfiles/',
+    parallel: true,
+    typescript: {
+      typeCheck: {
+        memoryLimit: 3072
+      }
+    }
   }
 }
 

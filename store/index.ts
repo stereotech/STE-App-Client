@@ -1,4 +1,3 @@
-import createPersistedState from 'vuex-persistedstate'
 import { HubConnection } from '@aspnet/signalr'
 import { ActionTree, MutationTree, GetterTree, ActionContext } from 'vuex'
 import { Error } from '~/types/error';
