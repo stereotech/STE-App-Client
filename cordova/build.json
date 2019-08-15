@@ -1,0 +1,12 @@
+{
+    "electron": {
+        "linux": {
+            "package": [
+                "dir"
+            ],
+            "arch": [
+                "armv71"
+            ]
+        }
+    }
+}
