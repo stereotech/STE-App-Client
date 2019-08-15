@@ -1,43 +1,21 @@
-image: node
-
-variables:
-  NODE_ENV: production
-  AWS_DEFAULT_REGION: eu-west-3
-  BUCKET_NAME: steapp
-  
-cache:
-  paths:
-    - node_modules
-
-before_script:
-  - npm install --dev
-
 stages:
   - build
+  - test
   - deploy
 
-buildNuxt:
+buildWeb:
+  image: node
   stage: build
-  script:
-    - npm run build
-  artifacts:
-    name: "client"
+  cache:
     paths:
-      - dist/*
-  only: 
+      - node_modules
+  before_script:
+    - npm install --dev
+  script:
+    - npm run build-web
+  artifacts:
+    paths:
+      - dist
+  only:
     - develop
     - master
-    - tags
-
-deployRelease:
-  image: "python:latest"
-  stage: deploy
-  dependencies:
-    - buildNuxt
-  before_script:
-    - pip install awscli
-  script:
-    - tar -cvf client-${CI_COMMIT_TAG}.zip public/
-    - aws s3 cp client-${CI_COMMIT_TAG}.zip s3://${BUCKET_NAME}/client/
-  only: 
-    - tags
