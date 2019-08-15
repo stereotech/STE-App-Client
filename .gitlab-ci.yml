@@ -50,6 +50,7 @@ prepareAndroid:
 
 buildAndroid:
   image: openjdk:8-jdk
+  stage: build
   variables:
     ANDROID_COMPILE_SDK: "28"
     ANDROID_BUILD_TOOLS: "28.0.3"
