@@ -9,7 +9,7 @@
     "build-for-panel": "cross-env NUXT_ENV_PLATFORM=PANEL nuxt build --spa",
     "build-for-web": "cross-env NUXT_ENV_PLATFORM=WEB nuxt build --spa",
     "build-web": "npm run build-for-web",
-    "build-android": "npm run build-for-mobile && npm run replace-relative-paths && npm run copy-cordova && npm run build-android",
+    "build-android": "npm run build-for-mobile && npm run replace-relative-paths && npm run copy-cordova && npm run build-for-android",
     "build-panel": "npm run build-for-panel && npm run replace-relative-paths && npm run copy-cordova && npm run build-electron",
     "build-for-android": "cd cordova && cordova prepare android",
     "build-electron": "cd cordova && cordova build electron",
