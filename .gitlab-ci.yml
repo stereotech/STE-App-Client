@@ -13,9 +13,11 @@ buildWeb:
     - npm install --dev
   script:
     - npm run build-web
+  after_script:
+    - cp dist build-web
   artifacts:
     paths:
-      - dist
+      - build-web
   only:
     - develop
     - master
@@ -35,9 +37,11 @@ buildPanel:
     - cd ..
   script:
     - npm run build-panel
+  after_script:
+    - cp cordova/platforms/electron/build/ panel-build
   artifacts:
     paths:
-      - cordova/platforms/electron/build
+      - panel-build
   only:
     - develop
     - master
