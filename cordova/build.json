@@ -1,7 +1,7 @@
 {
     "electron": {
         "linux": {
-                    "package": ["zip"],
+                    "package": ["zip", "deb"],
                     "arch": ["arm64"]
                 }
     }

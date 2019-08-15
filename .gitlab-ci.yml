@@ -14,10 +14,11 @@ buildWeb:
   script:
     - npm run build-web
   after_script:
-    - cp dist build-web
+    - cp -r dist web-build
   artifacts:
     paths:
       - build-web
+    name: "web-build-$CI_COMMIT_REF_NAME"
   only:
     - develop
     - master
@@ -38,10 +39,11 @@ buildPanel:
   script:
     - npm run build-panel
   after_script:
-    - cp cordova/platforms/electron/build/ panel-build
+    - cp -r cordova/platforms/electron/build/ panel-build
   artifacts:
     paths:
       - panel-build
+    name: "panel-build-$CI_COMMIT_REF_NAME"
   only:
     - develop
     - master
