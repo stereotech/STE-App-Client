@@ -86,6 +86,14 @@
         <icon src="res/icon/windows/Wide310x150Logo.png" target="Wide310x150Logo" />
     </platform>
 
+    <platform name="electron">
+        <icon src="res/icon/electron/icon.png" />
+    </platform>
+
+    <platform name="electron">
+        <preference name="ElectronSettingsFilePath" value="res/electron/settings.json" />
+    </platform>
+
     <preference name="SplashMaintainAspectRatio" value="true" />
 
     <preference name="StatusBarBackgroundColor" value="#ffffff" />

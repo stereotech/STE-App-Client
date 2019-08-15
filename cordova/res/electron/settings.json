@@ -1,0 +1,7 @@
+{
+    "browserWindow": {
+        "kiosk": true,
+        "autoHideMenuBar": true,
+        "alwaysOnTop": true
+    }
+}

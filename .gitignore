@@ -92,3 +92,7 @@ sw.*
 cordova/platforms
 cordova/plugins
 cordova/www
+
+//Conflict merging
+*.bak
+*.orig
