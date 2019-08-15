@@ -23,6 +23,25 @@ buildWeb:
     - develop
     - master
 
+buildAndroid:
+  image: node
+  stage: build
+  cache:
+    paths:
+      - node_modules
+      - cordova/node_modules
+  before_script:
+    - npm install --dev
+    - cd cordova
+    - npm install -g cordova
+    - cordova platform add android
+    - cd ..
+  script:
+    - npm run build-android
+  only:
+    - develop
+    - master
+
 buildPanel:
   image: node
   stage: build
