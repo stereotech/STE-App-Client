@@ -1,8 +1,23 @@
 {
     "electron": {
         "linux": {
-                    "package": ["zip", "deb"],
-                    "arch": ["arm64"]
-                }
+            "package": [
+                "zip",
+                "deb"
+            ],
+            "arch": [
+                "arm64"
+            ]
+        }
+    },
+    "android": {
+        "debug": {
+            "keystore": "./keystore.jks",
+            "alias": "upload",
+        },
+        "release": {
+            "keystore": "./keystore.jks",
+            "alias": "upload",
+        }
     }
 }
