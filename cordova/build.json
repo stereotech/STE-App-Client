@@ -1,12 +1,8 @@
 {
     "electron": {
         "linux": {
-            "target": [
-                {
-                    "target": "zip",
+                    "package": "zip",
                     "arch": "arm64"
                 }
-            ]
-        }
     }
 }
