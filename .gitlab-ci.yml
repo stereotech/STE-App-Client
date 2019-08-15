@@ -28,8 +28,7 @@ buildPanel:
       - node_modules
   before_script:
     - npm install --dev
-    - npm install -g cordova
-    - cd cordova && npm install
+    - cd cordova && npm install cordova
     - cd ..
   script:
     - npm run build-panel
