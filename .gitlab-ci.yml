@@ -29,6 +29,7 @@ buildPanel:
   before_script:
     - npm install --dev
     - cd cordova && npm install
+    - cd ..
   script:
     - npm run build-panel
   artifacts:
