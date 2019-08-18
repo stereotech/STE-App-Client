@@ -4,8 +4,7 @@ stages:
   - test
   - deploy
 
-include: '.web-ci.yml'
-
-include: '.panel-ci.yml'
-
-include: '.android-ci.yml'
+include: 
+  - '.web-ci.yml'
+  - '.panel-ci.yml'
+  - '.android-ci.yml'
