@@ -1,76 +1,11 @@
 stages:
+  - prepare
   - build
   - test
   - deploy
 
-buildWeb:
-  image: node
-  stage: build
-  cache:
-    paths:
-      - node_modules
-  before_script:
-    - npm install --dev
-  script:
-    - npm run build-web
-  after_script:
-    - cp -r dist web-build
-  artifacts:
-    paths:
-      - web-build
-    name: "web-build-$CI_COMMIT_REF_NAME"
-  only:
-    - develop
-    - master
+include: '.web-ci.yml'
 
-buildAndroid:
-  image: node
-  stage: build
-  cache:
-    paths:
-      - node_modules
-      - cordova/node_modules
-  before_script:
-    - npm install --dev
-    - cd cordova
-    - npm install -g cordova
-    - cordova platform add android
-    - cd ..
-  script:
-    - npm run build-android
-    - cd cordova
-    - cordova build android --release -- --storePassword=$STORE_PASSWORD --password=$KEY_PASSWORD
-    - cd ..
-  after_script:
-    - cp -r cordova/platforms/android/app/build/outputs/apk/release android-build
-  artifacts:
-    paths:
-      - android-build
-  only:
-    - develop
-    - master
+include: '.panel-ci.yml'
 
-buildPanel:
-  image: node
-  stage: build
-  cache:
-    paths:
-      - node_modules
-      - cordova/node_modules
-  before_script:
-    - npm install --dev
-    - cd cordova
-    - npm install -g cordova
-    - cordova platform add electron
-    - cd ..
-  script:
-    - npm run build-panel
-  after_script:
-    - cp -r cordova/platforms/electron/build/linux-arm64-unpacked/ panel-build
-  artifacts:
-    paths:
-      - panel-build
-    name: "panel-build-$CI_COMMIT_REF_NAME"
-  only:
-    - develop
-    - master
+include: '.android-ci.yml'

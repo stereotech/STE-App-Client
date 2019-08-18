@@ -1,0 +1,26 @@
+buildAndroid:
+  image: node
+  stage: build
+  cache:
+    paths:
+      - node_modules
+      - cordova/node_modules
+  before_script:
+    - npm install --dev
+    - cd cordova
+    - npm install -g cordova
+    - cordova platform add android
+    - cd ..
+  script:
+    - npm run build-android
+    - cd cordova
+    - cordova build android --release -- --storePassword=$STORE_PASSWORD --password=$KEY_PASSWORD
+    - cd ..
+  after_script:
+    - cp -r cordova/platforms/android/app/build/outputs/apk/release android-build
+  artifacts:
+    paths:
+      - android-build
+  only:
+    - develop
+    - master
