@@ -11,6 +11,7 @@ buildWeb:
   stage: build
   dependencies: 
     - prepareWeb
+  needs: [prepareWeb]
   cache:
     paths:
       - node_modules
