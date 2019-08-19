@@ -1,4 +1,4 @@
-buildAndroid
+buildAndroid:
   image: woahbase/alpine-android:latest
   stage: build
   cache:
