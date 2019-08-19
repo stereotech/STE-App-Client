@@ -1,5 +1,5 @@
 buildAndroid:
-  image: woahbase/alpine-android:latest
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   stage: build
   cache:
     paths:
