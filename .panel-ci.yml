@@ -1,17 +1,6 @@
-preparePanel:
-  stage: prepare
-  script:
-    - echo "Prepare build touchscreen app"
-  only:
-    - develop
-    - master
-
 buildPanel:
   image: node
   stage: build
-  dependencies:
-    - preparePanel
-  needs: [preparePanel]
   cache:
     paths:
       - node_modules

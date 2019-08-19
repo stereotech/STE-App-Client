@@ -1,17 +1,6 @@
-prepareWeb:
-  stage: prepare
-  script:
-    - echo "Prepare build web app"
-  only:
-    - develop
-    - master
-
 buildWeb:
   image: node
   stage: build
-  dependencies: 
-    - prepareWeb
-  needs: [prepareWeb]
   cache:
     paths:
       - node_modules
