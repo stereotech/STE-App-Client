@@ -91,29 +91,7 @@ sw.*
 //Cordova
 cordova/plugins
 cordova/www
-
-cordova/platforms/electron/build
-cordova/platforms/electron/www
-
-cordova/platforms/android/fastlane/metadata
-cordova/platforms/android/app/src
-cordova/platforms/android/build.xml
-cordova/platforms/android/local.properties
-# Ant builds
-cordova/platforms/android/ant-build
-cordova/platforms/android/ant-gen
-# Eclipse builds
-cordova/platforms/android/gen
-cordova/platforms/android/out
-# Gradle build artifacts
-cordova/platforms/android/.gradle
-cordova/platforms/android/.gradletasknamecache
-cordova/platforms/android/build
-cordova/platforms/android/CordovaLib/build
-cordova/platforms/android/app/build
-cordova/platforms/android/gradle-app.setting
-# Android Studio
-cordova/platforms/android/.idea
+cordova/platforms
 
 //Conflict merging
 *.bak
