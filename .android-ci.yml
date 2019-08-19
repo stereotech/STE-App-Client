@@ -63,21 +63,21 @@ buildRelease:
 
 promoteAlpha:
   extends: .promote_job
-  stage: alpha
+  stage: deploy
   script:
     - cd cordova/platforms/android
     - bundle exec fastlane promote_internal_to_alpha
 
 promoteBeta:
   extends: .promote_job
-  stage: beta
+  stage: deploy
   script:
     - cd cordova/platforms/android
     - bundle exec fastlane promote_alpha_to_beta
 
 promoteProduction:
   extends: .promote_job
-  stage: production
+  stage: deploy
   script:
     - cd cordova/platforms/android
     - bundle exec fastlane promote_beta_to_production
