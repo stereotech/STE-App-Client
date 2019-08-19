@@ -1,0 +1,25 @@
+buildAndroid
+  image: woahbase/alpine-android:latest
+  stage: build
+  cache:
+    paths:
+      - node_modules
+      - cordova/node_modules
+  before_script:
+    - npm install --dev
+    - cd cordova
+    - cordova platform add android
+    - cd ..
+  script:
+    - npm run build-android
+    - cd cordova
+    - cordova build android --release
+  after_script:
+    - cp -r cordova/platforms/android/build android-build
+  artifacts:
+    paths:
+      - android-build
+    name: "android-build-$CI_COMMIT_REF_NAME"
+  only:
+    - develop
+    - master
