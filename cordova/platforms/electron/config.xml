@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="ru.stereotech.steapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>STE App</name>
+    <icon src="icon.png" />
+    <description>
+        3D printing management application
+    </description>
+    <author email="dev@ste3d.ru" href="https://stereotech.org">
+        Stereotech Dev
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon src="res/icon/electron/icon.png" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="StatusBarBackgroundColor" value="#ffffff" />
+    <preference name="StatusBarStyle" value="default" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="ElectronSettingsFilePath" value="res/electron/settings.json" />
+</widget>
