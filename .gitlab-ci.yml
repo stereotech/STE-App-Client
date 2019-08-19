@@ -5,7 +5,7 @@ stages:
   - deploy
 
 include: 
-  - '.docker-ci.yml'
+  #- '.docker-ci.yml'
   - '.web-ci.yml'
   - '.panel-ci.yml'
   #- '.android-ci.yml'
