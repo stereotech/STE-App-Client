@@ -4,6 +4,7 @@
   services:
     - docker:dind
   script:
+    - cd cordova/platforms/android
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG .
@@ -13,7 +14,7 @@ updateContainer:
   extends: .updateContainerJob
   only:
     changes:
-      - Dockerfile
+      - cordova/platforms/android/Dockerfile
 
 ensureContainer:
   extends: .updateContainerJob
