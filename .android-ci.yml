@@ -9,6 +9,7 @@ prepareAndroid:
     - npm install --dev
     - cd cordova
     - npm install -g cordova
+    - cordova add platform android
     - cd ..
   script:
     - npm run build-android

@@ -9,15 +9,5 @@
                 "arm64"
             ]
         }
-    },
-    "android": {
-        "debug": {
-            "keystore": "./keystore.jks",
-            "alias": "upload"
-        },
-        "release": {
-            "keystore": "./keystore.jks",
-            "alias": "upload"
-        }
     }
 }
