@@ -11,10 +11,12 @@ ARG NPM_VERSION="latest"
 ARG SDK_TARGET="27"
 ARG SDK_API_VERSION="27.0.3"
 #
+USER root
+
 ENV \
     JAVA_OPTS=" -Djava.net.useSystemProxies=true -Dhttp.noProxyHosts=${no_proxy} " \
     ANDROID_HOME=/opt/android-sdk-linux \
-    GRADLE_HOME=/opt/gradle-$GRADLE_VERSION
+    GRADLE_ANDROID_HOME=/opt/gradle-$GRADLE_VERSION
 #
 RUN set -xe \
     && apk add --no-cache --purge -uU \
@@ -24,7 +26,7 @@ RUN set -xe \
     unzip \
     && mkdir -p \
     ${ANDROID_HOME} \
-    ${GRADLE_HOME} \
+    ${GRADLE_ANDROID_HOME} \
     && curl -o /tmp/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip \
     -jkSL https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip \
     && unzip -q -d ${ANDROID_HOME} \
@@ -34,15 +36,15 @@ RUN set -xe \
     -jkSL https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && unzip -q -d /opt \
     /tmp/gradle-${GRADLE_VERSION}-bin.zip \
-    && chown -Rh alpine:alpine ${GRADLE_HOME} \
+    && chown -Rh alpine:alpine ${GRADLE_ANDROID_HOME} \
     && npm install -g \
     npm@${NPM_VERSION} \
     cordova \
     && rm -rf /var/cache/apk/* /tmp/* /root/.npm /root/.node-gyp
 #
-ENV PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${GRADLE_HOME}/bin
+ENV PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${GRADLE_ANDROID_HOME}/bin
 #
-USER root
+
 #
 RUN set -xe \
     && mkdir -p ~/.android ~/.gradle \
