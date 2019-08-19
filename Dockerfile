@@ -26,6 +26,6 @@ RUN echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all -
 RUN echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository
 # install Fastlane
 #COPY Gemfile.lock .
-COPY Gemfile .
+#COPY Gemfile .
 RUN gem install bundle
 RUN bundle install
