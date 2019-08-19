@@ -121,3 +121,4 @@ cordova/platforms/android/.idea
 //Conflict merging
 *.bak
 *.orig
+*.jks
