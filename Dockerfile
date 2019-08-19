@@ -42,7 +42,7 @@ RUN set -xe \
 #
 ENV PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${GRADLE_HOME}/bin
 #
-USER alpine
+USER root
 #
 RUN set -xe \
     && mkdir -p ~/.android ~/.gradle \
@@ -59,9 +59,9 @@ RUN set -xe \
 #
 # COPY root/ /
 #
-VOLUME /home/alpine/
-WORKDIR /home/alpine/project/
+#VOLUME /home/alpine/
+#WORKDIR /home/alpine/project/
 #
-EXPOSE 5037 8100
+#EXPOSE 5037 8100
 #
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
