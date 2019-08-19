@@ -9,6 +9,7 @@ buildPanel:
     - npm install --dev
     - cd cordova
     - npm install -g cordova
+    - cordova platform add electron
     - cd ..
   script:
     - npm run build-panel
