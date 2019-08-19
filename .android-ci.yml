@@ -25,7 +25,7 @@ prepareAndroid:
     - master
 
 .buildJobAndroid:
-  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  image: registry.gitlab.com/stereotech/steapp/ste-app-client:develop
   stage: build
   before_script:
     - echo "Passing some artifacts"
@@ -50,7 +50,7 @@ buildRelease:
     name: production
 
 .promote_job:
-  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  image: registry.gitlab.com/stereotech/steapp/ste-app-client:develop
   when: manual
   dependencies: []
   only:
