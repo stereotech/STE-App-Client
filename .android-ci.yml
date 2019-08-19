@@ -41,10 +41,11 @@ prepareAndroid:
     - develop
     - master
 
-buildRelease:
+buildAndroid:
   extends: .buildJob
   script:
     - cd cordova/platforms/android
+    - chmod +x gradlew
     - bundle exec fastlane buildRelease
   environment:
     name: production
