@@ -55,6 +55,8 @@ RUN set -xe \
     "build-tools;${SDK_API_VERSION}" \
     "platform-tools" \
     "tools" 1>/dev/null
+
+RUN gradle -v
 # && sdkmanager --uninstall "emulator" \
 #
 # COPY root/ /
