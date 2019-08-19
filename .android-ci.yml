@@ -23,26 +23,26 @@ prepareAndroid:
   only:
     - develop
     - master
-
-.buildJobAndroid:
-  image: registry.gitlab.com/stereotech/steapp/ste-app-client:develop
+    
+.buildJob:
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   stage: build
   before_script:
     - echo "Passing some artifacts"
     - echo "$signing_jks_file_hex" | xxd -r -p - > keystore.jks
     - "export VERSION_CODE=$((100 + $CI_PIPELINE_IID)) && echo $VERSION_CODE"
     - "export VERSION_SHA=`echo ${CI_COMMIT_SHORT_SHA}` && echo $VERSION_SHA"
-   after_script:
+  after_script:
     - rm keystore.jks || true
   artifacts:
     paths:
-    - app/build/outputs
+      - app/build/outputs
   only:
     - develop
     - master
 
 buildRelease:
-  extends: .buildJobAndroid
+  extends: .buildJob
   script:
     - cd cordova/platforms/android
     - bundle exec fastlane buildRelease
@@ -50,7 +50,7 @@ buildRelease:
     name: production
 
 .promote_job:
-  image: registry.gitlab.com/stereotech/steapp/ste-app-client:develop
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   when: manual
   dependencies: []
   only:
