@@ -6,7 +6,7 @@ buildAndroid:
       - node_modules
       - cordova/node_modules
   before_script:
-    - npm install --dev
+    - sudo npm install --dev
     - cd cordova
     - cordova platform add android
     - cd ..
