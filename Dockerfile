@@ -1,6 +1,6 @@
-ARG ARCH=frommakefile
-ARG DOCKERSRC=frommakefile
-ARG USERNAME=frommakefile
+ARG ARCH=x86_64
+ARG DOCKERSRC=alpine-openjdk8
+ARG USERNAME=woahbase
 #
 FROM ${USERNAME}/${DOCKERSRC}:${ARCH}
 #
