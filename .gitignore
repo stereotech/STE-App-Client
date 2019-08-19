@@ -99,9 +99,6 @@ cordova/platforms/android/fastlane/metadata
 cordova/platforms/android/app/src
 cordova/platforms/android/build.xml
 cordova/platforms/android/local.properties
-cordova/platforms/android/gradlew
-cordova/platforms/android/gradlew.bat
-cordova/platforms/android/gradle
 # Ant builds
 cordova/platforms/android/ant-build
 cordova/platforms/android/ant-gen
