@@ -42,7 +42,7 @@ prepareAndroid:
     - master
 
 buildRelease:
-  extends: .build_job
+  extends: .buildJobAndroid
   script:
     - cd cordova/platforms/android
     - bundle exec fastlane buildRelease
