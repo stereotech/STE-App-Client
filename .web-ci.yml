@@ -9,7 +9,8 @@ prepareWeb:
 buildWeb:
   image: node
   stage: build
-  needs: [prepareWeb]
+  dependencies: 
+    - prepareWeb
   cache:
     paths:
       - node_modules

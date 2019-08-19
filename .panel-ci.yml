@@ -9,7 +9,8 @@ preparePanel:
 buildPanel:
   image: node
   stage: build
-  needs: [preparePanel]
+  dependencies:
+    - preparePanel
   cache:
     paths:
       - node_modules
