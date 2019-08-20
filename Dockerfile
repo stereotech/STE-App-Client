@@ -59,6 +59,13 @@ RUN set -xe \
     "platform-tools" \
     "tools" 1>/dev/null
 
+RUN echo "export ANDROID_HOME=/opt/android-sdk-linux" >> ~/.bashrc \
+    && echo "export ANDROID_SDK_ROOT=/opt/android-sdk-linux" >> ~/.bashrc \
+    && echo "export PATH=${PATH}:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/tools/bin" >> ~/.bashrc \
+    && echo "export GRADLE_HOME=/opt/android-studio/gradle" >> ~/.bashrc \
+    && echo "export PATH=$PATH:/opt/gradle-5.6/bin" >> ~/.bashrc \
+    && echo "export PATH=$PATH:$GRADLE_HOME/m2repository" >> ~/.bashrc 
+
 RUN gradle -v
 # && sdkmanager --uninstall "emulator" \
 #
