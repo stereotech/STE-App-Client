@@ -28,10 +28,9 @@ deployPanelDevelop:
   stage: deploy
   needs: [buildPanel]
   before_script:
-    - apt-get install zip unzip
     - pip install awscli
   script:
-    - zip -r panel-build/ panel-build.zip
+    - python -m zipfile -c panel-build.zip panel-build/
     - aws s3 cp panel-build.zip s3://${BUCKET_NAME}/steapp/panel/testing/
   only:
     - develop
