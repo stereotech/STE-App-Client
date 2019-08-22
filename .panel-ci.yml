@@ -33,8 +33,8 @@ deployPanelDevelop:
     - python -m zipfile -c panel-build.zip panel-build/
     - aws s3 cp panel-build.zip s3://${BUCKET_NAME}/steapp/panel/testing/
   environment:
-    name: testing
-    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/panel/testing
+    name: testingPanel
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/panel/testing/panel-build.zip
     on_stop: cleanPanelDevelop
   only:
     - develop
@@ -47,6 +47,6 @@ cleanPanelDevelop:
   script:
     - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/panel-build.zip
   environment:
-    name: testing
+    name: testingPanel
     action: stop
   when: manual

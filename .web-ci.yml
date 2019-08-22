@@ -28,8 +28,8 @@ deployWebDevelop:
     - python -m zipfile -c web-build.zip web-build/
     - aws s3 cp web-build.zip s3://${BUCKET_NAME}/steapp/web/testing/
   environment:
-    name: testing
-    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/web/testing
+    name: testingWeb
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/web/testing/web-build.zip
     on_stop: cleanWebDevelop
   only:
     - develop
@@ -42,6 +42,6 @@ cleanWebDevelop:
   script:
     - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/web-build.zip
   environment:
-    name: testing
+    name: testingWeb
     action: stop
   when: manual
