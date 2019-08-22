@@ -1,23 +1,21 @@
 buildAndroid:
-  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  image: posohof/android:latest
   stage: build
-  needs: [updateContainer, ensureContainer]
+  services:
+    - node
   cache:
     paths:
       - node_modules
       - cordova/node_modules
   before_script:
-    - PATH=$PATH:/opt/gradle-5.6/bin
     - npm install --dev
     - cd cordova
-    - cordova platform add android
+    - npm install -g cordova
+    - cordova platform add electron
     - cd ..
   script:
     - npm run build-android
     - cd cordova
-    - echo "org.gradle.daemon=true\n" >> platforms/android/gradle.properties
-    - echo "org.gradle.jvmargs=-Xmx4096m"\n >> platforms/android/gradle.properties
-    - echo "android.useDeprecatedNdk=true"\n >> platforms/android/gradle.properties
     - cordova build android --release
   after_script:
     - cp -r cordova/platforms/android/build android-build
