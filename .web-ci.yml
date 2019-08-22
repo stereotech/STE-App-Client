@@ -17,3 +17,25 @@ buildWeb:
   only:
     - develop
     - master
+
+deployWebDevelop:
+  image: brentley/awscli:latest
+  stage: deploy
+  script:
+    - aws s3 cp web-build s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA} --recursive
+  environment:
+    name: testing
+    url: http://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA}
+    on_stop: cleanWebDevelop
+  only:
+    - develop
+
+cleanWebDevelop:
+  image: brentley/awscli:latest
+  stage: deploy
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_REF_SLUG} --recursive
+  environment:
+    name: testing
+    action: stop
+  when: manual
