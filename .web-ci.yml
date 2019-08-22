@@ -25,10 +25,10 @@ deployWebDevelop:
   before_script:
     - pip install awscli
   script:
-    - aws s3 cp web-build/ s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA} --recursive
+    - aws s3 cp web-build/ s3://${BUCKET_NAME}/steapp/testing/ --recursive
   environment:
     name: testing
-    url: http://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA}
+    url: http://${BUCKET_NAME}/steapp/testing
     on_stop: cleanWebDevelop
   only:
     - develop
@@ -39,7 +39,7 @@ cleanWebDevelop:
   before_script:
     - pip install awscli
   script:
-    - aws s3 rm s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_REF_SLUG} --recursive
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/testing/ --recursive
   environment:
     name: testing
     action: stop
