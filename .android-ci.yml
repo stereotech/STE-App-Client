@@ -11,7 +11,7 @@ buildAndroid:
     - npm install --dev
     - cd cordova
     - npm install -g cordova
-    - cordova platform add electron
+    - cordova platform add android
     - cd ..
   script:
     - npm run build-android
