@@ -7,7 +7,7 @@ buildAndroid:
       - cordova/node_modules
   before_script:
     - curl -sL https://deb.nodesource.com/setup_10.x
-    - sudo apt-get install -y nodejs
+    - apt-get install -y nodejs
     - npm install --dev
     - cd cordova
     - npm install -g cordova
