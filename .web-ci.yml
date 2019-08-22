@@ -25,10 +25,11 @@ deployWebDevelop:
   before_script:
     - pip install awscli
   script:
-    - aws s3 cp web-build/ s3://${BUCKET_NAME}/steapp/web/testing/ --recursive
+    - python -m zipfile -c web-build.zip web-build/
+    - aws s3 cp web-build.zip s3://${BUCKET_NAME}/steapp/web/testing/
   environment:
     name: testing
-    url: http://${BUCKET_NAME}/steapp/web/testing
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/web/testing
     on_stop: cleanWebDevelop
   only:
     - develop
@@ -39,7 +40,8 @@ cleanWebDevelop:
   before_script:
     - pip install awscli
   script:
-    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/ --recursive
+    - python -m zipfile -c web-build.zip web-build/
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/web-build.zip
   environment:
     name: testing
     action: stop
