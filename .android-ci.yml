@@ -14,6 +14,7 @@ buildAndroid:
   script:
     - npm run build-android
     - cd cordova
+    - echo "org.gradle.jvmargs=-Xmx2048m" >> platforms/android/gradle.properties
     - cordova build android --release
   after_script:
     - cp -r cordova/platforms/android/build android-build
