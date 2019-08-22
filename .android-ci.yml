@@ -15,7 +15,7 @@ buildAndroid:
     - npm run build-android
     - cd cordova
     - echo "org.gradle.daemon=true\n" >> platforms/android/gradle.properties
-    - echo "org.gradle.jvmargs=-Xmx2048m\n" >> platforms/android/gradle.properties
+    - echo "org.gradle.jvmargs=-Xmx3072m\n" >> platforms/android/gradle.properties
     - echo "android.useDeprecatedNdk=true\n" >> platforms/android/gradle.properties
     - cordova build android --release
   after_script:
