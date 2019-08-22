@@ -1,7 +1,6 @@
 buildPanel:
   image: node
   stage: build
-  needs: []
   cache:
     paths:
       - node_modules
@@ -19,7 +18,7 @@ buildPanel:
   artifacts:
     paths:
       - panel-build
-    name: "panel-build-$CI_COMMIT_REF_NAME"
+    name: "panel-build-${CI_COMMIT_REF_NAME}"
   only:
     - develop
     - master

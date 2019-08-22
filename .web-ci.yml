@@ -1,7 +1,6 @@
 buildWeb:
   image: node
   stage: build
-  needs: []
   cache:
     paths:
       - node_modules
@@ -14,7 +13,7 @@ buildWeb:
   artifacts:
     paths:
       - web-build
-    name: "web-build-$CI_COMMIT_REF_NAME"
+    name: "web-build-${CI_COMMIT_REF_NAME}"
   only:
     - develop
     - master
