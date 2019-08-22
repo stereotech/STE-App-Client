@@ -45,7 +45,6 @@ cleanPanelDevelop:
   before_script:
     - pip install awscli
   script:
-    - python -m zipfile -c panel-build.zip panel-build/
     - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/panel-build.zip
   environment:
     name: testing
