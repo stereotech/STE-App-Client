@@ -96,4 +96,3 @@ cordova/platforms
 //Conflict merging
 *.bak
 *.orig
-*.jks
