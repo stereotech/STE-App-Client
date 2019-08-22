@@ -16,9 +16,9 @@ buildAndroid:
   script:
     - npm run build-android
     - cd cordova
-    - cordova build android --release
+    - cordova build android --release -- --keystore=keystore.jks --storePassword=${ANDROID_STORE_PASSWORD} --alias=upload --password=${ANDROID_PASSWORD}
   after_script:
-    - cp -r cordova/platforms/android/build android-build
+    - cp -r cordova/platforms/android/app/build/outputs android-build
   artifacts:
     paths:
       - android-build
@@ -26,3 +26,14 @@ buildAndroid:
   only:
     - develop
     - master
+
+deployAndroidDevelop:
+  stage: deploy
+  needs: [buildAndroid]
+  before_script:
+    - gem install bundler
+    - bundle install
+  script:
+    - fastlane supply --apk android-build/apk/app-release.apk --track internal --package_name ru.stereotech.steapp --json_key_data ${ANDROID_JSON_KEY_DATA}
+  only:
+    - develop
