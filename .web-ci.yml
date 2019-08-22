@@ -19,11 +19,12 @@ buildWeb:
     - master
 
 deployWebDevelop:
-  image: brentley/awscli:latest
+  image: python:latest
   stage: deploy
   needs: [buildWeb]
+  before_script:
+    - pip install awscli
   script:
-    - aws s3 help
     - aws s3 cp web-build/ s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA} --recursive
   environment:
     name: testing
@@ -33,8 +34,10 @@ deployWebDevelop:
     - develop
 
 cleanWebDevelop:
-  image: brentley/awscli:latest
+  image: python:latest
   stage: deploy
+  before_script:
+    - pip install awscli
   script:
     - aws s3 rm s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_REF_SLUG} --recursive
   environment:
