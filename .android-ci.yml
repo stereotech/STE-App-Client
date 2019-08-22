@@ -1,6 +1,7 @@
 buildAndroid:
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   stage: build
+  needs: [updateContainer, ensureContainer]
   cache:
     paths:
       - node_modules

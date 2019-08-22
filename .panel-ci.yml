@@ -1,6 +1,7 @@
 buildPanel:
   image: node
   stage: build
+  needs: []
   cache:
     paths:
       - node_modules
