@@ -8,4 +8,4 @@ include:
   - '.docker-ci.yml'
   - '.web-ci.yml'
   - '.panel-ci.yml'
-  - '.android-ci.yml'
+  #- '.android-ci.yml'
