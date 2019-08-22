@@ -22,3 +22,14 @@ buildPanel:
   only:
     - develop
     - master
+
+deployPanelDevelop:
+  image: python:latest
+  stage: deploy
+  needs: [buildPanel]
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 cp panel-build/ s3://${BUCKET_NAME}/steapp/panel/testing/ --recursive
+  only:
+    - develop
