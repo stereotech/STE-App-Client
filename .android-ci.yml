@@ -1,13 +1,13 @@
 buildAndroid:
   image: posohof/android:latest
   stage: build
-  services:
-    - node
   cache:
     paths:
       - node_modules
       - cordova/node_modules
   before_script:
+    - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    - sudo apt-get install -y nodejs
     - npm install --dev
     - cd cordova
     - npm install -g cordova
