@@ -23,7 +23,8 @@ deployWebDevelop:
   stage: deploy
   needs: [buildWeb]
   script:
-    - aws s3 cp web-build s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA} --recursive
+    - aws s3 help
+    - aws s3 cp web-build/ s3://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA} --recursive
   environment:
     name: testing
     url: http://${BUCKET_NAME}/steapp/testing/${CI_COMMIT_SHORT_SHA}
