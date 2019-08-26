@@ -32,6 +32,7 @@ deployAndroidDevelop:
   stage: deploy
   needs: [buildAndroid]
   before_script:
+    - mkdir -p cordova/platforms/android
     - cp cordova/Gemfile cordova/platforms/android/Gemfile
     - cp cordova/Gemfile.lock cordova/platforms/android/Gemfile.lock
     - cd cordova/platforms/android
