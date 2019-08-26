@@ -34,6 +34,23 @@ deployWebDevelop:
   only:
     - develop
 
+deployWebProduction:
+  image: python:latest
+  stage: deploy
+  needs: [buildWeb]
+  before_script:
+    - pip install awscli
+  script:
+    - python -m zipfile -c web-build.zip web-build/
+    - aws s3 cp web-build.zip s3://${BUCKET_NAME}/steapp/web/stable/
+  environment:
+    name: stableWeb
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/web/stable/web-build.zip
+    on_stop: cleanWebDevelop
+  only:
+    - master
+  when: manual
+
 cleanWebDevelop:
   image: python:latest
   stage: deploy
@@ -43,5 +60,17 @@ cleanWebDevelop:
     - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/web-build.zip
   environment:
     name: testingWeb
+    action: stop
+  when: manual
+
+cleanWebProduction:
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/stable/web-build.zip
+  environment:
+    name: stableWeb
     action: stop
   when: manual
