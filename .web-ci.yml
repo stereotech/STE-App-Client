@@ -61,6 +61,8 @@ cleanWebDevelop:
   environment:
     name: testingWeb
     action: stop
+  only:
+    - develop
   when: manual
 
 cleanWebProduction:
@@ -73,4 +75,6 @@ cleanWebProduction:
   environment:
     name: stableWeb
     action: stop
+  only:
+    - master
   when: manual
