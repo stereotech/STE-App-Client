@@ -32,10 +32,8 @@ deployAndroidDevelop:
   stage: deploy
   needs: [buildAndroid]
   before_script:
-    - cd cordova
     - gem install bundler
     - bundle install
-    - cd ..
   script:
     - bundle exec fastlane supply --apk android-build/apk/app-release.apk --track internal --package_name ru.stereotech.steapp --json_key_data ${ANDROID_JSON_KEY_DATA}
   only:
