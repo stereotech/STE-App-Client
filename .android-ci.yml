@@ -16,8 +16,8 @@ buildAndroid:
   script:
     - npm run build-android
     - cd cordova
-    - cp keystore.jks platforms/android/keystore.jks
-    - cordova build android --release -- --keystore=../keystore.jks --storePassword=${ANDROID_STORE_PASSWORD} --alias=upload --password=${ANDROID_PASSWORD}
+    - cp keystore.jks platforms/android/app/keystore.jks
+    - cordova build android --release -- --keystore=keystore.jks --storePassword=${ANDROID_STORE_PASSWORD} --alias=upload --password=${ANDROID_PASSWORD}
   after_script:
     - cp -r cordova/platforms/android/app/build/outputs android-build
   artifacts:
