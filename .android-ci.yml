@@ -35,6 +35,6 @@ deployAndroidDevelop:
     - gem install bundler
     - bundle install
   script:
-    - bundle exec fastlane supply --apk android-build/apk/app-release.apk --track internal --package_name ru.stereotech.steapp --json_key_data ${ANDROID_JSON_KEY_DATA}
+    - bundle exec fastlane supply --apk android-build/apk/release/app-release.apk --track internal --package_name ru.stereotech.steapp --json_key_data ${ANDROID_JSON_KEY_DATA}
   only:
     - develop
