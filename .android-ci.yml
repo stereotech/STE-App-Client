@@ -34,7 +34,7 @@ deployAndroidDevelop:
   before_script:
     - gem install bundler
     - bundle install
-    - echo $ANDROID_JSON_KEY_DATA > google-play-key.json
+    #- echo $ANDROID_JSON_KEY_DATA > google-play-key.json
   script:
     - bundle exec fastlane supply --apk android-build/apk/release/app-release.apk --track internal --package_name ru.stereotech.steapp --json_key google-play-key.json
   after_script:
