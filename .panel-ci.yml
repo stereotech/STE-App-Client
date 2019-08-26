@@ -49,6 +49,8 @@ cleanPanelDevelop:
   environment:
     name: testingPanel
     action: stop
+  only:
+    - develop
   when: manual
 
 deployPanelProduction:
@@ -78,4 +80,6 @@ cleanPanelProduction:
   environment:
     name: stablePanel
     action: stop
+  only:
+    - master
   when: manual
