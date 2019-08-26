@@ -50,3 +50,32 @@ cleanPanelDevelop:
     name: testingPanel
     action: stop
   when: manual
+
+deployPanelProduction:
+  image: python:latest
+  stage: deploy
+  needs: [buildPanel]
+  before_script:
+    - pip install awscli
+  script:
+    - python -m zipfile -c panel-build.zip panel-build/
+    - aws s3 cp panel-build.zip s3://${BUCKET_NAME}/steapp/panel/stable/
+  environment:
+    name: stablePanel
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/panel/stable/panel-build.zip
+    on_stop: cleanPanelProduction
+  only:
+    - master
+  when: manual
+
+cleanPanelProduction:
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/panel-build.zip
+  environment:
+    name: stablePanel
+    action: stop
+  when: manual
