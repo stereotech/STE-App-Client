@@ -4,16 +4,6 @@
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex xs12>
-          <!--
-          <v-textarea
-            filled
-            readonly
-            label="Terminal output"
-            :value="printerLogs(id)"
-            height="500"
-            no-resize
-          ></v-textarea>
-          -->
           <v-card height="500">
             <v-list dense style="max-height: 500px" class="overflow-y-auto" id="terminal-list">
               <template v-for="(line, index) in printerLogs(id)">
@@ -26,19 +16,22 @@
           <v-checkbox label="Autoscroll" v-model="autoscroll"></v-checkbox>
         </v-flex>
         <v-flex xs12>
-          <v-text-field
-            append-icon="mdi-send"
-            @click:append="misc"
-            @keydown.enter="misc"
-            @keydown.up="prevGCode"
-            @keydown.down="nextGCode"
-            filled
-            clear-icon="mdi-close-circle"
-            clearable
-            label="G-Code Command"
-            type="text"
-            v-model="gcodeString"
-          ></v-text-field>
+          <BottomInput :input.sync="gcodeString" v-model="keyboard">
+            <v-text-field
+              append-icon="mdi-send"
+              @click:append="misc"
+              @click="keyboard = true"
+              @keydown.enter="misc"
+              @keydown.up="prevGCode"
+              @keydown.down="nextGCode"
+              filled
+              clear-icon="mdi-close-circle"
+              clearable
+              label="G-Code Command"
+              type="text"
+              v-model="gcodeString"
+            ></v-text-field>
+          </BottomInput>
         </v-flex>
       </v-layout>
     </v-container>
@@ -50,12 +43,14 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
 import { VuetifyGoToOptions } from 'vuetify/types/services/goto'
 import TerminalString from '~/components/printers/expert/TerminalString.vue'
+import BottomInput from '~/components/common/BottomInput.vue'
 
 const printers = namespace('printersState')
 
 @Component({
   components: {
-    TerminalString
+    TerminalString,
+    BottomInput
   }
 })
 export default class TerminalCard extends Vue {
@@ -71,6 +66,7 @@ export default class TerminalCard extends Vue {
 
   private autoscroll: boolean = true
   private temperature: boolean = false
+  private keyboard: boolean = false
 
 
   private scrollToBottom () {

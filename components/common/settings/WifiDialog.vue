@@ -72,17 +72,20 @@
           >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
           <v-card-title v-else class="headline">Connect to network?</v-card-title>
           <v-container grid-list-md v-if="setupNetwork.security">
-            <v-text-field
-              filled
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[ rules.required, rules.min ]"
-              :type="showPassword ? 'text' : 'password'"
-              name="input-10-2"
-              label="Wi-Fi password"
-              class="input-group--focused"
-              v-model="password"
-              @click:append="showPassword = !showPassword"
-            ></v-text-field>
+            <BottomInput :input.sync="password" v-model="keyboard">
+              <v-text-field
+                filled
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[ rules.required, rules.min ]"
+                :type="showPassword ? 'text' : 'password'"
+                name="input-10-2"
+                label="Wi-Fi password"
+                class="input-group--focused"
+                v-model="password"
+                @click:append="showPassword = !showPassword"
+                @click="keyboard = true"
+              ></v-text-field>
+            </BottomInput>
           </v-container>
 
           <v-card-actions>
@@ -100,12 +103,14 @@ import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Network } from '~/types/networking'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import BottomInput from '~/components/common/BottomInput.vue'
 
 const settings = namespace('settingsState')
 
 @Component({
   components: {
-    SettingsDialog
+    SettingsDialog,
+    BottomInput
   }
 })
 export default class extends Vue {
@@ -116,6 +121,7 @@ export default class extends Vue {
 
   private isOpen: boolean = this.value
 
+  private keyboard: boolean = false
   private confirmation: boolean = false
   private forgetConfirmation: boolean = false
   private showPassword: boolean = false

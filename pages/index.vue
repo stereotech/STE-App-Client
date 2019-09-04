@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index"/>
+    <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index" />
     <DoneJobs />
     <Queue />
     <Storage local />
@@ -10,7 +10,6 @@
       :name="usbStorage.origin"
       :display="usbStorage.origin"
     />
-    <BottomKeyboard v-model="keyboard" />
   </v-layout>
 </template>
 
@@ -20,7 +19,7 @@ import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
 import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
-import BottomKeyboard from '~/components/common/BottomKeyboard.vue'
+import BottomInput from '~/components/common/BottomInput.vue'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { StorageState } from '../store/storageState';
 import { FileOrFolder } from '../types/fileOrFolder';
@@ -35,16 +34,18 @@ const printers = namespace('printersState')
     DoneJobs,
     Storage,
     Queue,
-    BottomKeyboard
+    BottomInput
   }
 })
 export default class Dashboard extends Vue {
-  
+
   @storage.Getter allUsbStorages!: FileOrFolder[]
 
   @printers.Getter printers!: PrinterInfo[]
 
   @Getter isApiAbsolute!: boolean
+
+  text: string = ''
 
   head () {
     return { title: 'STE App Dashboard' }
