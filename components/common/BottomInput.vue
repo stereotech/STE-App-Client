@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot></slot>
-    <v-bottom-sheet v-model="isOpen" @click:outside="closeKeyboard">
+    <v-bottom-sheet v-model="isOpen" @click:outside="closeKeyboard" v-if="isPanel">
       <v-sheet>
         <v-container grid-list-xs>
           <v-layout row wrap>
@@ -43,6 +43,10 @@ export default class BottomInput extends Vue {
     this.isOpen = false
   }
 
+  get isPanel () {
+    return process.env.NUXT_ENV_PLATFORM == 'PANEL'
+  }
+
   @Prop({ type: String, default: '' }) input!: string
 
   inputLocal: string = this.input
@@ -58,7 +62,7 @@ export default class BottomInput extends Vue {
     }
     if (button === '{enter}') {
       this.inputLocal += '\n'
-        this.$emit('update:input', this.inputLocal)
+      this.$emit('update:input', this.inputLocal)
       return
     }
     if (button.startsWith('{') && button.endsWith('}')) {
