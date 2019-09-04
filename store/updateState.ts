@@ -3,30 +3,69 @@ import { RootState } from '.'
 
 const updateEndpoint = 'update/'
 
+export enum SoftwareUpdateState {
+    Idle,
+    IsNewFirmware,
+    InitDownload,
+    Downloading,
+    Downloaded,
+    Copying,
+    FailedDownload,
+    FailedUsb,
+}
+
 export interface UpdateState {
-    releaseType: string
     currentVersion: string
     avaliableVersion: string
-    progress: number
+    downloadProgress: number
+    softwareUpdateState: SoftwareUpdateState
+    updateOnUsb: boolean
 }
 
 export const state = (): UpdateState => ({
-    releaseType: 'default',
     currentVersion: '1.0.0',
     avaliableVersion: '1.0.0',
-    progress: 0
+    softwareUpdateState: SoftwareUpdateState.Idle,
+    downloadProgress: 0,
+    updateOnUsb: false
 })
 
 export const getters: GetterTree<UpdateState, RootState> = {
     currentVersion (state: UpdateState): string {
         return state.avaliableVersion
-    }
+    },
+    softwareUpdateState (state: UpdateState): SoftwareUpdateState {
+        return state.softwareUpdateState
+    },
+    downloadProgress (state: UpdateState): number {
+        return state.downloadProgress
+    },
+    avaliableVersion (state: UpdateState): string {
+        return state.avaliableVersion
+    },
+    updateOnUsb (state: UpdateState): boolean {
+        return state.updateOnUsb
+    },
+
 }
 
 export const mutations: MutationTree<UpdateState> = {
     setCurrentVersion (state: UpdateState, version: string) {
         state.currentVersion = version
+    },
+    setAvaliableVersion (state: UpdateState, version: string) {
+        state.avaliableVersion = version
+    },
+    setSoftwareUpdateState (state: UpdateState, softwareUpdateState: SoftwareUpdateState) {
+        state.softwareUpdateState = softwareUpdateState
+    },
+    setUpdateOnUsb (state: UpdateState, found: boolean) {
+        state.updateOnUsb = found
+    },
+    setDownloadProgress (state: UpdateState, progress: number) {
+        state.downloadProgress = progress
     }
+
 }
 
 export const actions: ActionTree<UpdateState, RootState> = {
@@ -37,44 +76,18 @@ export const actions: ActionTree<UpdateState, RootState> = {
         }
     },
 
-    async checkForUpdate ({ state }) {
-        await this.$axios.post(this.state.apiUrl + updateEndpoint, null, {
-            params: {
-                release: state.releaseType
-            }
-        })
+    async downloadUpdateVersion ({ commit }) {
+        await this.$axios.post(this.state.apiUrl + updateEndpoint)
     },
 
-    async startUpdate ({ state }) {
-        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'start', null, {
-            params: {
-                release: state.releaseType
-            }
-        })
+    async startUpdateFromUsb ({ commit }) {
+        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'local', { filename: '/home/ste/uploads/USB/ste-update.stu' })
     },
 
-    async startLocalUpdate ({ commit }, filename: string) {
-        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'local')
-    },
-
-    async wasUpdateCompleted ({ commit }) {
-        let response = await this.$axios.get(this.state.apiUrl + updateEndpoint + 'complete')
-        if (response.status === 200) {
-            //TODO: do smth
-
-        }
-    },
-
-    async acknowledgeUpdateCompleted () {
-        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'complete')
-    },
-
-    async ignoreVersion ({ commit }, version: string) {
-        await this.$axios.put(this.state.apiUrl + updateEndpoint, null, {
-            params: {
-                version: version
-            }
-        })
+    async uploadUpdate ({ commit }, file: File) {
+        let data = new FormData();
+        data.append('file', file, file.name)
+        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'upload', data, { headers: 'Content-Type: multipart/form-data' })
     }
 
 }

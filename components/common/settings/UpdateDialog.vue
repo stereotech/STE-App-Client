@@ -1,40 +1,94 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">System update</template>
-    <h5
-      class="headline font-weight-light text-center"
-    >Current version: {{ avaliableUpdate.currentVersion }}</h5>
-    <v-btn @click="checkForUpdate" rounded block color="primary" dark>Check for update</v-btn>
-    <v-card>
-      <v-card-text>
-        <p
-          v-if="isNewVersion"
-          class="primary--text display-2 font-weight-light text-center"
-        >{{ avaliableUpdate.newVersion }}</p>
-        <p class="body-1">{{ avaliableUpdate.description }}</p>
-        <v-btn
-          @click="onlineUpdate"
-          v-if="isNewVersion"
-          rounded
-          block
-          color="accent"
-          dark
-        >Download and install</v-btn>
-      </v-card-text>
-    </v-card>
-    <p class="subheading text-center">Install update manually</p>
-    <v-container grid-list-xs>
+    <v-container grid-list-md>
       <v-layout row wrap>
         <v-flex xs12>
-          <v-file-input chips display-size label="Upload Update" accept=".stu" v-model="file"></v-file-input>
+          <v-card>
+            <v-container grid-list-md>
+              <v-layout row wrap>
+                <v-flex xs12 v-if="softwareUpdateState == 0">
+                  <h5
+                    class="headline primary--text text-center"
+                  >Current version: {{ currentVersion }}</h5>
+                  <h5 class="text-center">You have the latest firmware</h5>
+                </v-flex>
+                <v-flex xs12 v-if="softwareUpdateState == 1">
+                  <h5
+                    class="headline success--text text-center"
+                  >New version avaliable: {{ avaliableVersion }}</h5>
+                  <h5 class="text-center">Current version: {{ currentVersion }}</h5>
+                  <v-btn
+                    depressed
+                    block
+                    color="success"
+                    @click="downloadUpdateVersion"
+                  >Download update</v-btn>
+                </v-flex>
+                <v-flex xs12 v-if="softwareUpdateState == 2">
+                  <h5 class="headline text-center">Downloading {{ avaliableVersion }}...</h5>
+                  <v-progress-linear :indeterminate="true"></v-progress-linear>
+                </v-flex>
+                <v-flex xs12 v-if="softwareUpdateState == 3">
+                  <h5 class="headline text-center">Downloading {{ downloadProgress }}%</h5>
+                  <v-progress-linear :value="downloadProgress"></v-progress-linear>
+                </v-flex>
+                <v-flex xs12 v-if="softwareUpdateState == 4">
+                  <h5
+                    class="headline text-center"
+                  >Download finished. Please reboot printer to finish update</h5>
+                  <v-progress-linear :indeterminate="true"></v-progress-linear>
+                </v-flex>
+                <v-flex xs12 v-if="softwareUpdateState == 5">
+                  <h5 class="headline text-center">Copying</h5>
+                  <v-progress-linear :indeterminate="true"></v-progress-linear>
+                </v-flex>
+                <v-flex xs12 v-if="softwareUpdateState == 6">
+                  <h5 class="headline error--text text-center">Download failed</h5>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
         </v-flex>
         <v-flex xs12>
-          <v-btn depressed block color="primary" @click="upload">Upload</v-btn>
+          <v-card>
+            <v-container grid-list-md v-if="softwareUpdateState < 2">
+              <v-layout row wrap>
+                <v-flex xs12 v-if="isWeb">
+                  <v-file-input
+                    chips
+                    display-size
+                    label="Upload Update"
+                    accept=".stu"
+                    v-model="file"
+                  ></v-file-input>
+                </v-flex>
+                <v-flex xs12 v-if="isWeb">
+                  <v-btn
+                    depressed
+                    block
+                    color="primary"
+                    @click="upload"
+                    :disabled="file == null"
+                  >Upload</v-btn>
+                </v-flex>
+                <v-flex xs12 v-if="updateOnUsb">
+                  <v-btn
+                    depressed
+                    outlined
+                    block
+                    color="primary"
+                    @click="startUpdateFromUsb"
+                  >Install update from USB</v-btn>
+                </v-flex>
+              </v-layout>
+              <v-overlay :value="overlay" absolute>
+                <v-progress-circular indeterminate size="64"></v-progress-circular>
+              </v-overlay>
+            </v-container>
+          </v-card>
         </v-flex>
       </v-layout>
-      <v-overlay :value="overlay" absolute>
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
     </v-container>
   </SettingsDialog>
 </template>
@@ -44,8 +98,9 @@ import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import { SoftwareUpdateState } from '~/store/updateState';
 
-const settings = namespace('settingsState')
+const update = namespace('updateState')
 
 @Component({
   components: {
@@ -60,7 +115,19 @@ export default class extends Vue {
 
   private isOpen: boolean = this.value
 
+  get isWeb (): boolean {
+    return process.env.NUXT_ENV_PLATFORM == 'WEB'
+  }
 
+  @update.Getter currentVersion!: string
+  @update.Getter softwareUpdateState!: SoftwareUpdateState
+  @update.Getter downloadProgress!: number
+  @update.Getter avaliableVersion!: string
+  @update.Getter updateOnUsb!: boolean
+
+  @update.Action startUpdateFromUsb!: any
+  @update.Action uploadUpdate!: any
+  @update.Action downloadUpdateVersion!: any
 
 
   private closeDialog () {
@@ -70,11 +137,12 @@ export default class extends Vue {
 
   private overlay: boolean = false
 
-  private file: File[] = []
+  private file: File[] | null = null
 
   private async upload () {
     this.overlay = true
-    this.file = []
+    await this.uploadUpdate(this.file![0])
+    this.file = null
     this.overlay = false
   }
 }

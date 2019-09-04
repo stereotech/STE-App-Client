@@ -49,13 +49,18 @@
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs12 order-sm5 pt-2>
+        <v-flex xs8 sm9 order-sm5 pt-2>
           <v-btn-toggle mandatory v-model="selectedAmount" rounded>
             <v-btn text color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
             <v-btn text color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
             <v-btn text color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
             <v-btn text color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
           </v-btn-toggle>
+        </v-flex>
+        <v-flex xs4 sm3 order-sm5>
+          <v-btn text color="primary" :disabled="printing" outlined icon>
+            <v-icon>mdi-engine-off-outline</v-icon>
+          </v-btn>
         </v-flex>
         <v-flex xs12 order-sm5 pt-6>
           <v-slider v-model="feed" label="Feed" thumb-label min="50" max="150" @change="setFeed"></v-slider>

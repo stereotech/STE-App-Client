@@ -1,6 +1,7 @@
 import { HubConnectionBuilder, HttpTransportType, LogLevel, HubConnection, HubConnectionState } from '@aspnet/signalr'
 import { CurrentState } from '../types/printer'
 import moment, { version } from 'moment'
+import { SoftwareUpdateState } from '~/store/updateState';
 
 export default ({ app, store }, inject) => {
     function generateHub () {
@@ -35,33 +36,29 @@ export default ({ app, store }, inject) => {
             app.$notify(`${args.printJobName} has been failed on ${args.id.toUpperCase()} for ${duration} cause of ${args.reason}`, 'error')
         })
 
-
-        hub.on('UpdateProcedureStart', () => {
-            app.$notify('Update procedure start', 'info')
+        //UpdateState
+        hub.on('DownloadFinished', () => {
+            store.dispatch('updateState/setSoftwareUpdateState', SoftwareUpdateState.Downloaded)
         })
-
-        hub.on('PreUpdateSuccessful', () => {
-            app.$notify('Update succesfully prepared, please, reboot printer to install it', 'success')
+        hub.on('DownloadFailed', () => {
+            store.dispatch('updateState/setSoftwareUpdateState', SoftwareUpdateState.FailedDownload)
+            app.$notify(`New firmware download failed`, 'error')
         })
-
-        hub.on('NewFirmwareVersionDetected', (version) => {
-            app.$notify(`New firmware version detected: ${version}`, 'info')
+        hub.on('UpdateFoundOnUsb', (args: { found: boolean }) => {
+            store.dispatch('updateState/setUpdateOnUsb', args.found)
+            app.$notify(`New firmware is found on USB. Check settings for install`)
         })
-
-        hub.on('FirmwareVersionLoadFailed', (version) => {
-            app.$notify(`Firmware version is failed to load: ${version}`, 'error')
+        hub.on('HasEqualFirmware', (args: { version: string }) => {
+            store.dispatch('updateState/setCurrentVersion', args.version)
         })
-
-        hub.on('HasEqualFirmware', (version) => {
-            app.$notify(`You have the latest firmware: ${version}`, 'info')
+        hub.on('HasNewFirmware', (args: { version: string }) => {
+            store.dispatch('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
+            store.dispatch('updateState/setAvaliableVersion', args.version)
+            app.$notify(`New firmware is available, version ${args.version}. Check settings for install`)
         })
-
-        hub.on('HasNewFirmware', (releaseType, version) => {
-            app.$notify(`A new ${releaseType} firmware update is avaliable. Update version: ${version}`, 'info')
-        })
-
-        hub.on('UpdateStateChanged', (state, downloadProgress) => {
-            app.$notify(`Downloading update... ${downloadProgress}%`, 'info')
+        hub.on('UpdateStateChanged', (args: { state: SoftwareUpdateState, downloadProgress: number }) => {
+            store.dispatch('updateState/setDownloadProgress', args.downloadProgress)
+            store.dispatch('updateState/setSoftwareUpdateState', args.state)
         })
 
 

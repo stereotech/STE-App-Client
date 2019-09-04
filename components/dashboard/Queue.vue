@@ -1,5 +1,5 @@
 <template>
-  <v-flex xl3 lg4 md6 sm6 xs12>
+  <v-flex xl4 lg6 md6 sm12 xs12>
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
@@ -73,9 +73,17 @@
             </h6>
           </v-flex>
         </v-layout>
+        <v-overlay :value="overlay" absolute z-index="3">
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
       </v-container>
     </v-card>
-    <v-dialog v-model="dialog" max-width="425" persistent :fullscreen="$vuetify.breakpoint.smAndDown">
+    <v-dialog
+      v-model="dialog"
+      max-width="425"
+      persistent
+      :fullscreen="$vuetify.breakpoint.smAndDown"
+    >
       <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="closeDialog(undefined)">
@@ -97,7 +105,8 @@
                   :rules="nameRules"
                   @input="nameWasChanged = true"
                 ></v-text-field>
-              </v-flex><v-flex xs12 sm6 md12>
+              </v-flex>
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete
                   label="File assignment"
                   filled
@@ -108,7 +117,8 @@
                   :rules="fileRules"
                   @input="changeNameFromFile"
                 ></v-autocomplete>
-                </v-flex><v-flex xs12 sm6 md12>
+              </v-flex>
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete
                   label="Printer assignment"
                   filled
@@ -119,7 +129,8 @@
                   item-value="id"
                   v-model="editedJob.printers"
                 ></v-autocomplete>
-                </v-flex><v-flex xs12 sm6 md12>
+              </v-flex>
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete
                   v-if="!editMode"
                   label="Copies"
@@ -127,7 +138,8 @@
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   v-model="copiesCount"
                 ></v-autocomplete>
-                </v-flex><v-flex xs12 >
+              </v-flex>
+              <v-flex xs12>
                 <v-textarea filled label="Description" auto-grow v-model="editedJob.description"></v-textarea>
               </v-flex>
             </v-layout>
@@ -169,6 +181,7 @@ export default class extends Vue {
   @printers.Getter printers!: PrinterInfo[]
   @storage.Getter avaliableFiles!: { name: string, uri: string }[]
 
+  private overlay: boolean = false
   private dialog: boolean = false
   private editMode: boolean = false
   private confirmation: boolean = false
@@ -253,9 +266,11 @@ export default class extends Vue {
     this.editedJob = job
   }
 
-  private endRemoveJob () {
+  private async endRemoveJob () {
     this.confirmation = false
-    this.removeJob(this.editedJob)
+    this.overlay = true
+    await this.removeJob(this.editedJob)
+    this.overlay = false
   }
 
   private removePrinter (item: string) {
@@ -263,7 +278,7 @@ export default class extends Vue {
     if (index >= 0) this.editedJob.printers.splice(index, 1)
   }
 
-  private closeDialog (add: boolean | undefined) {
+  private async closeDialog (add: boolean | undefined) {
     this.dialog = false
     this.nameWasChanged = false
     if (add !== undefined) {
@@ -275,13 +290,17 @@ export default class extends Vue {
           copiedJob.id += index
           jobsArray.push(copiedJob)
         }
-        this.addJob(jobsArray)
+        this.overlay = true
+        await this.addJob(jobsArray)
+        this.overlay = false
       } else {
         let emptyIdx = this.editedJob.printers.indexOf('')
         if (emptyIdx > -1) {
           this.editedJob.printers.splice(emptyIdx, 1)
         }
-        this.editJob(this.editedJob)
+        this.overlay = true
+        await this.editJob(this.editedJob)
+        this.overlay = false
       }
     }
     this.editedJob = {
