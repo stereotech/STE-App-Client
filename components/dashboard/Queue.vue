@@ -97,14 +97,17 @@
           <v-container fluid grid-list-sm>
             <v-layout row wrap>
               <v-flex xs12 sm6 md12>
-                <v-text-field
-                  label="Job name"
-                  filled
-                  clearable
-                  v-model="editedJob.name"
-                  :rules="nameRules"
-                  @input="nameWasChanged = true"
-                ></v-text-field>
+                <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
+                  <v-text-field
+                    label="Job name"
+                    filled
+                    clearable
+                    v-model="editedJob.name"
+                    :rules="nameRules"
+                    @input="nameWasChanged = true"
+                    @click="nameKeyboard = true"
+                  ></v-text-field>
+                </BottomInput>
               </v-flex>
               <v-flex xs12 sm6 md12>
                 <v-autocomplete
@@ -116,6 +119,7 @@
                   v-model="editedJob.fileUri"
                   :rules="fileRules"
                   @input="changeNameFromFile"
+                  :menu-props="menuProps"
                 ></v-autocomplete>
               </v-flex>
               <v-flex xs12 sm6 md12>
@@ -124,10 +128,12 @@
                   filled
                   chips
                   multiple
+                  dense
                   :items="printers"
                   item-text="name"
                   item-value="id"
                   v-model="editedJob.printers"
+                  :menu-props="menuProps"
                 ></v-autocomplete>
               </v-flex>
               <v-flex xs12 sm6 md12>
@@ -137,10 +143,19 @@
                   filled
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   v-model="copiesCount"
+                  :menu-props="menuProps"
                 ></v-autocomplete>
               </v-flex>
               <v-flex xs12>
-                <v-textarea filled label="Description" auto-grow v-model="editedJob.description"></v-textarea>
+                <BottomInput v-model="descriptionKeyboard" :input.sync="editedJob.description">
+                  <v-textarea
+                    @click="descriptionKeyboard = true"
+                    filled
+                    label="Description"
+                    auto-grow
+                    v-model="editedJob.description"
+                  ></v-textarea>
+                </BottomInput>
               </v-flex>
             </v-layout>
           </v-container>
@@ -165,12 +180,17 @@ import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo } from '~/types/printer'
 import { FileOrFolder } from '~/types/fileOrFolder'
 import { PrintJob } from '~/types/printJob';
+import BottomInput from '~/components/common/BottomInput.vue'
 
 const printJobs = namespace('printJobsState')
 const printers = namespace('printersState')
 const storage = namespace('storageState')
 
-@Component
+@Component({
+  components: {
+    BottomInput
+  }
+})
 export default class extends Vue {
   @printJobs.Getter queuedJobs!: PrintJob[]
   @printJobs.Getter jobsCount!: number
@@ -198,6 +218,19 @@ export default class extends Vue {
     }
   }
 
+  private nameKeyboard: boolean = false
+  private descriptionKeyboard: boolean = false
+
+  private menuProps: any = {
+    closeOnClick: false,
+    closeOnContentClick: false,
+    openOnClick: false,
+    maxHeight: 300,
+    offsetY: true,
+    offsetOverflow: true,
+    transition: false,
+    top: true  }
+
   private copiesCount: number = 1
 
   private valid: boolean = false
@@ -209,10 +242,6 @@ export default class extends Vue {
   private fileRules = [
     v => !!v || 'File should be selected'
   ]
-
-  openKeyboard () {
-    console.log('open keyboard')
-  }
 
   private editedJob: PrintJob = {
     id: 0,

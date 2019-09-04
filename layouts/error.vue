@@ -10,7 +10,8 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component({
-  props: ['error']
+  props: ['error'],
+  layout: 'solid'
 })
 export default class Error extends Vue {
   layout() {
