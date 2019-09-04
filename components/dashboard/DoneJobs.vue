@@ -1,5 +1,5 @@
 <template>
-  <v-flex xl3 lg4 md6 sm6 xs12>
+  <v-flex xl4 lg6 md6 sm12 xs12>
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>

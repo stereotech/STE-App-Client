@@ -2,6 +2,9 @@
     "browserWindow": {
         "kiosk": true,
         "autoHideMenuBar": true,
-        "alwaysOnTop": true
+        "alwaysOnTop": true,
+        "webPreferences": {
+            "zoomFactor": 1.25
+        }
     }
 }
