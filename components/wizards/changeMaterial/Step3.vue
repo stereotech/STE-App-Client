@@ -21,7 +21,7 @@
           <v-btn block large text nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
         </v-flex>
         <v-flex xs12 v-else>
-          <v-btn block large text @click="next(4)">Next</v-btn>
+          <v-btn block large text @click="next(3)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -50,7 +50,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 3
+  private step?: number = 2
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling.png'

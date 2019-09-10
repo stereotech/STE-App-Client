@@ -2,10 +2,11 @@
   <v-layout row wrap>
     <PrinterCard toolbar :id="$route.params.id" />
     <v-flex xs12>
-    <v-expansion-panels multiple v-model="panel">
-      <WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />
-      <ManualControlPanel :printing="isPrinting" :id="$route.params.id" />
-    </v-expansion-panels>
+      <v-expansion-panels multiple v-model="panel">
+        <!--<WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />-->
+        <WizardsPanel :id="$route.params.id" />
+        <ManualControlPanel :printing="isPrinting" :id="$route.params.id" />
+      </v-expansion-panels>
     </v-flex>
   </v-layout>
 </template>

@@ -96,3 +96,4 @@ cordova/platforms
 //Conflict merging
 *.bak
 *.orig
+cordova/upload_certificate.pem

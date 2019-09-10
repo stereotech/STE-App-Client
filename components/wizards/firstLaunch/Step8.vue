@@ -34,7 +34,7 @@ export default class extends Vue {
 
   @settings.Action sendFinishSetup: any
 
-  private step?: number = 8
+  private step?: number = 7
   private curStep?: number = this.currentStep
 
   private next (step: number) {
@@ -42,8 +42,8 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  private finishSetup () {
-    this.sendFinishSetup()
+  private async finishSetup () {
+    await this.sendFinishSetup()
     this.$router.push('/')
   }
 }

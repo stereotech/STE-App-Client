@@ -29,7 +29,7 @@ import Step5 from '~/components/wizards/changeMaterial/Step5.vue'
   }
 })
 export default class ChangeMaterialStepper extends Vue {
-  private currentStep: number = 1
+  private currentStep: number = 0
 
   private additionalData: { tool: number, action: number } = {
     tool: 0,

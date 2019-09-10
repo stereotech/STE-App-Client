@@ -15,7 +15,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large text @click="next(5)">Next</v-btn>
+          <v-btn block large text @click="next(4)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -44,7 +44,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 4
+  private step?: number = 3
   private curStep?: number = this.currentStep
 
   @printers.Getter status!: (id: string) => CurrentState | undefined

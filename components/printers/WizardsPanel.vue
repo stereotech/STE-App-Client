@@ -38,7 +38,7 @@ export default class WizardsPanel extends Vue {
     {
       id: 1,
       name: 'Bed leveling',
-      image: 'bed_leveling',
+      image: 'bed_leveling/bed_leveling',
       link: 'bed-leveling',
       description: 'This wizard will help you to calibrate the build plate for good adhesion of the print to the build plate.'
     },

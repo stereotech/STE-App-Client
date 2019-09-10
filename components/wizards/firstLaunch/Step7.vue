@@ -66,7 +66,7 @@
           </v-card>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="next(8)">Next</v-btn>
+          <v-btn block large text @click="next(7)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -93,7 +93,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 7
+  private step?: number = 6
   private curStep?: number = this.currentStep
 
   private keyboard: boolean = false

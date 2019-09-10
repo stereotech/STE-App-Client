@@ -25,8 +25,6 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <platform name="android">
-        <preference name="SplashMaintainAspectRatio" value="true"/>
-        <preference name="SplashShowOnlyFirstTime" value="true"/>
         <icon density="ldpi" src="res/icon/android/ldpi.png"/>
         <icon density="mdpi" src="res/icon/android/mdpi.png"/>
         <icon density="hdpi" src="res/icon/android/hdpi.png"/>
@@ -103,6 +101,7 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.3" />
     <plugin name="cordova-plugin-zeroconf" spec="~1.4.0"/>
-
-
+    <preference name="SplashMaintainAspectRatio" value="true"/>
+    <preference name="SplashShowOnlyFirstTime" value="true"/>
+    <preference name="SplashScreenDelay" value="0"/>
 </widget>

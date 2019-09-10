@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block large text @click="next(1)">
-      Start
+    <v-btn block text @click="finish">
+      Finish
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -24,17 +24,20 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 1
+  private step?: number = 5
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling/bed_leveling.png'
-  private description: string = 'Perform bed leveling if there is too much distance between the nozzles and the build plate'
+  private description: string = 'Calibration complete!'
 
   @printers.Action homeCommand: any
 
-  private next (step: number) {
+  private finish () {
     this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+    this.$router.go(-1)
+  }
 
+  private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }

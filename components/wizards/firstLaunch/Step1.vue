@@ -15,7 +15,7 @@
           ></v-select>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="next(2)">Start</v-btn>
+          <v-btn block large text @click="next(1)">Start</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -41,7 +41,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 1
+  private step?: number = 0
   private curStep?: number = this.currentStep
 
   @settings.Getter settings!: Settings

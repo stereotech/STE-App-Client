@@ -40,7 +40,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 6
+  private step?: number = 5
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling.png'
@@ -92,7 +92,7 @@ export default class extends Vue {
 
   private nextStep () {
     this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
-    this.next(7)
+    this.next(6)
   }
 
   private next (step: number) {

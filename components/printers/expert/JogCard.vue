@@ -58,7 +58,7 @@
           </v-btn-toggle>
         </v-flex>
         <v-flex xs4 sm3 order-sm5>
-          <v-btn text color="primary" :disabled="printing" outlined icon>
+          <v-btn text color="primary" :disabled="printing" outlined icon @click="motorsOff">
             <v-icon>mdi-engine-off-outline</v-icon>
           </v-btn>
         </v-flex>
@@ -133,6 +133,10 @@ export default class JogCard extends Vue {
     this.feedCommand({ id: this.id, feed: value })
   }
 
+  private motorsOff () {
+    this.customCommand({ id: this.id, command: 'M84' })
+  }
+
   @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
   @Prop({ default: false, type: Boolean }) printing?: boolean
   @Prop({ default: '', type: String }) id?: string
@@ -140,6 +144,7 @@ export default class JogCard extends Vue {
   @printers.Action jogCommand: any
   @printers.Action homeCommand: any
   @printers.Action feedCommand: any
+  @printers.Action customCommand: any
 }
 </script>
 
