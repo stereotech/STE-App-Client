@@ -12,7 +12,7 @@
           <v-btn block large text @click="nextStep">Next</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="next(7)">Skip</v-btn>
+          <v-btn block large text @click="next(6)">Skip</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -43,7 +43,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 4
+  private step?: number = 3
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling.png'
@@ -67,7 +67,7 @@ export default class extends Vue {
         tool1Temp: 240
       })
     }
-    this.next(5)
+    this.next(4)
   }
 
   private next (step: number) {

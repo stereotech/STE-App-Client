@@ -37,7 +37,7 @@ import Step8 from '~/components/wizards/firstLaunch/Step8.vue'
   }
 })
 export default class FirstLaunchStepper extends Vue {
-  private currentStep: number = 1
+  private currentStep: number = 0
 
   private additionalData: { tool: number, action: number } = {
     tool: 0,

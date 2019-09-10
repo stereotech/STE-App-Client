@@ -63,10 +63,10 @@ export default {
       });
     }
   },
-  watch: {
-    input(input) {
-      this.keyboard.setInput(input);
-    }
+
+
+  input(input) {
+    this.keyboard.setInput(input);
   }
 };
 </script>

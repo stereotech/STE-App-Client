@@ -38,7 +38,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 5
+  private step?: number = 4
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling.png'
