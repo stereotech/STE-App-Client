@@ -3,7 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
+          <v-progress-circular
+            :size="70"
+            :width="7"
+            color="secondary"
+            :max="240"
+            :value="heatingValue"
+          ></v-progress-circular>
         </v-flex>
         <v-flex xs12>
           <p>Heating...</p>
@@ -53,7 +59,7 @@ export default class extends Vue {
   private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = '/wizards/change_material/change_material03.png'
   private description: string = 'Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading'
 
   @printers.Action retractCommand: any
@@ -86,6 +92,26 @@ export default class extends Vue {
       }
     }
     return true
+  }
+
+  get heatingValue (): number {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
+        let actual = 0
+        if (this.additionalData.tool === 0) {
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+          }
+
+        } else {
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+          }
+        }
+        return actual
+      }
+    }
+    return 0
   }
 
   private repeat () {
