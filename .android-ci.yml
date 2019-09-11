@@ -1,6 +1,8 @@
 buildAndroid:
   image: posohof/android:latest
   stage: build
+  variables:
+    VERSION_CODE: date --date="-18 year" +%-g.%-m.%-d
   cache:
     paths:
       - node_modules
@@ -17,7 +19,7 @@ buildAndroid:
     - npm run build-android
     - cd cordova
     - cp keystore.jks platforms/android/app/keystore.jks
-    - cordova build android --release -- --keystore=keystore.jks --storePassword=$ANDROID_STORE_PASSWORD --alias=upload --password=$ANDROID_PASSWORD
+    - cordova build android --release -- --keystore=keystore.jks --storePassword=$ANDROID_STORE_PASSWORD --alias=upload --password=$ANDROID_PASSWORD --versionCode=$VERSION_CODE
   after_script:
     - cp -r cordova/platforms/android/app/build/outputs android-build
   artifacts:
