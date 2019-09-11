@@ -97,3 +97,9 @@ cordova/platforms
 *.bak
 *.orig
 cordova/upload_certificate.pem
+
+*_BASE_*
+*_BACKUP_*
+*_LOCAL_*
+*_REMOTE_*
+package-lock.json

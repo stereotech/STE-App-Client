@@ -1,0 +1,85 @@
+buildPanel:
+  image: node
+  stage: build
+  cache:
+    paths:
+      - node_modules
+      - cordova/node_modules
+  before_script:
+    - npm install --dev
+    - cd cordova
+    - npm install -g cordova
+    - cordova platform add electron
+    - cd ..
+  script:
+    - npm run build-panel
+  after_script:
+    - cp -r cordova/platforms/electron/build/linux-arm64-unpacked/ panel-build
+  artifacts:
+    paths:
+      - panel-build
+    name: "panel-build-${CI_COMMIT_REF_NAME}"
+  only:
+    - develop
+    - master
+
+deployPanelDevelop:
+  image: python:latest
+  stage: deploy
+  needs: [buildPanel]
+  before_script:
+    - pip install awscli
+  script:
+    - python -m zipfile -c panel-build.zip panel-build/
+    - aws s3 cp panel-build.zip s3://${BUCKET_NAME}/steapp/panel/testing/
+  environment:
+    name: testingPanel
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/panel/testing/panel-build.zip
+    on_stop: cleanPanelDevelop
+  only:
+    - develop
+
+cleanPanelDevelop:
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/panel-build.zip
+  environment:
+    name: testingPanel
+    action: stop
+  only:
+    - develop
+  when: manual
+
+deployPanelProduction:
+  image: python:latest
+  stage: deploy
+  needs: [buildPanel]
+  before_script:
+    - pip install awscli
+  script:
+    - python -m zipfile -c panel-build.zip panel-build/
+    - aws s3 cp panel-build.zip s3://${BUCKET_NAME}/steapp/panel/stable/
+  environment:
+    name: stablePanel
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/panel/stable/panel-build.zip
+    on_stop: cleanPanelProduction
+  only:
+    - master
+  when: manual
+
+cleanPanelProduction:
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/panel-build.zip
+  environment:
+    name: stablePanel
+    action: stop
+  only:
+    - master
+  when: manual

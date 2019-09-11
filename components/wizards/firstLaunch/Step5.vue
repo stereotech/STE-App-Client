@@ -15,7 +15,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="next(6)">Next</v-btn>
+          <v-btn block large text @click="next(5)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -26,7 +26,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus, PrinterInfo } from 'types/printer'
+import { PrinterInfo, CurrentState } from 'types/printer'
 import { Settings } from 'types/settings'
 
 const printers = namespace('printersState')
@@ -47,24 +47,33 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 5
+  private step?: number = 4
   private curStep?: number = this.currentStep
 
   @settings.Getter settings!: Settings
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
     return this.status(this.settings.systemId)
   }
 
   get heating () {
-    if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
         let deviation = 0
         if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
+            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+            deviation = Math.abs(target - actual)
+          }
+
         } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
+            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+            deviation = Math.abs(target - actual)
+          }
         }
         return deviation > 10
       }

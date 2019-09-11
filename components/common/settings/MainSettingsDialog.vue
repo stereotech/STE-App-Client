@@ -3,23 +3,23 @@
     <template slot="title">Settings</template>
     <v-list>
       <template v-for="(setting, index) in settings">
-        <v-list-tile avatar :key="setting.title" @click="setting.page = true">
-          <v-list-tile-action>
+        <v-list-item :key="setting.title" @click="setting.page = true">
+          <v-list-item-action>
             <v-icon>{{ setting.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="setting.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="setting.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-divider inset :key="index"></v-divider>
       </template>
     </v-list>
-    <WifiDialog v-model="settings[0].page"/>
-    <DateTimeDialog v-model="settings[1].page"/>
-    <LanguageDialog v-model="settings[2].page"/>
-    <StorageDialog v-model="settings[3].page"/>
-    <ResetDialog v-model="settings[4].page"/>
-    <UpdateDialog v-model="settings[5].page"/>
+    <WifiDialog v-model="settings[0].page" />
+    <DateTimeDialog v-model="settings[1].page" />
+    <LanguageDialog v-model="settings[2].page" />
+    <StorageDialog v-model="settings[3].page" />
+    <ResetDialog v-model="settings[4].page" />
+    <UpdateDialog v-model="settings[5].page" />
   </SettingsDialog>
 </template>
 

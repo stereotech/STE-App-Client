@@ -10,7 +10,7 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large text @click="nextStep">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -21,7 +21,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
+import { CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -39,26 +39,21 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 2
+  private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = '/wizards/change_material/change_material02.png'
   private description: string = 'Select the needed action'
 
   @printers.Action customCommand: any
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
-
-  get computedStatus () {
-    return this.status(this.$route.params.id)
-  }
 
   private nextStep () {
     this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
-      this.next(4)
-    } else {
       this.next(3)
+    } else {
+      this.next(2)
     }
   }
 

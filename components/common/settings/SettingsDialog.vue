@@ -3,7 +3,7 @@
     v-model="isOpen"
     max-width="425"
     persistent
-    :fullscreen="$vuetify.breakpoint.xs"
+    :fullscreen="$vuetify.breakpoint.smAndDown"
     scrollable
   >
     <v-card>

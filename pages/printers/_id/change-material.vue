@@ -17,22 +17,6 @@ export default class extends Vue {
   layout () {
     return 'solid'
   }
-
-  private pollingStatus!: NodeJS.Timeout
-
-  private async pollData () {
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
-  }
 }
 </script>
 

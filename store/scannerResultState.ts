@@ -2,6 +2,8 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { ScannerResult } from '~/types/scannerResult'
 import { RootState } from '.'
 
+const scannerEndpoint = 'scanner'
+
 export interface ScannerResultState {
   printers: ScannerResult[]
 }
@@ -11,8 +13,8 @@ export const state = (): ScannerResultState => ({
 })
 
 export const getters: GetterTree<ScannerResultState, RootState> = {
-  results (state): ScannerResult[] {
-    return state.printers.filter(value => value.role === 'host')
+  results (state: ScannerResultState): ScannerResult[] {
+    return state.printers.filter(value => value.printers === 1)
   }
 }
 
@@ -27,28 +29,18 @@ export const mutations: MutationTree<ScannerResultState> = {
 
 export const actions: ActionTree<ScannerResultState, RootState> = {
   async fetchResults ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    const results: ScannerResult[] = [
-      {
-        id: 'st-ddd',
-        model: 'STE320',
-        name: 'ST-DDD',
-        role: 'host',
-        ipAddress: '192.168.0.200'
-      },
-      {
-        id: 'st-eee',
-        model: 'STE320',
-        name: 'ST-EEE',
-        role: 'host',
-        ipAddress: '192.168.0.20'
-      }
-    ]
-    commit('setResults', results)
+    let response = await this.$axios.get(this.state.apiUrl + scannerEndpoint)
+    if (response.status == 200) {
+      let results = response.data
+      commit('setResults', results)
+    }
   },
 
-  async connect ({ commit }, printer: ScannerResult) {
-    await new Promise(resolve => setTimeout(resolve, 200))
-    commit('clearResults')
+  async connect ({ commit, dispatch }, printer: ScannerResult) {
+    let response = await this.$axios.post(this.state.apiUrl + scannerEndpoint, printer)
+    if (response.status == 204) {
+      commit('clearResults')
+      await dispatch('printersState/fetchPrinters', null, { root: true })
+    }
   }
 }

@@ -2,6 +2,9 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
 
+const localStorageEndpoint = 'storage/local'
+const usbStorageEndpoint = 'storage/usb'
+
 export interface StorageState {
   local: FileOrFolder[]
   usb: FileOrFolder[]
@@ -19,6 +22,10 @@ export const getters: GetterTree<StorageState, RootState> = {
 
   usbStorage (state: StorageState) {
     return (name: string) => state.usb.find(value => value.origin === name)
+  },
+
+  allUsbStorages (state: StorageState): FileOrFolder[] {
+    return state.usb
   },
 
   avaliableFiles (state: StorageState): { name: string, uri: string }[] {
@@ -53,6 +60,14 @@ export const getters: GetterTree<StorageState, RootState> = {
 export const mutations: MutationTree<StorageState> = {
   setLocal (state: StorageState, localStorage: FileOrFolder) {
     state.local = []
+    if (localStorage.children !== undefined) {
+      localStorage.children.sort((a, b) => {
+        if (a.date !== undefined && b.date !== undefined) {
+          return b.date - a.date
+        }
+        return 0
+      })
+    }
     state.local.push(localStorage)
   },
 
@@ -93,90 +108,34 @@ export const mutations: MutationTree<StorageState> = {
 
 export const actions: ActionTree<StorageState, RootState> = {
   async fetchLocal ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    const localStorage: FileOrFolder = {
-      children: [
-        {
-          date: Date.now(),
-          display: 'File_1.gcode',
-          hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-          name: 'File_1.gcode',
-          size: 15315451,
-          origin: 'st_aaa',
-          path: '/Storage/File_1.gcode',
-          type: 'machinecode',
-          typePath: ['machinecode', 'gcode']
-        }
-      ],
-      display: 'Storage',
-      name: 'Storage',
-      origin: 'st-aaa',
-      path: 'Storage',
-      size: 4354654843,
-      type: 'folder',
-      typePath: ['folder']
+    let response = await this.$axios.get<FileOrFolder>(this.state.apiUrl + localStorageEndpoint)
+    if (response.status === 200) {
+      commit('setLocal', response.data)
     }
-    commit('setLocal', localStorage)
   },
 
   async fetchUsbs ({ commit }) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    const usbs = [
-      {
-        children: [
-          {
-            date: Date.now(),
-            display: 'File_2.gcode',
-            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-            name: 'File_2.gcode',
-            size: 15315451,
-            origin: 'st-aaa',
-            path: '/USB/File_2.gcode',
-            type: 'machinecode',
-            typePath: ['machinecode', 'gcode']
-          }
-        ],
-        display: 'Storage',
-        name: 'Storage',
-        origin: 'st-aaa',
-        path: 'USB',
-        size: 4354654843,
-        type: 'folder',
-        typePath: ['folder']
-      },
-      {
-        children: [
-          {
-            date: Date.now(),
-            display: 'File_2.gcode',
-            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-            name: 'File_2.gcode',
-            size: 15315451,
-            origin: 'st-bbb',
-            path: '/USB/File_2.gcode',
-            type: 'machinecode',
-            typePath: ['machinecode', 'gcode']
-          }
-        ],
-        display: 'Storage',
-        name: 'Storage',
-        origin: 'st-bbb',
-        path: 'USB',
-        size: 4354654843,
-        type: 'folder',
-        typePath: ['folder']
-      }
-    ]
-    commit('setUsbs', usbs)
+    let response = await this.$axios.get<FileOrFolder[]>(this.state.apiUrl + usbStorageEndpoint)
+    if (response.status === 200) {
+      commit('setUsbs', response.data)
+    }
   },
 
   async deleteFile ({ commit }, file: FileOrFolder) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-
-    if (file.path.startsWith('/Storage')) {
+    if (file.origin == 'local') {
       commit('deleteLocalFile', file)
+      let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
     } else {
       commit('deleteUsbFile', file)
+      let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
     }
+  },
+
+  async uploadFiles ({ commit }, files: File[]) {
+    let data = new FormData()
+    files.forEach(file => {
+      data.append("files", file, file.name)
+    });
+    await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
 }

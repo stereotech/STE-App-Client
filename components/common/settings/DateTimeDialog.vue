@@ -7,22 +7,23 @@
       :return-value.sync="dateModel"
       @update:return-value="setDate"
       persistent
-      lazy
       full-width
       width="290px"
     >
-      <v-text-field
-        slot="activator"
-        v-model="dateModel"
-        box
-        label="Set date"
-        prepend-icon="mdi-calendar"
-        readonly
-      ></v-text-field>
+      <template v-slot:activator="{ on }">
+        <v-text-field
+          v-on="on"
+          v-model="dateModel"
+          filled
+          label="Set date"
+          prepend-icon="mdi-calendar"
+          readonly
+        ></v-text-field>
+      </template>
       <v-date-picker v-model="dateModel" scrollable>
         <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="setDate(dateModel)">OK</v-btn>
+        <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+        <v-btn text color="primary" @click="setDate(dateModel)">OK</v-btn>
       </v-date-picker>
     </v-dialog>
     <v-dialog
@@ -30,22 +31,23 @@
       v-model="modal2"
       :return-value.sync="timeModel"
       persistent
-      lazy
       full-width
       width="290px"
     >
-      <v-text-field
-        slot="activator"
-        v-model="timeModel"
-        box
-        label="Set time"
-        prepend-icon="mdi-clock-outline"
-        readonly
-      ></v-text-field>
+      <template v-slot:activator="{ on }">
+        <v-text-field
+          v-on="on"
+          v-model="timeModel"
+          filled
+          label="Set time"
+          prepend-icon="mdi-clock-outline"
+          readonly
+        ></v-text-field>
+      </template>
       <v-time-picker v-if="modal2" v-model="timeModel" full-width format="24hr">
         <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="setTime(timeModel)">OK</v-btn>
+        <v-btn text color="primary" @click="modal2 = false">Cancel</v-btn>
+        <v-btn text color="primary" @click="setTime(timeModel)">OK</v-btn>
       </v-time-picker>
     </v-dialog>
   </SettingsDialog>

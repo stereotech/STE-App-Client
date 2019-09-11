@@ -1,155 +1,68 @@
 <template>
   <v-card>
     <v-card-title class="title">Jog</v-card-title>
-    <v-container fluid grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
+    <v-container grid-list-xs>
+      <v-layout row wrap class="text-center" align-center justify-center>
+        <v-flex xs12 sm9 order-sm1>
+          <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
         </v-flex>
-        <v-flex xs3 offset-xs3 v-else>
-          <v-btn flat icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
-        </v-flex>
-        <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
-        </v-flex>
-        <v-flex xs3 offset-xs3 v-else>
-          <v-btn flat icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :ripple="false" depressed :disabled="printing">a</v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :ripple="false" depressed :disabled="printing">b</v-btn>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogYPlus">
+        <v-flex xs12 sm9 order-sm2>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="jogYPlus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs3 offset-xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogYPlus">
-            <v-icon>mdi-chevron-up</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogZMinus">
-            <v-icon>mdi-chevron-up</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs3 offset-xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogZMinus">
-            <v-icon>mdi-chevron-up</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogAMinus">
-            <v-icon>mdi-chevron-up</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogBMinus">
-            <v-icon>mdi-chevron-up</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogXMinus">
+        <v-flex xs4 sm3 order-sm3>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="jogXMinus">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogXMinus">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="homeXY">
+        <v-flex xs4 sm3 order-sm3>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="homeXY">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="homeXY">
-            <v-icon>mdi-home</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogXPlus">
+        <v-flex xs4 sm3 order-sm3>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="jogXPlus">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogXPlus">
-            <v-icon>mdi-chevron-right</v-icon>
+        <v-flex xs12 sm9 order-sm4>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="jogYMinus">
+            <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="homeZ">
+        <v-flex xs12 sm3 order-sm1>
+          <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
+        </v-flex>
+        <v-flex xs4 sm3 order-sm4>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="jogZPlus">
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </v-flex>
+        <v-flex xs4 sm3 order-sm3>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="homeZ">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="homeZ">
-            <v-icon>mdi-home</v-icon>
+        <v-flex xs4 sm3 order-sm2>
+          <v-btn outlined text icon color="primary" :disabled="printing" @click="jogZMinus">
+            <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="homeA">
-            <v-icon>mdi-home</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="homeB">
-            <v-icon>mdi-home</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogYMinus">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs3 offset-xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogYMinus">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 offset-xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogZPlus">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs3 offset-xs3 v-else>
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogZPlus">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogAPlus">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs2 v-if="fiveAxis">
-          <v-btn flat icon color="primary" :disabled="printing" @click="jogAPlus">
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 d-flex>
-          <v-btn-toggle mandatory v-model="selectedAmount">
-            <v-btn flat block color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
-            <v-btn flat block color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
-            <v-btn flat block color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
-            <v-btn flat block color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
+        <v-flex xs8 sm9 order-sm5 pt-2>
+          <v-btn-toggle mandatory v-model="selectedAmount" rounded>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
+            <v-btn text color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 d-flex>
+        <v-flex xs4 sm3 order-sm5>
+          <v-btn text color="primary" :disabled="printing" outlined icon @click="motorsOff">
+            <v-icon>mdi-engine-off-outline</v-icon>
+          </v-btn>
+        </v-flex>
+        <v-flex xs12 order-sm5 pt-6>
           <v-slider v-model="feed" label="Feed" thumb-label min="50" max="150" @change="setFeed"></v-slider>
         </v-flex>
       </v-layout>
@@ -220,6 +133,10 @@ export default class JogCard extends Vue {
     this.feedCommand({ id: this.id, feed: value })
   }
 
+  private motorsOff () {
+    this.customCommand({ id: this.id, command: 'M84' })
+  }
+
   @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
   @Prop({ default: false, type: Boolean }) printing?: boolean
   @Prop({ default: '', type: String }) id?: string
@@ -227,6 +144,7 @@ export default class JogCard extends Vue {
   @printers.Action jogCommand: any
   @printers.Action homeCommand: any
   @printers.Action feedCommand: any
+  @printers.Action customCommand: any
 }
 </script>
 

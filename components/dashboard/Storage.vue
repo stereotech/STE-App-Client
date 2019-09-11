@@ -1,39 +1,89 @@
 <template>
-  <v-flex xl3 lg4 md6 sm6 xs12>
-    <v-card>
+  <v-flex xl4 lg6 md6 sm12 xs12>
+    <v-card transition="slide-y-reverse-transition" min-height="550" v-if="dataStorage">
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">{{ local ? 'Storage' : 'USB' }}</span>
-          <span v-if="name" class="headline font-weight-light">&nbsp;at {{ name }}</span>
+          <span v-if="name" class="headline font-weight-light">&nbsp;at {{ display }}</span>
         </v-card-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items></v-toolbar-items>
       </v-toolbar>
 
-      <v-list v-if="dataStorage" two-line :style="styleObj" class="scroll-y">
-        <v-list-tile v-for="file in dataStorage.children" :key="file.hash">
-          <v-list-tile-content>
-            <v-list-tile-title class="subheading">{{ file.display }}</v-list-tile-title>
-            <v-list-tile-sub-title class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-menu bottom left>
-              <v-btn slot="activator" icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
+      <v-list
+        v-if="dataStorage.children.length > 0"
+        two-line
+        :style="styleObj"
+        class="overflow-y-auto"
+      >
+        <v-list-item
+          v-for="(file, index) in dataStorage.children"
+          :key="index"
+          @contextmenu="showContextMenu"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
+            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-btn @click="showContextMenu" icon>
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+            <v-menu absolute :position-x="menuX" :position-y="menuY" v-model="showMenu">
               <v-list>
-                <v-list-tile @click="deleteFile(file)">
-                  <v-list-tile-action>
+                <v-list-item @click="deleteFile(file)">
+                  <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-title>Remove</v-list-tile-title>
-                </v-list-tile>
+                  </v-list-item-action>
+                  <v-list-item-title>Remove</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-menu>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
-      <dropzone v-if="local" id="dropzone" ref="el" :options="options" :destroyDropzone="true"></dropzone>
+      <v-container grid-list-xs v-else>
+        <v-layout align-center justify-center column fill-height>
+          <v-flex xs12>
+            <v-img
+              src="/empty-state/local-storage.svg"
+              height="192px"
+              width="192px"
+              aspect-ratio="1"
+            ></v-img>
+          </v-flex>
+          <v-flex xs12>
+            <h6
+              class="title text-center"
+            >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
+          </v-flex>
+        </v-layout>
+      </v-container>
+      <v-container grid-list-xs v-if="local && isWeb">
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-file-input
+              chips
+              multiple
+              display-size
+              label="Upload G-Code Files"
+              accept=".gcode"
+              v-model="files"
+            ></v-file-input>
+          </v-flex>
+          <v-flex xs12>
+            <v-btn
+              depressed
+              block
+              color="primary"
+              @click="upload"
+              :disabled="files.length < 1"
+            >Upload</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-overlay :value="overlay" absolute z-index="3">
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
+      </v-container>
     </v-card>
   </v-flex>
 </template>
@@ -42,32 +92,51 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { FileOrFolder } from '~/types/fileOrFolder'
-import Dropzone from 'nuxt-dropzone'
-import 'nuxt-dropzone/dropzone.css'
 
 const storage = namespace('storageState')
 
-@Component({
-  components: {
-    Dropzone
-  }
-})
+@Component
 export default class extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
+  @Prop({ type: String }) display?: string
 
   @storage.Getter localStorage!: FileOrFolder
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
 
+  @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
+
+  get isWeb (): boolean {
+    return process.env.NUXT_ENV_PLATFORM == 'WEB'
+  }
 
   private styleObj: any = {
     maxHeight: this.local ? '336px' : '486px'
   }
 
-  options: any = {
-    url: '/local',
-    uploadMultiple: true
+  private overlay: boolean = false
+
+  private files: File[] = []
+
+  showMenu: boolean = false
+  menuX: number = 0
+  menuY: number = 0
+  showContextMenu (e) {
+    e.preventDefault()
+    this.showMenu = false
+    this.menuX = e.clientX
+    this.menuY = e.clientY
+    this.$nextTick(() => {
+      this.showMenu = true
+    })
+  }
+
+  private async upload () {
+    this.overlay = true
+    await this.uploadFiles(this.files)
+    this.files = []
+    this.overlay = false
   }
 
   get dataStorage (): FileOrFolder | undefined {
@@ -78,64 +147,6 @@ export default class extends Vue {
         return this.usbStorage(this.name)
       }
     }
-  }
-
-  private data: any[] = [
-    {
-      id: 1,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 2,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 3,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 4,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 5,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 6,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 7,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 8,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 9,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    },
-    {
-      id: 10,
-      name: 'STE320_pulley_1.gcode',
-      uploaded: Date.now()
-    }
-  ]
-
-  mounted () {
-    // Everything is mounted and you can access the dropzone instance
-    const instance = this.$refs['el']
   }
 }
 </script>

@@ -9,7 +9,10 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
+          <v-btn block large text @click="nextStep">Next</v-btn>
+        </v-flex>
+        <v-flex xs12>
+          <v-btn block large text @click="next(6)">Skip</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -20,8 +23,10 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import { Settings } from '../../../types/settings';
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -38,7 +43,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 4
+  private step?: number = 3
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling.png'
@@ -46,22 +51,23 @@ export default class extends Vue {
     'Select the extruder, where you want insert the material'
 
   @printers.Action toolTempCommand: any
+  @settings.Getter settings!: Settings
 
   private nextStep () {
     if (this.additionalData.tool === 0) {
       this.toolTempCommand({
-        id: this.$route.params.id,
+        id: this.settings.systemId,
         tool0Temp: 240,
         tool1Temp: 0
       })
     } else {
       this.toolTempCommand({
-        id: this.$route.params.id,
+        id: this.settings.systemId,
         tool0Temp: 0,
         tool1Temp: 240
       })
     }
-    this.next(5)
+    this.next(4)
   }
 
   private next (step: number) {

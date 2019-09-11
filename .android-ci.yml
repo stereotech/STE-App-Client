@@ -1,0 +1,60 @@
+buildAndroid:
+  image: posohof/android:latest
+  stage: build
+  cache:
+    paths:
+      - node_modules
+      - cordova/node_modules
+  before_script:
+    - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+    - apt-get install -y nodejs
+    - npm install --dev
+    - cd cordova
+    - npm install -g cordova
+    - cordova platform add android
+    - cd ..
+  script:
+    - npm run build-android
+    - cd cordova
+    - cp keystore.jks platforms/android/app/keystore.jks
+    - cordova build android --release -- --keystore=keystore.jks --storePassword=$ANDROID_STORE_PASSWORD --alias=upload --password=$ANDROID_PASSWORD
+  after_script:
+    - cp -r cordova/platforms/android/app/build/outputs android-build
+  artifacts:
+    paths:
+      - android-build
+    name: "android-build-$CI_COMMIT_REF_NAME"
+  only:
+    - develop
+    - master
+
+deployAndroidDevelop:
+  stage: deploy
+  needs: [buildAndroid]
+  before_script:
+    - gem install bundler
+    - bundle install
+    - echo $ANDROID_JSON_KEY_DATA > google-play-key.json
+    - cat google-play-key.json
+  script:
+    - bundle exec fastlane supply --apk android-build/apk/release/app-release.apk --track internal --package_name ru.stereotech.steapp --json_key google-play-key.json
+  after_script:
+    - rm -rf google-play-key.json
+  only:
+    - develop
+
+deployAndroidProduction:
+  stage: deploy
+  needs: [buildAndroid]
+  before_script:
+    - gem install bundler
+    - bundle install
+    - echo $ANDROID_JSON_KEY_DATA > google-play-key.json
+    - cat google-play-key.json
+  script:
+    - bundle exec fastlane supply --apk android-build/apk/release/app-release.apk --package_name ru.stereotech.steapp --json_key google-play-key.json
+  after_script:
+    - rm -rf google-play-key.json
+  when: manual
+  only:
+    - master

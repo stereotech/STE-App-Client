@@ -5,7 +5,7 @@
       :items="settings.avaliableLanguages"
       :value="settings.language"
       @input="sendLanguage"
-      box
+      filled
       label="Select language"
     ></v-select>
   </SettingsDialog>

@@ -3,65 +3,65 @@
     <template slot="title">Wi-Fi Setup</template>
     <v-list>
       <v-subheader>Current network</v-subheader>
-      <v-list-tile avatar v-if="currentNetwork" @click="forgetConfirmation = true">
-        <v-list-tile-action v-if="currentNetwork.strength > 81">
+      <v-list-item v-if="currentNetwork" @click="forgetConfirmation = true">
+        <v-list-item-action v-if="currentNetwork.strength > 81">
           <v-icon>mdi-wifi-strength-4</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-action v-else-if="currentNetwork.strength > 61">
+        </v-list-item-action>
+        <v-list-item-action v-else-if="currentNetwork.strength > 61">
           <v-icon>mdi-wifi-strength-3</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-action v-else-if="currentNetwork.strength > 41">
+        </v-list-item-action>
+        <v-list-item-action v-else-if="currentNetwork.strength > 41">
           <v-icon>mdi-wifi-strength-2</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-action v-else-if="currentNetwork.strength > 21">
+        </v-list-item-action>
+        <v-list-item-action v-else-if="currentNetwork.strength > 21">
           <v-icon>mdi-wifi-strength-1</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-action v-else>
+        </v-list-item-action>
+        <v-list-item-action v-else>
           <v-icon>mdi-wifi-strength-outline</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title v-text="currentNetwork.name"></v-list-tile-title>
-        </v-list-tile-content>
-        <v-list-tile-action v-if="currentNetwork.security">
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title v-text="currentNetwork.name"></v-list-item-title>
+        </v-list-item-content>
+        <v-list-item-action v-if="currentNetwork.security">
           <v-icon>mdi-lock</v-icon>
-        </v-list-tile-action>
+        </v-list-item-action>
         <v-dialog v-model="forgetConfirmation" max-width="425">
           <v-card>
             <v-card-title class="headline">Forget {{ currentNetwork.name }} ?</v-card-title>
             <v-card-actions>
               <v-card-actions>
-                <v-btn color="primary" flat @click="forgetConfirmation = false">Cancel</v-btn>
-                <v-btn color="primary" flat @click="startForgetting">Forget</v-btn>
+                <v-btn color="primary" text @click="forgetConfirmation = false">Cancel</v-btn>
+                <v-btn color="primary" text @click="startForgetting">Forget</v-btn>
               </v-card-actions>
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-list-tile>
+      </v-list-item>
       <v-subheader>Avaliable networks</v-subheader>
       <template v-for="(network, index) in avaliableNetworks">
-        <v-list-tile avatar :key="network.id" @click="startConnection(network)">
-          <v-list-tile-action v-if="network.strength > 81">
+        <v-list-item :key="network.id" @click="startConnection(network)">
+          <v-list-item-action v-if="network.strength > 81">
             <v-icon>mdi-wifi-strength-4</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-action v-else-if="network.strength > 61">
+          </v-list-item-action>
+          <v-list-item-action v-else-if="network.strength > 61">
             <v-icon>mdi-wifi-strength-3</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-action v-else-if="network.strength > 41">
+          </v-list-item-action>
+          <v-list-item-action v-else-if="network.strength > 41">
             <v-icon>mdi-wifi-strength-2</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-action v-else-if="network.strength > 21">
+          </v-list-item-action>
+          <v-list-item-action v-else-if="network.strength > 21">
             <v-icon>mdi-wifi-strength-1</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-action v-else>
+          </v-list-item-action>
+          <v-list-item-action v-else>
             <v-icon>mdi-wifi-strength-outline</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="network.name"></v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-action v-if="network.security">
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="network.name"></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action v-if="network.security">
             <v-icon>mdi-lock</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
         <v-divider inset :key="index"></v-divider>
       </template>
       <v-dialog v-model="confirmation" max-width="425">
@@ -72,22 +72,25 @@
           >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
           <v-card-title v-else class="headline">Connect to network?</v-card-title>
           <v-container grid-list-md v-if="setupNetwork.security">
-            <v-text-field
-              box
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[ rules.required, rules.min ]"
-              :type="showPassword ? 'text' : 'password'"
-              name="input-10-2"
-              label="Wi-Fi password"
-              class="input-group--focused"
-              v-model="password"
-              @click:append="showPassword = !showPassword"
-            ></v-text-field>
+            <BottomInput :input.sync="password" v-model="keyboard">
+              <v-text-field
+                filled
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[ rules.required, rules.min ]"
+                :type="showPassword ? 'text' : 'password'"
+                name="input-10-2"
+                label="Wi-Fi password"
+                class="input-group--focused"
+                v-model="password"
+                @click:append="showPassword = !showPassword"
+                @click="keyboard = true"
+              ></v-text-field>
+            </BottomInput>
           </v-container>
 
           <v-card-actions>
-            <v-btn color="primary" flat @click="confirmation = false">Cancel</v-btn>
-            <v-btn color="primary" flat @click="startConnecting" :disabled="isMin">Connect</v-btn>
+            <v-btn color="primary" text @click="confirmation = false">Cancel</v-btn>
+            <v-btn color="primary" text @click="startConnecting" :disabled="isMin">Connect</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -100,12 +103,14 @@ import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Network } from '~/types/networking'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import BottomInput from '~/components/common/BottomInput.vue'
 
 const settings = namespace('settingsState')
 
 @Component({
   components: {
-    SettingsDialog
+    SettingsDialog,
+    BottomInput
   }
 })
 export default class extends Vue {
@@ -116,6 +121,7 @@ export default class extends Vue {
 
   private isOpen: boolean = this.value
 
+  private keyboard: boolean = false
   private confirmation: boolean = false
   private forgetConfirmation: boolean = false
   private showPassword: boolean = false

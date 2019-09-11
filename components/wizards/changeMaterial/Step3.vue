@@ -3,7 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
+          <v-progress-circular
+            :size="70"
+            :width="7"
+            color="secondary"
+            :max="240"
+            :value="heatingValue"
+          ></v-progress-circular>
         </v-flex>
         <v-flex xs12>
           <p>Heating...</p>
@@ -15,13 +21,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large flat @click="repeat">Unload</v-btn>
+          <v-btn block large text @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12 v-if="additionalData.action === 0">
-          <v-btn block large flat nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
+          <v-btn block large text nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
         </v-flex>
         <v-flex xs12 v-else>
-          <v-btn block large flat @click="next(4)">Next</v-btn>
+          <v-btn block large text @click="next(3)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -32,7 +38,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
+import { CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -50,33 +56,62 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 3
+  private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = '/wizards/change_material/change_material03.png'
   private description: string = 'Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading'
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
     return this.status(this.$route.params.id)
   }
 
   get heating () {
-    if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
         let deviation = 0
         if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
+            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+            deviation = Math.abs(target - actual)
+          }
+
         } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
+            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+            deviation = Math.abs(target - actual)
+          }
         }
         return deviation > 10
       }
     }
     return true
+  }
+
+  get heatingValue (): number {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
+        let actual = 0
+        if (this.additionalData.tool === 0) {
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+          }
+
+        } else {
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+          }
+        }
+        return actual
+      }
+    }
+    return 0
   }
 
   private repeat () {

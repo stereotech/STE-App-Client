@@ -1,11 +1,15 @@
 <template>
   <v-layout row wrap>
-    <PrintersPanel/>
-    <DoneJobs/>
-    <Queue/>
-    <Storage local/>
-    <Storage name="st-aaa"/>
-    <Storage name="st-bbb"/>
+    <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index" />
+    <DoneJobs />
+    <Queue />
+    <Storage local />
+    <Storage
+      v-for="usbStorage in allUsbStorages"
+      :key="usbStorage.origin"
+      :name="usbStorage.origin"
+      :display="usbStorage.origin"
+    />
   </v-layout>
 </template>
 
@@ -14,41 +18,50 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
-import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
+import BottomInput from '~/components/common/BottomInput.vue'
+import { State, Action, Getter, namespace } from 'vuex-class'
+import { StorageState } from '../store/storageState';
+import { FileOrFolder } from '../types/fileOrFolder';
+import { PrinterInfo } from '../types/printer';
+
+const storage = namespace('storageState')
+const printers = namespace('printersState')
 
 @Component({
   components: {
-    PrintersPanel,
+    PrinterCard,
     DoneJobs,
     Storage,
-    Queue
+    Queue,
+    BottomInput
   }
 })
 export default class Dashboard extends Vue {
-  private pollingStorageAndJobs!: NodeJS.Timeout
-  private pollingStatus!: NodeJS.Timeout
 
-  private async pollData () {
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 1000)
-    await this.$store.dispatch('printersState/fetchPrinters')
+  @storage.Getter allUsbStorages!: FileOrFolder[]
 
-    this.pollingStorageAndJobs = setInterval(async () => {
-      await this.$store.dispatch('printJobsState/fetchJobs')
-      await this.$store.dispatch('storageState/fetchLocal')
-      await this.$store.dispatch('storageState/fetchUsbs')
-    }, 5000)
+  @printers.Getter printers!: PrinterInfo[]
 
+  @Getter isApiAbsolute!: boolean
+
+  text: string = ''
+
+  head () {
+    return { title: 'STE App Dashboard' }
   }
 
-  async mounted () {
-    await this.pollData()
-  }
+  keyboard: boolean = true
 
-  beforeDestroy () {
-    clearInterval(this.pollingStorageAndJobs)
-    clearInterval(this.pollingStatus)
+  mounted () {
+    if (process.env.NUXT_ENV_PLATFORM === 'MOBILE' && !this.isApiAbsolute) {
+      this.$router.push('/chooseprinter')
+    } else {
+      this.$store.dispatch('printersState/fetchPrinters')
+      this.$store.dispatch('storageState/fetchLocal')
+      this.$store.dispatch('storageState/fetchUsbs')
+      this.$store.dispatch('printJobsState/fetchJobs')
+    }
   }
 
 }
