@@ -45,7 +45,7 @@ export default class WizardsPanel extends Vue {
     {
       id: 2,
       name: 'Change material',
-      image: 'change_material',
+      image: 'change_material/change_material',
       link: 'change-material',
       description: 'This wizard will help you to change, insert or remove the material'
     }

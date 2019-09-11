@@ -3,7 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
+          <v-progress-circular
+            :size="70"
+            :width="7"
+            color="secondary"
+            :max="240"
+            :value="heatingValue"
+          ></v-progress-circular>
         </v-flex>
         <v-flex xs12>
           <p>Heating...</p>
@@ -77,7 +83,27 @@ export default class extends Vue {
     return true
   }
 
-  private image: string = '/wizards/bed_leveling.png'
+  get heatingValue (): number {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
+        let actual = 0
+        if (this.additionalData.tool === 0) {
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+          }
+
+        } else {
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+          }
+        }
+        return actual
+      }
+    }
+    return 0
+  }
+
+  private image: string = '/wizards/change_material/change_material.png'
   private description: string = 'Load new spool, insert material into bowden tube and press Next button'
 
   private next (step: number) {
