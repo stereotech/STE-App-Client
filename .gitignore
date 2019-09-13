@@ -97,3 +97,4 @@ cordova/platforms
 *.bak
 *.orig
 cordova/upload_certificate.pem
+package-lock.json
