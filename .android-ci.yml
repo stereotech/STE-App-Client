@@ -42,7 +42,7 @@ deployAndroidDevelop:
   after_script:
     - rm -rf google-play-key.json
   only:
-    - develop
+    - schedules
 
 deployAndroidProduction:
   stage: deploy

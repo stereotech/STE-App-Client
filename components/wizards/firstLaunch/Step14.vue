@@ -1,27 +1,15 @@
 <template>
-  <WizardStep :step="step" v-if="heating">
+  <WizardStep :step="step" :image="image" :description="description">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-progress-circular
-            :size="70"
-            :width="7"
-            color="secondary"
-            :max="240"
-            :value="heatingValue"
-          ></v-progress-circular>
+          <v-btn block large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12>
-          <p>Heating...</p>
+          <v-btn block large depressed color="accent" @click="load">Load</v-btn>
         </v-flex>
-      </v-layout>
-    </v-container>
-  </WizardStep>
-  <WizardStep v-else :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="next(4)">Next</v-btn>
+          <v-btn block large depressed color="accent" @click="finish">Finish</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -46,13 +34,19 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Prop({ type: Object, default: null }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 3
+  private step?: number = 13
   private curStep?: number = this.currentStep
 
+  private image: string = '/wizards/change_material/change_material04.png'
+  private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
+
+  @printers.Action retractCommand: any
+  @printers.Action extrudeCommand: any
+  @printers.Action toolTempCommand: any
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
@@ -83,28 +77,18 @@ export default class extends Vue {
     return true
   }
 
-  get heatingValue (): number {
-    if (this.computedStatus) {
-      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
-        let actual = 0
-        if (this.additionalData.tool === 0) {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-          }
-
-        } else {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-          }
-        }
-        return actual
-      }
-    }
-    return 0
+  private repeat () {
+    this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
   }
 
-  private image: string = '/wizards/change_material/change_material.png'
-  private description: string = 'Load new spool, insert material into bowden tube and press Next button'
+  private load () {
+    this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+  }
+
+  private finish () {
+    this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 0 })
+    this.next(14)
+  }
 
   private next (step: number) {
     this.$emit('change', step)

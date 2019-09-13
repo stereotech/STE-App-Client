@@ -1,21 +1,17 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio label="Extruder 1" :value="0" color="secondary"></v-radio>
-            <v-radio label="Extruder 2" :value="1" color="secondary"></v-radio>
-          </v-radio-group>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large text @click="nextStep">Next</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large text @click="next(6)">Skip</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-flex xs12>
+      <v-btn block large depressed color="accent" @click="next(4)">
+        Start
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-flex>
+    <v-flex xs12>
+      <v-btn block large depressed color="accent" @click="next(9)">
+        Skip
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-flex>
   </WizardStep>
 </template>
 
@@ -23,10 +19,8 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { Settings } from '../../../types/settings';
 
 const printers = namespace('printersState')
-const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -34,43 +28,22 @@ const settings = namespace('settingsState')
   }
 })
 export default class extends Vue {
-  @Model('change', { type: Number, default: 1, required: true })
-  currentStep?: number
-  @Prop({ type: Object, default: {} }) additionalData!: any
-  @Watch('additionalData') onAdditionalDataChanged () {
-    this.$emit('dataChanged', this.additionalData)
-  }
+  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
+
   private step?: number = 3
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
-  private description: string =
-    'Select the extruder, where you want insert the material'
+  private image: string = '/wizards/bed_leveling/bed_leveling.png'
+  private description: string = 'Perform bed leveling if there is too much distance between the nozzles and the build plate'
 
-  @printers.Action toolTempCommand: any
-  @settings.Getter settings!: Settings
-
-  private nextStep () {
-    if (this.additionalData.tool === 0) {
-      this.toolTempCommand({
-        id: this.settings.systemId,
-        tool0Temp: 240,
-        tool1Temp: 0
-      })
-    } else {
-      this.toolTempCommand({
-        id: this.settings.systemId,
-        tool0Temp: 0,
-        tool1Temp: 240
-      })
-    }
-    this.next(4)
-  }
+  @printers.Action homeCommand: any
 
   private next (step: number) {
+    this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+
     this.$emit('change', step)
     this.curStep = step
   }

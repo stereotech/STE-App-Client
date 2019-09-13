@@ -3,13 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large text @click="repeat">Unload</v-btn>
+          <v-btn block large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="load">Load</v-btn>
+          <v-btn block large depressed color="accent" @click="load">Load</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
+          <v-btn block large depressed color="accent" @click="finish">Finish</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

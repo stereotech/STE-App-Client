@@ -1,9 +1,12 @@
 <template>
-  <WizardStep :step="step" :image="image" :description="description">
+  <WizardStep :step="step">
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="next(2)">Next</v-btn>
+          <h1 class="display-4">Done!</h1>
+        </v-flex>
+        <v-flex xs12>
+          <v-btn block large depressed color="accent" @click="finishSetup">Finish</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -13,6 +16,10 @@
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Action, Getter, State, namespace } from 'vuex-class'
+
+const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -20,24 +27,28 @@ import WizardStep from '~/components/wizards/WizardStep.vue'
   }
 })
 export default class extends Vue {
-  @Model('change', { type: Number, default: 1, required: true })
-  currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 1
-  private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
-  private description: string =
-    'Please remove all the transportation fixtures and press Next'
+  @settings.Action sendFinishSetup: any
+
+  private step?: number = 15
+  private curStep?: number = this.currentStep
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
+
+  private async finishSetup () {
+    await this.sendFinishSetup()
+    this.$router.push('/')
+  }
 }
 </script>
+
 
 <style>
 </style>
