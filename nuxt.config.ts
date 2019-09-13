@@ -27,7 +27,7 @@ const config: NuxtConfiguration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
+  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~plugins/i18n', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
   /*
    ** Nuxt.js modules
    */
