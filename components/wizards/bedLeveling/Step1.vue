@@ -1,9 +1,11 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block large text @click="next(1)">
-      Start
-      <v-icon right dark>mdi-chevron-right</v-icon>
-    </v-btn>
+    <v-flex xs12>
+      <v-btn block large depressed color="accent" @click="next(1)">
+        Start
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-flex>
   </WizardStep>
 </template>
 
@@ -24,7 +26,8 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 1
+
+  @Prop({ default: 0, type: Number, required: true }) private step?: number = 0
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling/bed_leveling.png'

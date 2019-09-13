@@ -3,17 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-radio-group v-model="additionalData.action" mandatory>
-            <v-radio label="Unload material" :value="0" color="secondary"></v-radio>
-            <v-radio label="Change material" :value="1" color="secondary"></v-radio>
-            <v-radio label="Load material" :value="2" color="secondary"></v-radio>
+          <v-radio-group v-model="additionalData.tool" mandatory>
+            <v-radio label="Extruder 1" :value="0" color="secondary"></v-radio>
+            <v-radio label="Extruder 2" :value="1" color="secondary"></v-radio>
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
           <v-btn block large depressed color="accent" @click="nextStep">Next</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="nextStep">Skip</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -24,7 +20,6 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -35,7 +30,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Prop({ type: Object, default: null }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
@@ -45,19 +40,18 @@ export default class extends Vue {
   private step?: number = 9
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material02.png'
-  private description: string = 'Select the needed action'
+  private image: string = '/wizards/change_material/change_material.png'
+  private description: string = 'Select the extruder, where you want change the material'
 
-  @printers.Action customCommand: any
+  @printers.Action toolTempCommand: any
 
   private nextStep () {
-    this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
-
-    if (this.additionalData.action > 1) {
-      this.next(3)
+    if (this.additionalData.tool === 0) {
+      this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 240, tool1Temp: 0 })
     } else {
-      this.next(2)
+      this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 240 })
     }
+    this.next(10)
   }
 
   private next (step: number) {

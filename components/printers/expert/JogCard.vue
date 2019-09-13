@@ -51,10 +51,10 @@
         </v-flex>
         <v-flex xs8 sm9 order-sm5 pt-2>
           <v-btn-toggle mandatory v-model="selectedAmount" rounded>
-            <v-btn text color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
-            <v-btn text color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
-            <v-btn text color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
-            <v-btn text color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-flex>
         <v-flex xs4 sm3 order-sm5>

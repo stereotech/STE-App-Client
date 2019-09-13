@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block depressed color="accent" @click="next(4)">
-      Next
+    <v-btn block depressed color="accent" @click="next(9)">
+      Finish
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -23,31 +23,19 @@ export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
-
-    if (this.curStep === this.step) {
-      this.performStep()
-    }
   }
-
-  async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X190 Y10 F3600' })
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
-  }
-
-  private step?: number = 3
+  private step?: number = 8
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling04.png'
-  private description: string = 'Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed'
+  private image: string = '/wizards/bed_leveling/bed_leveling.png'
+  private description: string = 'Calibration complete!'
 
+  @printers.Action homeCommand: any
 
-  private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+  private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
-
-  @printers.Action customCommand: any
 }
 </script>
 

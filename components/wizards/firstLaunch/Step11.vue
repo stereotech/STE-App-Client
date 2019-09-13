@@ -12,9 +12,6 @@
         <v-flex xs12>
           <v-btn block large depressed color="accent" @click="nextStep">Next</v-btn>
         </v-flex>
-        <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="nextStep">Skip</v-btn>
-        </v-flex>
       </v-layout>
     </v-container>
   </WizardStep>
@@ -35,14 +32,14 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
-  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Prop({ type: Object, default: null }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 9
+  private step?: number = 10
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/change_material/change_material02.png'
@@ -54,9 +51,9 @@ export default class extends Vue {
     this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
-      this.next(3)
+      this.next(12)
     } else {
-      this.next(2)
+      this.next(11)
     }
   }
 
