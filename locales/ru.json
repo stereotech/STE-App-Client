@@ -1,0 +1,148 @@
+{
+    "frequentlyUsed": {
+        "no": "Нет",
+        "yes": "Да",
+        "cancel": "Отменить",
+        "ok": "Ок",
+        "forget": "Забыть",
+        "connect": "Подключиться",
+        "remove": "Удалить",
+        "save": "Сохранить",
+        "next": "Далее",
+        "retry": "Повторить"
+    },
+    "common": {
+        "printerCard": {
+            "title": "Панель управления",
+            "printing": "Печатаем...",
+            "paused": "Приостановлено",
+            "maintenance": "Поддержка",
+            "printingDone": "Печать готова !",
+            "offline": "Не в сети",
+            "e1Target": "Т экструдера1",
+            "e2Target": "Т экструдера 2",
+            "bedTarget": "Температура подставки",
+            "chamberTarget": "Целевая плата",
+            "tryToReconnect": "Попробуйте переподключиться",
+            "currentFile": "Текущий файл:",
+            "currentPrintjob": "Текущая работа принтера:",
+            "cleanTheBuildplate": "Очистите пластину сборки и выбирите состояние",
+            "printerIsWaiting": "Принтер ожидает работы",
+            "printerIsReady": "Принтер готов к обслуживанию",
+            "doYouWantToRemove": "Хотите убрать {0} из кластера?",
+            "no": "Нет",
+            "yes": "Да"
+        },
+        "settings": {
+            "settingsTitle": {
+                "Wi-Fi": "Wi-Fi",
+                "Date and Time": "Дата и время",
+                "Language": "Язык",
+                "Storage": "Хранилище",
+                "Reset and Restore": "Сброс и Восстановление",
+                "Update": "Обновление"
+            },
+            "dateTimeDialog": {
+                "title": "Дата и время"
+            },
+            "languageDialog": {
+                "title": "Выбор языка"
+            },
+            "mainSettingsDialog": {
+                "title": "Настройки"
+            },
+            "resetDialog": {
+                "title": "Восстановление и перезагрузка",
+                "factoryReset": "К заводским настройкам",
+                "factoryResetClearStorage": "К заводским настройкам (стереть память)",
+                "sureFactoryReset": "Вы уверены, что хотите вернуться к заводским настройкам?",
+                "sureFactoryResetClear": "Вы уверены, что хотите вернуться к заводским настройкам и стереть все пользовательские данные?",
+                "rebootMessage": "Принтер буден перезагружен после подтверждения"
+            },
+            "settingsDialog": {
+                "title": "Настройки",
+                "reboot": "Перезагрузка",
+                "powerOff": "Выключение"
+            },
+            "storageDialog": {
+                "title": "Хранилище"
+            },
+            "updateDialog": {
+                "title": "Обновление системы",
+                "currentVersion": "Текущая версия:",
+                "checkForUpdate": "Проверить обновления",
+                "downloadAndInstall": "Скачать и установить"
+            },
+            "wifiDialog": {
+                "title": "Настройки Wi-Fi",
+                "currentNetwork": "Текущая сеть",
+                "forgetNetworkName": "Забыть",
+                "avaliableNetworks": "Доступные сети",
+                "enterWifiPassword": "Введите пароль для",
+                "connectToNetwork": "Подключиться к сети?",
+                "wifiPassword": "Пароль Wi-Fi"
+            }
+        }
+    },
+    "dashboard": {
+        "doneJobs": {
+            "title": "Готово",
+            "printed": "Напечатано:",
+            "revert": "Повторить"
+        },
+        "printersPanel": {},
+        "queue": {
+            "title": "Очередь",
+            "edit": "редактировать",
+            "removeJob": "Хотите удалить работу?"
+        },
+        "storage": {
+            "title": "",
+            "uploaded": "Загруженно "
+        }
+    },
+    "materials": {
+        "materialDialog": {
+            "title": "Добавить материал",
+            "updateMaterial": "Обновить материал",
+            "colorCode": "Код цвета"
+        }
+    },
+    "printers": {
+        "expert": {
+            "extruderCard": {
+                "title": "Экструдер"
+            },
+            "jogCard": {
+                "title": "Управление"
+            },
+            "manualControlPanel": {
+                "title": "Ручное управление"
+            },
+            "miscCard": {
+                "title": "Разное"
+            },
+            "temperatureFan": {
+                "title": "Температура и вентилятор"
+            }
+        },
+        "addPrinterDialog": {
+            "title": "Добавить принтер",
+            "address": "Адрес:",
+            "doYouWantToAdd": "Вы хотите добавить {0} в кластер?"
+        },
+        "wizardCard": {},
+        "wizardsPanel": {
+            "title": "Maстер установки"
+        }
+    },
+    "chooseprinter": {
+        "address": "Адрес"
+    },
+    "navigationPanel": {
+        "Dashboard": "Мониторинг",
+        "Printers": "Принтеры",
+        "Materials": "Материалы",
+        "Select cluster": "Выбор кластера"
+    }
+}
