@@ -30,7 +30,7 @@
     "vue-i18n": "^8.14.1",
     "vue-moment": "^4.0.0",
     "vue2-filters": "^0.4.1",
-    "vuetify": "^2.0.0",
+    "vuetify": "^2.0.17",
     "vuetify-loader": "^1.1.1",
     "vuex-class": "^0.3.1"
   },
