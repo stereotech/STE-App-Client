@@ -41,7 +41,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
-import { VuetifyGoToOptions } from 'vuetify/types/services/goto'
+import { GoToOptions } from 'vuetify/types/services/goto'
 import TerminalString from '~/components/printers/expert/TerminalString.vue'
 import BottomInput from '~/components/common/BottomInput.vue'
 
@@ -73,7 +73,7 @@ export default class TerminalCard extends Vue {
     if (!this.autoscroll) {
       return
     }
-    let options: VuetifyGoToOptions = {
+    let options: GoToOptions = {
       container: '#terminal-list'
     }
     this.$vuetify.goTo(9999999, options)
