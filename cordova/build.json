@@ -6,7 +6,7 @@
                 "deb"
             ],
             "arch": [
-                "armv7l"
+                "armv71"
             ]
         }
     }
