@@ -1,8 +1,7 @@
-import { Context } from '@nuxt/vue-app'
+import { Middleware } from '@nuxt/types'
 
-export * from 'vue-router'
 
-export default async function (context: Context) {
+const firstLaunch: Middleware = async (context) => {
   if (process.env.NUXT_ENV_PLATFORM == 'MOBILE') {
     let apiUrl = context.store.state.apiUrl as string
     if (!apiUrl.startsWith('http://')) {
@@ -19,3 +18,5 @@ export default async function (context: Context) {
     return context.redirect('/')
   }
 }
+
+export default firstLaunch
