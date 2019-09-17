@@ -1,13 +1,8 @@
 {
     "electron": {
         "linux": {
-            "package": [
-                "zip",
-                "deb"
-            ],
-            "arch": [
-                "armv7l"
-            ]
+            "package": "zip",
+            "arch": "armv7l"
         }
     }
 }
