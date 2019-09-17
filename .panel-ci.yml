@@ -4,7 +4,6 @@ buildPanel:
   cache:
     paths:
       - node_modules
-      - cordova/node_modules
   before_script:
     - npm install --dev
     - cd cordova
