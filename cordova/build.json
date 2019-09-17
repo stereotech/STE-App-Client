@@ -5,8 +5,8 @@
                 "deb"
             ],
             "arch": [
-                "arm64",
-                "armv71"
+                "armv7l",
+                "arm64"
             ]
         }
     }
