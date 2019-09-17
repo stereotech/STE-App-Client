@@ -6,31 +6,31 @@
           <v-container grid-list-md>
             <v-layout row wrap class="text-center" align-center justify-center>
               <v-flex xs6>
-                <v-btn outlined depressed color="accent" icon dark @click="jog(-1)">
+                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(-1)">
                   <v-icon>mdi-chevron-up</v-icon>
                 </v-btn>
               </v-flex>
               <v-flex xs6>
-                <v-btn outlined depressed color="accent" icon dark @click="jog(1)">
+                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(1)">
                   <v-icon>mdi-chevron-down</v-icon>
                 </v-btn>
               </v-flex>
               <v-flex xs12>
                 <v-btn-toggle rounded mandatory v-model="selectedAmount">
-                  <v-btn large color="accent" @click="amount = 0.1">0.1</v-btn>
-                  <v-btn large color="accent" @click="amount = 1">1</v-btn>
+                  <v-btn x-large color="accent" @click="amount = 0.1">0.1</v-btn>
+                  <v-btn x-large color="accent" @click="amount = 1">1</v-btn>
                 </v-btn-toggle>
               </v-flex>
             </v-layout>
           </v-container>
         </v-flex>
         <v-flex xs12>
-          <v-btn block depressed color="accent" @click="next(5)">
+          <v-btn x-large block depressed color="accent" @click="next(5)">
             <v-icon left dark>mdi-chevron-left</v-icon>Set points again
           </v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block depressed color="accent" @click="next(8)">
+          <v-btn x-large block depressed color="accent" @click="next(8)">
             Next
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>

@@ -21,12 +21,12 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="repeat">Unload</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12 v-if="additionalData.action === 0">
           <v-btn
             block
-            large
+            x-large
             depressed
             color="accent"
             nuxt
@@ -34,7 +34,7 @@
           >Finish</v-btn>
         </v-flex>
         <v-flex xs12 v-else>
-          <v-btn block large depressed color="accent" @click="next(12)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(12)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

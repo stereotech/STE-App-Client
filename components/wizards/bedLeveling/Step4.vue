@@ -1,6 +1,6 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block depressed color="accent" @click="next(4)">
+    <v-btn x-large block depressed color="accent" @click="next(4)">
       Next
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>

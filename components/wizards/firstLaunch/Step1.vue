@@ -15,7 +15,7 @@
           ></v-select>
         </v-flex>-->
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="next(1)">Let's Start</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">Let's Start</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

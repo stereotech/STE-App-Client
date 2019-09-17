@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-flex xs12>
-      <v-btn block large depressed color="accent" @click="next(1)">
+      <v-btn block x-large depressed color="accent" @click="next(1)">
         Start
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
@@ -27,7 +27,7 @@ export default class extends Vue {
     this.curStep = val
   }
 
-  @Prop({ default: 0, type: Number, required: true }) private step?: number = 0
+  private step?: number = 0
   private curStep?: number = this.currentStep
 
   private image: string = '/wizards/bed_leveling/bed_leveling.png'
