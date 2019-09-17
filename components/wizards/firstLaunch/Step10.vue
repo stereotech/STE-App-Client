@@ -9,10 +9,10 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="next(13)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(13)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

@@ -57,8 +57,9 @@
                   </v-container>
 
                   <v-card-actions>
-                    <v-btn color="primary" depressed @click="confirmation = false">Cancel</v-btn>
+                    <v-btn x-large color="primary" depressed @click="confirmation = false">Cancel</v-btn>
                     <v-btn
+                      x-large
                       color="primary"
                       depressed
                       @click="startConnecting"
@@ -71,7 +72,7 @@
           </v-card>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large depressed color="accent" @click="next(15)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(15)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
