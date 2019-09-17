@@ -5,7 +5,6 @@
                 "deb"
             ],
             "arch": [
-                "armv7l",
                 "arm64"
             ]
         }
