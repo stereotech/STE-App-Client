@@ -2,7 +2,7 @@ buildPanel:
   image: node
   stage: build
   variables:
-    USE_HARD_LINKS: false
+    USE_HARD_LINKS: 'false'
   cache:
     paths:
       - node_modules
