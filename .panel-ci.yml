@@ -14,7 +14,7 @@ buildPanel:
   script:
     - npm run build-panel
   after_script:
-    - cp -r cordova/platforms/electron/build/linux-arm7l-unpacked/ panel-build
+    - cp -r cordova/platforms/electron/build/ panel-build
   artifacts:
     paths:
       - panel-build
