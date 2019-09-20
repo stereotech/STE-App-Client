@@ -36,7 +36,7 @@ export default class extends Vue {
   private step?: number = 3
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling.png'
+  private image: string = '/wizards/bed_leveling/bed_leveling.jpg'
   private description: string = 'Perform bed leveling if there is too much distance between the nozzles and the build plate'
 
   @printers.Action homeCommand: any

@@ -17,7 +17,7 @@ export default ({ app }, inject) => {
         props: {
             timeout: {
                 type: Number,
-                default: 6000,
+                default: 60000,
             },
             pause: {
                 type: Number,
@@ -118,40 +118,40 @@ export default ({ app }, inject) => {
         render: function (createElement) {
             return createElement(
                 Vue.component('VSnackbar'), {
+                props: {
+                    value: this.isShown,
+                    timeout: this.timeout,
+                    multiLine: true,
+                    color: this.snackbar && this.snackbar.color,
+                    top: this.top,
+                    bottom: this.bottom,
+                    left: this.left,
+                    right: this.right
+                },
+                on: {
+                    input: (value) => {
+                        this.isShown = value;
+                    },
+                },
+            }, [
+                (this.$scopedSlots.default && this.$scopedSlots.default({
+                    snackbar: this.snackbar,
+                })) || (this.snackbar && this.snackbar.message),
+                createElement(
+                    Vue.component('VBtn'), {
                     props: {
-                        value: this.isShown,
-                        timeout: this.timeout,
-                        multiLine: true,
-                        color: this.snackbar && this.snackbar.color,
-                        top: this.top,
-                        bottom: this.bottom,
-                        left: this.left,
-                        right: this.right
+                        icon: true,
+                        text: true,
                     },
                     on: {
-                        input: (value) => {
-                            this.isShown = value;
-                        },
+                        click: this.onSnackbarClose,
                     },
-                }, [
-                    (this.$scopedSlots.default && this.$scopedSlots.default({
-                        snackbar: this.snackbar,
-                    })) || (this.snackbar && this.snackbar.message),
-                    createElement(
-                        Vue.component('VBtn'), {
-                            props: {
-                                icon: true,
-                                text: true,
-                            },
-                            on: {
-                                click: this.onSnackbarClose,
-                            },
 
-                        }, [createElement(
-                            Vue.component('VIcon'), {}, 'mdi-close'
-                        )],
-                    ),
-                ],
+                }, [createElement(
+                    Vue.component('VIcon'), {}, 'mdi-close'
+                )],
+                ),
+            ],
             );
         },
     };

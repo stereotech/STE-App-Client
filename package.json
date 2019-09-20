@@ -20,7 +20,7 @@
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
     "@nuxt/typescript-runtime": "^0.1.6",
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/axios": "^5.6.0",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
     "nuxt": "^2.9.2",
     "nuxt-class-component": "^1.2.1",
