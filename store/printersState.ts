@@ -95,7 +95,7 @@ export const mutations: MutationTree<PrintersState> = {
     const index = state.status.findIndex(value => value.id === status.id)
     if (index > -1) {
       let current = state.status[index]
-      if (current.logs.length < 500) {
+      if (current.logs.length < 50) {
         current.logs.push(...status.logs)
       }
       else {

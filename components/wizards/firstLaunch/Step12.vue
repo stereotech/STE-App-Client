@@ -66,7 +66,7 @@ export default class extends Vue {
   private step?: number = 11
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material03.png'
+  private image: string = '/wizards/change_material/change_material03.jpg'
   private description: string = 'Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading'
 
   @printers.Action retractCommand: any

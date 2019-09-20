@@ -1,7 +1,7 @@
 <template>
   <v-card hover ripple nuxt :to="to">
     <v-img
-      :src="'/wizards/' + image + '.png'"
+      :src="'/wizards/' + image + '.jpg'"
       gradient="to top, rgba(100,115,201,.0), rgba(38, 50, 56, 1)"
     >
       <v-container fill-height fluid>

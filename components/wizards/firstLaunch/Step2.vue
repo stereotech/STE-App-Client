@@ -28,7 +28,7 @@ export default class extends Vue {
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = '/wizards/bed_leveling.jpg'
   private description: string =
     'Please remove all the transportation fixtures and press Next'
 

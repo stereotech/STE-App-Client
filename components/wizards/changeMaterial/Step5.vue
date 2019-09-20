@@ -41,7 +41,7 @@ export default class extends Vue {
   private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material04.png'
+  private image: string = '/wizards/change_material/change_material04.jpg'
   private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
 
   @printers.Action retractCommand: any

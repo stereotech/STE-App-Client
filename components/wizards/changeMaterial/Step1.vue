@@ -40,7 +40,7 @@ export default class extends Vue {
   private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material.png'
+  private image: string = '/wizards/change_material/change_material.jpg'
   private description: string = 'Select the extruder, where you want change the material'
 
   @printers.Action toolTempCommand: any

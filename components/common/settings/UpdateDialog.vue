@@ -128,6 +128,7 @@ export default class extends Vue {
   @update.Action startUpdateFromUsb!: any
   @update.Action uploadUpdate!: any
   @update.Action downloadUpdateVersion!: any
+  @update.Action fetchCurrentVersion!: any
 
 
   private closeDialog () {
@@ -144,6 +145,10 @@ export default class extends Vue {
     await this.uploadUpdate(this.file![0])
     this.file = null
     this.overlay = false
+  }
+
+  private async mounted () {
+    await this.fetchCurrentVersion()
   }
 }
 </script>

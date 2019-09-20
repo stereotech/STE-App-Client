@@ -19,6 +19,7 @@
           ripple
           link
           :to="menuItem.link"
+          color="primary"
         >
           <v-list-item-action>
             <v-icon>{{ menuItem.icon }}</v-icon>

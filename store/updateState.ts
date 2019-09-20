@@ -32,7 +32,7 @@ export const state = (): UpdateState => ({
 
 export const getters: GetterTree<UpdateState, RootState> = {
     currentVersion (state: UpdateState): string {
-        return state.avaliableVersion
+        return state.currentVersion
     },
     softwareUpdateState (state: UpdateState): SoftwareUpdateState {
         return state.softwareUpdateState

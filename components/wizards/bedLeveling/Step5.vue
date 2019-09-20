@@ -84,7 +84,7 @@ export default class extends Vue {
   private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling05.png'
+  private image: string = '/wizards/bed_leveling/bed_leveling05.jpg'
   private description: string = 'Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment'
 
 
