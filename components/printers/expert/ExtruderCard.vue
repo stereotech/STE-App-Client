@@ -29,10 +29,10 @@
         </v-flex>
         <v-flex xs12 sm9 order-sm3>
           <v-btn-toggle mandatory v-model="selectedAmount" rounded>
-            <v-btn text x-large color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
-            <v-btn text x-large color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
-            <v-btn text x-large color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
-            <v-btn text x-large color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-flex>
       </v-layout>
@@ -48,7 +48,7 @@ const printers = namespace('printersState')
 
 @Component
 export default class ExtruderCard extends Vue {
-  private selectedAmount: number = 1
+  private selectedAmount: number = 2
   private amount: number = 10
 
   private extruders: any = [

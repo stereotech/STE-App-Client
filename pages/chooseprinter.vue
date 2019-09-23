@@ -31,6 +31,9 @@
                 </v-flex>
               </v-layout>
             </v-container>
+            <v-overlay :value="overlay">
+              <v-progress-circular indeterminate></v-progress-circular>
+            </v-overlay>
           </v-card>
         </v-flex>
       </v-layout>
@@ -60,16 +63,19 @@ export default class ChoosePrinter extends Vue {
   }
 
   remember: boolean = false
+  overlay: boolean = false
 
   connectToPrinter (printer: ScannerResult) {
+    this.overlay = true
     this.setCluster({ cluster: printer, save: this.remember })
-    this.$router.push('/')
     //@ts-ignore
     this.$startHub()
-    
+    this.$router.push('/')
+    this.overlay = false
   }
 
   mounted () {
+    this.overlay = false
     //@ts-ignore
     this.$stopHub()
     this.$store.commit('setApiUrl', '/api/')

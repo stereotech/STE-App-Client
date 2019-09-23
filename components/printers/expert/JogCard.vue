@@ -7,27 +7,27 @@
           <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
         </v-flex>
         <v-flex xs12 sm9 order-sm2>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="jogYPlus">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogYPlus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="jogXMinus">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogXMinus">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="homeXY">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeXY">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="jogXPlus">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogXPlus">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs12 sm9 order-sm4>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="jogYMinus">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogYMinus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
@@ -35,26 +35,26 @@
           <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm4>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="jogZPlus">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogZPlus">
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="homeZ">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeZ">
             <v-icon>mdi-home</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm2>
-          <v-btn outlined text icon x-large   color="primary" :disabled="printing" @click="jogZMinus">
+          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogZMinus">
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-flex>
         <v-flex xs8 sm9 order-sm5 pt-2>
           <v-btn-toggle mandatory v-model="selectedAmount" rounded>
-            <v-btn text x-large color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
-            <v-btn text x-large color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
-            <v-btn text x-large color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
-            <v-btn text x-large color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-flex>
         <v-flex xs4 sm3 order-sm5>
@@ -78,7 +78,7 @@ const printers = namespace('printersState')
 
 @Component
 export default class JogCard extends Vue {
-  private selectedAmount: number = 1
+  private selectedAmount: number = 2
   private amount: number = 10
   private feed: number = 100
 
