@@ -6,16 +6,16 @@
     <v-expansion-panel-content>
       <v-container fluid grid-list-xs>
         <v-layout row wrap>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs12 md6>
             <JogCard :printing="printing" :id="id" />
           </v-flex>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs12 md6>
             <ExtruderCard :printing="printing" :id="id" />
           </v-flex>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs12 md6>
             <TemperatureFan chamberFan :id="id" />
           </v-flex>
-          <v-flex xs12 md6 lg4>
+          <v-flex xs12 md6>
             <TerminalCard :id="id" />
           </v-flex>
         </v-layout>

@@ -35,5 +35,10 @@
       "@nuxtjs/axios",
       "moment"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "cordova"
+  ]
 }

@@ -102,34 +102,34 @@ export default ({ app }, inject) => {
         render: function (createElement) {
             return createElement(
                 Vue.component('VDialog'), {
-                    props: {
-                        value: this.isShown,
-                        persistent: true,
-                        maxWidth: 400,
+                props: {
+                    value: this.isShown,
+                    persistent: true,
+                    maxWidth: 400,
+                },
+                on: {
+                    input: (value) => {
+                        this.isShown = value;
                     },
-                    on: {
-                        input: (value) => {
-                            this.isShown = value;
-                        },
+                },
+            }, [createElement(Vue.component('VAlert'), {
+                props: {
+                    type: this.dialog && this.dialog.color,
+                    border: 'top',
+                    coloredBorder: true,
+                    elevation: 0,
+                    value: this.isShown,
+                    dismissible: true
+                },
+                on: {
+                    input: (value) => {
+                        if (value === false) {
+                            this.onDialogClose()
+                        }
                     },
-                }, [createElement(Vue.component('VAlert'), {
-                    props: {
-                        type: this.dialog && this.dialog.color,
-                        border: 'top',
-                        coloredBorder: true,
-                        elevation: 0,
-                        value: this.isShown,
-                        dismissible: true
-                    },
-                    on: {
-                        input: (value) => {
-                            if (value === false) {
-                                this.onDialogClose()
-                            }
-                        },
-                    },
-                }, [(this.dialog && this.dialog.message)]),
-                ],
+                },
+            }, [(this.dialog && this.dialog.message)]),
+            ],
             );
         },
     };
