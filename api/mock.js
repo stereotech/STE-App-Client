@@ -98,6 +98,77 @@ const printJobs = [
     }
 ]
 
+const materials= [
+    {
+        id:1,
+        metadata:{ 
+            name:{
+              brand: 'chineeseBrand',
+             materialName:'123',
+             color:'very red',
+            },
+            version:'1',
+             colorCode:'#ea0b0b',
+             description:'',
+             adhesionInfo:'',
+          },
+         properties:{
+             density:1
+         }
+    },
+    {
+        id:2,
+        metadata:{ 
+            name:{
+              brand: 'surerBrand',
+             materialName:'199',
+             color:'very white',
+            },
+            version:'1',
+             colorCode:'#ff0000',
+             description:'',
+             adhesionInfo:'',
+          },
+         properties:{
+             density:1
+         }
+    },
+    {
+        id:3,
+        metadata:{ 
+            name:{
+              brand: '1984',
+             materialName:'plastic',
+             color:'a little bit grey',
+            },
+            version:'1',
+             colorCode:'#726767',
+             description:'top',
+             adhesionInfo:'',
+          },
+         properties:{
+             density:1
+         }
+    },
+    {
+        id:5,
+        metadata:{ 
+            name:{
+              brand: 'poland is strong',
+             materialName:'nylon',
+             color:'navy',
+            },
+            version:'1',
+             colorCode:'#726767',
+             description:'very top',
+             adhesionInfo:'',
+          },
+         properties:{
+             density:1
+         } 
+    }
+]
+
 const scannerResults = [
     {
         id: 'st-ddd',
@@ -302,4 +373,7 @@ export default function (req, res, next) {
         res.end(JSON.stringify(networks))
     }
     //next()
+    else if (req.url==='/materials'){
+        res.end(JSON.stringify(materials))
+    }
 }
