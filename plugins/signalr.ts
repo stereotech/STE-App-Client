@@ -5,7 +5,10 @@ import { SoftwareUpdateState } from '~/store/updateState';
 
 export default ({ app, store }, inject) => {
     function generateHub () {
-        let hub = new HubConnectionBuilder().withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets }).configureLogging(LogLevel.Debug).build()
+        let hub = new HubConnectionBuilder()
+            .withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets })
+            .configureLogging(LogLevel.Debug)
+            .build()
 
         hub.on("CurrentStateChanged", (id, state) => {
             let current: CurrentState = {
