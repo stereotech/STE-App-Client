@@ -109,7 +109,7 @@ export default ({ app, store }, inject) => {
             store.state.hub.start()
         } catch (err) {
             console.log(err)
-            setTimeout(() => startHub(), 3000)
+            setTimeout(() => startHub(), 1500)
         }
     }
 
