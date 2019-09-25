@@ -64,7 +64,19 @@ export default ({ app, store }, inject) => {
             store.commit('updateState/setSoftwareUpdateState', args.state)
         })
 
+        //MATERIAL SERVICE
+        hub.on('MaterialAdded',()=>{
+            store.dispatch('materialsState/fetchMaterials')
+        })
 
+        hub.on('MaterialEdited',()=>{
+            store.dispatch('materialsState/fetchMaterials')
+        })
+
+        hub.on('MaterialRemoved',()=>{
+            store.dispatch('materialsState/fetchMaterials')
+        })
+        //FILE STORAGE SERVICE
         hub.on('LocalStorageChanged', () => {
             store.dispatch('storageState/fetchLocal')
         })
