@@ -3,13 +3,13 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large text @click="repeat">Unload</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="load">Load</v-btn>
+          <v-btn block x-large depressed color="accent" @click="load">Load</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">Finish</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -41,7 +41,7 @@ export default class extends Vue {
   private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material04.png'
+  private image: string = '/wizards/change_material/change_material04.jpg'
   private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
 
   @printers.Action retractCommand: any

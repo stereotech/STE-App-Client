@@ -1,8 +1,6 @@
-import { Context } from '@nuxt/vue-app'
+import { Middleware } from '@nuxt/types'
 
-export * from 'vue-router'
-
-export default async function (context: Context) {
+const chooser: Middleware = (context) => {
     if (process.env.NUXT_ENV_PLATFORM == 'MOBILE') {
         if ((context.route.path as string).indexOf('chooseprinter') > 0) {
             return
@@ -15,3 +13,5 @@ export default async function (context: Context) {
         return context.redirect('/')
     }
 }
+
+export default chooser

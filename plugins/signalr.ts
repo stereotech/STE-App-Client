@@ -5,7 +5,10 @@ import { SoftwareUpdateState } from '~/store/updateState';
 
 export default ({ app, store }, inject) => {
     function generateHub () {
-        let hub = new HubConnectionBuilder().withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets }).configureLogging(LogLevel.Debug).build()
+        let hub = new HubConnectionBuilder()
+            .withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets })
+            .configureLogging(LogLevel.Debug)
+            .build()
 
         hub.on("CurrentStateChanged", (id, state) => {
             let current: CurrentState = {
@@ -38,27 +41,27 @@ export default ({ app, store }, inject) => {
 
         //UpdateState
         hub.on('DownloadFinished', () => {
-            store.dispatch('updateState/setSoftwareUpdateState', SoftwareUpdateState.Downloaded)
+            store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.Downloaded)
         })
         hub.on('DownloadFailed', () => {
-            store.dispatch('updateState/setSoftwareUpdateState', SoftwareUpdateState.FailedDownload)
+            store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.FailedDownload)
             app.$notify(`New firmware download failed`, 'error')
         })
         hub.on('UpdateFoundOnUsb', (args: { found: boolean }) => {
-            store.dispatch('updateState/setUpdateOnUsb', args.found)
+            store.commit('updateState/setUpdateOnUsb', args.found)
             app.$notify(`New firmware is found on USB. Check settings for install`)
         })
         hub.on('HasEqualFirmware', (args: { version: string }) => {
-            store.dispatch('updateState/setCurrentVersion', args.version)
+            store.commit('updateState/setCurrentVersion', args.version)
         })
         hub.on('HasNewFirmware', (args: { version: string }) => {
-            store.dispatch('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
-            store.dispatch('updateState/setAvaliableVersion', args.version)
+            store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
+            store.commit('updateState/setAvaliableVersion', args.version)
             app.$notify(`New firmware is available, version ${args.version}. Check settings for install`)
         })
         hub.on('UpdateStateChanged', (args: { state: SoftwareUpdateState, downloadProgress: number }) => {
-            store.dispatch('updateState/setDownloadProgress', args.downloadProgress)
-            store.dispatch('updateState/setSoftwareUpdateState', args.state)
+            store.commit('updateState/setDownloadProgress', args.downloadProgress)
+            store.commit('updateState/setSoftwareUpdateState', args.state)
         })
 
 
@@ -106,7 +109,7 @@ export default ({ app, store }, inject) => {
             store.state.hub.start()
         } catch (err) {
             console.log(err)
-            setTimeout(() => startHub(), 3000)
+            setTimeout(() => startHub(), 1500)
         }
     }
 

@@ -1,25 +1,32 @@
 <template>
-  <v-flex xs12 v-if="error" text-center>
-    <h1 class="display-4">{{ error.statusCode }}</h1>
-    <h4 class="display-1">{{ error.message }}</h4>
-    <v-btn large color="accent" @click="refresh">Retry</v-btn>
-  </v-flex>
+  <div>
+    <Loading v-if="error.statusCode === 500 || error.statusCode === 502" />
+    <v-flex xs12 v-else text-center>
+      <h1 class="display-4">{{ error.statusCode }}</h1>
+      <h4 class="display-1">{{ error.message }}</h4>
+      <v-btn large color="accent" @click="refresh">Retry</v-btn>
+    </v-flex>
+  </div>
 </template>
 
 <script>
-import { Vue, Component } from 'nuxt-property-decorator'
+import Loading from '~/components/loading.vue'
 
-@Component({
+export default {
   props: ['error'],
-  layout: 'solid'
-})
-export default class Error extends Vue {
-  layout() {
-    return 'solid'
-  }
+  layout: 'solid', // you can set a custom layout for the error page
+  methods: {
+    refresh() {
 
-  refresh() {
-    window.location.reload(true)
+    }
+  },
+  components: {
+    Loading
+  },
+  mounted: function () {
+    setTimeout(function () {
+      window.location.reload(true)
+    }, 3000)
   }
 }
 </script>

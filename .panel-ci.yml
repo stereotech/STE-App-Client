@@ -1,6 +1,8 @@
 buildPanel:
   image: node
   stage: build
+  variables:
+    USE_HARD_LINKS: 'false'
   cache:
     paths:
       - node_modules
@@ -14,7 +16,7 @@ buildPanel:
   script:
     - npm run build-panel
   after_script:
-    - cp -r cordova/platforms/electron/build/linux-arm64-unpacked/ panel-build
+    - cp -r cordova/platforms/electron/build/linux-armv7l-unpacked panel-build
   artifacts:
     paths:
       - panel-build

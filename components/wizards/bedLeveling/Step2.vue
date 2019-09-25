@@ -1,6 +1,6 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block text @click="next(2)">
+    <v-btn x-large block depressed color="accent" @click="next(2)">
       Next
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
@@ -35,7 +35,7 @@ export default class extends Vue {
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling02.png'
+  private image: string = '/wizards/bed_leveling/bed_leveling02.jpg'
   private description: string = 'Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed'
 
 

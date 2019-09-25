@@ -21,7 +21,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block large text @click="next(4)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(4)">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -103,7 +103,7 @@ export default class extends Vue {
     return 0
   }
 
-  private image: string = '/wizards/change_material/change_material.png'
+  private image: string = '/wizards/change_material/change_material.jpg'
   private description: string = 'Load new spool, insert material into bowden tube and press Next button'
 
   private next (step: number) {

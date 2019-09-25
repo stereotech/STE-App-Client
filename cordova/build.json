@@ -2,11 +2,11 @@
     "electron": {
         "linux": {
             "package": [
-                "zip",
-                "deb"
+                "dir"
             ],
             "arch": [
-                "arm64"
+                "arm64",
+                "armv7l"
             ]
         }
     }

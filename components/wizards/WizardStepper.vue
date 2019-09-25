@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12>
     <v-toolbar color="primary" flat dense>
-      <v-btn text icon @click="$router.back()" v-if="closeable && currentStep == 0">
+      <v-btn x-large text icon @click="$router.back()" v-if="closeable && currentStep == 0">
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <span class="headline font-weight-light">

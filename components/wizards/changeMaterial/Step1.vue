@@ -9,7 +9,7 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -40,7 +40,7 @@ export default class extends Vue {
   private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material.png'
+  private image: string = '/wizards/change_material/change_material.jpg'
   private description: string = 'Select the extruder, where you want change the material'
 
   @printers.Action toolTempCommand: any

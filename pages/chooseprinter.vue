@@ -19,7 +19,7 @@
                   <v-img
                     :src="'/printers/'+ printer.model +'.png'"
                     alt="Avatar"
-                    v-if="printer.printers === 1"
+                    v-if="printer.printers < 2"
                   />
                   <v-img :src="'/printers/Cluster.png'" alt="Avatar" v-else />
                 </v-flex>
@@ -31,6 +31,9 @@
                 </v-flex>
               </v-layout>
             </v-container>
+            <v-overlay :value="overlay">
+              <v-progress-circular indeterminate></v-progress-circular>
+            </v-overlay>
           </v-card>
         </v-flex>
       </v-layout>
@@ -40,13 +43,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <!--<v-container grid-list-xs>
-      <v-layout column align-center justify-center>
-        <v-flex xs12 class="text-center">
-          <v-checkbox label="Remember selected" v-model="remember"></v-checkbox>
-        </v-flex>
-      </v-layout>
-    </v-container>-->
   </v-flex>
 </template>
 
@@ -67,18 +63,22 @@ export default class ChoosePrinter extends Vue {
   }
 
   remember: boolean = false
+  overlay: boolean = false
 
   connectToPrinter (printer: ScannerResult) {
+    this.overlay = true
     this.setCluster({ cluster: printer, save: this.remember })
     //@ts-ignore
     this.$startHub()
     this.$router.push('/')
+    this.overlay = false
   }
 
   mounted () {
-    this.$store.commit('setApiUrl', '/api/')
+    this.overlay = false
     //@ts-ignore
     this.$stopHub()
+    this.$store.commit('setApiUrl', '/api/')
   }
 }
 

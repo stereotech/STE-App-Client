@@ -5,7 +5,7 @@
         <v-flex xs12>
           <h1 class="display-4">Hello!</h1>
         </v-flex>
-        <v-flex xs12>
+        <!--<v-flex xs12>
           <v-select
             :items="settings.avaliableLanguages"
             :value="settings.language"
@@ -13,9 +13,9 @@
             label="Select language"
             outline
           ></v-select>
-        </v-flex>
+        </v-flex>-->
         <v-flex xs12>
-          <v-btn block large text @click="next(1)">Start</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">Let's Start</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

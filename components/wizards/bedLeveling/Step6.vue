@@ -1,6 +1,6 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn block text @click="finish">
+    <v-btn x-large block depressed color="accent" @click="finish">
       Finish
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
@@ -27,7 +27,7 @@ export default class extends Vue {
   private step?: number = 5
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling.png'
+  private image: string = '/wizards/bed_leveling/bed_leveling.jpg'
   private description: string = 'Calibration complete!'
 
   @printers.Action homeCommand: any

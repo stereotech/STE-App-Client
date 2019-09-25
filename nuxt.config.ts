@@ -1,6 +1,6 @@
-import NuxtConfiguration from '@nuxt/config'
+import { Configuration } from '@nuxt/types'
 
-const config: NuxtConfiguration = {
+const config: Configuration = {
   mode: 'spa',
   head: {
     title: 'STE App',
@@ -27,7 +27,7 @@ const config: NuxtConfiguration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
+  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~plugins/i18n', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
   /*
    ** Nuxt.js modules
    */
@@ -35,9 +35,18 @@ const config: NuxtConfiguration = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/vuetify',
     '@nuxtjs/pwa'
   ],
+
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
+
+  typescript: {
+    typeCheck: {
+      memoryLimit: 3072
+    },
+    ignoreNotFoundWarnings: true,
+
+  },
   /*
    ** Axios module configuration
    */
@@ -99,11 +108,6 @@ const config: NuxtConfiguration = {
   build: {
     publicPath: '/nuxtfiles/',
     parallel: true,
-    typescript: {
-      typeCheck: {
-        memoryLimit: 3072
-      }
-    }
   }
 }
 

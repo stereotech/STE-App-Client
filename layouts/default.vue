@@ -19,6 +19,7 @@
           ripple
           link
           :to="menuItem.link"
+          color="primary"
         >
           <v-list-item-action>
             <v-icon>{{ menuItem.icon }}</v-icon>
@@ -99,7 +100,7 @@
     </v-app-bar>
     <MainSettingsDialog v-model="settingsDialog" />
     <v-content>
-      <v-container fluid grid-list-md>
+      <v-container fluid grid-list-md class="pb-xs-4">
         <nuxt />
       </v-container>
       <v-snackbar-queue :top="bottomNav" :bottom="!bottomNav" :right="!bottomNav" :timeout="3000">

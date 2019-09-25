@@ -10,7 +10,10 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block large text @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+        </v-flex>
+        <v-flex xs12>
+          <v-btn block x-large depressed color="accent" @click="nextStep">Skip</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -39,10 +42,10 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 1
+  private step?: number = 9
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material02.png'
+  private image: string = '/wizards/change_material/change_material02.jpg'
   private description: string = 'Select the needed action'
 
   @printers.Action customCommand: any
