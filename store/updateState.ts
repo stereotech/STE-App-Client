@@ -76,6 +76,10 @@ export const actions: ActionTree<UpdateState, RootState> = {
         }
     },
 
+    async checkForUpdateManually ({ commit }) {
+        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'check');
+    },
+
     async downloadUpdateVersion ({ commit }) {
         await this.$axios.post(this.state.apiUrl + updateEndpoint)
     },

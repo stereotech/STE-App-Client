@@ -8,6 +8,13 @@
             <v-container grid-list-md>
               <v-layout row wrap>
                 <v-flex xs12 v-if="softwareUpdateState == 0">
+                  <v-btn
+                    depressed
+                    block
+                    outlined
+                    color="primary"
+                    @click="checkForUpdateManually"
+                  >Check for update</v-btn>
                   <h5
                     class="headline primary--text text-center"
                   >Current version: {{ currentVersion }}</h5>
@@ -129,6 +136,7 @@ export default class extends Vue {
   @update.Action uploadUpdate!: any
   @update.Action downloadUpdateVersion!: any
   @update.Action fetchCurrentVersion!: any
+  @update.Action checkForUpdateManually!: any
 
 
   private closeDialog () {
