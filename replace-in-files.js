@@ -37,10 +37,3 @@ replace({
     paths: [join('dist')],
     recursive: true
 });
-
-replace({
-    regex: '(image: string = )\'/',
-    replacement: '$1:\'',
-    paths: [join('dist')],
-    recursive: true
-})

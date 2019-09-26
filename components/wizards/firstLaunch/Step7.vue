@@ -37,7 +37,7 @@ export default class extends Vue {
   private step?: number = 6
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling04.jpg'
+  private image: string = 'wizards/bed_leveling/bed_leveling04.jpg'
   private description: string = 'Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed'
 
 

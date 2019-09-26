@@ -103,7 +103,7 @@ export default class extends Vue {
     return 0
   }
 
-  private image: string = '/wizards/change_material/change_material.jpg'
+  private image: string = 'wizards/change_material/change_material.jpg'
   private description: string = 'Load new spool, insert material into bowden tube and press Next button'
 
   private next (step: number) {
