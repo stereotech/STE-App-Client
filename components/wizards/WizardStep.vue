@@ -5,7 +5,7 @@
         <v-layout row wrap align-center v-if="landscapeMode">
           <v-flex xs6 order-xs1 v-if="image != null">
             <v-card flat color="primary">
-              <v-img height="320" width="260" :src="image"></v-img>
+              <v-img height="320" width="260" :src="imageSource"></v-img>
             </v-card>
           </v-flex>
           <v-flex xs6 order-xs3 v-if="description">
@@ -47,6 +47,17 @@ export default class extends Vue {
     let width = this.$vuetify.breakpoint.width
     let height = this.$vuetify.breakpoint.height
     return (width > height) && (this.$vuetify.breakpoint.smAndDown)
+  }
+
+  get imageSource () {
+    if (this.image && process.env.NUXT_ENV_PLATFORM === 'WEB') {
+      return `/${this.image}`
+    }
+    return this.image
+  }
+
+  mounted () {
+
   }
 }
 </script>

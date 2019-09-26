@@ -69,7 +69,7 @@
                     block
                     color="primary"
                     @click="upload"
-                    :disabled="file == null"
+                    :disabled="file.length < 1"
                   >Upload</v-btn>
                 </v-flex>
                 <v-flex xs12 v-if="updateOnUsb">
@@ -138,12 +138,14 @@ export default class extends Vue {
 
   private overlay: boolean = false
 
-  private file: File[] | null = null
+  private file: File[] = []
 
   private async upload () {
     this.overlay = true
-    await this.uploadUpdate(this.file![0])
-    this.file = null
+    if (this.file && this.file.length > 0) {
+      await this.uploadUpdate(this.file[0])
+    }
+    this.file = []
     this.overlay = false
   }
 

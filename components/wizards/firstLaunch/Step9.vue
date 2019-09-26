@@ -27,7 +27,7 @@ export default class extends Vue {
   private step?: number = 8
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling.jpg'
+  private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
   private description: string = 'Calibration complete!'
 
   @printers.Action homeCommand: any

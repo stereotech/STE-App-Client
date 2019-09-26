@@ -42,7 +42,7 @@ export default class extends Vue {
   private step?: number = 10
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/change_material/change_material02.jpg'
+  private image: string = 'wizards/change_material/change_material02.jpg'
   private description: string = 'Select the needed action'
 
   @printers.Action customCommand: any
