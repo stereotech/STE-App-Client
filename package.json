@@ -16,11 +16,7 @@
     "replace-relative-paths": "node replace-in-files.js",
     "copy-cordova": "cp -R dist/* cordova/www/",
     "clear-cordova": "rm -R cordova/www/*",
-    "reset-printer-address": "node replace-printer-address.js"
   },
-  "pre-commit": [
-    "reset-printer-address"
-  ],
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
     "@nuxt/typescript-runtime": "^0.1.6",
@@ -48,7 +44,6 @@
     "cross-env": "^5.2.0",
     "deepmerge": "^4.0.0",
     "fibers": "^4.0.1",
-    "pre-commit": "^1.2.2",
     "replace": "^1.1.0",
     "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
