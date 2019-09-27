@@ -15,7 +15,7 @@
     "build-electron": "cd cordova && cordova build electron --release",
     "replace-relative-paths": "node replace-in-files.js",
     "copy-cordova": "cp -R dist/* cordova/www/",
-    "clear-cordova": "rm -R cordova/www/*",
+    "clear-cordova": "rm -R cordova/www/*"
   },
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
