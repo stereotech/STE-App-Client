@@ -89,9 +89,10 @@ export const actions: ActionTree<UpdateState, RootState> = {
     },
 
     async uploadUpdate ({ commit }, file: File) {
+        console.log(file)
         let data = new FormData();
         data.append('file', file, file.name)
-        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'upload', data, { headers: 'Content-Type: multipart/form-data' })
+        await this.$axios.post(this.state.apiUrl + updateEndpoint + 'upload', data, { headers: { 'Content-Type': 'multipart/form-data' } })
     }
 
 }

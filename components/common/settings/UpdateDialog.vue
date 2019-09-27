@@ -146,12 +146,12 @@ export default class extends Vue {
 
   private overlay: boolean = false
 
-  private file: File[] = []
+  private file: File[] | File = []
 
   private async upload () {
     this.overlay = true
-    if (this.file && this.file.length > 0) {
-      await this.uploadUpdate(this.file[0])
+    if (this.file) {
+      await this.uploadUpdate(this.file)
     }
     this.file = []
     this.overlay = false
