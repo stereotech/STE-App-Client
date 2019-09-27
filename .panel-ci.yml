@@ -14,6 +14,7 @@ buildPanel:
     - cordova platform add electron
     - cd ..
   script:
+    - cp -rf cordova/res/electron/cdv-electron-main.js cordova/platforms/electron/platform_www/cdv-electron-main.js
     - npm run build-panel
   after_script:
     - cp -r cordova/platforms/electron/build/linux-armv7l-unpacked panel-build
