@@ -51,8 +51,8 @@ export default ({ app, store }, inject) => {
             store.commit('updateState/setUpdateOnUsb', args.found)
             app.$notify(`New firmware is found on USB. Check settings for install`)
         })
-        hub.on('HasEqualFirmware', (args: { version: string }) => {
-            store.commit('updateState/setCurrentVersion', args.version)
+        hub.on('HasEqualFirmware', (args: string) => {
+            store.commit('updateState/setCurrentVersion', args)
         })
         hub.on('HasNewFirmware', (args: { version: string }) => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
