@@ -177,9 +177,37 @@ const usbs = [
         children: [
             {
                 date: Date.now(),
+                display: 'File_24534.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_234534553.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2345345534.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
                 display: 'File_2.gcode',
                 hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_2.gcode',
+                name: 'File_234534435.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2345534345.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_234645346.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_267868565.gcode',
                 size: 15315451,
                 origin: 'st-aaa',
                 path: '/USB/File_2.gcode',
@@ -188,7 +216,49 @@ const usbs = [
                 refs: {
                     download: 'localhost:3000/usb/file2.gcode',
                 }
-            }
+            },
+            {
+                date: Date.now(),
+                display: 'File_276856885.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_258768786.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_267867868.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_26786786.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2768676.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_2678678678.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_2.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_27686786.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
         ],
         display: 'Storage',
         name: 'Storage',
@@ -202,9 +272,9 @@ const usbs = [
         children: [
             {
                 date: Date.now(),
-                display: 'File_2.gcode',
+                display: 'File_2678678678.gcode',
                 hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_2.gcode',
+                name: 'File_26786787868.gcode',
                 size: 15315451,
                 origin: 'st-bbb',
                 path: '/USB/File_2.gcode',
@@ -213,7 +283,77 @@ const usbs = [
                 refs: {
                     download: 'localhost:3000/usb1/file2.gcode',
                 }
-            }
+            },
+            {
+                date: Date.now(),
+                display: 'File_26786758.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_25766768678.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_256867856.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_2.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_256867585.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_5656867582.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_56786782.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_25678568.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_265867867.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: 'File_2547657.gcode',
+                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                name: 'File_246876678.gcode',
+                size: 15315451,
+                origin: 'st-aaa',
+                path: '/USB/File_2.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/usb/file2.gcode',
+                }
+            },
         ],
         display: 'Storage',
         name: 'Storage',
