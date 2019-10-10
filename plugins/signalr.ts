@@ -47,21 +47,21 @@ export default ({ app, store }, inject) => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.FailedDownload)
             app.$notify(`New firmware download failed`, 'error')
         })
-        hub.on('UpdateFoundOnUsb', (args: { found: boolean }) => {
-            store.commit('updateState/setUpdateOnUsb', args.found)
+        hub.on('UpdateFoundOnUsb', (args: boolean) => {
+            store.commit('updateState/setUpdateOnUsb', args)
             app.$notify(`New firmware is found on USB. Check settings for install`)
         })
         hub.on('HasEqualFirmware', (args: string) => {
             store.commit('updateState/setCurrentVersion', args)
         })
-        hub.on('HasNewFirmware', (args: { version: string }) => {
+        hub.on('HasNewFirmware', (args: string) => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
-            store.commit('updateState/setAvaliableVersion', args.version)
-            app.$notify(`New firmware is available, version ${args.version}. Check settings for install`)
+            store.commit('updateState/setAvaliableVersion', args)
+            app.$notify(`New firmware is available, version ${args}. Check settings for install`)
         })
-        hub.on('UpdateStateChanged', (args: { state: SoftwareUpdateState, downloadProgress: number }) => {
-            store.commit('updateState/setDownloadProgress', args.downloadProgress)
-            store.commit('updateState/setSoftwareUpdateState', args.state)
+        hub.on('UpdateStateChanged', (state: SoftwareUpdateState, downloadProgress: number) => {
+            store.commit('updateState/setDownloadProgress', downloadProgress)
+            store.commit('updateState/setSoftwareUpdateState', state)
         })
 
 
