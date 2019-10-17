@@ -6,10 +6,22 @@ const printers = [
         model: 'STE320',
         name: 'ST-AAA',
         isLocal: true,
+        isFiveAxis: false,
         address: '192.168.0.100',
         apiKey: '',
         octoApiKey: '',
         role: 'host'
+    },
+    {
+        id: 'st-aab',
+        model: 'STE520',
+        name: 'ST-BBB',
+        isLocal: false,
+        isFiveAxis: true,
+        address: '192.168.0.100',
+        apiKey: '',
+        octoApiKey: '',
+        role: 'host' 
     }
 ]
 
@@ -20,80 +32,97 @@ const printJobs = [
         description: '',
         creationTime: Date.now(),
         fileUri: 'file.gcode',
+        ifFiveAxis:true,
         succesful: true,
         lastPrintTime: Date.now(),
+        state: 'Queued',
         printers: []
     },
     {
         id: 2,
         name: 'job2',
         description: '',
+        isFiveAxis:true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Queued',
         printers: ['st-aaa']
     },
     {
         id: 3,
-        name: 'job2',
+        name: 'job3',
         description: '',
+        isFiveAxis: true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Queued',
         printers: ['st-aaa']
     },
     {
         id: 4,
-        name: 'job2',
+        name: 'job4',
         description: '',
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Completed',
         printers: ['st-aaa']
     },
     {
         id: 5,
-        name: 'job2',
+        name: 'job5',
         description: '',
+        isFiveAxis: true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Completed',
         printers: ['st-aaa']
     },
     {
         id: 6,
-        name: 'job2',
+        name: 'job6',
         description: '',
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Queued',
         printers: ['st-aaa']
     },
     {
         id: 7,
-        name: 'job2',
+        name: 'job7',
         description: '',
+        isFiveAxis: true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Completed',
         printers: ['st-aaa']
     },
     {
         id: 8,
-        name: 'job2',
+        name: 'job8',
         description: '',
+        isFiveAxis: true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Queued',
         printers: ['st-aaa']
     },
     {
         id: 9,
-        name: 'job2',
+        name: 'job9',
         description: '',
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Queued',
         printers: ['st-aaa']
     },
     {
         id: 10,
-        name: 'job2',
+        name: 'job10',
         description: '',
+        isFiveAxis: true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
+        state: 'Completed',
         printers: ['st-aaa']
     }
 ]
@@ -180,6 +209,7 @@ const usbs = [
                 display: 'File_24534.gcode',
                 hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
                 name: 'File_234534553.gcode',
+                isFiveAxis: true,
                 size: 15315451,
                 origin: 'st-aaa',
                 path: '/USB/File_2345345534.gcode',
@@ -276,6 +306,7 @@ const usbs = [
                 hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
                 name: 'File_26786787868.gcode',
                 size: 15315451,
+                isFiveAxis:true,
                 origin: 'st-bbb',
                 path: '/USB/File_2.gcode',
                 type: 'machinecode',
@@ -368,8 +399,8 @@ const usbs = [
 export default function (req, res, next) {
     //res.writeHead(200, { 'Content-Type': 'application/json' })
     if (req.url === '/jobs') {
-        res.end(JSON.stringify([]))
-        //res.end(JSON.stringify(printJobs))
+       // res.end(JSON.stringify([]))
+        res.end(JSON.stringify(printJobs))
     }
     else if (req.url === '/printers/') {
         res.end(JSON.stringify(printers))
