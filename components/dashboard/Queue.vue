@@ -22,7 +22,8 @@
           @contextmenu="showContextMenu"
         >
           <v-list-item-content>
-            <v-list-item-title>{{ job.name }}</v-list-item-title>
+            <v-list-item-title>{{ job.name }}<v-chip color="info" v-if="job.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
+    
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true"></v-progress-linear>
             </v-list-item-subtitle>
@@ -129,7 +130,7 @@
                   chips
                   multiple
                   dense
-                  :items="printers"
+                  :items="certainTypePrinters(isFiveAxis)"
                   item-text="name"
                   item-value="id"
                   v-model="editedJob.printers"
@@ -181,6 +182,7 @@ import { PrinterInfo } from '~/types/printer'
 import { FileOrFolder } from '~/types/fileOrFolder'
 import { PrintJob } from '~/types/printJob';
 import BottomInput from '~/components/common/BottomInput.vue'
+import { PrinterType } from '~/types/printerType';
 
 const printJobs = namespace('printJobsState')
 const printers = namespace('printersState')
@@ -199,7 +201,8 @@ export default class extends Vue {
   @printJobs.Action addJob: any
 
   @printers.Getter printers!: PrinterInfo[]
-  @storage.Getter avaliableFiles!: { name: string, uri: string }[]
+  @printers.Getter certainTypePrinters!:(type: PrinterType)=>PrinterInfo[]
+  @storage.Getter avaliableFiles!: { name: string, uri: string, isFiveAxis: boolean}[]
 
   private overlay: boolean = false
   private dialog: boolean = false
@@ -208,6 +211,20 @@ export default class extends Vue {
 
   private nameWasChanged: boolean = false
 
+  get numberValueOfFiveAxis(): number{
+    let isFiveAx = this.editedJob.isFiveAxis
+    if(this.editedJob!=null){
+        if (isFiveAx==true){
+          return PrinterType.fiveAxis;
+        }
+        else {
+          return PrinterType.threeAxis;
+        }
+    }
+    else{
+      return PrinterType.both;
+    }
+  }
   private changeNameFromFile (value: string) {
     if (!this.nameWasChanged) {
       let filenameWithExt = value.split('/').pop()
@@ -215,6 +232,11 @@ export default class extends Vue {
         let filename = filenameWithExt.split('.').shift()
         this.editedJob.name = `Print ${filename}`
       }
+    }
+
+    let file = this.avaliableFiles.find(el=> el.uri === value)
+    if (file != undefined){
+      this.editedJob.isFiveAxis=file.isFiveAxis
     }
   }
 
@@ -252,6 +274,7 @@ export default class extends Vue {
     printers: [],
     lastPrintTime: 0,
     successful: false,
+    isFiveAxis:undefined,
     state: ''
   }
 
@@ -264,6 +287,7 @@ export default class extends Vue {
       description: '',
       printers: [],
       fileUri: '',
+      isFiveAxis:false,
       creationTime: Date.now(),
       lastPrintTime: 0,
       successful: false,
@@ -338,6 +362,7 @@ export default class extends Vue {
       description: '',
       creationTime: 0,
       fileUri: '',
+      isFiveAxis:false,
       printers: [],
       lastPrintTime: 0,
       successful: false,

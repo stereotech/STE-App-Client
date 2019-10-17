@@ -19,6 +19,7 @@
             :paused="isPaused"
             :maintenance="isMaintenance"
             :idle="isIdle"
+            :isFiveAxis="computedPrinter.isFiveAxis"
             :printing="isPrinting"
             :done="isDone"
             :failed="isFailed"
