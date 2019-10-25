@@ -1,5 +1,5 @@
 buildWeb:
-  image: node
+  image: node:10.17.0-alpine
   stage: build
   cache:
     paths:
