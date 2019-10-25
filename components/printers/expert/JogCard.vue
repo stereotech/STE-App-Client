@@ -6,6 +6,7 @@
         <v-flex xs12 sm9 order-sm1>
           <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
         </v-flex>
+
         <v-flex xs12 sm9 order-sm2>
           <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogYPlus">
             <v-icon>mdi-chevron-up</v-icon>
@@ -135,6 +136,10 @@ export default class JogCard extends Vue {
 
   private motorsOff () {
     this.customCommand({ id: this.id, command: 'M84' })
+  }
+
+  private servicePos () {
+    this.customCommand({ id: this.id, command: 'G0 X100 Y5' })
   }
 
   @Prop({ default: false, type: Boolean }) fiveAxis?: boolean

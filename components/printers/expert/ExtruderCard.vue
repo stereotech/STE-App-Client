@@ -27,13 +27,27 @@
             :disabled="printing"
           ></v-select>
         </v-flex>
-        <v-flex xs12 sm9 order-sm3>
+
+        <v-flex xs12 sm6 order-sm3>
           <v-btn-toggle mandatory v-model="selectedAmount" rounded>
             <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
             <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
             <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
             <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
           </v-btn-toggle>
+        </v-flex>
+        <v-flex xs12 sm3 order-sm3>
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            color="primary"
+            :disabled="printing"
+            @click="servicePos"
+          >
+            <v-icon>mdi-progress-wrench</v-icon>
+          </v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -67,6 +81,7 @@ export default class ExtruderCard extends Vue {
   @printers.Action extrudeCommand: any
   @printers.Action retractCommand: any
   @printers.Action flowCommand: any
+  @printers.Action customCommand: any
 
   private extrude () {
     this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.amount })
@@ -78,6 +93,10 @@ export default class ExtruderCard extends Vue {
 
   private setFlow (value: number) {
     this.flowCommand({ id: this.id, flow: value })
+  }
+
+  private servicePos () {
+    this.customCommand({ id: this.id, command: 'G0 X100 Y5' })
   }
 
   @Prop({ default: false, type: Boolean }) printing?: boolean
