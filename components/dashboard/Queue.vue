@@ -130,7 +130,7 @@
                   chips
                   multiple
                   dense
-                  :items="certainTypePrinters(isFiveAxis)"
+                  :items="certainTypePrinters(editedJob.isFiveAxis)"
                   item-text="name"
                   item-value="id"
                   v-model="editedJob.printers"
