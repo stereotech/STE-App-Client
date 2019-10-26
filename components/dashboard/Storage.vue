@@ -21,7 +21,7 @@
           @contextmenu="showContextMenu"
         >
           <v-list-item-content>
-            <v-list-item-title class="subheading">{{ file.display }}<v-chip color="info" v-if="file.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
+            <v-list-item-title class="subheading">{{ file.display }}<v-chip color="info" v-if="file.gCodeAnalysis.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
 
             <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
             
