@@ -1,43 +1,43 @@
 <template>
-  <v-flex d-flex md4 xs12 sm6>
-    <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs4>
+  <v-col class="d-flex" md="4" cols="12" sm="6">
+    <v-container fluid>
+      <v-row dense>
+        <v-col cols="4">
           <v-img class="elevation-1" :src="'/printers/'+ model +'.png'" alt="Avatar">
-            <div v-if="printing" class="fill-height repeating-gradient-white"></div>
-            <div v-else-if="paused || maintenance" class="fill-height repeating-gradient-warning"></div>
-            <div v-else-if="done" class="fill-height repeating-gradient-success"></div>
-            <div v-else-if="offline" class="fill-height repeating-gradient-error"></div>
-            <div v-else></div>
+            <div v-if="printing" class="fill-height repeating-gradient-white" />
+            <div v-else-if="paused || maintenance" class="fill-height repeating-gradient-warning" />
+            <div v-else-if="done" class="fill-height repeating-gradient-success" />
+            <div v-else-if="offline" class="fill-height repeating-gradient-error" />
+            <div v-else />
           </v-img>
-        </v-flex>
-        <v-flex xs8>
+        </v-col>
+        <v-col cols="8">
           <div class="title">
             {{ name }}
-            <v-chip color="primary" v-if="local" outlined label>Host</v-chip>
+            <v-chip v-if="local" color="primary" outlined label>Host</v-chip>
           </div>
 
           <div class="caption">{{ model }}</div>
           <div
-            class="caption"
             v-if="printing || paused"
+            class="caption"
           >Spent {{ [printTime, 'seconds'] | duration('humanize') }}, {{ [printTimeLeft, 'seconds'] | duration('humanize') }} left</div>
-          <div class="title" v-if="printing">Printing...{{ progress | currency('', 1) }}%</div>
-          <div class="warning--text title" v-if="paused">Paused at {{ progress | currency('', 1) }}%</div>
-          <div class="title" v-else-if="idle">Idle</div>
-          <div class="warning--text title" v-else-if="maintenance">Maintenance</div>
-          <div class="success--text title" v-else-if="done">Printing Done!</div>
-          <div class="error--text title" v-else-if="failed">Printing Failed</div>
-          <div class="error--text title" v-else-if="offline">Offline</div>
-          <div class="primary--text title" v-else-if="loading">Loading...</div>
-          <div class="error--text title" v-else-if="notAvaliable">Not Avaliable</div>
-          <v-progress-linear v-if="printing" :value="progress"></v-progress-linear>
-          <v-progress-linear v-if="paused" :value="progress" color="warning"></v-progress-linear>
-          <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
-        </v-flex>
-      </v-layout>
+          <div v-if="printing" class="title">Printing...{{ progress | currency('', 1) }}%</div>
+          <div v-if="paused" class="warning--text title">Paused at {{ progress | currency('', 1) }}%</div>
+          <div v-else-if="idle" class="title">Idle</div>
+          <div v-else-if="maintenance" class="warning--text title">Maintenance</div>
+          <div v-else-if="done" class="success--text title">Printing Done!</div>
+          <div v-else-if="failed" class="error--text title">Printing Failed</div>
+          <div v-else-if="offline" class="error--text title">Offline</div>
+          <div v-else-if="loading" class="primary--text title">Loading...</div>
+          <div v-else-if="notAvaliable" class="error--text title">Not Avaliable</div>
+          <v-progress-linear v-if="printing" :value="progress" />
+          <v-progress-linear v-if="paused" :value="progress" color="warning" />
+          <v-progress-linear v-if="loading" indeterminate />
+        </v-col>
+      </v-row>
     </v-container>
-  </v-flex>
+  </v-col>
 </template>
 
 <script lang="ts">

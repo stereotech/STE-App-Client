@@ -1,72 +1,179 @@
 <template>
   <v-card>
-    <v-card-title class="title">Jog</v-card-title>
-    <v-container grid-list-xs>
-      <v-layout row wrap class="text-center" align-center justify-center>
-        <v-flex xs12 sm9 order-sm1>
-          <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
-        </v-flex>
+    <v-card-title class="title">
+      Jog
+    </v-card-title>
+    <v-container>
+      <v-row dense class="text-center" align="center" justify="center">
+        <v-col cols="12" sm="9" order-sm="1">
+          <v-btn
+            text
+            icon
+            color="primary"
+            :ripple="false"
+            depressed
+            :disabled="printing"
+          >
+            xy
+          </v-btn>
+        </v-col>
 
-        <v-flex xs12 sm9 order-sm2>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogYPlus">
+        <v-col cols="12" sm="9" order-sm="2">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="jogYPlus"
+          >
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogXMinus">
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="3">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="jogXMinus"
+          >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeXY">
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="3">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="homeXY"
+          >
             <v-icon>mdi-home</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogXPlus">
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="3">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="jogXPlus"
+          >
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs12 sm9 order-sm4>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogYMinus">
+        </v-col>
+        <v-col cols="12" sm="9" order-sm="4">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="jogYMinus"
+          >
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs12 sm3 order-sm1>
-          <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm4>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogZPlus">
+        </v-col>
+        <v-col cols="12" sm="3" order-sm="1">
+          <v-btn
+            text
+            icon
+            color="primary"
+            :ripple="false"
+            depressed
+            :disabled="printing"
+          >
+            z
+          </v-btn>
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="4">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="jogZPlus"
+          >
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeZ">
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="3">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="homeZ"
+          >
             <v-icon>mdi-home</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm2>
-          <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogZMinus">
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="2">
+          <v-btn
+            outlined
+            text
+            icon
+            x-large
+            color="primary"
+            :disabled="printing"
+            @click="jogZMinus"
+          >
             <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs8 sm9 order-sm5 pt-2>
-          <v-btn-toggle mandatory v-model="selectedAmount" rounded>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
+        </v-col>
+        <v-col class="pt-2" cols="8" sm="9" order-sm="5">
+          <v-btn-toggle v-model="selectedAmount" mandatory rounded>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">
+              0.1
+            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 1">
+              1
+            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 10">
+              10
+            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 100">
+              100
+            </v-btn>
           </v-btn-toggle>
-        </v-flex>
-        <v-flex xs4 sm3 order-sm5>
-          <v-btn x-large text color="primary" :disabled="printing" outlined icon @click="motorsOff">
+        </v-col>
+        <v-col cols="4" sm="3" order-sm="5">
+          <v-btn
+            x-large
+            text
+            color="primary"
+            :disabled="printing"
+            outlined
+            icon
+            @click="motorsOff"
+          >
             <v-icon>mdi-engine-off-outline</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs12 order-sm5 pt-6>
-          <v-slider v-model="feed" label="Feed" thumb-label min="50" max="150" @change="setFeed"></v-slider>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col class="pt-6" cols="12" order-sm="5">
+          <v-slider
+            v-model="feed"
+            label="Feed"
+            thumb-label
+            min="50"
+            max="150"
+            @change="setFeed"
+          />
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>

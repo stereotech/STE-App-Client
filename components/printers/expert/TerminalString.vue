@@ -1,7 +1,7 @@
 <template>
   <v-list-item>
     <v-list-item-content>
-      <slot></slot>
+      <slot />
     </v-list-item-content>
   </v-list-item>
 </template>

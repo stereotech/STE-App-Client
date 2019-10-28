@@ -1,23 +1,23 @@
 <template>
-  <v-layout row wrap>
-    <PrinterCard toolbar :id="$route.params.id" />
-    <v-flex xs12>
-      <v-expansion-panels multiple v-model="panel">
-        <WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />
+  <v-row dense>
+    <PrinterCard :id="$route.params.id" toolbar />
+    <v-col cols="12">
+      <v-expansion-panels v-model="panel" multiple>
+        <WizardsPanel v-if="isMaintenance || isPaused" :id="$route.params.id" />
         <!--<WizardsPanel :id="$route.params.id" />-->
-        <ManualControlPanel :printing="isPrinting" :id="$route.params.id" />
+        <ManualControlPanel :id="$route.params.id" :printing="isPrinting" />
       </v-expansion-panels>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { Action, Getter, namespace } from 'vuex-class'
+import { PrinterInfo, CurrentState } from 'types/printer'
 import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
 import WizardsPanel from '~/components/printers/WizardsPanel.vue'
 import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.vue'
-import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, CurrentState } from 'types/printer'
 
 const printers = namespace('printersState')
 

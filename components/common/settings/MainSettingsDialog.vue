@@ -1,6 +1,8 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Settings</template>
+    <template slot="title">
+      Settings
+    </template>
     <v-list>
       <template v-for="(setting, index) in settings">
         <v-list-item :key="setting.title" @click="setting.page = true">
@@ -8,10 +10,10 @@
             <v-icon>{{ setting.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="setting.title"></v-list-item-title>
+            <v-list-item-title v-text="setting.title" />
           </v-list-item-content>
         </v-list-item>
-        <v-divider inset :key="index"></v-divider>
+        <v-divider :key="index" inset />
       </template>
     </v-list>
     <WifiDialog v-model="settings[0].page" />

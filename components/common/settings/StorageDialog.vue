@@ -1,24 +1,28 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Storage</template>
-    <v-text-field label="Total" filled readonly :value="bytesTotal | prettyBytes"></v-text-field>
-    <v-text-field label="Owned" filled readonly :value="bytesOwned | prettyBytes"></v-text-field>
-    <v-text-field label="Avaliable" filled readonly :value="bytesAvaliable | prettyBytes"></v-text-field>
+    <template slot="title">
+      Storage
+    </template>
+    <v-text-field label="Total" filled readonly :value="bytesTotal | prettyBytes" />
+    <v-text-field label="Owned" filled readonly :value="bytesOwned | prettyBytes" />
+    <v-text-field label="Avaliable" filled readonly :value="bytesAvaliable | prettyBytes" />
     <v-progress-circular
       :rotate="-90"
       :width="50"
       size="288"
       :value="percentOwned"
       color="primary"
-    >{{ bytesOwned | prettyBytes(1) }} / {{ bytesTotal | prettyBytes(1) }}</v-progress-circular>
+    >
+      {{ bytesOwned | prettyBytes(1) }} / {{ bytesTotal | prettyBytes(1) }}
+    </v-progress-circular>
   </SettingsDialog>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
 
 const settings = namespace('settingsState')
 

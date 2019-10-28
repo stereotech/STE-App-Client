@@ -1,8 +1,8 @@
 <template>
   <WizardStep :step="step">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
+    <v-container>
+      <v-row dense class="fill-height" align="center" justify="space-around" column>
+        <v-col cols="12">
           <v-card>
             <v-list light>
               <v-subheader>Avaliable networks</v-subheader>
@@ -24,24 +24,29 @@
                     <v-icon>mdi-wifi-strength-outline</v-icon>
                   </v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title v-text="network.name"></v-list-item-title>
+                    <v-list-item-title v-text="network.name" />
                   </v-list-item-content>
                   <v-list-item-action v-if="network.security">
                     <v-icon>mdi-lock</v-icon>
                   </v-list-item-action>
                 </v-list-item>
-                <v-divider inset :key="index"></v-divider>
+                <v-divider :key="index" inset />
               </template>
               <v-dialog v-model="confirmation" max-width="425">
                 <v-card>
                   <v-card-title
                     v-if="setupNetwork.security"
                     class="headline"
-                  >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
-                  <v-card-title v-else class="headline">Connect to network?</v-card-title>
-                  <v-container grid-list-md v-if="setupNetwork.security">
-                    <BottomInput :input.sync="password" v-model="keyboard">
+                  >
+                    Enter Wi-Fi password for {{ setupNetwork.name }}
+                  </v-card-title>
+                  <v-card-title v-else class="headline">
+                    Connect to network?
+                  </v-card-title>
+                  <v-container v-if="setupNetwork.security">
+                    <BottomInput v-model="keyboard" :input.sync="password">
                       <v-text-field
+                        v-model="password"
                         filled
                         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                         :rules="[ rules.required, rules.min ]"
@@ -49,40 +54,45 @@
                         name="input-10-2"
                         label="Wi-Fi password"
                         class="input-group--focused"
-                        v-model="password"
                         @click:append="showPassword = !showPassword"
                         @click="keyboard = true"
-                      ></v-text-field>
+                      />
                     </BottomInput>
                   </v-container>
 
                   <v-card-actions>
-                    <v-btn x-large color="primary" depressed @click="confirmation = false">Cancel</v-btn>
+                    <v-btn x-large color="primary" depressed @click="confirmation = false">
+                      Cancel
+                    </v-btn>
                     <v-btn
                       x-large
                       color="primary"
                       depressed
-                      @click="startConnecting"
                       :disabled="isMin"
-                    >Connect</v-btn>
+                      @click="startConnecting"
+                    >
+                      Connect
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
             </v-list>
           </v-card>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="next(15)">Next</v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="next(15)">
+            Next
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Network } from '~/types/networking'
 import BottomInput from '~/components/common/BottomInput.vue'
 
@@ -109,7 +119,7 @@ export default class extends Vue {
   private password: string = ''
   private rules: any = {
     required: value => !!value || 'Required.',
-    min: v => {
+    min: (v) => {
       if (v != null) {
         return v.length >= 8 || 'Min 8 characters'
       }

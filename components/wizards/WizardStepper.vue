@@ -1,25 +1,27 @@
 <template>
-  <v-flex xs12>
+  <v-col cols="12">
     <v-toolbar color="primary" flat dense>
-      <v-btn x-large text icon @click="$router.back()" v-if="closeable && currentStep == 0">
+      <v-btn v-if="closeable && currentStep == 0" x-large text icon @click="$router.back()">
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <span class="headline font-weight-light">
-        <slot name="title"></slot>
+        <slot name="title" />
       </span>
-      <div class="flex-grow-1"></div>
-      <v-progress-circular :value="progressStep" size="48">{{currentStep + 1}}/{{stepCount}}</v-progress-circular>
+      <div class="flex-grow-1" />
+      <v-progress-circular :value="progressStep" size="48">
+        {{ currentStep + 1 }}/{{ stepCount }}
+      </v-progress-circular>
     </v-toolbar>
     <v-card color="primary" dark flat>
       <v-window
         v-model="currentStep"
-        @change="$emit('change', currentStep)"
         :vertical="landscapeMode"
+        @change="$emit('change', currentStep)"
       >
-        <slot></slot>
+        <slot />
       </v-window>
     </v-card>
-  </v-flex>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -34,8 +36,8 @@ export default class extends Vue {
   @Prop({ type: Boolean, default: true }) closeable?: boolean
 
   get landscapeMode (): boolean {
-    let width = this.$vuetify.breakpoint.width
-    let height = this.$vuetify.breakpoint.height
+    const width = this.$vuetify.breakpoint.width
+    const height = this.$vuetify.breakpoint.height
     return (width > height) && (this.$vuetify.breakpoint.smAndDown)
   }
 

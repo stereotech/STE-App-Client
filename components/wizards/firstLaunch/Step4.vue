@@ -1,24 +1,28 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-flex xs12>
+    <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(4)">
         Start
-        <v-icon right dark>mdi-chevron-right</v-icon>
+        <v-icon right dark>
+          mdi-chevron-right
+        </v-icon>
       </v-btn>
-    </v-flex>
-    <v-flex xs12>
+    </v-col>
+    <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(9)">
         Skip
-        <v-icon right dark>mdi-chevron-right</v-icon>
+        <v-icon right dark>
+          mdi-chevron-right
+        </v-icon>
       </v-btn>
-    </v-flex>
+    </v-col>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -49,7 +53,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 
 <style>
 </style>

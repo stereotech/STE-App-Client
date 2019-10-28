@@ -4,17 +4,17 @@
       <span class="headline font-weight-light">Wizards</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <v-flex xs6 sm3 lg2 v-for="wizard in data" :key="wizard.id">
+      <v-container fluid>
+        <v-row dense>
+          <v-col v-for="wizard in data" :key="wizard.id" cols="6" sm="3" lg="2">
             <WizardCard
               :name="wizard.name"
               :image="wizard.image"
               :description="wizard.description"
               :to="'/printers/' + $route.params.id + '/' + wizard.link"
             />
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
     </v-expansion-panel-content>
   </v-expansion-panel>
@@ -24,14 +24,12 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import WizardCard from '~/components/printers/WizardCard.vue'
 
-
 @Component({
   components: {
     WizardCard
   }
 })
 export default class WizardsPanel extends Vue {
-
   @Prop({ default: '', type: String }) id?: string
 
   private data: any[] = [

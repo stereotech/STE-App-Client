@@ -4,21 +4,21 @@
       <span class="headline font-weight-light">Manual control</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <v-container fluid grid-list-xs>
-        <v-layout row wrap>
-          <v-flex xs12 md6>
-            <JogCard :printing="printing" :id="id" />
-          </v-flex>
-          <v-flex xs12 md6>
-            <ExtruderCard :printing="printing" :id="id" />
-          </v-flex>
-          <v-flex xs12 md6>
-            <TemperatureFan chamberFan :id="id" />
-          </v-flex>
-          <v-flex xs12 md6>
+      <v-container fluid>
+        <v-row dense>
+          <v-col cols="12" md="6">
+            <JogCard :id="id" :printing="printing" />
+          </v-col>
+          <v-col cols="12" md="6">
+            <ExtruderCard :id="id" :printing="printing" />
+          </v-col>
+          <v-col cols="12" md="6">
+            <TemperatureFan :id="id" chamber-fan />
+          </v-col>
+          <v-col cols="12" md="6">
             <TerminalCard :id="id" />
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
     </v-expansion-panel-content>
   </v-expansion-panel>

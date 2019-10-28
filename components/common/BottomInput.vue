@@ -1,17 +1,17 @@
 <template>
   <div>
-    <slot></slot>
-    <v-bottom-sheet v-model="isOpen" @click:outside="closeKeyboard" v-if="isPanel">
+    <slot />
+    <v-bottom-sheet v-if="isPanel" v-model="isOpen" @click:outside="closeKeyboard">
       <v-sheet>
-        <v-container grid-list-xs>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <slot></slot>
-            </v-flex>
-            <v-flex xs12>
-              <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="inputLocal" />
-            </v-flex>
-          </v-layout>
+        <v-container>
+          <v-row dense>
+            <v-col cols="12">
+              <slot />
+            </v-col>
+            <v-col cols="12">
+              <SimpleKeyboard :input="inputLocal" @onChange="onChange" @onKeyPress="onKeyPress" />
+            </v-col>
+          </v-row>
         </v-container>
       </v-sheet>
     </v-bottom-sheet>
@@ -44,14 +44,14 @@ export default class BottomInput extends Vue {
   }
 
   get isPanel () {
-    return process.env.NUXT_ENV_PLATFORM == 'PANEL'
+    return process.env.NUXT_ENV_PLATFORM === 'PANEL'
   }
 
   @Prop({ type: String, default: '' }) input!: string
 
   inputLocal: string = this.input
 
-  onChange (input) {
+  onChange () {
 
   }
   onKeyPress (button: string) {

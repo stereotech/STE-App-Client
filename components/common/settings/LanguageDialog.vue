@@ -1,21 +1,23 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Language</template>
+    <template slot="title">
+      Language
+    </template>
     <v-select
       :items="settings.avaliableLanguages"
       :value="settings.language"
-      @input="sendLanguage"
       filled
       label="Select language"
-    ></v-select>
+      @input="sendLanguage"
+    />
   </SettingsDialog>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
 
 const settings = namespace('settingsState')
 

@@ -1,5 +1,24 @@
+import { Plugin } from '@nuxt/types'
 
-export default ({ app }, inject) => {
+declare module 'vue/types/vue' {
+    interface Vue {
+        $notify (message: string, type: string, strict: boolean): Promise<void>
+    }
+}
+
+declare module '@nuxt/types' {
+    interface NuxtAppOptions {
+        $notify (message: string, type: string, strict: boolean): Promise<void>
+    }
+}
+
+declare module 'vuex/types/index' {
+    interface Store<S> {
+        $notify (message: string, type: string, strict: boolean): Promise<void>
+    }
+}
+
+const notify: Plugin = ({ app }, inject) => {
     inject('notify', async (message: string, type: string = 'info', strict: boolean = false) => {
         if (strict) {
             app.$dialog(message, type)
@@ -25,3 +44,4 @@ export default ({ app }, inject) => {
     })
 }
 
+export default notify

@@ -1,61 +1,85 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <v-container grid-list-md>
-            <v-layout row wrap class="text-center" align-center justify-center>
-              <v-flex xs6>
-                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(-1)">
+    <v-container>
+      <v-row dense>
+        <v-col cols="12">
+          <v-container>
+            <v-row dense class="text-center" align="center" justify="center">
+              <v-col cols="6">
+                <v-btn
+                  x-large
+                  outlined
+                  depressed
+                  color="accent"
+                  icon
+                  dark
+                  @click="jog(-1)"
+                >
                   <v-icon>mdi-chevron-up</v-icon>
                 </v-btn>
-              </v-flex>
-              <v-flex xs6>
-                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(1)">
+              </v-col>
+              <v-col cols="6">
+                <v-btn
+                  x-large
+                  outlined
+                  depressed
+                  color="accent"
+                  icon
+                  dark
+                  @click="jog(1)"
+                >
                   <v-icon>mdi-chevron-down</v-icon>
                 </v-btn>
-              </v-flex>
-              <v-flex xs12>
-                <v-btn-toggle mandatory v-model="selectedAmount">
+              </v-col>
+              <v-col cols="12">
+                <v-btn-toggle v-model="selectedAmount" mandatory>
                   <v-btn
                     x-large
                     outlined
                     color="primary"
                     text-color="secondary"
                     @click="amount = 0.1"
-                  >0.1</v-btn>
+                  >
+                    0.1
+                  </v-btn>
                   <v-btn
                     x-large
                     outlined
                     color="primary"
                     text-color="secondary"
                     @click="amount = 1"
-                  >1</v-btn>
+                  >
+                    1
+                  </v-btn>
                 </v-btn-toggle>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-container>
-        </v-flex>
-        <v-flex xs12>
+        </v-col>
+        <v-col cols="12">
           <v-btn x-large block depressed color="accent" @click="next(1)">
-            <v-icon left dark>mdi-chevron-left</v-icon>Set points again
+            <v-icon left dark>
+              mdi-chevron-left
+            </v-icon>Set points again
           </v-btn>
-        </v-flex>
-        <v-flex xs12>
+        </v-col>
+        <v-col cols="12">
           <v-btn x-large block depressed color="accent" @click="next(5)">
             Next
-            <v-icon right dark>mdi-chevron-right</v-icon>
+            <v-icon right dark>
+              mdi-chevron-right
+            </v-icon>
           </v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -87,7 +111,6 @@ export default class extends Vue {
   private image: string = 'wizards/bed_leveling/bed_leveling05.jpg'
   private description: string = 'Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment'
 
-
   private async next (step: number) {
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
@@ -102,7 +125,6 @@ export default class extends Vue {
   @printers.Action jogCommand: any
 }
 </script>
-
 
 <style>
 </style>

@@ -12,11 +12,11 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title>
-          <slot name="title"></slot>
+          <slot name="title" />
         </v-toolbar-title>
       </v-toolbar>
       <v-card-text style="height: 1000px;">
-        <slot></slot>
+        <slot />
       </v-card-text>
     </v-card>
   </v-dialog>
