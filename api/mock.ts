@@ -1,3 +1,7 @@
+import { ServerMiddleware } from '@nuxt/types'
+import { PrinterInfo, CurrentState } from '~/types/printer'
+import { Settings } from '~/types/settings'
+
 
 
 const printers = [
@@ -115,10 +119,9 @@ const scannerResults = [
     }
 ]
 
-const settings = {
+const settings: Settings = {
     systemId: 'st-aaa',
     role: 'host',
-    hostname: 'st-aaa',
     firstLaunch: false,
     avaliableLanguages: ['English', 'Русский'],
     language: 'English',
@@ -365,62 +368,24 @@ const usbs = [
     }
 ]
 
-export default function (req, res, next) {
-    //res.writeHead(200, { 'Content-Type': 'application/json' })
+
+const apiMock: ServerMiddleware = function (req, res, next) {
     if (req.url === '/jobs') {
         res.end(JSON.stringify([]))
         //res.end(JSON.stringify(printJobs))
     }
     else if (req.url === '/printers/') {
+        let printers: PrinterInfo[] = [{
+            id: 'st-aaa',
+            model: 'STE320',
+            name: 'ST-AAA',
+            isLocal: true,
+            address: '192.168.0.100',
+            apiKey: '',
+            octoApiKey: '',
+            role: 'host'
+        }]
         res.end(JSON.stringify(printers))
-    }
-    else if (req.url === '/printers/state') {
-        let status = [
-            {
-                id: 'st-aaa',
-                stateText: 'Printing',
-                bed: {
-                    actual: 60 + Math.random() * 5,
-                    target: 60,
-                    offset: 0
-                },
-                tool0: {
-                    actual: 218 + Math.random() * 4,
-                    target: 220,
-                    offset: 0
-                },
-                tool1: {
-                    actual: 43 + Math.random() * 4,
-                    target: 0,
-                    offset: 0
-                },
-                job: {
-                    estimatedPrintTime: 4453.447533993765,
-                    filment: {
-                        tool0: {
-                            length: 3482.341989999999,
-                            volume: 0
-                        }
-                    },
-                    file: {
-                        date: 1548750780,
-                        display: 'CFFFP_крышка.gcode',
-                        name: 'CFFFP_крышка.gcode',
-                        origin: 'st-aaa',
-                        path: 'Storage/CFFFP_крышка.gcode',
-                        size: 1124869
-                    }
-                },
-                progress: {
-                    completion: 88.58151482528189,
-                    filepos: 996426,
-                    printTime: 4488,
-                    printTimeLeft: 543,
-                    printTimeLeftOrigin: 'estimate'
-                }
-            }
-        ]
-        res.end(JSON.stringify(status))
     }
     else if (req.url === '/scanner') {
         res.end(JSON.stringify(scannerResults))
@@ -440,6 +405,9 @@ export default function (req, res, next) {
     }
     else if (req.url === '/network/wifi') {
         res.end(JSON.stringify(networks))
+    } else {
+        next()
     }
-    //next()
 }
+
+export default apiMock

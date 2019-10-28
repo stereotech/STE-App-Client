@@ -2,15 +2,17 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(6)">
       Next
-      <v-icon right dark>mdi-chevron-right</v-icon>
+      <v-icon right dark>
+        mdi-chevron-right
+      </v-icon>
     </v-btn>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -38,7 +40,6 @@ export default class extends Vue {
   private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
   private description: string = 'Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed'
 
-
   private async next (step: number) {
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
@@ -48,7 +49,6 @@ export default class extends Vue {
   @printers.Action customCommand: any
 }
 </script>
-
 
 <style>
 </style>

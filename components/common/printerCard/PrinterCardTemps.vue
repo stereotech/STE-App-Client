@@ -1,43 +1,61 @@
 <template>
-  <v-flex d-flex md4 xs12 sm6 v-if="!offline">
-    <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs4 v-if="lastTempDataPoint(id).tool0">
-          <div class="body-1 text-truncate">E1 Target:</div>
-          <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
+  <v-col v-if="!offline" class="d-flex" md="4" cols="12" sm="6">
+    <v-container fluid>
+      <v-row dense>
+        <v-col v-if="lastTempDataPoint(id).tool0" cols="4">
+          <div class="body-1 text-truncate">
+            E1 Target:
+          </div>
+          <div class="body-1">
+            {{ lastTempDataPoint(id).tool0.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool0.actual / 3.2"
             :color="e1Color"
-          >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
-        </v-flex>
-        <v-flex xs4 v-if="lastTempDataPoint(id).tool1">
-          <div class="body-1 text-truncate">E2 Target:</div>
-          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
+          >
+            {{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}
+          </v-progress-circular>
+        </v-col>
+        <v-col v-if="lastTempDataPoint(id).tool1" cols="4">
+          <div class="body-1 text-truncate">
+            E2 Target:
+          </div>
+          <div class="body-1">
+            {{ lastTempDataPoint(id).tool1.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
-          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
-        </v-flex>
-        <v-flex xs4 v-if="lastTempDataPoint(id).bed">
-          <div class="body-1 text-truncate">Bed Target:</div>
+          >
+            {{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}
+          </v-progress-circular>
+        </v-col>
+        <v-col v-if="lastTempDataPoint(id).bed" cols="4">
+          <div class="body-1 text-truncate">
+            Bed Target:
+          </div>
           <div
-            class="body-1"
             v-if="lastTempDataPoint(id).bed"
-          >{{ lastTempDataPoint(id).bed.target }}&deg;C</div>
+            class="body-1"
+          >
+            {{ lastTempDataPoint(id).bed.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).bed.actual / 1.5"
             :color="bedColor"
-          >{{ lastTempDataPoint(id).bed.actual | currency('', 0) }}</v-progress-circular>
-        </v-flex>
-      </v-layout>
+          >
+            {{ lastTempDataPoint(id).bed.actual | currency('', 0) }}
+          </v-progress-circular>
+        </v-col>
+      </v-row>
     </v-container>
-  </v-flex>
+  </v-col>
   <!--
   <v-flex d-flex md4 xs12 sm6 v-else>
     <v-btn color="accent" rounded large depressed>
@@ -92,4 +110,3 @@ export default class PrinterCardTemps extends Vue {
   }
 }
 </script>
-

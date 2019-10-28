@@ -1,59 +1,71 @@
 <template>
-    <v-dialog
-      v-model="dialog"
-      max-width="425"
-      persistent
-      :fullscreen="$vuetify.breakpoint.xs"
-      scrollable
-    >
-     <template v-slot:activator="{ on }">
-<v-btn color="primary" large outlined @click="startScan" v-on="on">
-      <v-icon>mdi-plus</v-icon>&nbsp;Add printer
-    </v-btn>
-       </template>
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="closeDialog">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Add printer</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="startScan">
-            <v-icon>mdi-refresh</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text style="height: 1000px;">
-          <v-container grid-list-md fluid>
-            <v-layout row wrap v-if="results.length > 0">
-              <v-flex d-flex xs6 v-for="printer in results" :key="printer.id">
-                <v-card hover ripple @click="confirmation = true">
-                  <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" />
-                  <div class="title text-center">{{ printer.name }}</div>
-                  <div class="body-1 text-center">{{ printer.model }}</div>
-                  <div class="body-1 text-center">Address: {{ printer.ipAddress }}</div>
-                </v-card>
-                <v-dialog v-model="confirmation" max-width="425">
-                  <v-card>
-                    <v-card-title class="headline">Do you want to add {{ printer.name }} to cluster?</v-card-title>
-                    <v-card-actions>
-                      <v-btn color="primary" text @click="confirmation = false">No</v-btn>
-                      <v-btn color="primary" text @click="startConnection(printer)">Yes</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-flex>
-            </v-layout>
-            <v-layout row wrap v-else>
-              <v-flex d-flex xs12>
+  <v-dialog
+    v-model="dialog"
+    max-width="425"
+    persistent
+    :fullscreen="$vuetify.breakpoint.xs"
+    scrollable
+  >
+    <template v-slot:activator="{ on }">
+      <v-btn color="primary" large outlined @click="startScan" v-on="on">
+        <v-icon>mdi-plus</v-icon>&nbsp;Add printer
+      </v-btn>
+    </template>
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="closeDialog">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>Add printer</v-toolbar-title>
+        <v-spacer />
+        <v-btn icon dark @click="startScan">
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-card-text style="height: 1000px;">
+        <v-container fluid>
+          <v-row dense v-if="results.length > 0">
+            <v-col v-for="printer in results" :key="printer.id" class="d-flex" cols="6">
+              <v-card hover ripple @click="confirmation = true">
+                <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" />
                 <div class="title text-center">
-                  <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
+                  {{ printer.name }}
                 </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+                <div class="body-1 text-center">
+                  {{ printer.model }}
+                </div>
+                <div class="body-1 text-center">
+                  Address: {{ printer.ipAddress }}
+                </div>
+              </v-card>
+              <v-dialog v-model="confirmation" max-width="425">
+                <v-card>
+                  <v-card-title class="headline">
+                    Do you want to add {{ printer.name }} to cluster?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn color="primary" text @click="confirmation = false">
+                      No
+                    </v-btn>
+                    <v-btn color="primary" text @click="startConnection(printer)">
+                      Yes
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-col>
+          </v-row>
+          <v-row dense v-else>
+            <v-col class="d-flex" cols="12">
+              <div class="title text-center">
+                <v-progress-circular :size="50" color="primary" indeterminate />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">

@@ -20,7 +20,7 @@
     >
       <v-icon>mdi-camera-control</v-icon>
     </v-btn>
-    <v-spacer></v-spacer>
+    <v-spacer />
     <v-btn text icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
       <v-icon>mdi-lightbulb-on-outline</v-icon>
     </v-btn>
@@ -37,10 +37,16 @@
       <v-card>
         <v-card-title
           class="headline"
-        >Do you want to remove {{ printer(id) ? printer(id).name : ''}} from cluster?</v-card-title>
+        >
+          Do you want to remove {{ printer(id) ? printer(id).name : '' }} from cluster?
+        </v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" text @click="removeFromCluster">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">
+            No
+          </v-btn>
+          <v-btn color="primary" text @click="removeFromCluster">
+            Yes
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

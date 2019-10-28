@@ -1,20 +1,29 @@
 <template>
-  <v-flex xl4 lg6 md6 sm12 xs12>
+  <v-col xl="4" lg="6" md="6" sm="12" cols="12">
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">Queue</span>
         </v-card-title>
-        <v-spacer></v-spacer>
-        <v-btn small fab depressed dark color="primary" @click="createJob">
-          <v-icon dark>mdi-plus</v-icon>
+        <v-spacer />
+        <v-btn
+          small
+          fab
+          depressed
+          dark
+          color="primary"
+          @click="createJob"
+        >
+          <v-icon dark>
+            mdi-plus
+          </v-icon>
         </v-btn>
       </v-toolbar>
       <v-list
+        v-if="queuedJobs.length > 0"
         two-line
         style="max-height: 486px"
         class="overflow-y-auto"
-        v-if="queuedJobs.length > 0"
       >
         <v-list-item
           v-for="job in queuedJobs"
@@ -24,22 +33,24 @@
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
-              <v-progress-linear :indeterminate="true"></v-progress-linear>
+              <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
             <v-list-item-subtitle
-              class="body-1"
               v-else
-            >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-item-subtitle>
+              class="body-1"
+            >
+              Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
-            <v-btn @click="showContextMenu" icon>
+            <v-btn icon @click="showContextMenu">
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
             <v-menu
               v-if="job.state === 'Queued'"
-              absolute
               v-model="showMenu"
+              absolute
               :position-x="menuX"
               :position-y="menuY"
             >
@@ -61,20 +72,22 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
-      <v-container grid-list-xs v-else>
-        <v-layout align-center justify-center column fill-height>
-          <v-flex xs12>
-            <v-img src="/empty-state/queue.svg" height="192px" width="192px" aspect-ratio="1"></v-img>
-          </v-flex>
-          <v-flex xs12>
+      <v-container v-else>
+        <v-row dense class="fill-height" align="center" justify="center" column>
+          <v-col cols="12">
+            <v-img src="/empty-state/queue.svg" height="192px" width="192px" aspect-ratio="1" />
+          </v-col>
+          <v-col cols="12">
             <h6 class="title text-center">
               There are no queued print jobs yet. Add new one by clicking
-              <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
+              <v-icon color="primary">
+                mdi-plus-circle
+              </v-icon>&nbsp;button
             </h6>
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
         <v-overlay :value="overlay" absolute z-index="3">
-          <v-progress-circular indeterminate size="64"></v-progress-circular>
+          <v-progress-circular indeterminate size="64" />
         </v-overlay>
       </v-container>
     </v-card>
@@ -90,41 +103,44 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ editMode ? 'Edit' : 'Create' }} job</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">Save</v-btn>
+          <v-spacer />
+          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">
+            Save
+          </v-btn>
         </v-toolbar>
         <v-form v-model="valid">
-          <v-container fluid grid-list-sm>
-            <v-layout row wrap>
-              <v-flex xs12 sm6 md12>
+          <v-container fluid>
+            <v-row dense>
+              <v-col cols="12" sm="6" md="12">
                 <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
                   <v-text-field
+                    v-model="editedJob.name"
                     label="Job name"
                     filled
                     clearable
-                    v-model="editedJob.name"
                     :rules="nameRules"
                     @input="nameWasChanged = true"
                     @click="nameKeyboard = true"
-                  ></v-text-field>
+                  />
                 </BottomInput>
-              </v-flex>
-              <v-flex xs12 sm6 md12>
+              </v-col>
+              <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
+                  v-model="editedJob.fileUri"
                   label="File assignment"
                   filled
                   :items="avaliableFiles"
                   item-text="name"
                   item-value="uri"
-                  v-model="editedJob.fileUri"
                   :rules="fileRules"
-                  @input="changeNameFromFile"
                   :menu-props="menuProps"
-                ></v-autocomplete>
-              </v-flex>
-              <v-flex xs12 sm6 md12>
+                  @input="changeNameFromFile"
+                />
+              </v-col>
+              <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
                   label="Printer assignment"
+                  v-model="editedJob.printers"
                   filled
                   chips
                   multiple
@@ -132,46 +148,51 @@
                   :items="printers"
                   item-text="name"
                   item-value="id"
-                  v-model="editedJob.printers"
                   :menu-props="menuProps"
-                ></v-autocomplete>
-              </v-flex>
-              <v-flex xs12 sm6 md12>
+                />
+              </v-col>
+              <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
                   v-if="!editMode"
+                  v-model="copiesCount"
                   label="Copies"
                   filled
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
-                  v-model="copiesCount"
                   :menu-props="menuProps"
-                ></v-autocomplete>
-              </v-flex>
-              <v-flex xs12>
+                />
+              </v-col>
+              <v-col cols="12">
                 <BottomInput v-model="descriptionKeyboard" :input.sync="editedJob.description">
                   <v-textarea
-                    @click="descriptionKeyboard = true"
+                    v-model="editedJob.description"
                     filled
                     label="Description"
                     auto-grow
-                    v-model="editedJob.description"
-                  ></v-textarea>
+                    @click="descriptionKeyboard = true"
+                  />
                 </BottomInput>
-              </v-flex>
-            </v-layout>
+              </v-col>
+            </v-row>
           </v-container>
         </v-form>
       </v-card>
     </v-dialog>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">Do you want to remove job?</v-card-title>
+        <v-card-title class="headline">
+          Do you want to remove job?
+        </v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" text @click="endRemoveJob">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">
+            No
+          </v-btn>
+          <v-btn color="primary" text @click="endRemoveJob">
+            Yes
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-flex>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -179,7 +200,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo } from '~/types/printer'
 import { FileOrFolder } from '~/types/fileOrFolder'
-import { PrintJob } from '~/types/printJob';
+import { PrintJob } from '~/types/printJob'
 import BottomInput from '~/components/common/BottomInput.vue'
 
 const printJobs = namespace('printJobsState')
@@ -210,9 +231,9 @@ export default class extends Vue {
 
   private changeNameFromFile (value: string) {
     if (!this.nameWasChanged) {
-      let filenameWithExt = value.split('/').pop()
+      const filenameWithExt = value.split('/').pop()
       if (filenameWithExt) {
-        let filename = filenameWithExt.split('.').shift()
+        const filename = filenameWithExt.split('.').shift()
         this.editedJob.name = `Print ${filename}`
       }
     }
@@ -229,7 +250,7 @@ export default class extends Vue {
     offsetY: true,
     offsetOverflow: true,
     transition: false,
-    top: true  }
+    top: true }
 
   private copiesCount: number = 1
 
@@ -304,7 +325,7 @@ export default class extends Vue {
 
   private removePrinter (item: string) {
     const index = this.editedJob.printers.indexOf(item)
-    if (index >= 0) this.editedJob.printers.splice(index, 1)
+    if (index >= 0) { this.editedJob.printers.splice(index, 1) }
   }
 
   private async closeDialog (add: boolean | undefined) {
@@ -312,9 +333,9 @@ export default class extends Vue {
     this.nameWasChanged = false
     if (add !== undefined) {
       if (add) {
-        let jobsArray: PrintJob[] = [this.editedJob]
+        const jobsArray: PrintJob[] = [this.editedJob]
         for (let index = 1; index < this.copiesCount; index++) {
-          let copiedJob: PrintJob = Object.assign({}, this.editedJob)
+          const copiedJob: PrintJob = Object.assign({}, this.editedJob)
           copiedJob.name = copiedJob.name + '(' + index + ')'
           copiedJob.id += index
           jobsArray.push(copiedJob)
@@ -323,7 +344,7 @@ export default class extends Vue {
         await this.addJob(jobsArray)
         this.overlay = false
       } else {
-        let emptyIdx = this.editedJob.printers.indexOf('')
+        const emptyIdx = this.editedJob.printers.indexOf('')
         if (emptyIdx > -1) {
           this.editedJob.printers.splice(emptyIdx, 1)
         }

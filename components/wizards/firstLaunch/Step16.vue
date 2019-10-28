@@ -1,22 +1,26 @@
 <template>
   <WizardStep :step="step">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <h1 class="display-4">Done!</h1>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="finishSetup">Finish</v-btn>
-        </v-flex>
-      </v-layout>
+    <v-container>
+      <v-row dense class="fill-height" align="center" justify="space-around" column>
+        <v-col cols="12">
+          <h1 class="display-4">
+            Done!
+          </h1>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="finishSetup">
+            Finish
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 const settings = namespace('settingsState')
@@ -48,7 +52,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 
 <style>
 </style>

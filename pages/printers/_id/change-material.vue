@@ -1,7 +1,7 @@
 <template>
-  <v-flex xs12>
-    <changeMaterialStepper/>
-  </v-flex>
+  <v-col cols="12">
+    <changeMaterialStepper />
+  </v-col>
 </template>
 
 <script lang="ts">

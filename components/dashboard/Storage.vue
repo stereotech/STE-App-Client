@@ -1,12 +1,12 @@
 <template>
-  <v-flex xl4 lg6 md6 sm12 xs12>
-    <v-card transition="slide-y-reverse-transition" min-height="550" v-if="dataStorage">
+  <v-col xl="4" lg="6" md="6" sm="12" cols="12">
+    <v-card v-if="dataStorage" transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">{{ local ? 'Storage' : 'USB' }}</span>
           <span v-if="name" class="headline font-weight-light">&nbsp;at {{ display }}</span>
         </v-card-title>
-        <v-spacer></v-spacer>
+        <v-spacer />
       </v-toolbar>
 
       <v-list
@@ -21,14 +21,18 @@
           @contextmenu="showContextMenu"
         >
           <v-list-item-content>
-            <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
-            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
+            <v-list-item-title class="subheading">
+              {{ file.display }}
+            </v-list-item-title>
+            <v-list-item-subtitle class="body-1">
+              Uploaded {{ file.date | moment("from") }}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn @click="showContextMenu" icon>
+            <v-btn icon @click="showContextMenu">
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
-            <v-menu absolute :position-x="menuX" :position-y="menuY" v-model="showMenu">
+            <v-menu v-model="showMenu" absolute :position-x="menuX" :position-y="menuY">
               <v-list>
                 <v-list-item @click="deleteFile(file)">
                   <v-list-item-action>
@@ -41,51 +45,55 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
-      <v-container grid-list-xs v-else>
-        <v-layout align-center justify-center column fill-height>
-          <v-flex xs12>
+      <v-container v-else>
+        <v-row dense class="fill-height" align="center" justify="center" column>
+          <v-col cols="12">
             <v-img
               src="/empty-state/local-storage.svg"
               height="192px"
               width="192px"
               aspect-ratio="1"
-            ></v-img>
-          </v-flex>
-          <v-flex xs12>
+            />
+          </v-col>
+          <v-col cols="12">
             <h6
               class="title text-center"
-            >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
-          </v-flex>
-        </v-layout>
+            >
+              You don't have any uploaded files yet. You could add new files using dropzone below
+            </h6>
+          </v-col>
+        </v-row>
       </v-container>
-      <v-container grid-list-xs v-if="local && isWeb">
-        <v-layout row wrap>
-          <v-flex xs12>
+      <v-container v-if="local && isWeb">
+        <v-row dense>
+          <v-col cols="12">
             <v-file-input
+              v-model="files"
               chips
               multiple
               display-size
               label="Upload G-Code Files"
               accept=".gcode"
-              v-model="files"
-            ></v-file-input>
-          </v-flex>
-          <v-flex xs12>
+            />
+          </v-col>
+          <v-col cols="12">
             <v-btn
               depressed
               block
               color="primary"
-              @click="upload"
               :disabled="files.length < 1"
-            >Upload</v-btn>
-          </v-flex>
-        </v-layout>
+              @click="upload"
+            >
+              Upload
+            </v-btn>
+          </v-col>
+        </v-row>
         <v-overlay :value="overlay" absolute z-index="3">
-          <v-progress-circular indeterminate size="64"></v-progress-circular>
+          <v-progress-circular indeterminate size="64" />
         </v-overlay>
       </v-container>
     </v-card>
-  </v-flex>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -142,10 +150,8 @@ export default class extends Vue {
   get dataStorage (): FileOrFolder | undefined {
     if (this.local) {
       return this.localStorage
-    } else {
-      if (this.name !== undefined) {
-        return this.usbStorage(this.name)
-      }
+    } else if (this.name !== undefined) {
+      return this.usbStorage(this.name)
     }
   }
 }

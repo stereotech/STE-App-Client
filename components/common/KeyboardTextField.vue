@@ -1,5 +1,5 @@
 <template>
-  <v-text-field name="name" label="label" id="id"></v-text-field>
+  <v-text-field id="id" name="name" label="label" />
 </template>
 
 <script lang="ts">

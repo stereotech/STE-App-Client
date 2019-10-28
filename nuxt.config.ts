@@ -56,7 +56,7 @@ const config: Configuration = {
     progress: false
   },
   proxy: {
-    '/api/': { target: '*' },
+    '/api': { target: '*' },
   },
   vuetify: {
     treeShake: false,
@@ -102,8 +102,8 @@ const config: Configuration = {
     "start_url": "/"
   },
   serverMiddleware: [
-    { path: '/api', handler: '~/api/mock.js' },
-    { path: '/nuxtfiles', handler: '~/servermiddleware/assets.js' }
+    { path: '/api', handler: '~/api/mock.ts' },
+    { path: '/nuxtfiles', handler: '~/servermiddleware/assets.ts' }
   ],
   build: {
     publicPath: '/nuxtfiles/',
