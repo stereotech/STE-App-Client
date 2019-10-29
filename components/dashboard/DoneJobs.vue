@@ -11,26 +11,20 @@
           <v-list-item-action v-if="doneJob.state == 'Completed'" ripple>
             <v-icon
               :color="doneJob.successful ? `success` : `error`"
-            >
-              {{ doneJob.successful ? 'mdi-check' : 'mdi-close' }}
-            </v-icon>
+            >{{ doneJob.successful ? 'mdi-check' : 'mdi-close' }}</v-icon>
           </v-list-item-action>
           <v-list-item-action v-else-if="doneJob.state == 'Revert'">
             <v-progress-circular indeterminate color="primary" />
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="subheading">
-              {{ doneJob.name }}
-            </v-list-item-title>
+            <v-list-item-title class="subheading">{{ doneJob.name }}</v-list-item-title>
             <v-list-item-subtitle v-if="doneJob.state === 'Revert'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
             <v-list-item-subtitle
               v-else
               class="body-1"
-            >
-              Printed: {{ doneJob.lastPrintTime | moment("from") }}
-            </v-list-item-subtitle>
+            >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn icon @click="showContextMenu">
@@ -63,9 +57,7 @@
           <v-col cols="12">
             <h6 class="title text-center">
               Here you will see done print jobs. Succesful prints marked with
-              <v-icon color="success">
-                mdi-check
-              </v-icon>&nbsp;
+              <v-icon color="success">mdi-check</v-icon>&nbsp;
             </h6>
           </v-col>
         </v-row>

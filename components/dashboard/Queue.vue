@@ -6,17 +6,8 @@
           <span class="headline font-weight-light">Queue</span>
         </v-card-title>
         <v-spacer />
-        <v-btn
-          small
-          fab
-          depressed
-          dark
-          color="primary"
-          @click="createJob"
-        >
-          <v-icon dark>
-            mdi-plus
-          </v-icon>
+        <v-btn small fab depressed dark color="primary" @click="createJob">
+          <v-icon dark>mdi-plus</v-icon>
         </v-btn>
       </v-toolbar>
       <v-list
@@ -38,9 +29,7 @@
             <v-list-item-subtitle
               v-else
               class="body-1"
-            >
-              Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}
-            </v-list-item-subtitle>
+            >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
@@ -80,9 +69,7 @@
           <v-col cols="12">
             <h6 class="title text-center">
               There are no queued print jobs yet. Add new one by clicking
-              <v-icon color="primary">
-                mdi-plus-circle
-              </v-icon>&nbsp;button
+              <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
             </h6>
           </v-col>
         </v-row>
@@ -104,9 +91,7 @@
           </v-btn>
           <v-toolbar-title>{{ editMode ? 'Edit' : 'Create' }} job</v-toolbar-title>
           <v-spacer />
-          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">
-            Save
-          </v-btn>
+          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">Save</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
           <v-container fluid>
@@ -166,7 +151,7 @@
                   <v-textarea
                     v-model="editedJob.description"
                     filled
-                    label="Description"
+                    :label="Description"
                     auto-grow
                     @click="descriptionKeyboard = true"
                   />
@@ -179,16 +164,10 @@
     </v-dialog>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">
-          Do you want to remove job?
-        </v-card-title>
+        <v-card-title class="headline">Do you want to remove job?</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">
-            No
-          </v-btn>
-          <v-btn color="primary" text @click="endRemoveJob">
-            Yes
-          </v-btn>
+          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
+          <v-btn color="primary" text @click="endRemoveJob">Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -250,7 +229,7 @@ export default class extends Vue {
     offsetY: true,
     offsetOverflow: true,
     transition: false,
-    top: true }
+    top: true  }
 
   private copiesCount: number = 1
 

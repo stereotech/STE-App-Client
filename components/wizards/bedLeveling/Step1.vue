@@ -3,9 +3,7 @@
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(1)">
         Start
-        <v-icon right dark>
-          mdi-chevron-right
-        </v-icon>
+        <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
   </WizardStep>
