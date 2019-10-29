@@ -14,11 +14,6 @@
             Next
           </v-btn>
         </v-col>
-        <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">
-            Skip
-          </v-btn>
-        </v-col>
       </v-row>
     </v-container>
   </WizardStep>
