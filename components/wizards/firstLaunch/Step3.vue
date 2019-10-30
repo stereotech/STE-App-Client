@@ -1,74 +1,88 @@
 <template>
   <WizardStep :step="step">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <p class="headline">Set Date and Time</p>
-        </v-flex>
-        <v-flex xs12>
+    <v-container>
+      <v-row dense class="fill-height" align="center" justify="space-around" column>
+        <v-col cols="12">
+          <p class="headline">
+            Set Date and Time
+          </p>
+        </v-col>
+        <v-col cols="12">
           <v-dialog
             ref="datedialog"
             v-model="modal"
             :return-value.sync="dateModel"
-            @update:return-value="setDate"
             persistent
-            lazy
             full-width
             width="290px"
+            @update:return-value="setDate"
           >
-            <v-text-field
-              slot="activator"
-              v-model="dateModel"
-              box
-              label="Set date"
-              prepend-icon="mdi-calendar"
-              readonly
-            ></v-text-field>
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-model="dateModel"
+                filled
+                label="Set date"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-on="on"
+              />
+            </template>
             <v-date-picker v-model="dateModel" scrollable>
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-              <v-btn flat color="primary" @click="setDate(dateModel)">OK</v-btn>
+              <v-spacer />
+              <v-btn x-large depressed color="primary" @click="modal = false">
+                Cancel
+              </v-btn>
+              <v-btn x-large depressed color="primary" @click="setDate(dateModel)">
+                OK
+              </v-btn>
             </v-date-picker>
           </v-dialog>
-        </v-flex>
-        <v-flex xs12>
+        </v-col>
+        <v-col cols="12">
           <v-dialog
             ref="dialog"
             v-model="modal2"
             :return-value.sync="timeModel"
             persistent
-            lazy
             full-width
             width="290px"
           >
-            <v-text-field
-              slot="activator"
-              v-model="timeModel"
-              box
-              label="Set time"
-              prepend-icon="mdi-clock-outline"
-              readonly
-            ></v-text-field>
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-model="timeModel"
+                filled
+                label="Set time"
+                prepend-icon="mdi-clock-outline"
+                readonly
+                v-on="on"
+              />
+            </template>
             <v-time-picker v-if="modal2" v-model="timeModel" full-width format="24hr">
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
-              <v-btn flat color="primary" @click="setTime(timeModel)">OK</v-btn>
+              <v-spacer />
+              <v-btn x-large depressed color="primary" @click="modal2 = false">
+                Cancel
+              </v-btn>
+              <v-btn x-large depressed color="primary" @click="setTime(timeModel)">
+                OK
+              </v-btn>
             </v-time-picker>
           </v-dialog>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat @click="next(4)">Next</v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="next(3)">
+            Next
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
 
 const settings = namespace('settingsState')
 
@@ -83,7 +97,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 3
+  private step?: number = 2
   private curStep?: number = this.currentStep
 
   private modal: boolean = false

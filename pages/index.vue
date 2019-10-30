@@ -1,38 +1,40 @@
 <template>
-  <v-layout row wrap>
-    <PrintersPanel/>
-    <DoneJobs/>
-    <Queue/>
-    <Storage local/>
+  <v-row dense>
+    <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index" />
+    <DoneJobs />
+    <Queue />
+    <Storage local />
     <Storage
       v-for="usbStorage in allUsbStorages"
       :key="usbStorage.origin"
       :name="usbStorage.origin"
-      :display="printerName(usbStorage.origin)"
+      :display="usbStorage.origin"
     />
-  </v-layout>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { State, Action, Getter, namespace } from 'vuex-class'
+import { StorageState } from '../store/storageState'
+import { FileOrFolder } from '../types/fileOrFolder'
+import { PrinterInfo } from '../types/printer'
 import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
-import PrintersPanel from '~/components/dashboard/PrintersPanel.vue'
-import { State, Action, Getter, namespace } from 'vuex-class'
-import { StorageState } from '../store/storageState';
-import { FileOrFolder } from '../types/fileOrFolder';
-import { PrinterInfo } from '../types/printer';
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
+import BottomInput from '~/components/common/BottomInput.vue'
 
 const storage = namespace('storageState')
 const printers = namespace('printersState')
 
 @Component({
   components: {
-    PrintersPanel,
+    PrinterCard,
     DoneJobs,
     Storage,
-    Queue
+    Queue,
+    BottomInput
   }
 })
 export default class Dashboard extends Vue {
@@ -40,47 +42,25 @@ export default class Dashboard extends Vue {
 
   @printers.Getter printers!: PrinterInfo[]
 
+  @Getter isApiAbsolute!: boolean
+
+  text: string = ''
+
   head () {
     return { title: 'STE App Dashboard' }
   }
 
-  private get printerName () {
-    return (o: string) => {
-      let p = this.printers.find(pr => pr.id == o)
-      if (p !== undefined) {
-        return p.name
-      }
-      return ''
+  keyboard: boolean = true
+
+  mounted () {
+    if (process.env.NUXT_ENV_PLATFORM === 'MOBILE' && !this.isApiAbsolute) {
+      this.$router.push('/chooseprinter')
+    } else {
+      this.$store.dispatch('printersState/fetchPrinters')
+      this.$store.dispatch('storageState/fetchLocal')
+      this.$store.dispatch('storageState/fetchUsbs')
+      this.$store.dispatch('printJobsState/fetchJobs')
     }
   }
-
-  private pollingStorageAndJobs!: NodeJS.Timeout
-  private pollingStatus!: NodeJS.Timeout
-
-  private async pollData () {
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
-    await this.$store.dispatch('printersState/fetchPrinters')
-    await this.$store.dispatch('printJobsState/fetchJobs')
-    await this.$store.dispatch('storageState/fetchLocal')
-    await this.$store.dispatch('storageState/fetchUsbs')
-    this.pollingStorageAndJobs = setInterval(async () => {
-      await this.$store.dispatch('printJobsState/fetchJobs')
-      await this.$store.dispatch('storageState/fetchLocal')
-      await this.$store.dispatch('storageState/fetchUsbs')
-    }, 7000)
-
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStorageAndJobs)
-    clearInterval(this.pollingStatus)
-  }
-
 }
 </script>

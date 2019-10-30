@@ -1,0 +1,80 @@
+buildWeb:
+  image: node:10.17.0-alpine
+  stage: build
+  cache:
+    paths:
+      - node_modules
+  before_script:
+    - npm install --dev
+  script:
+    - npm run build-web
+  after_script:
+    - cp -r dist web-build
+  artifacts:
+    paths:
+      - web-build
+    name: "web-build-${CI_COMMIT_REF_NAME}"
+  only:
+    - develop
+    - master
+
+deployWebDevelop:
+  image: python:latest
+  stage: deploy
+  needs: [buildWeb]
+  before_script:
+    - pip install awscli
+  script:
+    - python -m zipfile -c web-build.zip web-build/
+    - aws s3 cp web-build.zip s3://${BUCKET_NAME}/steapp/web/testing/
+  environment:
+    name: testingWeb
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/web/testing/web-build.zip
+    on_stop: cleanWebDevelop
+  only:
+    - develop
+
+deployWebProduction:
+  image: python:latest
+  stage: deploy
+  needs: [buildWeb]
+  before_script:
+    - pip install awscli
+  script:
+    - python -m zipfile -c web-build.zip web-build/
+    - aws s3 cp web-build.zip s3://${BUCKET_NAME}/steapp/web/stable/
+  environment:
+    name: stableWeb
+    url: https://s3.eu-west-3.amazonaws.com/${BUCKET_NAME}/steapp/web/stable/web-build.zip
+    on_stop: cleanWebProduction
+  only:
+    - master
+  when: manual
+
+cleanWebDevelop:
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/testing/web-build.zip
+  environment:
+    name: testingWeb
+    action: stop
+  only:
+    - develop
+  when: manual
+
+cleanWebProduction:
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/steapp/web/stable/web-build.zip
+  environment:
+    name: stableWeb
+    action: stop
+  only:
+    - master
+  when: manual

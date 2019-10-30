@@ -1,25 +1,27 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Settings</template>
+    <template slot="title">
+      Settings
+    </template>
     <v-list>
       <template v-for="(setting, index) in settings">
-        <v-list-tile avatar :key="setting.title" @click="setting.page = true">
-          <v-list-tile-action>
+        <v-list-item :key="setting.title" @click="setting.page = true">
+          <v-list-item-action>
             <v-icon>{{ setting.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="setting.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-divider inset :key="index"></v-divider>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="setting.title" />
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider :key="index" inset />
       </template>
     </v-list>
-    <WifiDialog v-model="settings[0].page"/>
-    <DateTimeDialog v-model="settings[1].page"/>
-    <LanguageDialog v-model="settings[2].page"/>
-    <StorageDialog v-model="settings[3].page"/>
-    <ResetDialog v-model="settings[4].page"/>
-    <UpdateDialog v-model="settings[5].page"/>
+    <WifiDialog v-model="settings[0].page" />
+    <DateTimeDialog v-model="settings[1].page" />
+    <!--<LanguageDialog v-model="settings[2].page" />-->
+    <StorageDialog v-model="settings[2].page" />
+    <ResetDialog v-model="settings[3].page" />
+    <UpdateDialog v-model="settings[4].page" />
   </SettingsDialog>
 </template>
 
@@ -68,11 +70,11 @@ export default class extends Vue {
       title: 'Date and Time',
       page: false
     },
-    {
-      icon: 'mdi-translate',
-      title: 'Language',
-      page: false
-    },
+    // {
+    //   icon: 'mdi-translate',
+    //   title: 'Language',
+    //   page: false
+    // },
     {
       icon: 'mdi-sd   ',
       title: 'Storage',

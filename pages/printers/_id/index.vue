@@ -1,24 +1,23 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
-      <PrinterCard toolbar :id="$route.params.id"/>
-    </v-flex>
-    <v-flex xs12 v-if="!isPrinting">
-      <WizardsPanel :id="$route.params.id"/>
-    </v-flex>
-    <v-flex xs12>
-      <ManualControlPanel :printing="isPrinting" :id="$route.params.id"/>
-    </v-flex>
-  </v-layout>
+  <v-row dense>
+    <PrinterCard :id="$route.params.id" toolbar />
+    <v-col cols="12">
+      <v-expansion-panels v-model="panel" multiple>
+        <WizardsPanel v-if="isMaintenance || isPaused" :id="$route.params.id" />
+        <!--<WizardsPanel :id="$route.params.id" />-->
+        <ManualControlPanel :id="$route.params.id" :printing="isPrinting" />
+      </v-expansion-panels>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/PrinterCard.vue'
+import { Action, Getter, namespace } from 'vuex-class'
+import { PrinterInfo, CurrentState } from 'types/printer'
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
 import WizardsPanel from '~/components/printers/WizardsPanel.vue'
 import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.vue'
-import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, PrinterStatus } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -31,38 +30,38 @@ const printers = namespace('printersState')
 })
 export default class PrinterPage extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Getter status!: (id: string) => CurrentState | undefined
 
   async mounted () {
-    await this.$store.dispatch('printersState/fetchPrinters')
+    this.$store.dispatch('printersState/fetchPrinters')
     if (this.printer(this.$route.params.id) === undefined) {
       this.$router.push('/printers')
     }
-    this.pollData()
   }
 
   head () {
     return { title: 'STE App Printers' }
   }
 
+  panel: number[] = [0, 1]
+
   get isPrinting (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.stateText === 'Printing'
+      return this.status(this.$route.params.id)!.state.flags.printing
     }
     return false
   }
-
-  private pollingStatus!: NodeJS.Timeout
-
-  private pollData () {
-
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
+  get isMaintenance (): boolean {
+    if (this.status(this.$route.params.id) !== undefined) {
+      return this.status(this.$route.params.id)!.state.text === 'Maintenance'
+    }
+    return false
   }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
+  get isPaused (): boolean {
+    if (this.status(this.$route.params.id) !== undefined) {
+      return this.status(this.$route.params.id)!.state.text === 'Paused'
+    }
+    return false
   }
 }
 </script>

@@ -1,26 +1,32 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-btn block large flat @click="repeat">Unload</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat @click="load">Load</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat nuxt :to="'/printers/' + $route.params.id">Finish</v-btn>
-        </v-flex>
-      </v-layout>
+    <v-container>
+      <v-row dense class="fill-height" align="center" justify="space-around" column>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="repeat">
+            Unload
+          </v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="load">
+            Load
+          </v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="finish">
+            Finish
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
+import { CurrentState } from 'types/printer'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -38,28 +44,35 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 5
+  private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = 'wizards/change_material/change_material04.jpg'
   private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Action toolTempCommand: any
+  @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
     return this.status(this.$route.params.id)
   }
 
   get heating () {
-    if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
+    if (this.computedStatus) {
+      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
         let deviation = 0
         if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
-        } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
+          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
+            const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
+            const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+            deviation = Math.abs(target - actual)
+          }
+        } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+          const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
+          const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+          deviation = Math.abs(target - actual)
         }
         return deviation > 10
       }
@@ -75,13 +88,17 @@ export default class extends Vue {
     this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
   }
 
+  private finish () {
+    this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 0 })
+    this.$router.push('/printers/' + this.$route.params.id)
+  }
+
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
 }
 </script>
-
 
 <style>
 </style>

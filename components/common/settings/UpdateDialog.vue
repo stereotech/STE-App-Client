@@ -1,53 +1,117 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">System update</template>
-    <h5
-      class="headline font-weight-light text-xs-center"
-    >Current version: {{ avaliableUpdate.currentVersion }}</h5>
-    <v-btn @click="checkForUpdate" round block color="primary" dark>Check for update</v-btn>
-    <v-card>
-      <v-card-text>
-        <p
-          v-if="isNewVersion"
-          class="primary--text display-2 font-weight-light text-xs-center"
-        >{{ avaliableUpdate.newVersion }}</p>
-        <p class="body-1">{{ avaliableUpdate.description }}</p>
-        <v-btn
-          @click="onlineUpdate"
-          v-if="isNewVersion"
-          round
-          block
-          color="accent"
-          dark
-        >Download and install</v-btn>
-      </v-card-text>
-    </v-card>
-    <p class="subheading text-xs-center">Install update manually</p>
-    <dropzone
-      id="updateDropzone"
-      :options="options"
-      :destroyDropzone="true"
-      :includeStyling="false"
-      :duplicateCheck="true"
-    ></dropzone>
+    <v-container>
+      <v-row dense>
+        <v-col cols="12">
+          <v-card>
+            <v-container>
+              <v-row dense>
+                <v-col v-if="softwareUpdateState == 0" cols="12">
+                  <v-btn
+                    depressed
+                    block
+                    outlined
+                    color="primary"
+                    @click="checkForUpdateManually"
+                  >Check for update</v-btn>
+                  <h5
+                    class="headline primary--text text-center"
+                  >Current version: {{ currentVersion }}</h5>
+                  <h5 class="text-center">You have the latest firmware</h5>
+                </v-col>
+                <v-col v-if="softwareUpdateState == 1" cols="12">
+                  <h5
+                    class="headline success--text text-center"
+                  >New version avaliable: {{ avaliableVersion }}</h5>
+                  <h5 class="text-center">Current version: {{ currentVersion }}</h5>
+                  <v-btn
+                    depressed
+                    block
+                    color="success"
+                    @click="downloadUpdateVersion"
+                  >Download update</v-btn>
+                </v-col>
+                <v-col v-if="softwareUpdateState == 2" cols="12">
+                  <h5 class="headline text-center">Downloading {{ avaliableVersion }}...</h5>
+                  <v-progress-linear :indeterminate="true" />
+                </v-col>
+                <v-col v-if="softwareUpdateState == 3" cols="12">
+                  <h5 class="headline text-center">Downloading {{ downloadProgress }}%</h5>
+                  <v-progress-linear :value="downloadProgress" />
+                </v-col>
+                <v-col v-if="softwareUpdateState == 4" cols="12">
+                  <h5
+                    class="headline text-center"
+                  >Download finished. Please reboot printer to finish update</h5>
+                  <v-progress-linear :indeterminate="true" />
+                </v-col>
+                <v-col v-if="softwareUpdateState == 5" cols="12">
+                  <h5 class="headline text-center">Copying</h5>
+                  <v-progress-linear :indeterminate="true" />
+                </v-col>
+                <v-col v-if="softwareUpdateState == 6" cols="12">
+                  <h5 class="headline error--text text-center">Download failed</h5>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-col>
+        <v-col cols="12">
+          <v-card>
+            <v-container v-if="softwareUpdateState < 2">
+              <v-row dense>
+                <v-col v-if="isWeb" cols="12">
+                  <v-file-input
+                    v-model="file"
+                    chips
+                    display-size
+                    label="Upload Update"
+                    accept=".stu"
+                  />
+                </v-col>
+                <v-col v-if="isWeb" cols="12">
+                  <v-btn
+                    depressed
+                    block
+                    color="primary"
+                    :disabled="file.length < 1"
+                    @click="upload"
+                  >Upload</v-btn>
+                </v-col>
+                <v-col v-if="updateOnUsb" cols="12">
+                  <v-btn
+                    depressed
+                    outlined
+                    block
+                    color="primary"
+                    @click="startUpdateFromUsb"
+                  >Install update from USB</v-btn>
+                </v-col>
+              </v-row>
+              <v-overlay :value="overlay" absolute>
+                <v-progress-circular indeterminate size="64" />
+              </v-overlay>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </SettingsDialog>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
-import { UpdateInfo } from '~/types/updating'
-import Dropzone from 'nuxt-dropzone'
-import 'nuxt-dropzone/dropzone.css'
+import { SoftwareUpdateState } from '~/store/updateState'
 
-const settings = namespace('settingsState')
+const update = namespace('updateState')
 
 @Component({
   components: {
-    SettingsDialog,
-    Dropzone
+    SettingsDialog
   }
 })
 export default class extends Vue {
@@ -58,26 +122,42 @@ export default class extends Vue {
 
   private isOpen: boolean = this.value
 
-  @settings.Getter avaliableUpdate!: UpdateInfo
-  @settings.Action checkForUpdate: any
-  @settings.Action onlineUpdate: any
-
-  get isNewVersion (): boolean {
-    return this.avaliableUpdate.currentVersion !== this.avaliableUpdate.newVersion
+  get isWeb (): boolean {
+    return process.env.NUXT_ENV_PLATFORM == 'WEB'
   }
+
+  @update.Getter currentVersion!: string
+  @update.Getter softwareUpdateState!: SoftwareUpdateState
+  @update.Getter downloadProgress!: number
+  @update.Getter avaliableVersion!: string
+  @update.Getter updateOnUsb!: boolean
+
+  @update.Action startUpdateFromUsb!: any
+  @update.Action uploadUpdate!: any
+  @update.Action downloadUpdateVersion!: any
+  @update.Action fetchCurrentVersion!: any
+  @update.Action checkForUpdateManually!: any
 
   private closeDialog () {
     this.$emit('input', false)
     this.isOpen = false
   }
 
-  options: any = {
-    url: this.$store.state.apiUrl + 'update/offline',
-    uploadMultiple: false,
-    maxFilesize: 200,
-    createImageThumbnails: false,
-    thumbnailWidth: 50,
-    addRemoveLinks: true
+  private overlay: boolean = false
+
+  private file: File[] | File = []
+
+  private async upload () {
+    this.overlay = true
+    if (this.file) {
+      await this.uploadUpdate(this.file)
+    }
+    this.file = []
+    this.overlay = false
+  }
+
+  private async mounted () {
+    await this.fetchCurrentVersion()
   }
 }
 </script>

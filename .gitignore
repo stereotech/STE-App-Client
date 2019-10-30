@@ -85,4 +85,17 @@ public
 deps.txt
 material_model.json
 
+//PWA
 sw.*
+
+.vscode
+
+//Cordova
+cordova/plugins
+cordova/www
+cordova/platforms
+
+//Conflict merging
+*.bak
+*.orig
+cordova/upload_certificate.pem

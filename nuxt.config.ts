@@ -1,27 +1,23 @@
-import NuxtConfiguration from '@nuxt/config'
+import { Configuration } from '@nuxt/types'
 
-const config: NuxtConfiguration = {
+const config: Configuration = {
   mode: 'spa',
   head: {
     title: 'STE App',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'STE App Client' },
-      { name: 'msapplication-TileColor', content: '#0277bd' },
-      { name: 'theme-color', content: '#0277bd' }
-    ]
+      { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui' },
+      { hid: 'description', name: 'description', content: '3D printing management application' }
+    ],
+    script: process.env.NUXT_ENV_PLATFORM === 'MOBILE' ? [{ src: 'cordova.js', type: 'text/javascript', innerHTML: '' }] : [],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
   },
-  link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-    { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-    { rel: 'manifest', href: '/site.webmanifest' },
-    { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#0277bd' }
-  ],
+
   router: {
-    middleware: 'firstLaunch',
+    mode: 'hash',
+    middleware: ['chooser', 'firstLaunch'],
   },
   generate: {
     dir: 'public'
@@ -29,12 +25,12 @@ const config: NuxtConfiguration = {
   /*
    ** Global CSS
    */
-  css: ['@mdi/font/css/materialdesignicons.css'],
+  css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css'],
 
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes'],
+  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~plugins/i18n', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
   /*
    ** Nuxt.js modules
    */
@@ -42,8 +38,18 @@ const config: NuxtConfiguration = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/pwa'
   ],
+
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
+
+  typescript: {
+    typeCheck: {
+      memoryLimit: 3072
+    },
+    ignoreNotFoundWarnings: true,
+
+  },
   /*
    ** Axios module configuration
    */
@@ -53,19 +59,32 @@ const config: NuxtConfiguration = {
     progress: false
   },
   proxy: {
-    '/api/': { target: '*' }
+    '/api': { target: '*' },
   },
   vuetify: {
-    treeShake: true,
+    treeShake: false,
     materialIcons: false,
     theme: {
-      primary: '#0277bd',
-      secondary: '#ffffff',
-      accent: '#263238',
-      error: '#FF5252',
-      info: '#42A5F5',
-      success: '#4CAF50',
-      warning: '#FFC107'
+      themes: {
+        light: {
+          primary: '#0277bd',
+          secondary: '#ffffff',
+          accent: '#263238',
+          error: '#FF5252',
+          info: '#9C27B0',
+          success: '#4CAF50',
+          warning: '#FFC107'
+        },
+        dark: {
+          primary: '#0277bd',
+          secondary: '#ffffff',
+          accent: '#263238',
+          error: '#FF5252',
+          info: '#9C27B0',
+          success: '#4CAF50',
+          warning: '#FFC107'
+        }
+      }
     },
     iconfont: 'mdi'
   },
@@ -75,15 +94,27 @@ const config: NuxtConfiguration = {
     color: '#ffffff',
     background: '#0277bd'
   },
-  env: {
-    apiUrl: '/api/'
+  manifest: {
+
+    "name": "STE App",
+    "short_name": "STE App",
+    "theme_color": "#0277bd",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/"
   },
   serverMiddleware: [
-    { path: '/api', handler: '~/api/mock.js' },
+    { path: '/api', handler: '~/api/mock.ts' },
+    { path: '/nuxtfiles', handler: '~/servermiddleware/assets.ts' }
   ],
-  performance: {
-    hints: false
+  build: {
+    publicPath: '/nuxtfiles/',
+    parallel: true,
   }
 }
+
+
+
 
 export default config

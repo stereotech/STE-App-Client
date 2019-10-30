@@ -1,30 +1,20 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-btn block large flat @click="repeat">Unload</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat @click="load">Load</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat @click="next(7)">Next</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-btn x-large block depressed color="accent" @click="next(6)">
+      Next
+      <v-icon right dark>
+        mdi-chevron-right
+      </v-icon>
+    </v-btn>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
-import { Settings } from '../../../types/settings'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
-const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -35,63 +25,30 @@ export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
+
+    if (this.curStep === this.step) {
+      this.performStep()
+    }
   }
-  @Prop({ type: Object, default: {} }) additionalData!: any
-  @Watch('additionalData') onAdditionalDataChanged () {
-    this.$emit('dataChanged', this.additionalData)
+  async performStep () {
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 X10 Y10 F3600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
-  private step?: number = 6
+  private step?: number = 5
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
-  private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
+  private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
+  private description: string = 'Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed'
 
-  @printers.Action retractCommand: any
-  @printers.Action extrudeCommand: any
-  @printers.Action toolTempCommand: any
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
-
-  @settings.Getter settings!: Settings
-
-  get computedStatus () {
-    return this.status(this.settings.systemId)
-  }
-
-  get heating () {
-    if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
-        let deviation = 0
-        if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
-        } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
-        }
-        return deviation > 10
-      }
-    }
-    return true
-  }
-
-  private repeat () {
-    this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 10 })
-  }
-
-  private load () {
-    this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
-  }
-
-  private next (step: number) {
-    this.toolTempCommand({
-      id: this.settings.systemId,
-      tool0Temp: 0,
-      tool1Temp: 0
-    })
+  private async next (step: number) {
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
   }
+
+  @printers.Action customCommand: any
 }
 </script>
-
 
 <style>
 </style>
