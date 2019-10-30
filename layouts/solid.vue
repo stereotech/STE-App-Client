@@ -1,10 +1,10 @@
 <template>
-  <v-app class="light-blue darken-3" dark>
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout column wrap>
-          <nuxt/>
-        </v-layout>
+  <v-app>
+    <v-content class="light-blue darken-3">
+      <v-container class="fill-height" fluid>
+        <v-row dense column>
+          <nuxt />
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
@@ -14,10 +14,16 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
-export default class extends Vue {
+export default class Solid extends Vue {
+  mounted () {
+    this.$vuetify.theme.dark = true
+  }
+
+  beforeDestroy () {
+    this.$vuetify.theme.dark = false
+  }
 }
 </script>
-
 
 <style>
 </style>

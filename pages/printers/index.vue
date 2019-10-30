@@ -1,24 +1,24 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
-      <PrinterCard
-        toolbar
-        controlPanel
-        v-for="printer in printers"
-        :id="printer.id"
-        :key="printer.id"
-      />
-      <AddPrinterDialog/>
-    </v-flex>
-  </v-layout>
+  <v-row dense>
+    <PrinterCard
+      v-for="printer in printers"
+      :id="printer.id"
+      :key="printer.id"
+      toolbar
+      control-panel
+    />
+    <v-col cols="12" class="text-center">
+      <AddPrinterDialog />
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/PrinterCard.vue'
-import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, PrinterStatus } from 'types/printer'
+import { PrinterInfo, CurrentState } from 'types/printer'
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
+import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
 
 const printers = namespace('printersState')
 
@@ -29,28 +29,15 @@ const printers = namespace('printersState')
   }
 })
 export default class PrintersPage extends Vue {
+  [x: string]: any;
   @printers.Getter printers!: PrinterInfo[]
-  @printers.Getter printersStatus!: PrinterStatus[]
-
-  private pollingStatus!: NodeJS.Timeout
 
   head () {
     return { title: 'STE App Printers' }
   }
 
-  private async pollData () {
-    await this.$store.dispatch('printersState/fetchPrinters')
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
+  mounted () {
+    this.$store.dispatch('printersState/fetchPrinters')
   }
 }
 </script>

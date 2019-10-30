@@ -121,20 +121,21 @@ export const actions: ActionTree<StorageState, RootState> = {
     }
   },
 
-  async deleteFile ({ commit, dispatch }, file: FileOrFolder) {
-
+  async deleteFile ({ commit }, file: FileOrFolder) {
     if (file.origin == 'local') {
       commit('deleteLocalFile', file)
       let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
-      if (response.status === 204) {
-        await dispatch('fetchLocal')
-      } else {
-        commit('deleteUsbFile', file)
-        let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
-        if (response.status === 204) {
-          await dispatch('fetchUsbs')
-        }
-      }
+    } else {
+      commit('deleteUsbFile', file)
+      let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
     }
+  },
+
+  async uploadFiles ({ commit }, files: File[]) {
+    let data = new FormData()
+    files.forEach(file => {
+      data.append("files", file, file.name)
+    });
+    await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
 }

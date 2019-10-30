@@ -30,9 +30,15 @@
     },
     "types": [
       "@types/node",
+      "@nuxt/types",
+      "@nuxtjs/vuetify",
       "@nuxtjs/axios",
-      "vuetify",
       "moment"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "cordova"
+  ]
 }

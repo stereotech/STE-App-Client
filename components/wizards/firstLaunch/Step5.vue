@@ -1,36 +1,20 @@
 <template>
-  <WizardStep :step="step" v-if="heating">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-progress-circular :size="70" :width="7" color="secondary" indeterminate></v-progress-circular>
-        </v-flex>
-        <v-flex xs12>
-          <p>Heating...</p>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </WizardStep>
-  <WizardStep v-else :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-btn block large flat @click="next(6)">Next</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+  <WizardStep :step="step" :image="image" :description="description">
+    <v-btn x-large block depressed color="accent" @click="next(5)">
+      Next
+      <v-icon right dark>
+        mdi-chevron-right
+      </v-icon>
+    </v-btn>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { PrinterStatus, PrinterInfo } from 'types/printer'
-import { Settings } from 'types/settings'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
-const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -38,51 +22,33 @@ const settings = namespace('settingsState')
   }
 })
 export default class extends Vue {
-  @Model('change', { type: Number, default: 1, required: true })
-  currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
+
+    if (this.curStep === this.step) {
+      this.performStep()
+    }
   }
-  @Prop({ type: Object, default: {} }) additionalData!: any
-  @Watch('additionalData') onAdditionalDataChanged () {
-    this.$emit('dataChanged', this.additionalData)
+  async performStep () {
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y190 F3600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
-  private step?: number = 5
+  private step?: number = 4
   private curStep?: number = this.currentStep
 
-  @settings.Getter settings!: Settings
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
+  private description: string = 'Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed'
 
-  get computedStatus () {
-    return this.status(this.settings.systemId)
-  }
-
-  get heating () {
-    if (this.computedStatus !== undefined) {
-      if (this.computedStatus.tool0 !== undefined && this.computedStatus.tool1 !== undefined) {
-        let deviation = 0
-        if (this.additionalData.tool === 0) {
-          deviation = Math.abs(this.computedStatus.tool0.target - this.computedStatus.tool0.actual)
-        } else {
-          deviation = Math.abs(this.computedStatus.tool1.target - this.computedStatus.tool1.actual)
-        }
-        return deviation > 10
-      }
-    }
-    return true
-  }
-
-  private image: string = '/wizards/bed_leveling.png'
-  private description: string =
-    'Load new spool, insert material into bowden tube and press Next button'
-
-  private next (step: number) {
+  private async next (step: number) {
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
   }
+
+  @printers.Action customCommand: any
 }
 </script>
-
 
 <style>
 </style>

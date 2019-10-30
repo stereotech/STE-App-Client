@@ -1,65 +1,86 @@
 <template>
   <v-card>
-    <v-card-title class="title">Temp and Fans</v-card-title>
-    <v-container fluid grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="e1TargetSet" @change="setE1"></v-switch>
-        </v-flex>
-        <v-flex xs10>
-          <v-slider label="E1" thumb-label min="0" max="300" v-model="e1Target" @change="changeE1"></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="e2TargetSet" @change="setE2"></v-switch>
-        </v-flex>
-        <v-flex xs10>
-          <v-slider label="E2" thumb-label min="0" max="300" v-model="e2Target" @change="changeE2"></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-if="chamberHeater">
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="chamberTargetSet" @change="setChamber"></v-switch>
-        </v-flex>
-        <v-flex xs10>
+    <v-card-title class="title">
+      Temp and Fans
+    </v-card-title>
+    <v-container fluid>
+      <v-row dense>
+        <v-col cols="2">
+          <v-switch v-model="e1TargetSet" color="error" hide-details @change="setE1" />
+        </v-col>
+        <v-col cols="10">
           <v-slider
+            v-model="e1Target"
+            label="E1"
+            thumb-label
+            min="0"
+            max="300"
+            step="5"
+            @change="changeE1"
+          />
+        </v-col>
+      </v-row>
+      <v-row dense>
+        <v-col cols="2">
+          <v-switch v-model="e2TargetSet" color="error" hide-details @change="setE2" />
+        </v-col>
+        <v-col cols="10">
+          <v-slider
+            v-model="e2Target"
+            label="E2"
+            thumb-label
+            min="0"
+            max="300"
+            step="5"
+            @change="changeE2"
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-if="chamberHeater">
+        <v-col cols="2">
+          <v-switch v-model="chamberTargetSet" color="error" hide-details @change="setChamber" />
+        </v-col>
+        <v-col cols="10">
+          <v-slider
+            v-model="chamberTarget"
             label="Chamber"
             thumb-label
             min="0"
             max="100"
-            v-model="chamberTarget"
+            step="5"
             @change="setBed"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else>
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="bedTargetSet" @change="setBed"></v-switch>
-        </v-flex>
-        <v-flex xs10>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-else>
+        <v-col cols="2">
+          <v-switch v-model="bedTargetSet" color="error" hide-details @change="setBed" />
+        </v-col>
+        <v-col cols="10">
           <v-slider
+            v-model="bedTarget"
             label="Bed"
             thumb-label
             min="0"
             max="120"
-            v-model="bedTarget"
+            step="5"
             @change="changeBed"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense>
+        <v-col cols="12">
           <v-slider
+            v-model="coolingFanTarget"
             label="Cooling"
             thumb-label
             min="0"
             max="100"
-            v-model="coolingFanTarget"
+            step="5"
             @change="setCoolingFan"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
+          />
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>
@@ -67,7 +88,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterStatus } from 'types/printer'
+import { CurrentState, TemperatureDataPoint } from 'types/printer'
 
 const printers = namespace('printersState')
 
@@ -78,14 +99,10 @@ export default class TemperatureFanCard extends Vue {
   @Prop({ default: false, type: Boolean }) chamberFan!: boolean
   @Prop({ default: '', type: String, required: true }) id!: string
 
-  @printers.Getter status!: (id: string) => PrinterStatus | undefined
+  @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
   @printers.Action fanCommand: any
   @printers.Action toolTempCommand: any
   @printers.Action bedTempCommand: any
-
-  get computedStatus () {
-    return this.status(this.id)
-  }
 
   private e1Target: number = 0
   private e2Target: number = 0
@@ -99,18 +116,19 @@ export default class TemperatureFanCard extends Vue {
   private chamberTargetSet: boolean = false
 
   mounted () {
-    this.e1Target = this.computedStatus !== undefined ? this.computedStatus.tool0 !== undefined ? this.computedStatus.tool0.target : 100 : 100
-    this.e2Target = this.computedStatus !== undefined ? this.computedStatus.tool1 !== undefined ? this.computedStatus.tool1.target : 100 : 100
-    this.chamberTarget = this.computedStatus !== undefined ? this.computedStatus.bed !== undefined ? this.computedStatus.bed.target : 0 : 0
-    this.bedTarget = this.computedStatus !== undefined ? this.computedStatus.bed !== undefined ? this.computedStatus.bed.target : 0 : 0
-    this.e1TargetSet = this.e1Target > 100
-    this.e2TargetSet = this.e2Target > 100
-    this.bedTargetSet = this.bedTarget > 30
-    this.chamberTargetSet = this.chamberTarget > 30
+    this.e1Target = this.lastTempDataPoint(this.id).tool0.target
+    this.e2Target = this.lastTempDataPoint(this.id).tool1.target
+    this.bedTarget = this.lastTempDataPoint(this.id).bed.target
+    this.chamberTarget = this.lastTempDataPoint(this.id).bed.target
+
+    this.e1TargetSet = this.e1Target > 0
+    this.e2TargetSet = this.e2Target > 0
+    this.bedTargetSet = this.bedTarget > 0
+    this.chamberTargetSet = this.chamberTarget > 0
   }
 
   private setCoolingFan (value: number) {
-    this.fanCommand({ id: this.id, fanId: 0, fanValue: value * 100 / 255 })
+    this.fanCommand({ id: this.id, fanId: 0, fanValue: Math.round(value * 255 / 100) })
   }
 
   private setE1 (value: boolean) {

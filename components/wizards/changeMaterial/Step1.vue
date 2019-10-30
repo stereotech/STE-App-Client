@@ -1,25 +1,27 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
+    <v-container>
+      <v-row dense class="fill-height" align="center" justify="space-around" column>
+        <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio label="Extruder 1" :value="0" color="secondary"></v-radio>
-            <v-radio label="Extruder 2" :value="1" color="secondary"></v-radio>
+            <v-radio label="Extruder 1" :value="0" color="secondary" />
+            <v-radio label="Extruder 2" :value="1" color="secondary" />
           </v-radio-group>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block large flat @click="nextStep">Next</v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="nextStep">
+            Next
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -37,10 +39,10 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 1
+  private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = 'wizards/change_material/change_material.jpg'
   private description: string = 'Select the extruder, where you want change the material'
 
   @printers.Action toolTempCommand: any
@@ -51,7 +53,7 @@ export default class extends Vue {
     } else {
       this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 240 })
     }
-    this.next(2)
+    this.next(1)
   }
 
   private next (step: number) {
@@ -60,7 +62,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 
 <style>
 </style>

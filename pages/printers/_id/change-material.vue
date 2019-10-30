@@ -1,7 +1,7 @@
 <template>
-  <v-flex xs12>
-    <changeMaterialStepper/>
-  </v-flex>
+  <v-col cols="12">
+    <changeMaterialStepper />
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -16,22 +16,6 @@ import changeMaterialStepper from '~/components/wizards/changeMaterial/Stepper.v
 export default class extends Vue {
   layout () {
     return 'solid'
-  }
-
-  private pollingStatus!: NodeJS.Timeout
-
-  private async pollData () {
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
   }
 }
 </script>

@@ -1,11 +1,13 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-btn block large flat @click="next(3)">Next</v-btn>
-        </v-flex>
-      </v-layout>
+    <v-container>
+      <v-row dense class="fill-height" align="center" justify="space-around" column>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="next(2)">
+            Next
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
@@ -25,10 +27,10 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 2
+  private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling.png'
+  private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
   private description: string =
     'Please remove all the transportation fixtures and press Next'
 

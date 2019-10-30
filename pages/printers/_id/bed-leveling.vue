@@ -1,5 +1,5 @@
 <template>
-  <bedLevelingStepper/>
+  <bedLevelingStepper />
 </template>
 
 <script lang="ts">

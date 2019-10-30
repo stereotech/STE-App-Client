@@ -1,7 +1,7 @@
 <template>
-  <v-flex xs12>
-    <firstLaunchStepper/>
-  </v-flex>
+  <v-col cols="12">
+    <firstLaunchStepper />
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -20,22 +20,6 @@ export default class extends Vue {
 
   head () {
     return { title: 'STE App First Launch' }
-  }
-
-  private pollingStatus!: NodeJS.Timeout
-
-  private async pollData () {
-    this.pollingStatus = setInterval(async () => {
-      await this.$store.dispatch('printersState/fetchStatus')
-    }, 2000)
-  }
-
-  async mounted () {
-    await this.pollData()
-  }
-
-  beforeDestroy () {
-    clearInterval(this.pollingStatus)
   }
 }
 </script>

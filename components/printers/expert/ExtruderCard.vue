@@ -1,45 +1,88 @@
 <template>
   <v-card>
-    <v-card-title class="title">Extruder</v-card-title>
-    <v-container fluid grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="retract">
+    <v-card-title class="title">
+      Extruder
+    </v-card-title>
+    <v-container fluid>
+      <v-row dense class="text-center">
+        <v-col cols="6" sm="3" order-sm="1">
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            color="primary"
+            :disabled="printing"
+            @click="retract"
+          >
             <v-icon>mdi-chevron-double-up</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs10>
-          <v-slider v-model="flow" label="Flow" thumb-label min="50" max="150" @change="setFlow"></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs10 offset-xs2>
+        </v-col>
+        <v-col cols="6" sm="3" order-sm="3">
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            color="primary"
+            :disabled="printing"
+            @click="extrude"
+          >
+            <v-icon>mdi-chevron-double-down</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col class="pt-6" cols="12" sm="9" order-sm="1">
+          <v-slider
+            v-model="flow"
+            label="Flow"
+            thumb-label
+            min="50"
+            max="150"
+            @change="setFlow"
+          />
+        </v-col>
+        <v-col class="order-sm-2" cols="12" sm="9" offset-sm="3">
           <v-select
-            box
+            v-model="selectedExtruder"
+            filled
             :items="extruders"
             label="Select extruder"
             item-text="key"
             item-value="value"
-            v-model="selectedExtruder"
             :disabled="printing"
-          ></v-select>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-btn outline flat icon color="primary" :disabled="printing" @click="extrude">
-            <v-icon>mdi-chevron-double-down</v-icon>
-          </v-btn>
-        </v-flex>
-        <v-flex xs10 d-flex>
-          <v-btn-toggle mandatory v-model="selectedAmount">
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 0.1">0.1</v-btn>
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 1">1</v-btn>
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 10">10</v-btn>
-            <v-btn large flat block color="primary" :disabled="printing" @input="amount = 100">100</v-btn>
+          />
+        </v-col>
+
+        <v-col cols="12" sm="6" order-sm="3">
+          <v-btn-toggle v-model="selectedAmount" mandatory rounded>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">
+              0.1
+            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 1">
+              1
+            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 10">
+              10
+            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 100">
+              100
+            </v-btn>
           </v-btn-toggle>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12" sm="3" order-sm="3">
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            color="primary"
+            :disabled="printing"
+            @click="servicePos"
+          >
+            <v-icon>mdi-progress-wrench</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>
@@ -52,7 +95,7 @@ const printers = namespace('printersState')
 
 @Component
 export default class ExtruderCard extends Vue {
-  private selectedAmount: number = 1
+  private selectedAmount: number = 2
   private amount: number = 10
 
   private extruders: any = [
@@ -71,17 +114,22 @@ export default class ExtruderCard extends Vue {
   @printers.Action extrudeCommand: any
   @printers.Action retractCommand: any
   @printers.Action flowCommand: any
+  @printers.Action customCommand: any
 
   private extrude () {
-    this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
+    this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.amount })
   }
 
   private retract () {
-    this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.selectedAmount })
+    this.retractCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.amount })
   }
 
   private setFlow (value: number) {
     this.flowCommand({ id: this.id, flow: value })
+  }
+
+  private servicePos () {
+    this.customCommand({ id: this.id, command: 'G0 X100 Y5' })
   }
 
   @Prop({ default: false, type: Boolean }) printing?: boolean
