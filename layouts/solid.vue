@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-content class="light-blue darken-3">
-      <v-container class="fill-height" fluid>
+      <v-container fluid>
         <v-row dense column>
           <nuxt />
         </v-row>

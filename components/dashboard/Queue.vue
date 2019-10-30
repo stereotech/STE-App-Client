@@ -151,7 +151,7 @@
                   <v-textarea
                     v-model="editedJob.description"
                     filled
-                    :label="Description"
+                    label="Description"
                     auto-grow
                     @click="descriptionKeyboard = true"
                   />

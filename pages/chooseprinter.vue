@@ -2,7 +2,7 @@
   <v-col cols="12">
     <v-toolbar color="primary" flat>
       <v-avatar size="36px" class="mx-2">
-        <img src="/icon.png" alt="Logo">
+        <img src="/icon.png" alt="Logo" />
       </v-avatar>
       <v-toolbar-title>
         <span class="text-uppercase font-weight-regular">STE App</span>
@@ -24,21 +24,13 @@
                   <v-img v-else :src="'/printers/Cluster.png'" alt="Avatar" />
                 </v-col>
                 <v-col cols="12">
-                  <div class="title text-center">
-                    {{ printer.name }}
-                  </div>
-                  <div class="body-1 text-center">
-                    {{ printer.model }}
-                  </div>
+                  <div class="title text-center">{{ printer.name }}</div>
+                  <div class="body-1 text-center">{{ printer.model }}</div>
                   <div
                     v-if="printer.printers > 1"
                     class="body-1 text-center"
-                  >
-                    {{ printer.printers }} printers
-                  </div>
-                  <div class="body-1 text-center">
-                    Address: {{ printer.ipAddress }}
-                  </div>
+                  >{{ printer.printers }} printers</div>
+                  <div class="body-1 text-center">Address: {{ printer.ipAddress }}</div>
                 </v-col>
               </v-row>
             </v-container>
