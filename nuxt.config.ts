@@ -19,9 +19,6 @@ const config: Configuration = {
     mode: 'hash',
     middleware: ['chooser', 'firstLaunch'],
   },
-  generate: {
-    dir: 'public'
-  },
   /*
    ** Global CSS
    */
