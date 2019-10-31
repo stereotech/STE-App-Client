@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">Extruder</v-card-title>
+    <v-card-title class="title">{{$t("printers.expert.extruderCard.title")}}</v-card-title>
     <v-container fluid grid-list-xs>
       <v-layout row wrap class="text-center">
         <v-flex xs6 sm3 order-sm1>

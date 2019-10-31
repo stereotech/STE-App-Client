@@ -1,23 +1,23 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Reset and restore</template>
+    <template slot="title">{{$t("common.settings.resetDialog.title")}}</template>
     <v-list>
       <v-list-item @click="confirmation = true">
-        <v-list-item-title class="error--text">Factory reset</v-list-item-title>
+        <v-list-item-title class="error--text">{{$t("common.settings.resetDialog.factoryReset")}}</v-list-item-title>
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item @click="confirmation = true">
-        <v-list-item-title class="error--text font-weight-bold">Factory reset (clear storage)</v-list-item-title>
+        <v-list-item-title class="error--text font-weight-bold">{{$t("common.settings.resetDialog.factoryResetClearStorage")}}</v-list-item-title>
       </v-list-item>
       <v-divider></v-divider>
     </v-list>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">Are you sure want to perform factory reset?</v-card-title>
-        <v-card-text>Printer will reboot after confirmation</v-card-text>
+        <v-card-title class="headline">{{$t("common.settings.resetDialog.sureFactoryReset")}}</v-card-title>
+        <v-card-text>{{$t("common.settings.resetDialog.rebootMessage")}}</v-card-text>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
-          <v-btn color="error" text @click="factoryReset">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{$t("frequentlyUsed.no")}}</v-btn>
+          <v-btn color="error" text @click="factoryReset">{{$t("frequentlyUsed.yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -25,11 +25,11 @@
       <v-card>
         <v-card-title
           class="headline"
-        >Are you sure want to perform factory reset and clear all user data?</v-card-title>
-        <v-card-text>Printer will reboot after confirmation</v-card-text>
+        >{{$t("common.settings.resetDialog.sureFactoryResetClear")}}</v-card-title>
+        <v-card-text>{{$t("common.settings.resetDialog.rebootMessage")}}</v-card-text>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmationForce = false">No</v-btn>
-          <v-btn color="error" text @click="forceFactoryReset">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmationForce = false">{{$t("frequentlyUsed.no")}}</v-btn>
+          <v-btn color="error" text @click="forceFactoryReset">{{$t("frequentlyUsed.yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

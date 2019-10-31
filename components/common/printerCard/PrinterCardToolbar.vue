@@ -37,10 +37,10 @@
       <v-card>
         <v-card-title
           class="headline"
-        >Do you want to remove {{ printer(id) ? printer(id).name : ''}} from cluster?</v-card-title>
+        >{{$t("common.printerCard.doYouWantToRemove",[printer(id) ? printer(id).name : ''])}}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" text @click="removeFromCluster">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{$t("frequentlyUsed.no")}}</v-btn>
+          <v-btn color="primary" text @click="removeFromCluster">{{$t("frequentlyUsed.yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

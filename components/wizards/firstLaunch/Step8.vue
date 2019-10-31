@@ -26,12 +26,12 @@
         </v-flex>
         <v-flex xs12>
           <v-btn x-large block depressed color="accent" @click="next(5)">
-            <v-icon left dark>mdi-chevron-left</v-icon>Set points again
+            <v-icon left dark>mdi-chevron-left</v-icon>{{$t("printers.wizards.firstLaunch.setPoints")}}
           </v-btn>
         </v-flex>
         <v-flex xs12>
           <v-btn x-large block depressed color="accent" @click="next(8)">
-            Next
+            {{$t("frequentlyUsed.next")}}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
         </v-flex>

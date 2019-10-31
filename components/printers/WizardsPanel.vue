@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header>
-      <span class="headline font-weight-light">Wizards</span>
+      <span class="headline font-weight-light">{{$t("printers.wizardsPanel.title")}}</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <v-container fluid grid-list-md>

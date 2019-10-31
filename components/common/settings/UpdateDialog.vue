@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">System update</template>
+    <template slot="title">{{$t("common.settings.updateDialog.title")}}</template>
     <v-container grid-list-md>
       <v-layout row wrap>
         <v-flex xs12>
@@ -14,44 +14,44 @@
                     outlined
                     color="primary"
                     @click="checkForUpdateManually"
-                  >Check for update</v-btn>
+                  >{{$t("common.settings.updateDialog.checkForUpdate")}}</v-btn>
                   <h5
                     class="headline primary--text text-center"
-                  >Current version: {{ currentVersion }}</h5>
-                  <h5 class="text-center">You have the latest firmware</h5>
+                  >{{$t("common.settings.updateDialog.currentVersion", [currentVersion])}}</h5>
+                  <h5 class="text-center">{{$t("common.settings.updateDialog.latestFirmware")}}</h5>
                 </v-flex>
                 <v-flex xs12 v-if="softwareUpdateState == 1">
                   <h5
                     class="headline success--text text-center"
-                  >New version avaliable: {{ avaliableVersion }}</h5>
-                  <h5 class="text-center">Current version: {{ currentVersion }}</h5>
+                  >{{$t("common.settings.updateDialog.newVersion", [avaliableVersion])}}</h5>
+                  <h5 class="text-center">{{$t("common.settings.updateDialog.currentVersion", [currentVersion])}}</h5>
                   <v-btn
                     depressed
                     block
                     color="success"
                     @click="downloadUpdateVersion"
-                  >Download update</v-btn>
+                  >{{$t("common.settings.updateDialog.downloadUpdate")}}</v-btn>
                 </v-flex>
                 <v-flex xs12 v-if="softwareUpdateState == 2">
-                  <h5 class="headline text-center">Downloading {{ avaliableVersion }}...</h5>
+                  <h5 class="headline text-center">{{$t("common.settings.updateDialog.downloadingVersion", [avaliableVersion])}}</h5>
                   <v-progress-linear :indeterminate="true"></v-progress-linear>
                 </v-flex>
                 <v-flex xs12 v-if="softwareUpdateState == 3">
-                  <h5 class="headline text-center">Downloading {{ downloadProgress }}%</h5>
+                  <h5 class="headline text-center">{{$t("common.settings.updateDialog.progress", [downloadProgress])}}</h5>
                   <v-progress-linear :value="downloadProgress"></v-progress-linear>
                 </v-flex>
                 <v-flex xs12 v-if="softwareUpdateState == 4">
                   <h5
                     class="headline text-center"
-                  >Download finished. Please reboot printer to finish update</h5>
+                  >{{$t("common.settings.updateDialog.finish")}}</h5>
                   <v-progress-linear :indeterminate="true"></v-progress-linear>
                 </v-flex>
                 <v-flex xs12 v-if="softwareUpdateState == 5">
-                  <h5 class="headline text-center">Copying</h5>
+                  <h5 class="headline text-center">{{$t("common.settings.updateDialog.copying")}}</h5>
                   <v-progress-linear :indeterminate="true"></v-progress-linear>
                 </v-flex>
                 <v-flex xs12 v-if="softwareUpdateState == 6">
-                  <h5 class="headline error--text text-center">Download failed</h5>
+                  <h5 class="headline error--text text-center">{{$t("common.settings.updateDialog.failed")}}</h5>
                 </v-flex>
               </v-layout>
             </v-container>

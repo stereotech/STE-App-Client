@@ -8,7 +8,12 @@
         "connect": "Connect",
         "remove": "Remove",
         "save": "Save",
-        "retry": "Retry"
+        "retry": "Retry",
+        "start": "Start",
+        "next": "Next",
+        "finish":"Finish",
+        "skip": "Skip",
+        "done":"Done!"
     },
     "common": {
         "printerCard": {
@@ -17,7 +22,11 @@
             "paused": "Paused at",
             "maintenance": "Maintenance",
             "printingDone": "Printing Done!",
+	        "failed": "Printing Failed",	
             "offline": "Offline",
+	        "loading":"Loading...",
+	        "idle" : "Idle",
+	        "notAvaliable" : "Not Avaliable",
             "e1Target": "E1 Target",
             "e2Target": "E2 Target",
             "bedTarget": "Bed Target:",
@@ -25,9 +34,15 @@
             "tryToReconnect": "Try to reconnect",
             "currentFile": "Current file:",
             "currentPrintjob": "Current printjob:",
-            "cleanTheBuildplate": "Clean the buildplate and select state",
-            "printerIsWaiting": "Printer is waiting for printjob",
-            "printerIsReady": "Printer is ready for maintenance",
+            "cleanTheBuildplate": "Clean the buildplate",
+	        "andSelectState" : "and select state",
+            "printerIsWaiting": "Printer is waiting", 
+	        "forPrintJob":	"for printjob",
+	        "waiting" : "Waiting...",
+            "printerIsReady": "Printer is ready",
+	        "forMaintenance": "for maintenance",
+            "printerIsNotAvaliable":"Printer is not avaliable",	
+            "inTheCurrentNetwork":"in the current network",
             "doYouWantToRemove": "Do you want to remove {0} from cluster?",
             "no": "No",
             "yes": "Yes"
@@ -68,16 +83,25 @@
             },
             "updateDialog": {
                 "title": "Sistem updates",
-                "currentVersion": "Current version:",
+                "currentVersion": "Current version:{0}",
                 "checkForUpdate": "Check for update",
-                "downloadAndInstall": "download and install"
+                "latestFirmware": "You have the latest firmware",
+                "downloadAndInstall": "download and install",
+                "newVersion":"New version avaliable: {{ ver }}",
+                "downloadUpdate":"Download update",
+                "downloadingVersion":"Downloading {1}...",
+                "progress":"Downloading {2}%",
+                "finish":"Download finished. Please reboot printer to finish update",
+                "copying":"Copying",
+                "failed":"Download failed"
             },
             "wifiDialog": {
                 "title": "Wi-Fi Setup",
                 "currentNetwork": "Current Network",
-                "forgetNetworkName": "Forget",
+                "forget":"Forget",
+                "forgetNetworkName": "Forget{name}?",
                 "avaliableNetworks": "Avaliable networks",
-                "enterWifiPassword": "Enter Wi-Fi passord",
+                "enterWifiPassword": "Enter Wi-Fi passord for {ntwkName}",
                 "connectToNetwork": "Connect to network?",
                 "wifiPassword": "Wi-Fi password"
             }
@@ -86,18 +110,26 @@
     "dashboard": {
         "doneJobs": {
             "title": "Done Jobs",
-            "printed": "Printed:",
-            "revert": "Revert"
+            "printed": "Printed: {time}",
+            "revert": "Revert",
+            "remove":"Remove",
+            "seeDoneJobs":"Here you will see done print jobs. Succesful prints marked with"
         },
         "printersPanel": {},
         "queue": {
+            "jobAction":"{action} job",
+            "printers":"Printers: {prnts}",
             "title": "Queue",
             "edit": "Edit",
-            "removeJob": "Do you want to remove the job?"
+            "remove":"Remove",
+            "removeJob": "Do you want to remove the job?",
+            "noQueuedJobs":"There are no queued print jobs yet. Add new one by clicking"
         },
         "storage": {
             "title": "",
-            "uploaded": "Uploaded "
+            "uploaded": "Uploaded {time}",
+            "remove":"Remove",
+            "noUploadedFiles":"You don't have any uploaded files yet. You could add new files using dropzone below"
         }
     },
     "materials": {
@@ -122,20 +154,43 @@
             },
             "temperatureFan": {
                 "title": "Temperature And Fan"
+            },
+            "terminalCard":{
+                "title":"Terminal"
             }
         },
         "addPrinterDialog": {
             "title": "Add printer",
-            "address": "Address:",
+            "address": "Address: {ip}",
             "doYouWantToAdd": "Do you want to add {0} to cluster?"
         },
         "wizardCard": {},
         "wizardsPanel": {
             "title": "Wizard"
+        },
+        "wizards":{
+            "changeMatreial":{
+                "title":"Change material",
+                "heating":"Heating...",
+                "unload":"Unload",
+                "load":"Load"
+            },
+            "firstLaunch":{
+                "hello":"Hello!",
+                "start":"Let's Start",
+                "setDateTime":"Set Date and Time",
+                "setPoints":"Set points again",
+                "heating":"Heating...",
+                "unload":"Unload",
+                "load":"Load",
+                "connect":"Connect"
+            }
         }
     },
     "chooseprinter": {
-        "address": "Address"
+        "address": "Address",
+        "selectCluster":"Select cluster",
+        "printers":"{0} printers"
     },
     "navigationPanel": {
         "Dashboard": "Dashboard",

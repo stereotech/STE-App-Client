@@ -2,13 +2,13 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-flex xs12>
       <v-btn block x-large depressed color="accent" @click="next(4)">
-        Start
+        {{$t("frequentlyUsed.start")}}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-flex>
     <v-flex xs12>
       <v-btn block x-large depressed color="accent" @click="next(9)">
-        Skip
+        {{$t("frequentlyUsed.skip")}}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-flex>

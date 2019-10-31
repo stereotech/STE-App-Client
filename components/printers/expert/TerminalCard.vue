@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">Terminal</v-card-title>
+    <v-card-title class="title">{{$t("printers.expert.terminalCard.title")}}</v-card-title>
     <v-container fluid grid-list-xs>
       <v-layout row wrap>
         <v-flex xs12>

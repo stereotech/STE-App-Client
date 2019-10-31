@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Settings</template>
+    <template slot="title">{{$t("common.settings.mainSettingsDialog.title")}}</template>
     <v-list>
       <template v-for="(setting, index) in settings">
         <v-list-item :key="setting.title" @click="setting.page = true">
