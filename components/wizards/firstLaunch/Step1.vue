@@ -3,7 +3,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <h1 class="display-4">Hello!</h1>
+          <h1 class="display-4">{{$t("printers.wizards.firstLaunch.hello")}}</h1>
         </v-flex>
         <!--<v-flex xs12>
           <v-select
@@ -15,7 +15,7 @@
           ></v-select>
         </v-flex>-->
         <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="next(1)">Let's Start</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">{{$t("printers.wizards.firstLaunch.start")}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

@@ -3,7 +3,7 @@
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
-          <span class="headline font-weight-light">Done Jobs</span>
+          <span class="headline font-weight-light">{{$t("dashboard.doneJobs.title")}}</span>
         </v-card-title>
       </v-toolbar>
       <v-list two-line style="max-height: 486px" class="overflow-y-auto" v-if="doneJobs.length > 0">
@@ -24,7 +24,7 @@
             <v-list-item-subtitle
               class="body-1"
               v-else
-            >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-item-subtitle>
+            >{{ $t("dashboard.doneJobs.printed",[doneJob.lastPrintTime | moment("from")]) }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn @click="showContextMenu" icon>
@@ -36,13 +36,13 @@
                   <v-list-item-action>
                     <v-icon>mdi-refresh</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>Revert</v-list-item-title>
+                  <v-list-item-title>{{$t("dashboard.doneJobs.revert")}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="removeJob(doneJob)">
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>Remove</v-list-item-title>
+                  <v-list-item-title>{{$t("dashboard.doneJobs.remove")}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -56,7 +56,7 @@
           </v-flex>
           <v-flex xs12>
             <h6 class="title text-center">
-              Here you will see done print jobs. Succesful prints marked with
+              {{$t("dashboard.doneJobs.seeDoneJobs")}}
               <v-icon color="success">mdi-check</v-icon>&nbsp;
             </h6>
           </v-flex>

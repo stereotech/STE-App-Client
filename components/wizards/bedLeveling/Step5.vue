@@ -43,7 +43,7 @@
         </v-flex>
         <v-flex xs12>
           <v-btn x-large block depressed color="accent" @click="next(5)">
-            Next
+            {{$t("frequentlyUsed.next")}}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
         </v-flex>

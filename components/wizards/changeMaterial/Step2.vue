@@ -10,10 +10,10 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-flex>
         <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="nextStep">Skip</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.skip")}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

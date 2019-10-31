@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">Jog</v-card-title>
+    <v-card-title class="title">{{("printers.expert.jogCard.title")}}</v-card-title>
     <v-container grid-list-xs>
       <v-layout row wrap class="text-center" align-center justify-center>
         <v-flex xs12 sm9 order-sm1>

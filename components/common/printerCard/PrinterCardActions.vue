@@ -3,7 +3,7 @@
     <v-container fluid grid-list-md>
       <v-layout row wrap v-if="printing || paused">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">Current printjob:</div>
+          <div class="title text-truncate">{{$t("common.printerCard.currentPrintjob")}}</div>
           <div class="title text-truncate">{{ jobNameFomatted }}</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
@@ -22,8 +22,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="done || failed">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">Clean the buildplate</div>
-          <div class="title text-truncate">and select state</div>
+          <div class="title text-truncate">{{$t("common.printerCard.cleanTheBuildplate")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.andSelectState")}}</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
@@ -36,8 +36,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="idle">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">Printer is waiting</div>
-          <div class="title text-truncate">for printjob</div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsWaiting")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.forPrintJob")}}</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
@@ -51,8 +51,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="maintenance">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">Printer is ready</div>
-          <div class="title text-truncate">for maintenance</div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsReady")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.forMaintenance")}}</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-select
@@ -66,7 +66,7 @@
       </v-layout>
       <v-layout row wrap v-else-if="loading">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">Waiting...</div>
+          <div class="title text-truncate">{{$t("common.printerCard.waiting")}}</div>
         </v-flex>
         <v-flex xs12 sm4 md12>
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
@@ -74,8 +74,8 @@
       </v-layout>
       <v-layout row wrap v-else-if="notAvaliable">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">Printer is not avaliable</div>
-          <div class="title text-truncate">in the current network</div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvailable")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.inTheCurrentNetwork")}}</div>
         </v-flex>
       </v-layout>
     </v-container>

@@ -12,7 +12,7 @@
           ></v-progress-circular>
         </v-flex>
         <v-flex xs12>
-          <p>Heating...</p>
+          <p>{{$t("printers.wizards.changeMatreial.heating")}}</p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -21,7 +21,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("printers.wizards.changeMatreial.unload")}}</v-btn>
         </v-flex>
         <v-flex xs12 v-if="additionalData.action === 0">
           <v-btn
@@ -34,7 +34,7 @@
           >Finish</v-btn>
         </v-flex>
         <v-flex xs12 v-else>
-          <v-btn block x-large depressed color="accent" @click="next(3)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

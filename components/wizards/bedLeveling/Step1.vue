@@ -2,7 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-flex xs12>
       <v-btn block x-large depressed color="accent" @click="next(1)">
-        Start
+        {{$t("frequentlyUsed.start")}}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-flex>

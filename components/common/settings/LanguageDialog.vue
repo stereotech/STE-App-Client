@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Language</template>
+    <template slot="title">{{$t("common.settings.languageDialog.title")}}</template>
     <v-select
       :items="settings.avaliableLanguages"
       :value="settings.language"

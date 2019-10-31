@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header>
-      <span class="headline font-weight-light">Manual control</span>
+      <span class="headline font-weight-light">{{$t("printers.expert.manualControlPanel.title")}}</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <v-container fluid grid-list-xs>

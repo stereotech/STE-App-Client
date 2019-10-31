@@ -12,7 +12,7 @@
           ></v-progress-circular>
         </v-flex>
         <v-flex xs12>
-          <p>Heating...</p>
+          <p>{{$t("printers.wizards.firstLaunch.heating")}}</p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -21,7 +21,7 @@
     <v-container grid-list-xl>
       <v-layout align-center justify-space-around column fill-height>
         <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="next(13)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(13)">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-flex>
       </v-layout>
     </v-container>

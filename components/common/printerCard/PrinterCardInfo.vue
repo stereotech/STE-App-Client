@@ -22,15 +22,15 @@
             class="caption"
             v-if="printing || paused"
           >Spent {{ [printTime, 'seconds'] | duration('humanize') }}, {{ [printTimeLeft, 'seconds'] | duration('humanize') }} left</div>
-          <div class="title" v-if="printing">Printing...{{ progress | currency('', 1) }}%</div>
-          <div class="warning--text title" v-if="paused">Paused at {{ progress | currency('', 1) }}%</div>
-          <div class="title" v-else-if="idle">Idle</div>
-          <div class="warning--text title" v-else-if="maintenance">Maintenance</div>
-          <div class="success--text title" v-else-if="done">Printing Done!</div>
-          <div class="error--text title" v-else-if="failed">Printing Failed</div>
-          <div class="error--text title" v-else-if="offline">Offline</div>
-          <div class="primary--text title" v-else-if="loading">Loading...</div>
-          <div class="error--text title" v-else-if="notAvaliable">Not Avaliable</div>
+          <div class="title" v-if="printing">{{$t("common.printerCard.printing")}}{{ progress | currency('', 1) }}%</div>
+          <div class="warning--text title" v-if="paused">{{$t("common.printerCard.paused")}}{{ progress | currency('', 1) }}%</div>
+          <div class="title" v-else-if="idle">{{$t("common.printerCard.idle")}}</div>
+          <div class="warning--text title" v-else-if="maintenance">{{$t("common.printerCard.maintenance")}}</div>
+          <div class="success--text title" v-else-if="done">{{$t("common.printerCard.printingDone")}}</div>
+          <div class="error--text title" v-else-if="failed">{{$t("common.printerCard.failed")}}</div>
+          <div class="error--text title" v-else-if="offline">{{$t("common.printerCard.offline")}}</div>
+          <div class="primary--text title" v-else-if="loading">{{$t("common.printerCard.loading")}}</div>
+          <div class="error--text title" v-else-if="notAvaliable">{{$t("common.printerCard.notAvailable")}}</div>
           <v-progress-linear v-if="printing" :value="progress"></v-progress-linear>
           <v-progress-linear v-if="paused" :value="progress" color="warning"></v-progress-linear>
           <v-progress-linear v-if="loading" indeterminate></v-progress-linear>

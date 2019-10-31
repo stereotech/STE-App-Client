@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">Storage</template>
+    <template slot="title">{{$t("common.settings.storageDialog.title")}}</template>
     <v-text-field label="Total" filled readonly :value="bytesTotal | prettyBytes"></v-text-field>
     <v-text-field label="Owned" filled readonly :value="bytesOwned | prettyBytes"></v-text-field>
     <v-text-field label="Avaliable" filled readonly :value="bytesAvaliable | prettyBytes"></v-text-field>

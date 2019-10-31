@@ -3,7 +3,7 @@
     <v-container fluid grid-list-md>
       <v-layout row wrap>
         <v-flex xs4 v-if="lastTempDataPoint(id).tool0">
-          <div class="body-1 text-truncate">E1 Target:</div>
+          <div class="body-1 text-truncate">{{$t("common.printerCard.e1Target")}}</div>
           <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
           <v-progress-circular
             size="48"
@@ -13,7 +13,7 @@
           >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
         </v-flex>
         <v-flex xs4 v-if="lastTempDataPoint(id).tool1">
-          <div class="body-1 text-truncate">E2 Target:</div>
+          <div class="body-1 text-truncate">{{$t("common.printerCard.e2Target")}}</div>
           <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
           <v-progress-circular
             size="48"
@@ -23,7 +23,7 @@
           >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
         </v-flex>
         <v-flex xs4 v-if="lastTempDataPoint(id).bed">
-          <div class="body-1 text-truncate">Bed Target:</div>
+          <div class="body-1 text-truncate">{{$t("common.printerCard.bedTarget")}}</div>
           <div
             class="body-1"
             v-if="lastTempDataPoint(id).bed"

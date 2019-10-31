@@ -22,7 +22,7 @@
         >
           <v-list-item-content>
             <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
-            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
+            <v-list-item-subtitle class="body-1">{{$t("dashboard.storage.uploaded",[file.date | moment("from")])}}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn @click="showContextMenu" icon>
@@ -34,7 +34,7 @@
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>Remove</v-list-item-title>
+                  <v-list-item-title>{{$t("dashboard.storage.remove")}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -54,7 +54,7 @@
           <v-flex xs12>
             <h6
               class="title text-center"
-            >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
+            >{{$t("dashboard.storage.noUploadedFiles")}}</h6>
           </v-flex>
         </v-layout>
       </v-container>
