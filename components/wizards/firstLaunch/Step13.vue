@@ -1,7 +1,7 @@
 <template>
   <WizardStep v-if="heating" :step="step">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense  align="center" justify="space-around" >
         <v-col cols="12">
           <v-progress-circular
             :size="70"
@@ -19,7 +19,7 @@
   </WizardStep>
   <WizardStep v-else :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense  align="center" justify="space-around" >
         <v-col cols="12">
           <v-btn block x-large depressed color="accent" @click="next(13)">
             Next

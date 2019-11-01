@@ -40,7 +40,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row dense v-else column align="center" justify="center">
+      <v-row dense v-else align="center" justify="center">
         <v-col cols="12">
           <v-progress-circular indeterminate color="secondary" />
         </v-col>

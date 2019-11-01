@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense  align="center" justify="space-around" >
         <v-col cols="12">
           <v-radio-group v-model="additionalData.action" mandatory>
             <v-radio label="Unload material" :value="0" color="secondary" />
