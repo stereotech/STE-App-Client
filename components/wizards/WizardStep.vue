@@ -18,8 +18,8 @@
             <slot />
           </v-col>
         </v-row>
-        <v-row dense v-else class="fill-height" align="center" justify="space-around" column>
-          <v-col v-if="image != null" cols="12">
+        <v-row dense v-else align="center" justify="space-around">
+          <v-col v-if="image != null" cols="auto">
             <v-card>
               <v-img height="320" width="260" :src="image" />
             </v-card>

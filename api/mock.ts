@@ -1,6 +1,7 @@
 import { ServerMiddleware } from '@nuxt/types'
 import { PrinterInfo, CurrentState } from '~/types/printer'
 import { Settings } from '~/types/settings'
+import { PrintJob } from '~/types/printJob'
 
 
 
@@ -17,16 +18,17 @@ const printers = [
     }
 ]
 
-const printJobs = [
+const printJobs: PrintJob[] = [
     {
         id: 1,
         name: 'job1',
         description: '',
         creationTime: Date.now(),
         fileUri: 'file.gcode',
-        succesful: true,
+        successful: true,
         lastPrintTime: Date.now(),
-        printers: []
+        printers: [],
+        state: "Queued"
     },
     {
         id: 2,
@@ -34,71 +36,10 @@ const printJobs = [
         description: '',
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 3,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 4,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 5,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 6,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 7,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 8,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 9,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
-    },
-    {
-        id: 10,
-        name: 'job2',
-        description: '',
-        creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa']
+        printers: ['st-aaa'],
+        successful: false,
+        lastPrintTime: Date.now(),
+        state: "Queued",
     }
 ]
 
@@ -371,8 +312,7 @@ const usbs = [
 
 const apiMock: ServerMiddleware = function (req, res, next) {
     if (req.url === '/jobs') {
-        res.end(JSON.stringify([]))
-        //res.end(JSON.stringify(printJobs))
+        res.end(JSON.stringify(printJobs))
     }
     else if (req.url === '/printers/') {
         let printers: PrinterInfo[] = [{
