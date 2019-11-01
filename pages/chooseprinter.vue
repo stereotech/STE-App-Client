@@ -41,7 +41,7 @@
         </v-col>
       </v-row>
       <v-row dense v-else align="center" justify="center">
-        <v-col cols="12">
+        <v-col cols="auto">
           <v-progress-circular indeterminate color="secondary" />
         </v-col>
       </v-row>

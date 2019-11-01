@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step">
     <v-container>
-      <v-row dense  align="center" justify="space-around" >
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-card>
             <v-list light>
@@ -37,12 +37,8 @@
                   <v-card-title
                     v-if="setupNetwork.security"
                     class="headline"
-                  >
-                    Enter Wi-Fi password for {{ setupNetwork.name }}
-                  </v-card-title>
-                  <v-card-title v-else class="headline">
-                    Connect to network?
-                  </v-card-title>
+                  >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
+                  <v-card-title v-else class="headline">Connect to network?</v-card-title>
                   <v-container v-if="setupNetwork.security">
                     <BottomInput v-model="keyboard" :input.sync="password">
                       <v-text-field
@@ -61,18 +57,14 @@
                   </v-container>
 
                   <v-card-actions>
-                    <v-btn x-large color="primary" depressed @click="confirmation = false">
-                      Cancel
-                    </v-btn>
+                    <v-btn x-large color="primary" depressed @click="confirmation = false">Cancel</v-btn>
                     <v-btn
                       x-large
                       color="primary"
                       depressed
                       :disabled="isMin"
                       @click="startConnecting"
-                    >
-                      Connect
-                    </v-btn>
+                    >Connect</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -80,9 +72,7 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(15)">
-            Next
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(15)">Next</v-btn>
         </v-col>
       </v-row>
     </v-container>

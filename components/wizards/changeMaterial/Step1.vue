@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense align="center" justify="space-around" >
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
             <v-radio label="Extruder 1" :value="0" color="secondary" />
