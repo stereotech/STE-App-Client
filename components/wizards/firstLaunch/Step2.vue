@@ -1,11 +1,9 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense  align="center" justify="space-around" >
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(2)">
-            Next
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(2)">Next</v-btn>
         </v-col>
       </v-row>
     </v-container>
