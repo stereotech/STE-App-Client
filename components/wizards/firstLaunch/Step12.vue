@@ -1,7 +1,7 @@
 <template>
   <WizardStep v-if="heating" :step="step">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-progress-circular
             :size="70"
@@ -19,11 +19,9 @@
   </WizardStep>
   <WizardStep v-else :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">
-            Unload
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-col>
         <v-col v-if="additionalData.action === 0" cols="12">
           <v-btn
@@ -33,14 +31,10 @@
             color="accent"
             nuxt
             :to="'/printers/' + $route.params.id"
-          >
-            Finish
-          </v-btn>
+          >Finish</v-btn>
         </v-col>
         <v-col v-else cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(12)">
-            Next
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(12)">Next</v-btn>
         </v-col>
       </v-row>
     </v-container>

@@ -15,24 +15,18 @@
         :style="styleObj"
         class="overflow-y-auto"
       >
-        <v-list-item
-          v-for="(file, index) in dataStorage.children"
-          :key="index"
-          @contextmenu="showContextMenu"
-        >
+        <v-list-item v-for="(file, index) in dataStorage.children" :key="index">
           <v-list-item-content>
-            <v-list-item-title class="subheading">
-              {{ file.display }}
-            </v-list-item-title>
-            <v-list-item-subtitle class="body-1">
-              Uploaded {{ file.date | moment("from") }}
-            </v-list-item-subtitle>
+            <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
+            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn icon @click="showContextMenu">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-            <v-menu v-model="showMenu" absolute :position-x="menuX" :position-y="menuY">
+            <v-menu>
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
                 <v-list-item @click="deleteFile(file)">
                   <v-list-item-action>
@@ -46,8 +40,8 @@
         </v-list-item>
       </v-list>
       <v-container v-else>
-        <v-row dense class="fill-height" align="center" justify="center" column>
-          <v-col cols="12">
+        <v-row dense align="center" justify="center">
+          <v-col cols="auto">
             <v-img
               src="/empty-state/local-storage.svg"
               height="192px"
@@ -58,9 +52,7 @@
           <v-col cols="12">
             <h6
               class="title text-center"
-            >
-              You don't have any uploaded files yet. You could add new files using dropzone below
-            </h6>
+            >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
           </v-col>
         </v-row>
       </v-container>
@@ -83,9 +75,7 @@
               color="primary"
               :disabled="files.length < 1"
               @click="upload"
-            >
-              Upload
-            </v-btn>
+            >Upload</v-btn>
           </v-col>
         </v-row>
         <v-overlay :value="overlay" absolute z-index="3">

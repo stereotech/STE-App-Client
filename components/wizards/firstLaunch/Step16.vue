@@ -1,16 +1,12 @@
 <template>
   <WizardStep :step="step">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <h1 class="display-4">
-            Done!
-          </h1>
+          <h1 class="display-4">Done!</h1>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finishSetup">
-            Finish
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="finishSetup">Finish</v-btn>
         </v-col>
       </v-row>
     </v-container>
