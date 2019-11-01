@@ -16,11 +16,7 @@
         style="max-height: 486px"
         class="overflow-y-auto"
       >
-        <v-list-item
-          v-for="job in queuedJobs"
-          :key="job.id + job.name"
-          @contextmenu="showContextMenu"
-        >
+        <v-list-item v-for="(job) in queuedJobs" :key="job.id">
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
@@ -33,16 +29,13 @@
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
-            <v-btn icon @click="showContextMenu">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-            <v-menu
-              v-if="job.state === 'Queued'"
-              v-model="showMenu"
-              absolute
-              :position-x="menuX"
-              :position-y="menuY"
-            >
+
+            <v-menu v-if="job.state === 'Queued'">
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
                 <v-list-item @click="startEditJob(job)">
                   <v-list-item-action>
@@ -62,8 +55,8 @@
         </v-list-item>
       </v-list>
       <v-container v-else>
-        <v-row dense class="fill-height" align="center" justify="center" column>
-          <v-col cols="12">
+        <v-row dense align="center" justify="center">
+          <v-col cols="auto">
             <v-img src="/empty-state/queue.svg" height="192px" width="192px" aspect-ratio="1" />
           </v-col>
           <v-col cols="12">
@@ -271,18 +264,6 @@ export default class extends Vue {
     }
   }
 
-  showMenu: boolean = false
-  menuX: number = 0
-  menuY: number = 0
-  showContextMenu (e) {
-    e.preventDefault()
-    this.showMenu = false
-    this.menuX = e.clientX
-    this.menuY = e.clientY
-    this.$nextTick(() => {
-      this.showMenu = true
-    })
-  }
 
   private startEditJob (job: PrintJob) {
     this.dialog = true
@@ -290,9 +271,10 @@ export default class extends Vue {
     Object.assign(this.editedJob, job)
   }
 
-  private startRemoveJob (job: PrintJob) {
+  private startRemoveJob (job) {
+    console.log(job)
     this.confirmation = true
-    this.editedJob = job
+    Object.assign(this.editedJob, job)
   }
 
   private async endRemoveJob () {

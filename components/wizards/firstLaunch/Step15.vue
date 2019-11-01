@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense  align="center" justify="space-around" >
         <v-col cols="12">
           <v-card>
             <v-list light>
