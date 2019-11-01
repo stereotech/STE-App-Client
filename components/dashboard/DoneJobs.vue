@@ -7,7 +7,7 @@
         </v-card-title>
       </v-toolbar>
       <v-list v-if="doneJobs.length > 0" two-line style="max-height: 486px" class="overflow-y-auto">
-        <v-list-item v-for="doneJob in doneJobs" :key="doneJob.id" @contextmenu="showContextMenu">
+        <v-list-item v-for="doneJob in doneJobs" :key="doneJob.id">
           <v-list-item-action v-if="doneJob.state == 'Completed'" ripple>
             <v-icon
               :color="doneJob.successful ? `success` : `error`"
@@ -27,10 +27,12 @@
             >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn icon @click="showContextMenu">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-            <v-menu v-model="showMenu" absolute :position-x="menuX" :position-y="menuY">
+            <v-menu>
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
               <v-list>
                 <v-list-item @click="revertJob(doneJob)">
                   <v-list-item-action>
@@ -50,8 +52,8 @@
         </v-list-item>
       </v-list>
       <v-container v-else>
-        <v-row dense class="fill-height" align="center" justify="center" column>
-          <v-col cols="12">
+        <v-row dense align="center" justify="center">
+          <v-col cols="auto">
             <v-img src="/empty-state/done-jobs.svg" height="192px" width="192px" aspect-ratio="1" />
           </v-col>
           <v-col cols="12">
@@ -80,18 +82,6 @@ export default class extends Vue {
   @printJobs.Action revertJob: any
   @printJobs.Action toggleSuccess: any
 
-  showMenu: boolean = false
-  menuX: number = 0
-  menuY: number = 0
-  showContextMenu (e) {
-    e.preventDefault()
-    this.showMenu = false
-    this.menuX = e.clientX
-    this.menuY = e.clientY
-    this.$nextTick(() => {
-      this.showMenu = true
-    })
-  }
 }
 </script>
 
