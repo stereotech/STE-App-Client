@@ -4,8 +4,8 @@
       :src="'/wizards/' + image + '.jpg'"
       gradient="to top, rgba(100,115,201,.0), rgba(38, 50, 56, 1)"
     >
-      <v-container class="fill-height" fluid>
-        <v-row dense class="fill-height">
+      <v-container fluid>
+        <v-row dense>
           <v-col class="align-end flexbox" cols="12">
             <span class="white--text title font-weight-light">{{ name }}</span>
           </v-col>

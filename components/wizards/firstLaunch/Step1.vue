@@ -1,11 +1,9 @@
 <template>
   <WizardStep :step="step">
     <v-container>
-      <v-row dense class="fill-height" align="center" justify="space-around" column>
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <h1 class="display-4">
-            Hello!
-          </h1>
+          <h1 class="display-4">Hello!</h1>
         </v-col>
         <!--<v-flex xs12>
           <v-select
@@ -17,9 +15,7 @@
           ></v-select>
         </v-flex>-->
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(1)">
-            Let's Start
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">Let's Start</v-btn>
         </v-col>
       </v-row>
     </v-container>
