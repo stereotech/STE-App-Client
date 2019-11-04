@@ -156,7 +156,8 @@
                 "title": "Temperature And Fan"
             },
             "terminalCard":{
-                "title":"Terminal"
+                "title":"Terminal",
+                "autoscroll":"Autoscroll"
             }
         },
         "addPrinterDialog": {
@@ -197,5 +198,12 @@
         "Printers": "Printers",
         "Materials": "Materials",
         "Select cluster": "Select cluster"
+    },
+    "layout":{
+        "selectCluster":"",
+        "reboot":"",
+        "powerOff":"",
+        "settings":"Settings",
+        "retry":"Retry"
     }
 }

@@ -4,7 +4,7 @@
     <v-flex xs12 v-else text-center>
       <h1 class="display-4">{{ error.statusCode }}</h1>
       <h4 class="display-1">{{ error.message }}</h4>
-      <v-btn large color="accent" @click="refresh">Retry</v-btn>
+      <v-btn large color="accent" @click="refresh">{{$t("layout.retry")}}</v-btn>
     </v-flex>
   </div>
 </template>
