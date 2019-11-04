@@ -74,7 +74,7 @@
       </v-layout>
       <v-layout row wrap v-else-if="notAvaliable">
         <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvailable")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvaliable")}}</div>
           <div class="title text-truncate">{{$t("common.printerCard.inTheCurrentNetwork")}}</div>
         </v-flex>
       </v-layout>

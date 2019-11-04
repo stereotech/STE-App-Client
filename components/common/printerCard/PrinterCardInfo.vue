@@ -30,7 +30,7 @@
           <div class="error--text title" v-else-if="failed">{{$t("common.printerCard.failed")}}</div>
           <div class="error--text title" v-else-if="offline">{{$t("common.printerCard.offline")}}</div>
           <div class="primary--text title" v-else-if="loading">{{$t("common.printerCard.loading")}}</div>
-          <div class="error--text title" v-else-if="notAvaliable">{{$t("common.printerCard.notAvailable")}}</div>
+          <div class="error--text title" v-else-if="notAvaliable">{{$t("common.printerCard.notAvaliable")}}</div>
           <v-progress-linear v-if="printing" :value="progress"></v-progress-linear>
           <v-progress-linear v-if="paused" :value="progress" color="warning"></v-progress-linear>
           <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
