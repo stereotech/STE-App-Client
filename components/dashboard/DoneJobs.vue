@@ -24,7 +24,7 @@
             <v-list-item-subtitle
               class="body-1"
               v-else
-            >{{ $t("dashboard.doneJobs.printed",[doneJob.lastPrintTime | moment("from")]) }}</v-list-item-subtitle>
+            >{{ $t("dashboard.doneJobs.printed")}}{{$moment(doneJob.lastPrintTime).fromNow() }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn @click="showContextMenu" icon>

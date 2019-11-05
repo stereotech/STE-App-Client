@@ -27,7 +27,16 @@ const config: Configuration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment', '~plugins/filters', '~/plugins/prettyBytes', '~plugins/i18n', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
+  plugins: [
+    '~/plugins/filters',
+    '~/plugins/prettyBytes',
+    '~/plugins/i18n',
+    '~/plugins/locale',
+    '~/plugins/cordova',
+    '~/plugins/snackbarQueue',
+    '~/plugins/dialogQueue',
+    '~/plugins/notificationSystem',
+    '~/plugins/signalr'],
   /*
    ** Nuxt.js modules
    */
@@ -38,7 +47,7 @@ const config: Configuration = {
     '@nuxtjs/pwa'
   ],
 
-  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/moment'],
 
   typescript: {
     typeCheck: {
@@ -84,6 +93,9 @@ const config: Configuration = {
       }
     },
     iconfont: 'mdi'
+  },
+  moment: {
+    locales: ['ru']
   },
   loading: { color: '#263238' },
   loadingIndicator: {

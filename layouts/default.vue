@@ -177,13 +177,12 @@ export default class extends Vue {
     return undefined
   }
 
-
-
-
   mounted () {
     if (Notification.permission === 'default') {
       Notification.requestPermission()
     }
+    //@ts-ignore
+    this.$moment.locale('en')
   }
 }
 
