@@ -32,7 +32,7 @@
             >{{ $t("dashboard.queue.printers",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
+            <v-list-item-action-text>{{ $moment(job.creationTime).fromNow() }}</v-list-item-action-text>
             <v-btn @click="showContextMenu" icon>
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
@@ -89,9 +89,14 @@
           <v-btn icon dark @click="closeDialog(undefined)">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{ $t('dashboard.queue.jobAction', [editMode ? 'Edit' : 'Create']) }} </v-toolbar-title>
+          <v-toolbar-title>{{ $t('dashboard.queue.jobAction', [editMode ? 'Edit' : 'Create']) }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">{{$t("frequentlyUsed.save")}}</v-btn>
+          <v-btn
+            :disabled="!valid"
+            dark
+            text
+            @click="closeDialog(!editMode)"
+          >{{$t("frequentlyUsed.save")}}</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
           <v-container fluid grid-list-sm>
