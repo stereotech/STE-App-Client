@@ -22,8 +22,10 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -46,9 +48,10 @@ export default class extends Vue {
   private description: string = 'Select the needed action'
 
   @printers.Action customCommand: any
+  @settings.Getter settings!: Settings
 
   private nextStep () {
-    this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
+    this.customCommand({ id: this.settings.systemId, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
       this.next(12)

@@ -2,9 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(3)">
       Next
-      <v-icon right dark>
-        mdi-chevron-right
-      </v-icon>
+      <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
 </template>
@@ -31,14 +29,14 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X10 Y10 F3600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y190 F3600' })
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
   private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
-  private description: string = 'Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed'
+  private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
+  private description: string = 'Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed'
 
   private async next (step: number) {
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })

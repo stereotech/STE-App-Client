@@ -18,7 +18,7 @@
         <v-list-item v-for="(file, index) in dataStorage.children" :key="index">
           <v-list-item-content>
             <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
-            <v-list-item-subtitle class="body-1">Uploaded {{ file.date | moment("from") }}</v-list-item-subtitle>
+            <v-list-item-subtitle class="body-1">Uploaded {{ $moment(file.date).fromNow() }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-menu>

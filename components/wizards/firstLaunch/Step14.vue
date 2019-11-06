@@ -1,21 +1,15 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense  align="center" justify="space-around" >
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">
-            Unload
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="load">
-            Load
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="load">Load</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finish">
-            Finish
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">Finish</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -27,8 +21,10 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -54,9 +50,10 @@ export default class extends Vue {
   @printers.Action extrudeCommand: any
   @printers.Action toolTempCommand: any
   @printers.Getter status!: (id: string) => CurrentState | undefined
+  @settings.Getter settings!: Settings
 
   get computedStatus () {
-    return this.status(this.$route.params.id)
+    return this.status(this.settings.systemId)
   }
 
   get heating () {
@@ -81,15 +78,15 @@ export default class extends Vue {
   }
 
   private repeat () {
-    this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
+    this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 10 })
   }
 
   private load () {
-    this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+    this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private finish () {
-    this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 0 })
+    this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
     this.next(14)
   }
 
