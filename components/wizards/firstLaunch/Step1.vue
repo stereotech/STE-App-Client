@@ -2,7 +2,7 @@
   <WizardStep :step="step">
     <v-container>
       <v-row dense align="center" justify="space-around">
-        <v-col cols="12">
+        <v-col cols="auto">
           <h1 class="display-4">Hello!</h1>
         </v-col>
         <!--<v-flex xs12>
