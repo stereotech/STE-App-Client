@@ -1,25 +1,15 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-<<<<<<< Updated upstream
-      <v-row dense  align="center" justify="space-around" >
-=======
-      <v-row dense class="fill-height" align="center" justify="space-around" >
->>>>>>> Stashed changes
+      <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">
-            Unload
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="load">
-            Load
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="load">Load</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finish">
-            Finish
-          </v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">Finish</v-btn>
         </v-col>
       </v-row>
     </v-container>
