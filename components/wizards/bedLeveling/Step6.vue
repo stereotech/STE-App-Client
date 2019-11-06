@@ -2,9 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="finish">
       Finish
-      <v-icon right dark>
-        mdi-chevron-right
-      </v-icon>
+      <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
 </template>
@@ -33,8 +31,10 @@ export default class extends Vue {
   private description: string = 'Calibration complete!'
 
   @printers.Action homeCommand: any
+  @printers.Action customCommand: any
 
-  private finish () {
+  private async finish () {
+    await this.customCommand({ id: this.$route.params.id, command: 'M500' })
     this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
     this.$router.go(-1)
   }

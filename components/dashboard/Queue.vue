@@ -28,7 +28,7 @@
             >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-list-item-action-text>{{ job.creationTime | moment("from") }}</v-list-item-action-text>
+            <v-list-item-action-text>{{ $moment(job.creationTime).fromNow() }}</v-list-item-action-text>
 
             <v-menu v-if="job.state === 'Queued'">
               <template v-slot:activator="{ on }">

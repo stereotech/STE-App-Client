@@ -33,8 +33,10 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -54,9 +56,10 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   @printers.Getter status!: (id: string) => CurrentState | undefined
+  @settings.Getter settings!: Settings
 
   get computedStatus () {
-    return this.status(this.$route.params.id)
+    return this.status(this.settings.systemId)
   }
 
   get heating () {
