@@ -1,10 +1,8 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn x-large block depressed color="accent" @click="next(9)">
+    <v-btn x-large block depressed color="accent" @click="finish">
       Finish
-      <v-icon right dark>
-        mdi-chevron-right
-      </v-icon>
+      <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
 </template>
@@ -13,8 +11,10 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -33,6 +33,14 @@ export default class extends Vue {
   private description: string = 'Calibration complete!'
 
   @printers.Action homeCommand: any
+  @printers.Action customCommand: any
+  @settings.Getter settings!: Settings
+
+  private async finish () {
+    await this.customCommand({ id: this.settings.systemId, command: 'M500' })
+    this.homeCommand({ id: this.settings.systemId, head: true, bed: true, rotary: false })
+    this.next(9)
+  }
 
   private next (step: number) {
     this.$emit('change', step)

@@ -24,7 +24,7 @@
             <v-list-item-subtitle
               v-else
               class="body-1"
-            >Printed: {{ doneJob.lastPrintTime | moment("from") }}</v-list-item-subtitle>
+            >Printed: {{ $moment(doneJob.lastPrintTime).fromNow() }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-menu>
