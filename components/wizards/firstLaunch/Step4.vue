@@ -3,17 +3,13 @@
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(4)">
         Start
-        <v-icon right dark>
-          mdi-chevron-right
-        </v-icon>
+        <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(9)">
         Skip
-        <v-icon right dark>
-          mdi-chevron-right
-        </v-icon>
+        <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
   </WizardStep>
@@ -23,8 +19,10 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -44,9 +42,10 @@ export default class extends Vue {
   private description: string = 'Perform bed leveling if there is too much distance between the nozzles and the build plate'
 
   @printers.Action homeCommand: any
+  @settings.Getter settings!: Settings
 
-  private next (step: number) {
-    this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+  private async next (step: number) {
+    await this.homeCommand({ id: this.settings.systemId, head: true, bed: true, rotary: false })
 
     this.$emit('change', step)
     this.curStep = step

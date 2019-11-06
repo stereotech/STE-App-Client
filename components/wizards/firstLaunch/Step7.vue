@@ -2,9 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(7)">
       Next
-      <v-icon right dark>
-        mdi-chevron-right
-      </v-icon>
+      <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
 </template>
@@ -13,8 +11,10 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -30,25 +30,24 @@ export default class extends Vue {
       this.performStep()
     }
   }
-
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X190 Y10 F3600' })
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 X10 Y10 F3600' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z0 F600' })
   }
-
   private step?: number = 6
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling04.jpg'
-  private description: string = 'Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed'
+  private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
+  private description: string = 'Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed'
 
   private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
   }
 
   @printers.Action customCommand: any
+  @settings.Getter settings!: Settings
 }
 </script>
 
