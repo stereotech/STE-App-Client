@@ -37,7 +37,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
-  private description: string = 'Perform bed leveling if there is too much distance between the nozzles and the build plate'
+  private description: string = ''
 
   @printers.Action homeCommand: any
 
@@ -46,6 +46,10 @@ export default class extends Vue {
 
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step4desc').toString()
   }
 }
 </script>

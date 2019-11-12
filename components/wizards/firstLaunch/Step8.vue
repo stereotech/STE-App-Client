@@ -73,7 +73,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling05.jpg'
-  private description: string = 'Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment'
+  private description: string = ''
 
 
   private async next (step: number) {
@@ -82,6 +82,9 @@ export default class extends Vue {
     this.curStep = step
   }
 
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step8desc').toString()
+  }
   private jog (dir: number) {
     this.jogCommand({ id: this.$route.params.id, z: dir * this.amount })
   }

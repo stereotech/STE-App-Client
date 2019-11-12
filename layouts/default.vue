@@ -13,8 +13,8 @@
     >
       <v-list shaped nav>
         <v-list-item
-          v-for="menuItem in mainMenu"
-          :key="menuItem.title"
+          v-for="(menuItem, index) in mainMenu"
+          :key="index"
           nuxt
           ripple
           link
@@ -115,8 +115,8 @@
     <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
       <v-btn
         text
-        v-for="menuItem in mainMenu"
-        :key="menuItem.title"
+        v-for="(menuItem, index) in mainMenu"
+        :key="index"
         nuxt
         :to="menuItem.link"
         color="primary"
@@ -151,12 +151,12 @@ export default class extends Vue {
   private readonly mainMenu: MenuItem[] = [
     {
       icon: 'mdi-view-dashboard',
-      title: 'Dashboard',
+      title: '',
       link: '/'
     },
     {
       icon: 'mdi-printer-3d',
-      title: 'Printers',
+      title: '',
       link: '/printers'
     }
   ]
@@ -181,6 +181,8 @@ export default class extends Vue {
     if (Notification.permission === 'default') {
       Notification.requestPermission()
     }
+    this.mainMenu[0].title = this.$tc('pagesTitles.dashboard')
+    this.mainMenu[1].title = this.$tc('pagesTitles.printers')
     //@ts-ignore
     this.$moment.locale('en')
   }

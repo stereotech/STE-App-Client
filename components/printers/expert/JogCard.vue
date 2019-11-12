@@ -63,7 +63,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs12 order-sm5 pt-6>
-          <v-slider v-model="feed" label="Feed" thumb-label min="50" max="150" @change="setFeed"></v-slider>
+          <v-slider v-model="feed" :label="$tc('labels.feed')" thumb-label min="50" max="150" @change="setFeed"></v-slider>
         </v-flex>
       </v-layout>
     </v-container>
