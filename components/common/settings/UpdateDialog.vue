@@ -65,7 +65,7 @@
                   <v-file-input
                     chips
                     display-size
-                    label="Upload Update"
+                    :label="$tc('labels.uploadUpdate')"
                     accept=".stu"
                     v-model="file"
                   ></v-file-input>

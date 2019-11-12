@@ -13,7 +13,7 @@
           </v-card>
         </v-flex>
         <v-flex xs12>
-          <v-checkbox label="Autoscroll" v-model="autoscroll"></v-checkbox>
+          <v-checkbox :label="$tc('labels.autoscroll')" v-model="autoscroll"></v-checkbox>
         </v-flex>
         <v-flex xs12>
           <BottomInput :input.sync="gcodeString" v-model="keyboard">
@@ -27,7 +27,7 @@
               filled
               clear-icon="mdi-close-circle"
               clearable
-              label="G-Code Command"
+              :label="$tc('labels.gCodeCommand')"
               type="text"
               v-model="gcodeString"
             ></v-text-field>

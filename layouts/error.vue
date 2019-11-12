@@ -24,9 +24,9 @@ export default {
     Loading
   },
   mounted: function () {
-    setTimeout(function () {
-      window.location.reload(true)
-    }, 3000)
+    //setTimeout(function () {
+    //  window.location.reload(true)
+    //}, 3000)
   }
 }
 </script>

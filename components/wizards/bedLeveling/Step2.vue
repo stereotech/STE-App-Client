@@ -36,7 +36,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
-  private description: string = 'Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed'
+  private description: string = ''
 
 
   private async next (step: number) {
@@ -45,6 +45,9 @@ export default class extends Vue {
     this.curStep = step
   }
 
+  mounted() {
+    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step2desc').toString()
+  }
   @printers.Action customCommand: any
 
 }

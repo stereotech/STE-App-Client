@@ -47,7 +47,7 @@
                         :rules="[ rules.required, rules.min ]"
                         :type="showPassword ? 'text' : 'password'"
                         name="input-10-2"
-                        label="Wi-Fi password"
+                        :label="$tc('labels.wiFiPassword')"
                         class="input-group--focused"
                         v-model="password"
                         @click:append="showPassword = !showPassword"

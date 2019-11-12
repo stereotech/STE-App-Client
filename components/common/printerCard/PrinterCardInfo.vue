@@ -14,7 +14,7 @@
         <v-flex xs8>
           <div class="title">
             {{ name }}
-            <v-chip color="primary" v-if="local" outlined label>Host</v-chip>
+            <v-chip color="primary" v-if="local" outlined label>{{$t("common.printerCard.host")}}</v-chip>
           </div>
 
           <div class="caption">{{ model }}</div>

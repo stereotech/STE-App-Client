@@ -20,7 +20,7 @@
                 v-on="on"
                 v-model="dateModel"
                 filled
-                label="Set date"
+                :label="$tc('labels.setDate')"
                 prepend-icon="mdi-calendar"
                 readonly
               ></v-text-field>
@@ -46,7 +46,7 @@
                 v-on="on"
                 v-model="timeModel"
                 filled
-                label="Set time"
+                :label="$tc('labels.setTime')"
                 prepend-icon="mdi-clock-outline"
                 readonly
               ></v-text-field>

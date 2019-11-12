@@ -65,7 +65,7 @@
               chips
               multiple
               display-size
-              label="Upload G-Code Files"
+              :label="$tc('labels.uplGCodeFls')"
               accept=".gcode"
               v-model="files"
             ></v-file-input>

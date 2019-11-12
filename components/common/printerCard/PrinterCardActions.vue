@@ -29,7 +29,7 @@
           <v-select
             filled
             :items="['Idle', 'Maintenance']"
-            label="Select state"
+            :label="$tc('labels.selectState')"
             @change="setPrinterState"
           ></v-select>
         </v-flex>
@@ -43,7 +43,7 @@
           <v-select
             filled
             :items="['Idle', 'Maintenance']"
-            label="Select state"
+            :label="$tc('labels.selectState')"
             @change="setPrinterState"
             :value="stateText"
           ></v-select>
@@ -58,7 +58,7 @@
           <v-select
             filled
             :items="['Idle', 'Maintenance']"
-            label="Select state"
+            :label="$tc('labels.selectState')"
             @change="setPrinterState"
             :value="stateText"
           ></v-select>

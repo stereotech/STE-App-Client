@@ -6,7 +6,7 @@
       :value="settings.language"
       @input="sendLanguage"
       filled
-      label="Select language"
+      :label="$tc('labels.selectLanguage')"
     ></v-select>
   </SettingsDialog>
 </template>
@@ -38,6 +38,18 @@ export default class extends Vue {
   private closeDialog () {
     this.$emit('input', false)
     this.isOpen = false
+  }
+
+  private languages:{key:string, value:string}[]=[
+    {key:'English', value:'en'},
+    {key:'Русский', value:'ru'}
+  ]
+
+  private setLanguage(value:string){
+    this.setLanguage(value)
+    this.$i18n.locale=value
+    //@ts-ignore
+    this.$moment.locale(value)
   }
 }
 </script>

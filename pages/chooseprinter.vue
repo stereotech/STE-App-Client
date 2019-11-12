@@ -29,7 +29,7 @@
                   <div
                     class="body-1 text-center"
                     v-if="printer.printers > 1"
-                  >{{ $t("chooseprinter.printers",[printer.printers])}} printers</div>
+                  >{{ $t("chooseprinter.printers",[printer.printers])}} </div>
                   <div class="body-1 text-center">{{$t("printers.addPrinterDialog.address", [printer.ipAddress])}}</div>
                 </v-flex>
               </v-layout>

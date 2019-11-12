@@ -67,7 +67,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material03.jpg'
-  private description: string = 'Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading'
+  private description: string = ''
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
@@ -129,6 +129,9 @@ export default class extends Vue {
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+  mounted() {
+    this.description = this.$t('printers.wizards.changeMatreial.descriptions.step3desc').toString()
   }
 }
 </script>

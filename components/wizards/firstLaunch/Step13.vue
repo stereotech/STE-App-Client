@@ -104,12 +104,16 @@ export default class extends Vue {
   }
 
   private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = 'Load new spool, insert material into bowden tube and press Next button'
+  private description: string = ''
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
+
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step13desc').toString()
+  }  
 }
 </script>
 

@@ -14,13 +14,13 @@
           </v-btn>
         </v-flex>
         <v-flex xs12 sm9 order-sm1 pt-6>
-          <v-slider v-model="flow" label="Flow" thumb-label min="50" max="150" @change="setFlow"></v-slider>
+          <v-slider v-model="flow" :label="$tc('labels.flow')" thumb-label min="50" max="150" @change="setFlow"></v-slider>
         </v-flex>
         <v-flex xs12 sm9 offset-sm3 order-sm-2>
           <v-select
             filled
             :items="extruders"
-            label="Select extruder"
+            :label="$tc('labels.selectExtruder')"
             item-text="key"
             item-value="value"
             v-model="selectedExtruder"

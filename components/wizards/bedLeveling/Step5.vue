@@ -38,7 +38,7 @@
         </v-flex>
         <v-flex xs12>
           <v-btn x-large block depressed color="accent" @click="next(1)">
-            <v-icon left dark>mdi-chevron-left</v-icon>Set points again
+            <v-icon left dark>mdi-chevron-left</v-icon>{{$t("printers.wizards.bedLeveling.step5.setPointsAgain")}}
           </v-btn>
         </v-flex>
         <v-flex xs12>
@@ -85,7 +85,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling05.jpg'
-  private description: string = 'Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment'
+  private description: string = ''
 
 
   private async next (step: number) {
@@ -94,6 +94,9 @@ export default class extends Vue {
     this.curStep = step
   }
 
+ mounted() {
+    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step5desc').toString()
+  }
   private jog (dir: number) {
     this.jogCommand({ id: this.$route.params.id, z: dir * this.amount })
   }

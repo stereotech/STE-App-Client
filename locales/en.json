@@ -1,4 +1,41 @@
 {
+    "labels":{
+        "label":"label",
+        "selectState":"Select state",
+        "setTime":"Set time",
+        "setDate":"Set date",
+        "selectLanguage":"Select language",
+        "total":"Total",
+        "owned":"Owned",
+        "avaliable":"avaliable",
+        "uploadUpdate":"Upload Update",
+        "wiFiPassword":"Wi-Fi password",
+        "jobName":"Job name",
+        "fileAssignment":"File assignment",
+        "printerAssignment":"Printer assignment",
+        "copies":"Copies",
+        "description":"Description",
+        "uplGCodeFls":"Upload G-Code Files",
+        "selectExtruder":"Select extruder",
+        "flow":"Flow",
+        "feed":"Feed",
+        "e1":"E1",
+        "e2":"E2",
+        "chamber":"Chamber",
+        "bed":"Bed",
+        "cooling":"Cooling",
+        "autoscroll":"Autoscroll",
+        "gCodeCommand":"G-Code Command",
+        "extruder1":"Extruder 1",
+        "extruder2":"Extruder 2",
+        "unloadMaterial":"Unload material",
+        "changeMaterial":"Change material",
+        "loadMaterial":"Load material"
+    },
+    "pagesTitles":{
+        "printers":"Printers",
+        "dashboard":"Dashboard"
+    },
     "frequentlyUsed": {
         "no": "No",
         "yes": "Yes",
@@ -45,7 +82,8 @@
             "inTheCurrentNetwork":"in the current network",
             "doYouWantToRemove": "Do you want to remove {0} from cluster?",
             "no": "No",
-            "yes": "Yes"
+            "yes": "Yes",
+            "host":"Host"
         },
         "settings": {
             "settingsTitle": {
@@ -170,11 +208,34 @@
             "title": "Wizard"
         },
         "wizards":{
+            "bedLeveling":{
+                "descriptions":{
+                    "step1desc":"Perform bed leveling if there is too much distance between the nozzles and the build plate",
+                    "step2desc":"Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
+                    "step3desc":"Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
+                    "step4desc":"Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
+                    "step5desc":"Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
+                    "step6desc":"Calibration complete!"
+                },
+                "stepper":{
+                    "title":"Bed leveling"
+                },
+                "step5":{
+                    "setPointsAgain":"Set points again"
+                }
+            },
             "changeMatreial":{
                 "title":"Change material",
                 "heating":"Heating...",
                 "unload":"Unload",
-                "load":"Load"
+                "load":"Load",
+                "descriptions":{
+                    "step1desc":"Select the extruder, where you want change the material",
+                    "step2desc":"Select the needed action",
+                    "step3desc":"Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
+                    "step4desc":"Load new spool, insert material into bowden tube and press Next button",
+                    "step5desc":"Use Load and Unload buttons to load material untill it comes from nozzle"
+                }
             },
             "firstLaunch":{
                 "hello":"Hello!",
@@ -184,7 +245,23 @@
                 "heating":"Heating...",
                 "unload":"Unload",
                 "load":"Load",
-                "connect":"Connect"
+                "connect":"Connect",
+                "descriptions":{
+                    "step2desc":"Please remove all the transportation fixtures and press Next",
+                    "step3desc":"",
+                    "step4desc":"Perform bed leveling if there is too much distance between the nozzles and the build plate",
+                    "step5desc":"Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
+                    "step6desc":"Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
+                    "step7desc":"Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
+                    "step8desc":"Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
+                    "step9desc":"Calibration complete!",
+                    "step10desc":"Select the extruder, where you want change the material",
+                    "step11desc":"Select the needed action",
+                    "step12desc":"Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
+                    "step13desc":"Load new spool, insert material into bowden tube and press Next button",
+                    "step14desc":"Use Load and Unload buttons to load material untill it comes from nozzle"
+
+                }
             }
         }
     },

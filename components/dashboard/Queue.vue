@@ -104,7 +104,7 @@
               <v-flex xs12 sm6 md12>
                 <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
                   <v-text-field
-                    label="Job name"
+                    :label="$tc('labels.jobName')"
                     filled
                     clearable
                     v-model="editedJob.name"
@@ -116,7 +116,7 @@
               </v-flex>
               <v-flex xs12 sm6 md12>
                 <v-autocomplete
-                  label="File assignment"
+                  :label="$tc('labels.fileAssignment')"
                   filled
                   :items="avaliableFiles"
                   item-text="name"
@@ -129,7 +129,7 @@
               </v-flex>
               <v-flex xs12 sm6 md12>
                 <v-autocomplete
-                  label="Printer assignment"
+                  :label="$tc('labels.printerAssignment')"
                   filled
                   chips
                   multiple
@@ -144,7 +144,7 @@
               <v-flex xs12 sm6 md12>
                 <v-autocomplete
                   v-if="!editMode"
-                  label="Copies"
+                  :label="$tc('labels.copies')"
                   filled
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   v-model="copiesCount"
@@ -156,7 +156,7 @@
                   <v-textarea
                     @click="descriptionKeyboard = true"
                     filled
-                    label="Description"
+                    :label="$tc('labels.description')"
                     auto-grow
                     v-model="editedJob.description"
                   ></v-textarea>

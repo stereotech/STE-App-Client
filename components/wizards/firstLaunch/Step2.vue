@@ -29,12 +29,15 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
-  private description: string =
-    'Please remove all the transportation fixtures and press Next'
+  private description: string = ''
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step2desc').toString()
   }
 }
 </script>

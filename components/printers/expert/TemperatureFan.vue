@@ -8,7 +8,7 @@
         </v-flex>
         <v-flex xs10>
           <v-slider
-            label="E1"
+            :label="$tc('labels.e1')"
             thumb-label
             min="0"
             max="300"
@@ -24,7 +24,7 @@
         </v-flex>
         <v-flex xs10>
           <v-slider
-            label="E2"
+            :label="$tc('labels.e2')"
             thumb-label
             min="0"
             max="300"
@@ -40,7 +40,7 @@
         </v-flex>
         <v-flex xs10>
           <v-slider
-            label="Chamber"
+            :label="$tc('labels.chamber')"
             thumb-label
             min="0"
             max="100"
@@ -56,7 +56,7 @@
         </v-flex>
         <v-flex xs10>
           <v-slider
-            label="Bed"
+            :label="$tc('labels.bed')"
             thumb-label
             min="0"
             max="120"
@@ -69,7 +69,7 @@
       <v-layout row wrap>
         <v-flex xs12>
           <v-slider
-            label="Cooling"
+            :label="$tc('labels.cooling')"
             thumb-label
             min="0"
             max="100"
