@@ -111,7 +111,7 @@
                 </BottomInput>
               </v-flex>
               <v-flex xs12 sm6 md12>
-                <v-autocomplete
+                <v-autocomplete 
                   label="File assignment"
                   filled
                   :items="avaliableFiles"
@@ -124,7 +124,8 @@
                 ></v-autocomplete>
               </v-flex>
               <v-flex xs12 sm6 md12>
-                <v-autocomplete
+                <v-autocomplete 
+                  :disabled="editedJob.fileUri===''"
                   label="Printer assignment"
                   filled
                   chips
@@ -235,7 +236,7 @@ export default class extends Vue {
     }
 
     let file = this.avaliableFiles.find(el=> el.uri === value)
-    if (file != undefined){
+    if (file !== undefined){
       this.editedJob.isFiveAxis=file.isFiveAxis
     }
   }
@@ -256,6 +257,7 @@ export default class extends Vue {
   private copiesCount: number = 1
 
   private valid: boolean = false
+  private enable: boolean = false
 
   private nameRules = [
     v => !!v || 'Name is required'
@@ -287,7 +289,7 @@ export default class extends Vue {
       description: '',
       printers: [],
       fileUri: '',
-      isFiveAxis:false,
+      isFiveAxis:undefined,
       creationTime: Date.now(),
       lastPrintTime: 0,
       successful: false,
@@ -370,6 +372,7 @@ export default class extends Vue {
     }
     this.copiesCount = 1
   }
+
 }
 </script>
 

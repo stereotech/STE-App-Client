@@ -1,6 +1,7 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
+import {PrinterInfo} from '~/types/printer'
 
 const localStorageEndpoint = 'storage/local'
 const usbStorageEndpoint = 'storage/usb'
@@ -55,6 +56,7 @@ export const getters: GetterTree<StorageState, RootState> = {
     })
     return result
   }
+
 }
 
 export const mutations: MutationTree<StorageState> = {
