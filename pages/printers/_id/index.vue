@@ -5,7 +5,7 @@
       <v-expansion-panels multiple v-model="panel">
         <!--<WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />-->
         <WizardsPanel :id="$route.params.id"  :printerType="printerType" />
-        <ManualControlPanel :printing="isPrinting" :id="$route.params.id" :isFiveAxis="printerType==0" />
+        <ManualControlPanel :printing="isPrinting" :id="$route.params.id" :isFiveAxis="printerType==1" />
       </v-expansion-panels>
     </v-flex>
   </v-layout>

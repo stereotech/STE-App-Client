@@ -1,5 +1,6 @@
 export  enum PrinterType {
-    fiveAxis,
     threeAxis,
+    fiveAxis,
+    
     both
 }

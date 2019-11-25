@@ -62,6 +62,7 @@ export const getters: GetterTree<PrintersState, RootState> = {
   },
 
   //ADDED METHOD
+  //
   certainTypePrinters(state: PrintersState):(type: PrinterType)=>PrinterInfo[]{
     return (type:PrinterType)=>{
     
