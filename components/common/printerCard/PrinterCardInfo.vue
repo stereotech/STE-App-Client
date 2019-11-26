@@ -18,10 +18,12 @@
           </div>
 
           <div class="caption">{{ model }}</div>
-          <div
-            v-if="printing || paused"
-            class="caption"
-          >Spent {{ [printTime, 'seconds'] | duration('humanize') }}, {{ [printTimeLeft, 'seconds'] | duration('humanize') }} left</div>
+          <div v-if="printing || paused" class="caption">
+            <span>Spent {{ $moment.duration(printTime, 'seconds').humanize() }}</span>
+            <span
+              v-if="printTimeLeft"
+            >, {{ $moment.duration(printTimeLeft, 'seconds').humanize() }} left</span>
+          </div>
           <div v-if="printing" class="title">Printing...{{ progress | currency('', 1) }}%</div>
           <div v-if="paused" class="warning--text title">Paused at {{ progress | currency('', 1) }}%</div>
           <div v-else-if="idle" class="title">Idle</div>
