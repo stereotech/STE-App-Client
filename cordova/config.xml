@@ -95,8 +95,6 @@
     <platform name="electron">
         <preference name="ElectronSettingsFilePath" value="res/electron/settings.json" />
     </platform>
-    <preference name="StatusBarBackgroundColor" value="#ffffff" />
-    <preference name="StatusBarStyle" value="default" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.3" />
