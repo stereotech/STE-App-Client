@@ -1,8 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">
-      Temp and Fans
-    </v-card-title>
+    <v-card-title class="title">Temp and Fans</v-card-title>
     <v-container fluid>
       <v-row dense>
         <v-col cols="2">
