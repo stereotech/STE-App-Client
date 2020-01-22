@@ -4,26 +4,18 @@
       <v-row dense v-if="printing || paused">
         <v-col cols="12" sm="8" md="12">
           <div class="title text-truncate">{{$t("common.printerCard.currentPrintjob")}}</div>
-          <div class="title text-truncate">
-            {{ jobNameFomatted }}
-          </div>
+          <div class="title text-truncate">{{ jobNameFomatted }}</div>
         </v-col>
         <v-col cols="12" sm="4" md="12">
           <v-btn-toggle mandatory depressed>
             <v-btn text depressed :value="printing" @click="resumeJob">
-              <v-icon color="success">
-                mdi-play
-              </v-icon>
+              <v-icon color="success">mdi-play</v-icon>
             </v-btn>
             <v-btn text depressed :value="paused" @click="pauseJob">
-              <v-icon color="warning">
-                mdi-pause
-              </v-icon>
+              <v-icon color="warning">mdi-pause</v-icon>
             </v-btn>
             <v-btn text depressed @click="stopJob">
-              <v-icon color="error">
-                mdi-stop
-              </v-icon>
+              <v-icon color="error">mdi-stop</v-icon>
             </v-btn>
           </v-btn-toggle>
         </v-col>
@@ -82,7 +74,7 @@
       </v-row>
       <v-row dense v-else-if="notAvaliable">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvaliable")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvailable")}}</div>
           <div class="title text-truncate">{{$t("common.printerCard.inTheCurrentNetwork")}}</div>
         </v-col>
       </v-row>

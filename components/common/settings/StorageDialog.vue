@@ -3,16 +3,19 @@
     <template slot="title">{{$t("common.settings.storageDialog.title")}}</template>
     <v-text-field :label="$tc('labels.total')" filled readonly :value="bytesTotal | prettyBytes"></v-text-field>
     <v-text-field :label="$tc('labels.owned')" filled readonly :value="bytesOwned | prettyBytes"></v-text-field>
-    <v-text-field :label="$tc('labels.avaliable')" filled readonly :value="bytesAvaliable | prettyBytes"></v-text-field>
+    <v-text-field
+      :label="$tc('labels.available')"
+      filled
+      readonly
+      :value="bytesAvaliable | prettyBytes"
+    ></v-text-field>
     <v-progress-circular
       :rotate="-90"
       :width="50"
       size="288"
       :value="percentOwned"
       color="primary"
-    >
-      {{ bytesOwned | prettyBytes(1) }} / {{ bytesTotal | prettyBytes(1) }}
-    </v-progress-circular>
+    >{{ bytesOwned | prettyBytes(1) }} / {{ bytesTotal | prettyBytes(1) }}</v-progress-circular>
   </SettingsDialog>
 </template>
 

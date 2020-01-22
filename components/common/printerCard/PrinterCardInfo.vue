@@ -25,15 +25,30 @@
               v-if="printTimeLeft"
             >, {{ $moment.duration(printTimeLeft, 'seconds').humanize() }} left</span>
           </div>
-          <div v-if="printing" class="title">{{$t("common.printerCard.printing")}}{{ progress | currency('', 1) }}%</div>
-          <div v-if="paused" class="warning--text title">{{$t("common.printerCard.paused")}}{{ progress | currency('', 1) }}%</div>
+          <div
+            v-if="printing"
+            class="title"
+          >{{$t("common.printerCard.printing")}}{{ progress | currency('', 1) }}%</div>
+          <div
+            v-if="paused"
+            class="warning--text title"
+          >{{$t("common.printerCard.paused")}}{{ progress | currency('', 1) }}%</div>
           <div v-else-if="idle" class="title">{{$t("common.printerCard.idle")}}</div>
-          <div class="warning--text title" v-else-if="maintenance">{{$t("common.printerCard.maintenance")}}</div>
-          <div class="success--text title" v-else-if="done">{{$t("common.printerCard.printingDone")}}</div>
+          <div
+            class="warning--text title"
+            v-else-if="maintenance"
+          >{{$t("common.printerCard.maintenance")}}</div>
+          <div
+            class="success--text title"
+            v-else-if="done"
+          >{{$t("common.printerCard.printingDone")}}</div>
           <div class="error--text title" v-else-if="failed">{{$t("common.printerCard.failed")}}</div>
           <div class="error--text title" v-else-if="offline">{{$t("common.printerCard.offline")}}</div>
           <div class="primary--text title" v-else-if="loading">{{$t("common.printerCard.loading")}}</div>
-          <div class="error--text title" v-else-if="notAvaliable">{{$t("common.printerCard.notAvaliable")}}</div>
+          <div
+            class="error--text title"
+            v-else-if="notAvaliable"
+          >{{$t("common.printerCard.notAvailable")}}</div>
           <v-progress-linear v-if="printing" :value="progress" />
           <v-progress-linear v-if="paused" :value="progress" color="warning" />
           <v-progress-linear v-if="loading" indeterminate />
@@ -54,7 +69,7 @@ export default class PrinterCardInfo extends Vue {
   @Prop({ default: '', type: String }) model!: number
   @Prop({ default: '', type: String }) name!: number
   @Prop({ default: false, type: Boolean }) local!: boolean
-  @Prop({default: false, type: Boolean}) isFiveAxis!: boolean
+  @Prop({ default: false, type: Boolean }) isFiveAxis!: boolean
   @Prop({ default: false, type: Boolean }) printing!: boolean
   @Prop({ default: false, type: Boolean }) paused!: boolean
   @Prop({ default: true, type: Boolean }) maintenance!: boolean

@@ -7,7 +7,7 @@
         "selectLanguage": "Select language",
         "total": "Total",
         "owned": "Owned",
-        "avaliable": "avaliable",
+        "available": "available",
         "uploadUpdate": "Upload Update",
         "wiFiPassword": "Wi-Fi password",
         "jobName": "Job name",
@@ -63,7 +63,7 @@
             "offline": "Offline",
             "loading": "Loading...",
             "idle": "Idle",
-            "notAvaliable": "Not Avaliable",
+            "notAvailable": "Not Available",
             "e1Target": "E1 Target",
             "e2Target": "E2 Target",
             "bedTarget": "Bed Target:",
@@ -78,7 +78,7 @@
             "waiting": "Waiting...",
             "printerIsReady": "Printer is ready",
             "forMaintenance": "for maintenance",
-            "printerIsNotAvaliable": "Printer is not avaliable",
+            "printerIsNotAvailable": "Printer is not available",
             "inTheCurrentNetwork": "in the current network",
             "doYouWantToRemove": "Do you want to remove {0} from cluster?",
             "no": "No",
@@ -108,7 +108,7 @@
             "resetDialog": {
                 "title": "Reset And restore",
                 "factoryReset": "Factory Reset",
-                "factoryResetClearStorage": "Factory reste (clear storage)",
+                "factoryResetClearStorage": "Factory reset (clear storage)",
                 "sureFactoryReset": "Are you sure want to make factory reset?",
                 "sureFactoryResetClear": "Are you sure want to make factory reset and clear all user data?",
                 "rebootMessage": "Printer will reboot after confirmation"
@@ -122,12 +122,12 @@
                 "title": "Storage"
             },
             "updateDialog": {
-                "title": "Sistem updates",
+                "title": "System updates",
                 "currentVersion": "Current version:{0}",
                 "checkForUpdate": "Check for update",
                 "latestFirmware": "You have the latest firmware",
                 "downloadAndInstall": "download and install",
-                "newVersion": "New version avaliable: {0}",
+                "newVersion": "New version available: {0}",
                 "downloadUpdate": "Download update",
                 "downloadingVersion": "Downloading {0}...",
                 "progress": "Downloading {0}%",
@@ -140,8 +140,8 @@
                 "currentNetwork": "Current Network",
                 "forget": "Forget",
                 "forgetNetworkName": "Forget {0}?",
-                "avaliableNetworks": "Avaliable networks",
-                "enterWifiPassword": "Enter Wi-Fi passord for {0}",
+                "availableNetworks": "Available networks",
+                "enterWifiPassword": "Enter Wi-Fi password for {0}",
                 "connectToNetwork": "Connect to network?",
                 "wifiPassword": "Wi-Fi password"
             }
@@ -153,7 +153,7 @@
             "printed": "Printed: ",
             "revert": "Revert",
             "remove": "Remove",
-            "seeDoneJobs": "Here you will see done print jobs. Succesful prints marked with"
+            "seeDoneJobs": "Here you will see done print jobs. Successful prints marked with"
         },
         "printersPanel": {},
         "queue": {
@@ -169,7 +169,7 @@
             "title": "",
             "uploaded": "Uploaded ",
             "remove": "Remove",
-            "noUploadedFiles": "You don't have any uploaded files yet. You could add new files using dropzone below"
+            "noUploadedFiles": "You don't have any uploaded files yet. You could add new files using field below"
         }
     },
     "materials": {
