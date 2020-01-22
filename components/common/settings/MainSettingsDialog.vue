@@ -80,7 +80,7 @@ export default class extends Vue {
     },
     {
       icon: 'mdi-backup-restore',
-      title: 'Reset and restore',
+      title: 'Reset and Restore',
       page: false
     },
     {
@@ -89,6 +89,12 @@ export default class extends Vue {
       page: false
     }
   ]
+
+  mounted() {
+    this.settings.forEach(element => {
+      element.title = this.$t(`common.settings.settingsTitle.${element.title}`)
+    });
+  }
 }
 
 class Setting {
