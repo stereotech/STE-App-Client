@@ -7,7 +7,7 @@
       :to="'/printers/' + id"
       ripple
     >
-      Control panel
+      {{$t("common.printerCard.controlPanel")}}
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
     <v-btn

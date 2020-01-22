@@ -48,10 +48,7 @@ export default class extends Vue {
   ]
 
   private setLanguage (value: string) {
-    this.setLanguage(value)
-    this.$i18n.locale = value
-    //@ts-ignore
-    this.$moment.locale(value)
+    this.sendLanguage(value)
   }
 }
 </script>

@@ -83,7 +83,8 @@
             "doYouWantToRemove": "Do you want to remove {0} from cluster?",
             "no": "No",
             "yes": "Yes",
-            "host": "Host"
+            "host": "Host",
+            "controlPanel": "Control Panel"
         },
         "settings": {
             "settingsTitle": {
