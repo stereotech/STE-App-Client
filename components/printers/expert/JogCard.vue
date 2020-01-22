@@ -51,7 +51,7 @@
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
-          <v-col 2 cols="1" sm="6" order-sm="4">
+          <v-col cols="12" sm="6" order-sm="4">
             <v-btn
               outlined
               text
@@ -64,7 +64,7 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col 2 cols="1" sm="2" order-sm="1">
+          <v-col cols="12" sm="2" order-sm="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="4">
@@ -100,7 +100,7 @@
           </v-col>
 
           <!-- A-axis просмотреть order-->
-          <v-col 2 cols="1" sm="2" order-sm="1">
+          <v-col cols="12" sm="2" order-sm="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">a</v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="4">
@@ -135,7 +135,7 @@
             </v-btn>
           </v-col>
           <!-- C-axis просмотреть order-->
-          <v-col 2 cols="1" sm="2" order-sm="1">
+          <v-col cols="12" sm="2" order-sm="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">c</v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="4">
@@ -170,7 +170,7 @@
             </v-btn>
           </v-col>
 
-          <v-col 0 cols="8" sm="1" order-sm="5" pt-2>
+          <v-col cols="8" sm="10" order-sm="5" pt-2>
             <v-btn-toggle mandatory v-model="selectedAmount" rounded>
               <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
               <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
@@ -191,7 +191,7 @@
               <v-icon>mdi-engine-off-outline</v-icon>
             </v-btn>
           </v-col>
-          <v-col 2 cols="1" order-sm="5" pt-6>
+          <v-col cols="12" order-sm="5" pt-6>
             <v-slider v-model="feed" label="Feed" thumb-label min="50" max="150" @change="setFeed"></v-slider>
           </v-col>
         </template>
