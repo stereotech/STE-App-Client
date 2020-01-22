@@ -21,7 +21,7 @@ declare module 'vuex/types/index' {
 
 const setLocalePlugin: Plugin = (context, inject) => {
     inject('setLocale', (locale: string) => {
-        // context.app.$i18n.setLocale(locale)
+        context.app.$i18n.setLocale(locale)
         //context.app.$moment.locale(locale)
     }
     )

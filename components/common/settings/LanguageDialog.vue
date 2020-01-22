@@ -2,7 +2,9 @@
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">{{$t("common.settings.languageDialog.title")}}</template>
     <v-select
-      :items="settings.avaliableLanguages"
+      :items="$i18n.locales"
+      item-value="code"
+      item-text="name"
       :value="settings.language"
       @input="sendLanguage"
       filled
@@ -40,14 +42,14 @@ export default class extends Vue {
     this.isOpen = false
   }
 
-  private languages:{key:string, value:string}[]=[
-    {key:'English', value:'en'},
-    {key:'Русский', value:'ru'}
+  private languages: { key: string, value: string }[] = [
+    { key: 'English', value: 'en' },
+    { key: 'Русский', value: 'ru' }
   ]
 
-  private setLanguage(value:string){
+  private setLanguage (value: string) {
     this.setLanguage(value)
-    this.$i18n.locale=value
+    this.$i18n.locale = value
     //@ts-ignore
     this.$moment.locale(value)
   }

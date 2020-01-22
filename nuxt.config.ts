@@ -17,7 +17,7 @@ const config: Configuration = {
 
   router: {
     mode: 'hash',
-    middleware: ['chooser', 'firstLaunch'],
+    middleware: ['chooser', 'firstLaunch', 'localization'],
   },
   /*
    ** Global CSS
@@ -30,8 +30,8 @@ const config: Configuration = {
   plugins: [
     '~/plugins/filters',
     '~/plugins/prettyBytes',
-    '~/plugins/i18n',
-    '~/plugins/locale',
+    //'~/plugins/i18n',
+    //'~/plugins/locale',
     '~/plugins/cordova',
     '~/plugins/snackbarQueue',
     '~/plugins/dialogQueue',
@@ -44,7 +44,8 @@ const config: Configuration = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    'nuxt-i18n'
   ],
 
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/moment'],
@@ -97,6 +98,28 @@ const config: Configuration = {
   moment: {
     locales: ['ru']
   },
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en.json'
+      },
+      {
+        code: 'ru',
+        name: 'Русский',
+        file: 'ru.json'
+      }
+    ],
+    lazy: true,
+    langDir: 'locales/',
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en'
+    }
+  },
+
   loading: { color: '#263238' },
   loadingIndicator: {
     name: 'folding-cube',

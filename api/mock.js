@@ -120,8 +120,8 @@ const settings = {
     role: 'host',
     hostname: 'st-aaa',
     firstLaunch: false,
-    avaliableLanguages: ['English', 'Русский'],
-    language: 'English',
+    avaliableLanguages: ['en', 'ru'],
+    language: 'en',
     storageTotal: 6864843434384,
     storageFree: 3564684646846,
     dateTime: 1550665494
