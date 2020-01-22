@@ -84,7 +84,8 @@
             "no": "No",
             "yes": "Yes",
             "host": "Host",
-            "controlPanel": "Control Panel"
+            "controlPanel": "Control Panel",
+            "5d": "5D"
         },
         "settings": {
             "settingsTitle": {

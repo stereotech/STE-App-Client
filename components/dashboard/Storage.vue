@@ -17,8 +17,10 @@
       >
         <v-list-item v-for="(file, index) in dataStorage.children" :key="index">
           <v-list-item-content>
-            <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
+            <v-list-item-title class="subheading">{{ file.display }}<v-chip color="info" v-if="file.gCodeAnalysis.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
+
             <v-list-item-subtitle class="body-1">{{$t("dashboard.storage.uploaded")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
+            
           </v-list-item-content>
           <v-list-item-action>
             <v-menu>
@@ -98,6 +100,7 @@ export default class extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
   @Prop({ type: String }) display?: string
+  
 
   @storage.Getter localStorage!: FileOrFolder
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
@@ -116,6 +119,7 @@ export default class extends Vue {
   private overlay: boolean = false
 
   private files: File[] = []
+//
 
   showMenu: boolean = false
   menuX: number = 0

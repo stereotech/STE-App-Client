@@ -2,6 +2,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { PrinterInfo, CurrentState, TemperatureDataPoint } from '~/types/printer'
 import { Error } from '~/types/error'
 import { RootState } from '.'
+import {PrinterType} from '~/types/printerType.ts'
 
 const apiEndpoint = 'printers/'
 
@@ -58,8 +59,27 @@ export const getters: GetterTree<PrintersState, RootState> = {
       }
       return new Array<string>(0)
     }
+  },
+
+  //ADDED METHOD
+  //
+  certainTypePrinters(state: PrintersState):(type: PrinterType)=>PrinterInfo[]{
+    return (type:PrinterType)=>{
+    
+      if(type == PrinterType.fiveAxis){
+        return state.printers.filter(value => value.isFiveAxis===true)
+      }
+      else if (type == PrinterType.threeAxis){
+        return state.printers.filter(value => value.isFiveAxis===false)
+      }
+      else {
+        return state.printers
+      }
+      //return new Array<PrinterInfo>
+    }
+    
   }
-}
+} 
 
 export const mutations: MutationTree<PrintersState> = {
   setPrinters (state: PrintersState, printers: PrinterInfo[]) {

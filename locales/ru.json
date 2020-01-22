@@ -84,7 +84,8 @@
       "no": "Нет",
       "yes": "Да",
       "host": "Хост",
-      "controlPanel": "Панель управления"
+      "controlPanel": "Панель управления",
+      "5d": "5D"
     },
     "settings": {
       "settingsTitle": {

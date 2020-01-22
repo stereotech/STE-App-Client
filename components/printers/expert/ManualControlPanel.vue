@@ -7,7 +7,7 @@
       <v-container fluid>
         <v-row dense>
           <v-col cols="12" md="6">
-            <JogCard :id="id" :printing="printing" />
+            <JogCard :id="id" :printing="printing" :isFiveAxis="isFiveAxis"/>
           </v-col>
           <v-col cols="12" md="6">
             <ExtruderCard :id="id" :printing="printing" />
@@ -30,6 +30,7 @@ import JogCard from '~/components/printers/expert/JogCard.vue'
 import ExtruderCard from '~/components/printers/expert/ExtruderCard.vue'
 import TerminalCard from '~/components/printers/expert/TerminalCard.vue'
 import TemperatureFan from '~/components/printers/expert/TemperatureFan.vue'
+import { PrinterInfo } from '~/types/printer.ts'
 
 @Component({
   components: {
@@ -42,6 +43,7 @@ import TemperatureFan from '~/components/printers/expert/TemperatureFan.vue'
 export default class ManualControlPanel extends Vue {
   @Prop({ default: false, type: Boolean }) printing?: boolean
   @Prop({ default: '', type: String }) id?: string
+  @Prop({default: false, type: Boolean}) isFiveAxis?: boolean
 }
 </script>
 

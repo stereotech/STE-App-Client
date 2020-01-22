@@ -11,6 +11,18 @@ const printers = [
         model: 'STE320',
         name: 'ST-AAA',
         isLocal: true,
+        isFiveAxis: false,
+        address: '192.168.0.100',
+        apiKey: '',
+        octoApiKey: '',
+        role: 'host'
+    },
+    {
+        id: 'st-aab',
+        model: 'STE520',
+        name: 'ST-BBB',
+        isLocal: false,
+        isFiveAxis: true,
         address: '192.168.0.100',
         apiKey: '',
         octoApiKey: '',
@@ -25,21 +37,23 @@ const printJobs: PrintJob[] = [
         description: '',
         creationTime: Date.now(),
         fileUri: 'file.gcode',
+        isFiveAxis: true,
         successful: true,
         lastPrintTime: Date.now(),
-        printers: [],
-        state: "Queued"
+        state: 'Queued',
+        printers: []
     },
     {
-        id: 2,
-        name: 'job2',
+        id: 3,
+        name: 'job3',
         description: '',
+        isFiveAxis: true,
         creationTime: Date.now(),
         fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa'],
-        successful: false,
+        successful: true,
         lastPrintTime: Date.now(),
-        state: "Queued",
+        state: 'Queued',
+        printers: ['st-aaa']
     }
 ]
 
@@ -94,16 +108,36 @@ const localStorage = {
     children: [
         {
             date: Date.now(),
-            display: 'File_1.gcode',
+            display: 'File_3D.gcode',
             hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-            name: 'File_1.gcode',
+            name: 'File_3D.gcode',
             size: 15315451,
             origin: 'st_aaa',
-            path: '/Storage/File_1.gcode',
+            gCodeAnalysis: {
+                isFiveAxis: false
+            },
+            path: '/Storage/File_3D.gcode',
             type: 'machinecode',
             typePath: ['machinecode', 'gcode'],
             refs: {
-                download: 'localhost:3000/file1.gcode',
+                download: 'localhost:3000/file3D.gcode',
+            }
+        },
+        {
+            date: Date.now(),
+            display: 'File_5D.gcode',
+            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+            name: 'File_5D.gcode',
+            size: 15315451,
+            origin: 'st_aaa',
+            gCodeAnalysis: {
+                isFiveAxis: true
+            },
+            path: '/Storage/File_5D.gcode',
+            type: 'machinecode',
+            typePath: ['machinecode', 'gcode'],
+            refs: {
+                download: 'localhost:3000/file5D.gcode',
             }
         }
     ],
@@ -119,90 +153,6 @@ const localStorage = {
 const usbs = [
     {
         children: [
-            {
-                date: Date.now(),
-                display: 'File_24534.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_234534553.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2345345534.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_2.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_234534435.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2345534345.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_234645346.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_267868565.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_276856885.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_258768786.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_267867868.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_26786786.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2768676.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_2678678678.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_2.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_27686786.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
         ],
         display: 'Storage',
         name: 'Storage',
@@ -214,90 +164,6 @@ const usbs = [
     },
     {
         children: [
-            {
-                date: Date.now(),
-                display: 'File_2678678678.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_26786787868.gcode',
-                size: 15315451,
-                origin: 'st-bbb',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb1/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_26786758.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_25766768678.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_256867856.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_2.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_256867585.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_5656867582.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_56786782.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_25678568.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_265867867.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_2547657.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_246876678.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
         ],
         display: 'Storage',
         name: 'Storage',
@@ -334,7 +200,7 @@ const apiMock: ServerMiddleware = function (req, res, next) {
         res.end(JSON.stringify(settings))
     }
     else if (req.url === '/storage/local') {
-        localStorage.children = []
+
         res.end(JSON.stringify(localStorage))
     }
     else if (req.url === '/storage/usb') {
