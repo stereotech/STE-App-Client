@@ -17,7 +17,7 @@
             <v-progress-circular indeterminate color="primary" />
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="subheading">{{ doneJob.name }}</v-list-item-title>
+            <v-list-item-title class="subheading">{{ doneJob.name }}<v-chip color="info" v-if="doneJob.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
             <v-list-item-subtitle v-if="doneJob.state === 'Revert'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>

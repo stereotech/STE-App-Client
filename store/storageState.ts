@@ -1,6 +1,7 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
+import {PrinterInfo} from '~/types/printer'
 
 const localStorageEndpoint = 'storage/local'
 const usbStorageEndpoint = 'storage/usb'
@@ -28,15 +29,15 @@ export const getters: GetterTree<StorageState, RootState> = {
     return state.usb
   },
 
-  avaliableFiles (state: StorageState): { name: string, uri: string }[] {
-    const result: { name: string, uri: string }[] = []
+  avaliableFiles (state: StorageState): { name: string, uri: string, isFiveAxis?: boolean}[] {
+    const result: { name: string, uri: string, isFiveAxis?:boolean }[] = []
     // tslint:disable-next-line: strict-type-predicates
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
         result.push(
           ...state.local[0].children.map(
             (element: FileOrFolder) => {
-              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '' }
+              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '' , isFiveAxis : element.gCodeAnalysis !== undefined ? element.gCodeAnalysis.isFiveAxis : undefined}
             }
           )
         )
@@ -47,7 +48,7 @@ export const getters: GetterTree<StorageState, RootState> = {
         result.push(
           ...element.children.map(
             (value: FileOrFolder) => {
-              return { name: 'USB at ' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '' }
+              return { name: 'USB at ' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gCodeAnalysis !== undefined ? element.gCodeAnalysis.isFiveAxis : undefined}
             }
           )
         )
@@ -55,6 +56,7 @@ export const getters: GetterTree<StorageState, RootState> = {
     })
     return result
   }
+
 }
 
 export const mutations: MutationTree<StorageState> = {

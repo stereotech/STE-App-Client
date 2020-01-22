@@ -33,6 +33,7 @@ export interface GCodeAnalysis {
   estimatedPrintTime: number
   filament: Filament
   printingArea: PrintingArea
+  isFiveAxis: boolean
 }
 
 export interface FileOrFolder {
