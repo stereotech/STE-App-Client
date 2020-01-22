@@ -92,7 +92,7 @@ export default class extends Vue {
 
   mounted() {
     this.settings.forEach(element => {
-      element.title = this.$t(`common.settings.settingsTitle.${element.title}`)
+      element.title = this.$t(`common.settings.settingsTitle.${element.title}`).toString()
     });
   }
 }
