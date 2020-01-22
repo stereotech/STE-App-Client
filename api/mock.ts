@@ -189,7 +189,19 @@ const apiMock: ServerMiddleware = function (req, res, next) {
             address: '192.168.0.100',
             apiKey: '',
             octoApiKey: '',
-            role: 'host'
+            role: 'host',
+            isFiveAxis: false
+        },
+        {
+            id: 'st-aaa',
+            model: 'STE520',
+            name: 'ST-BBB',
+            isLocal: false,
+            address: '192.168.0.101',
+            apiKey: '',
+            octoApiKey: '',
+            role: 'client',
+            isFiveAxis: true
         }]
         res.end(JSON.stringify(printers))
     }

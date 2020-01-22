@@ -5,7 +5,7 @@ export interface PrinterInfo {
   model: string
   name: string
   isLocal: boolean
-  isFiveAxis:boolean
+  isFiveAxis: boolean
   role: string
   hostname?: string
   apiKey: string
