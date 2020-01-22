@@ -1,6 +1,6 @@
 <template>
-  <WizardStepper v-model="currentStep" :step-count="6">
-    <template slot="title">Bed leveling</template>
+  <WizardStepper :stepCount="6" v-model="currentStep">
+    <template slot="title">{{$t("printers.wizards.bedLeveling.stepper.title")}}</template>
     <Step1 v-model="currentStep" />
     <Step2 v-model="currentStep" />
     <Step3 v-model="currentStep" />

@@ -1,8 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">
-      Settings
-    </template>
+    <template slot="title">{{$t("common.settings.mainSettingsDialog.title")}}</template>
     <v-list>
       <template v-for="(setting, index) in settings">
         <v-list-item :key="setting.title" @click="setting.page = true">
@@ -18,10 +16,10 @@
     </v-list>
     <WifiDialog v-model="settings[0].page" />
     <DateTimeDialog v-model="settings[1].page" />
-    <!--<LanguageDialog v-model="settings[2].page" />-->
-    <StorageDialog v-model="settings[2].page" />
-    <ResetDialog v-model="settings[3].page" />
-    <UpdateDialog v-model="settings[4].page" />
+    <LanguageDialog v-model="settings[2].page" />
+    <StorageDialog v-model="settings[3].page" />
+    <ResetDialog v-model="settings[4].page" />
+    <UpdateDialog v-model="settings[5].page" />
   </SettingsDialog>
 </template>
 
@@ -70,11 +68,11 @@ export default class extends Vue {
       title: 'Date and Time',
       page: false
     },
-    // {
-    //   icon: 'mdi-translate',
-    //   title: 'Language',
-    //   page: false
-    // },
+    {
+      icon: 'mdi-translate',
+      title: 'Language',
+      page: false
+    },
     {
       icon: 'mdi-sd   ',
       title: 'Storage',

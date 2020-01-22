@@ -9,7 +9,7 @@
         {{ error.message }}
       </h4>
       <v-btn large color="accent" @click="refresh">
-        Retry
+        {{$t("layout.retry")}}
       </v-btn>
     </v-col>
   </div>
@@ -27,7 +27,7 @@ export default {
   mounted () {
     setTimeout(function () {
       window.location.reload(true)
-    }, 3000)
+    }, 5000)
   }, // you can set a custom layout for the error page
   methods: {
     refresh () {

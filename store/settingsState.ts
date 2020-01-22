@@ -58,6 +58,7 @@ export const getters: GetterTree<SettingsState, RootState> = {
 export const mutations: MutationTree<SettingsState> = {
   setSettings (state: SettingsState, settings: Settings) {
     state.settings = settings
+
   },
 
   setConnectedMethod (state: SettingsState, connectedMethod: string) {
@@ -90,6 +91,7 @@ export const actions: ActionTree<SettingsState, RootState> = {
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { language: lang })
     if (response.status === 200) {
       commit('setSettings', response.data)
+      this.$setLocale(lang)
     }
   },
 

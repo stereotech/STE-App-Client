@@ -4,15 +4,15 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio label="Extruder 1" :value="0" color="secondary" />
-            <v-radio label="Extruder 2" :value="1" color="secondary" />
+            <v-radio :label="$tc('labels.extruder1')" :value="0" color="secondary" />
+            <v-radio :label="$tc('labels.extruder2')" :value="1" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(14)">Skip</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(14)">{{$t("frequentlyUsed.skip")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -46,7 +46,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = 'Select the extruder, where you want change the material'
+  private description: string = ''
 
   @printers.Action toolTempCommand: any
   @settings.Getter settings!: Settings
@@ -64,6 +64,9 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step10desc').toString()
+  } 
 }
 </script>
 

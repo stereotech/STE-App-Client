@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="title">
-      Jog
+      {{$t("printers.expert.jogCard.title")}}
     </v-card-title>
     <v-container>
       <v-row dense class="text-center" align="center" justify="center">
@@ -166,7 +166,7 @@
         <v-col class="pt-6" cols="12" order-sm="5">
           <v-slider
             v-model="feed"
-            label="Feed"
+            :label="$tc('labels.feed')"
             thumb-label
             min="50"
             max="150"

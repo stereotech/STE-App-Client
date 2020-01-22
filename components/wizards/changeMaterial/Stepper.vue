@@ -1,7 +1,7 @@
 <template>
   <WizardStepper v-model="currentStep" :step-count="5">
     <template slot="title">
-      Change material
+      {{$t("printers.wizards.changeMatreial.title")}}
     </template>
     <Step1 v-model="currentStep" :additional-data="additionalData" />
     <Step2 v-model="currentStep" :additional-data="additionalData" />

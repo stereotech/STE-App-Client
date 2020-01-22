@@ -1,4 +1,41 @@
 {
+    "labels": {
+        "label": "label",
+        "selectState": "Select state",
+        "setTime": "Set time",
+        "setDate": "Set date",
+        "selectLanguage": "Select language",
+        "total": "Total",
+        "owned": "Owned",
+        "avaliable": "avaliable",
+        "uploadUpdate": "Upload Update",
+        "wiFiPassword": "Wi-Fi password",
+        "jobName": "Job name",
+        "fileAssignment": "File assignment",
+        "printerAssignment": "Printer assignment",
+        "copies": "Copies",
+        "description": "Description",
+        "uplGCodeFls": "Upload G-Code Files",
+        "selectExtruder": "Select extruder",
+        "flow": "Flow",
+        "feed": "Feed",
+        "e1": "E1",
+        "e2": "E2",
+        "chamber": "Chamber",
+        "bed": "Bed",
+        "cooling": "Cooling",
+        "autoscroll": "Autoscroll",
+        "gCodeCommand": "G-Code Command",
+        "extruder1": "Extruder 1",
+        "extruder2": "Extruder 2",
+        "unloadMaterial": "Unload material",
+        "changeMaterial": "Change material",
+        "loadMaterial": "Load material"
+    },
+    "pagesTitles": {
+        "printers": "Printers",
+        "dashboard": "Dashboard"
+    },
     "frequentlyUsed": {
         "no": "No",
         "yes": "Yes",
@@ -8,7 +45,12 @@
         "connect": "Connect",
         "remove": "Remove",
         "save": "Save",
-        "retry": "Retry"
+        "retry": "Retry",
+        "start": "Start",
+        "next": "Next",
+        "finish": "Finish",
+        "skip": "Skip",
+        "done": "Done!"
     },
     "common": {
         "printerCard": {
@@ -17,7 +59,11 @@
             "paused": "Paused at",
             "maintenance": "Maintenance",
             "printingDone": "Printing Done!",
+            "failed": "Printing Failed",
             "offline": "Offline",
+            "loading": "Loading...",
+            "idle": "Idle",
+            "notAvaliable": "Not Avaliable",
             "e1Target": "E1 Target",
             "e2Target": "E2 Target",
             "bedTarget": "Bed Target:",
@@ -25,12 +71,19 @@
             "tryToReconnect": "Try to reconnect",
             "currentFile": "Current file:",
             "currentPrintjob": "Current printjob:",
-            "cleanTheBuildplate": "Clean the buildplate and select state",
-            "printerIsWaiting": "Printer is waiting for printjob",
-            "printerIsReady": "Printer is ready for maintenance",
+            "cleanTheBuildplate": "Clean the buildplate",
+            "andSelectState": "and select state",
+            "printerIsWaiting": "Printer is waiting",
+            "forPrintJob": "for printjob",
+            "waiting": "Waiting...",
+            "printerIsReady": "Printer is ready",
+            "forMaintenance": "for maintenance",
+            "printerIsNotAvaliable": "Printer is not avaliable",
+            "inTheCurrentNetwork": "in the current network",
             "doYouWantToRemove": "Do you want to remove {0} from cluster?",
             "no": "No",
-            "yes": "Yes"
+            "yes": "Yes",
+            "host": "Host"
         },
         "settings": {
             "settingsTitle": {
@@ -68,16 +121,25 @@
             },
             "updateDialog": {
                 "title": "Sistem updates",
-                "currentVersion": "Current version:",
+                "currentVersion": "Current version:{0}",
                 "checkForUpdate": "Check for update",
-                "downloadAndInstall": "download and install"
+                "latestFirmware": "You have the latest firmware",
+                "downloadAndInstall": "download and install",
+                "newVersion": "New version avaliable: {0}",
+                "downloadUpdate": "Download update",
+                "downloadingVersion": "Downloading {0}...",
+                "progress": "Downloading {0}%",
+                "finish": "Download finished. Please reboot printer to finish update",
+                "copying": "Copying",
+                "failed": "Download failed"
             },
             "wifiDialog": {
                 "title": "Wi-Fi Setup",
                 "currentNetwork": "Current Network",
-                "forgetNetworkName": "Forget",
+                "forget": "Forget",
+                "forgetNetworkName": "Forget {0}?",
                 "avaliableNetworks": "Avaliable networks",
-                "enterWifiPassword": "Enter Wi-Fi passord",
+                "enterWifiPassword": "Enter Wi-Fi passord for {0}",
                 "connectToNetwork": "Connect to network?",
                 "wifiPassword": "Wi-Fi password"
             }
@@ -86,18 +148,26 @@
     "dashboard": {
         "doneJobs": {
             "title": "Done Jobs",
-            "printed": "Printed:",
-            "revert": "Revert"
+            "printed": "Printed: ",
+            "revert": "Revert",
+            "remove": "Remove",
+            "seeDoneJobs": "Here you will see done print jobs. Succesful prints marked with"
         },
         "printersPanel": {},
         "queue": {
+            "jobAction": "{0} job",
+            "printers": "Printers: {0}",
             "title": "Queue",
             "edit": "Edit",
-            "removeJob": "Do you want to remove the job?"
+            "remove": "Remove",
+            "removeJob": "Do you want to remove the job?",
+            "noQueuedJobs": "There are no queued print jobs yet. Add new one by clicking"
         },
         "storage": {
             "title": "",
-            "uploaded": "Uploaded "
+            "uploaded": "Uploaded ",
+            "remove": "Remove",
+            "noUploadedFiles": "You don't have any uploaded files yet. You could add new files using dropzone below"
         }
     },
     "materials": {
@@ -122,25 +192,94 @@
             },
             "temperatureFan": {
                 "title": "Temperature And Fan"
+            },
+            "terminalCard": {
+                "title": "Terminal",
+                "autoscroll": "Autoscroll"
             }
         },
         "addPrinterDialog": {
             "title": "Add printer",
-            "address": "Address:",
+            "address": "Address: {0}",
             "doYouWantToAdd": "Do you want to add {0} to cluster?"
         },
         "wizardCard": {},
         "wizardsPanel": {
             "title": "Wizard"
+        },
+        "wizards": {
+            "bedLeveling": {
+                "descriptions": {
+                    "step1desc": "Perform bed leveling if there is too much distance between the nozzles and the build plate",
+                    "step2desc": "Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
+                    "step3desc": "Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
+                    "step4desc": "Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
+                    "step5desc": "Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
+                    "step6desc": "Calibration complete!"
+                },
+                "stepper": {
+                    "title": "Bed leveling"
+                },
+                "step5": {
+                    "setPointsAgain": "Set points again"
+                }
+            },
+            "changeMatreial": {
+                "title": "Change material",
+                "heating": "Heating...",
+                "unload": "Unload",
+                "load": "Load",
+                "descriptions": {
+                    "step1desc": "Select the extruder, where you want change the material",
+                    "step2desc": "Select the needed action",
+                    "step3desc": "Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
+                    "step4desc": "Load new spool, insert material into bowden tube and press Next button",
+                    "step5desc": "Use Load and Unload buttons to load material untill it comes from nozzle"
+                }
+            },
+            "firstLaunch": {
+                "hello": "Hello!",
+                "start": "Let's Start",
+                "setDateTime": "Set Date and Time",
+                "setPoints": "Set points again",
+                "heating": "Heating...",
+                "unload": "Unload",
+                "load": "Load",
+                "connect": "Connect",
+                "descriptions": {
+                    "step2desc": "Please remove all the transportation fixtures and press Next",
+                    "step3desc": "",
+                    "step4desc": "Perform bed leveling if there is too much distance between the nozzles and the build plate",
+                    "step5desc": "Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
+                    "step6desc": "Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
+                    "step7desc": "Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
+                    "step8desc": "Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
+                    "step9desc": "Calibration complete!",
+                    "step10desc": "Select the extruder, where you want change the material",
+                    "step11desc": "Select the needed action",
+                    "step12desc": "Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
+                    "step13desc": "Load new spool, insert material into bowden tube and press Next button",
+                    "step14desc": "Use Load and Unload buttons to load material untill it comes from nozzle"
+                }
+            }
         }
     },
     "chooseprinter": {
-        "address": "Address"
+        "address": "Address",
+        "selectCluster": "Select cluster",
+        "printers": "{0} printers"
     },
     "navigationPanel": {
         "Dashboard": "Dashboard",
         "Printers": "Printers",
         "Materials": "Materials",
         "Select cluster": "Select cluster"
+    },
+    "layout": {
+        "selectCluster": "Select cluster",
+        "reboot": "Reboot",
+        "powerOff": "Power Off",
+        "settings": "Settings",
+        "retry": "Retry"
     }
 }

@@ -2,13 +2,13 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(4)">
-        Start
+        {{$t("frequentlyUsed.start")}}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(9)">
-        Skip
+        {{$t("frequentlyUsed.skip")}}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
@@ -39,7 +39,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
-  private description: string = 'Perform bed leveling if there is too much distance between the nozzles and the build plate'
+  private description: string = ''
 
   @printers.Action homeCommand: any
   @settings.Getter settings!: Settings
@@ -49,6 +49,10 @@ export default class extends Vue {
 
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step4desc').toString()
   }
 }
 </script>

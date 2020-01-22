@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="title">
-      Terminal
+      {{$t("printers.expert.terminalCard.title")}}
     </v-card-title>
     <v-container fluid>
       <v-row dense>
@@ -17,7 +17,7 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-checkbox v-model="autoscroll" label="Autoscroll" />
+          <v-checkbox v-model="autoscroll" :label="$tc('labels.autoscroll')" />
         </v-col>
         <v-col cols="12">
           <BottomInput v-model="keyboard" :input.sync="gcodeString">
@@ -27,7 +27,7 @@
               filled
               clear-icon="mdi-close-circle"
               clearable
-              label="G-Code Command"
+              :label="$tc('labels.gCodeCommand')"
               type="text"
               @click:append="misc"
               @click="keyboard = true"

@@ -18,7 +18,7 @@
         <v-list-item v-for="(file, index) in dataStorage.children" :key="index">
           <v-list-item-content>
             <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
-            <v-list-item-subtitle class="body-1">Uploaded {{ $moment(file.date).fromNow() }}</v-list-item-subtitle>
+            <v-list-item-subtitle class="body-1">{{$t("dashboard.storage.uploaded")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-menu>
@@ -32,7 +32,7 @@
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>Remove</v-list-item-title>
+                  <v-list-item-title>{{$t("dashboard.storage.remove")}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -52,7 +52,7 @@
           <v-col cols="12">
             <h6
               class="title text-center"
-            >You don't have any uploaded files yet. You could add new files using dropzone below</h6>
+            >{{$t("dashboard.storage.noUploadedFiles")}}</h6>
           </v-col>
         </v-row>
       </v-container>
@@ -64,7 +64,7 @@
               chips
               multiple
               display-size
-              label="Upload G-Code Files"
+              :label="$tc('labels.uplGCodeFls')"
               accept=".gcode"
             />
           </v-col>

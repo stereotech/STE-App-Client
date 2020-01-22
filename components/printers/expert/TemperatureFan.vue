@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">Temp and Fans</v-card-title>
+    <v-card-title class="title">{{$t("printers.expert.temperatureFan.title")}}</v-card-title>
     <v-container fluid>
       <v-row dense>
         <v-col cols="2">
@@ -9,7 +9,7 @@
         <v-col cols="10">
           <v-slider
             v-model="e1Target"
-            label="E1"
+            :label="$tc('labels.e1')"
             thumb-label
             min="0"
             max="300"
@@ -25,7 +25,7 @@
         <v-col cols="10">
           <v-slider
             v-model="e2Target"
-            label="E2"
+            :label="$tc('labels.e2')"
             thumb-label
             min="0"
             max="300"
@@ -41,7 +41,7 @@
         <v-col cols="10">
           <v-slider
             v-model="chamberTarget"
-            label="Chamber"
+            :label="$tc('labels.chamber')"
             thumb-label
             min="0"
             max="100"
@@ -57,7 +57,7 @@
         <v-col cols="10">
           <v-slider
             v-model="bedTarget"
-            label="Bed"
+            :label="$tc('labels.bed')"
             thumb-label
             min="0"
             max="120"
@@ -70,7 +70,7 @@
         <v-col cols="12">
           <v-slider
             v-model="coolingFanTarget"
-            label="Cooling"
+            :label="$tc('labels.cooling')"
             thumb-label
             min="0"
             max="100"

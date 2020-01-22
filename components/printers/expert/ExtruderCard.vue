@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="title">
-      Extruder
+      {{$t("printers.expert.extruderCard.title")}}
     </v-card-title>
     <v-container fluid>
       <v-row dense class="text-center">
@@ -34,7 +34,7 @@
         <v-col class="pt-6" cols="12" sm="9" order-sm="1">
           <v-slider
             v-model="flow"
-            label="Flow"
+            :label="$tc('labels.flow')"
             thumb-label
             min="50"
             max="150"
@@ -46,7 +46,7 @@
             v-model="selectedExtruder"
             filled
             :items="extruders"
-            label="Select extruder"
+            :label="$tc('labels.selectExtruder')"
             item-text="key"
             item-value="value"
             :disabled="printing"

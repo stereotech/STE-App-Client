@@ -13,8 +13,8 @@
     >
       <v-list shaped nav>
         <v-list-item
-          v-for="menuItem in mainMenu"
-          :key="menuItem.title"
+          v-for="(menuItem, index) in mainMenu"
+          :key="index"
           nuxt
           ripple
           link
@@ -38,7 +38,7 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>Select cluster</v-list-item-title>
+              <v-list-item-title>{{$t("layout.selectCluster")}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -68,20 +68,20 @@
             <v-list-item-action>
               <v-icon>mdi-settings</v-icon>
             </v-list-item-action>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>{{$t("layout.settings")}}</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="rebootSystem">
             <v-list-item-action>
               <v-icon>mdi-refresh</v-icon>
             </v-list-item-action>
-            <v-list-item-title>Reboot</v-list-item-title>
+            <v-list-item-title>{{$t("layout.reboot")}}</v-list-item-title>
           </v-list-item>
           <v-list-item @click="poweroffSystem">
             <v-list-item-action>
               <v-icon>mdi-power</v-icon>
             </v-list-item-action>
-            <v-list-item-title>Power Off</v-list-item-title>
+            <v-list-item-title>{{$t("layout.powerOff")}}</v-list-item-title>
           </v-list-item>
           <template v-if="isMobile">
             <v-divider inset />
@@ -91,7 +91,7 @@
               </v-list-item-action>
 
               <v-list-item-content>
-                <v-list-item-title>Select cluster</v-list-item-title>
+                <v-list-item-title>{{$t("layout.selectCluster")}}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -116,8 +116,8 @@
     </v-content>
     <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
       <v-btn
-        v-for="menuItem in mainMenu"
-        :key="menuItem.title"
+        v-for="(menuItem, index) in mainMenu"
+        :key="index"
         text
         nuxt
         :to="menuItem.link"
@@ -153,12 +153,12 @@ export default class extends Vue {
   private readonly mainMenu: MenuItem[] = [
     {
       icon: 'mdi-view-dashboard',
-      title: 'Dashboard',
+      title: '',
       link: '/'
     },
     {
       icon: 'mdi-printer-3d',
-      title: 'Printers',
+      title: '',
       link: '/printers'
     }
   ]
@@ -181,6 +181,10 @@ export default class extends Vue {
     if (Notification.permission === 'default') {
       Notification.requestPermission()
     }
+    this.mainMenu[0].title = this.$tc('pagesTitles.dashboard')
+    this.mainMenu[1].title = this.$tc('pagesTitles.printers')
+    //@ts-ignore
+    this.$moment.locale('en')
   }
 }
 

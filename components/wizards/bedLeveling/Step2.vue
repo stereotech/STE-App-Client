@@ -39,7 +39,7 @@
 
         <v-col cols="12">
           <v-btn x-large block depressed color="accent" @click="next(2)">
-            Next
+            {{$t("frequentlyUsed.next")}}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
         </v-col>
@@ -80,8 +80,9 @@ export default class extends Vue {
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling05.jpg'
-  private description: string = 'Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment'
+  private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
+  private description: string = ''
+
 
   private async next (step: number) {
     await this.customCommand({ id: this.$route.params.id, command: 'M306 Z0' })
@@ -93,8 +94,11 @@ export default class extends Vue {
   private jog (dir: number) {
     this.jogCommand({ id: this.$route.params.id, z: dir * this.amount })
   }
-
+  mounted() {
+    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step2desc').toString()
+  }
   @printers.Action customCommand: any
+
   @printers.Action jogCommand: any
   @printers.Action homeCommand: any
 }

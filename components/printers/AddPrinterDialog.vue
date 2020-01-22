@@ -8,7 +8,7 @@
   >
     <template v-slot:activator="{ on }">
       <v-btn color="primary" large outlined @click="startScan" v-on="on">
-        <v-icon>mdi-plus</v-icon>&nbsp;Add printer
+        <v-icon>mdi-plus</v-icon>&nbsp;{{$t("printers.addPrinterDialog.title")}}
       </v-btn>
     </template>
     <v-card>
@@ -16,7 +16,7 @@
         <v-btn icon dark @click="closeDialog">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Add printer</v-toolbar-title>
+        <v-toolbar-title>{{$t("printers.addPrinterDialog.title")}}</v-toolbar-title>
         <v-spacer />
         <v-btn icon dark @click="startScan">
           <v-icon>mdi-refresh</v-icon>
@@ -35,20 +35,20 @@
                   {{ printer.model }}
                 </div>
                 <div class="body-1 text-center">
-                  Address: {{ printer.ipAddress }}
+                  {{$t("printers.addPrinterDialog.address", [printer.ipAddress])}}
                 </div>
               </v-card>
               <v-dialog v-model="confirmation" max-width="425">
                 <v-card>
                   <v-card-title class="headline">
-                    Do you want to add {{ printer.name }} to cluster?
+                    {{ $t("printers.addPrinterDialog.doYouWantToAdd",[printer.name]) }}
                   </v-card-title>
                   <v-card-actions>
                     <v-btn color="primary" text @click="confirmation = false">
-                      No
+                      {{$t("frequentlyUsed.no")}}
                     </v-btn>
                     <v-btn color="primary" text @click="startConnection(printer)">
-                      Yes
+                      {{$t("frequentlyUsed.yes")}}
                     </v-btn>
                   </v-card-actions>
                 </v-card>

@@ -3,19 +3,19 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="auto">
-          <h1 class="display-4">Hello!</h1>
+          <h1 class="display-4">{{$t("printers.wizards.firstLaunch.hello")}}</h1>
         </v-col>
-        <!--<v-flex xs12>
+        <v-col cols="12">
           <v-select
             :items="settings.avaliableLanguages"
             :value="settings.language"
             @input="sendLanguage"
-            label="Select language"
+            :label="$tc('labels.selectLanguage')"
             outline
           ></v-select>
-        </v-flex>-->
+        </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(1)">Let's Start</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">{{$t("printers.wizards.firstLaunch.start")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -50,6 +50,17 @@ export default class extends Vue {
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  private languages:{key:string, value:string}[]=[
+    {key:'English', value:'en'},
+    {key:'Русский', value:'ru'}
+  ]
+  private setLanguage(value:string){
+    this.setLanguage(value)
+    this.$i18n.locale=value
+    //@ts-ignore
+    this.$moment.locale(value)
   }
 }
 </script>
