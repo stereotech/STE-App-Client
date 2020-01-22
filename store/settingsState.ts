@@ -91,7 +91,6 @@ export const actions: ActionTree<SettingsState, RootState> = {
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { language: lang })
     if (response.status === 200) {
       commit('setSettings', response.data)
-      this.$setLocale(lang)
     }
   },
 
