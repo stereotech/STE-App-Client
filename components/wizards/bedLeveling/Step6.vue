@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="finish">
-      Finish
+      {{$t("frequentlyUsed.finish")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -28,7 +28,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
-  private description: string = 'Calibration complete!'
+  private description: string = ''
 
   @printers.Action homeCommand: any
   @printers.Action customCommand: any
@@ -42,6 +42,9 @@ export default class extends Vue {
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+   mounted() {
+    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step6desc').toString()
   }
 }
 </script>

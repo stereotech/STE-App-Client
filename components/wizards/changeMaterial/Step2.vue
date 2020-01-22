@@ -4,13 +4,13 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.action" mandatory>
-            <v-radio label="Unload material" :value="0" color="secondary" />
-            <v-radio label="Change material" :value="1" color="secondary" />
-            <v-radio label="Load material" :value="2" color="secondary" />
+            <v-radio :label="$tc('labels.unloadMaterial')" :value="0" color="secondary"></v-radio>
+            <v-radio :label="$tc('labels.changeMaterial')" :value="1" color="secondary"></v-radio>
+            <v-radio :label="$tc('labels.loadMaterial')" :value="2" color="secondary"></v-radio>
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -43,7 +43,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material02.jpg'
-  private description: string = 'Select the needed action'
+  private description: string = ''
 
   @printers.Action customCommand: any
 
@@ -60,6 +60,9 @@ export default class extends Vue {
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+   mounted() {
+    this.description = this.$t('printers.wizards.changeMatreial.descriptions.step2desc').toString()
   }
 }
 </script>

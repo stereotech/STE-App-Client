@@ -5,7 +5,7 @@
         <v-col cols="12">
           <v-card>
             <v-list light>
-              <v-subheader>Avaliable networks</v-subheader>
+              <v-subheader>{{$t("common.settings.wifiDialog.avaliableNetworks")}}</v-subheader>
               <template v-for="(network, index) in avaliableNetworks">
                 <v-list-item :key="network.id" @click="startConnection(network)">
                   <v-list-item-action v-if="network.strength > 81">
@@ -37,8 +37,8 @@
                   <v-card-title
                     v-if="setupNetwork.security"
                     class="headline"
-                  >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
-                  <v-card-title v-else class="headline">Connect to network?</v-card-title>
+                  >{{$t("common.settings.wifiDialog.enterWifiPassword", [setupNetwork.name])}}</v-card-title>
+                  <v-card-title v-else class="headline">{{$t("common.settings.wifiDialog.connectToNetwork")}}</v-card-title>
                   <v-container v-if="setupNetwork.security">
                     <BottomInput v-model="keyboard" :input.sync="password">
                       <v-text-field
@@ -48,7 +48,7 @@
                         :rules="[ rules.required, rules.min ]"
                         :type="showPassword ? 'text' : 'password'"
                         name="input-10-2"
-                        label="Wi-Fi password"
+                        :label="$tc('labels.wiFiPassword')"
                         class="input-group--focused"
                         @click:append="showPassword = !showPassword"
                         @click="keyboard = true"
@@ -57,14 +57,14 @@
                   </v-container>
 
                   <v-card-actions>
-                    <v-btn x-large color="primary" depressed @click="confirmation = false">Cancel</v-btn>
+                    <v-btn x-large color="primary" depressed @click="confirmation = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
                     <v-btn
                       x-large
                       color="primary"
                       depressed
                       :disabled="isMin"
                       @click="startConnecting"
-                    >Connect</v-btn>
+                    >{{$t("printers.wizards.firstLaunch.connect")}}</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -72,7 +72,7 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(15)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(15)">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>

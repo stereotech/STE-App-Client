@@ -4,7 +4,7 @@
       <v-row dense>
         <v-col v-if="lastTempDataPoint(id).tool0" cols="4">
           <div class="body-1 text-truncate">
-            E1 Target:
+            {{$t("common.printerCard.e1Target")}}
           </div>
           <div class="body-1">
             {{ lastTempDataPoint(id).tool0.target }}&deg;C
@@ -20,7 +20,7 @@
         </v-col>
         <v-col v-if="lastTempDataPoint(id).tool1" cols="4">
           <div class="body-1 text-truncate">
-            E2 Target:
+            {{$t("common.printerCard.e2Target")}}
           </div>
           <div class="body-1">
             {{ lastTempDataPoint(id).tool1.target }}&deg;C
@@ -36,7 +36,7 @@
         </v-col>
         <v-col v-if="lastTempDataPoint(id).bed" cols="4">
           <div class="body-1 text-truncate">
-            Bed Target:
+            {{$t("common.printerCard.bedTarget")}}
           </div>
           <div
             v-if="lastTempDataPoint(id).bed"

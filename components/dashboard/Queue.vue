@@ -3,7 +3,7 @@
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
-          <span class="headline font-weight-light">Queue</span>
+          <span class="headline font-weight-light">{{$t("dashboard.queue.title")}}</span>
         </v-card-title>
         <v-spacer />
         <v-btn small fab depressed dark color="primary" @click="createJob">
@@ -25,7 +25,7 @@
             <v-list-item-subtitle
               v-else
               class="body-1"
-            >Printers: {{ job.printers.length > 0 ? job.printers.toString() : '-' }}</v-list-item-subtitle>
+            >{{ $t("dashboard.queue.printers",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ $moment(job.creationTime).fromNow() }}</v-list-item-action-text>
@@ -41,13 +41,13 @@
                   <v-list-item-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>Edit</v-list-item-title>
+                  <v-list-item-title>{{$t("dashboard.queue.edit")}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startRemoveJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>Remove</v-list-item-title>
+                  <v-list-item-title>{{$t("dashboard.queue.remove")}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -61,7 +61,7 @@
           </v-col>
           <v-col cols="12">
             <h6 class="title text-center">
-              There are no queued print jobs yet. Add new one by clicking
+              {{$t("dashboard.queue.noQueuedJobs")}}
               <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
             </h6>
           </v-col>
@@ -82,9 +82,9 @@
           <v-btn icon dark @click="closeDialog(undefined)">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{ editMode ? 'Edit' : 'Create' }} job</v-toolbar-title>
+          <v-toolbar-title>{{ $t('dashboard.queue.jobAction', [editMode ? 'Edit' : 'Create']) }}</v-toolbar-title>
           <v-spacer />
-          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">Save</v-btn>
+          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">{{$t("frequentlyUsed.save")}}</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
           <v-container fluid>
@@ -93,7 +93,7 @@
                 <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
                   <v-text-field
                     v-model="editedJob.name"
-                    label="Job name"
+                    :label="$tc('labels.jobName')"
                     filled
                     clearable
                     :rules="nameRules"
@@ -105,7 +105,7 @@
               <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
                   v-model="editedJob.fileUri"
-                  label="File assignment"
+                  :label="$tc('labels.fileAssignment')"
                   filled
                   :items="avaliableFiles"
                   item-text="name"
@@ -117,7 +117,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
-                  label="Printer assignment"
+                  :label="$tc('labels.printerAssignment')"
                   v-model="editedJob.printers"
                   filled
                   chips
@@ -133,7 +133,7 @@
                 <v-autocomplete
                   v-if="!editMode"
                   v-model="copiesCount"
-                  label="Copies"
+                  :label="$tc('labels.copies')"
                   filled
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   :menu-props="menuProps"
@@ -144,7 +144,7 @@
                   <v-textarea
                     v-model="editedJob.description"
                     filled
-                    label="Description"
+                    :label="$tc('labels.description')"
                     auto-grow
                     @click="descriptionKeyboard = true"
                   />
@@ -157,10 +157,10 @@
     </v-dialog>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">Do you want to remove job?</v-card-title>
+        <v-card-title class="headline">{{$t("dashboard.queue.removeJob")}}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">No</v-btn>
-          <v-btn color="primary" text @click="endRemoveJob">Yes</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{$t("frequentlyUsed.no")}}</v-btn>
+          <v-btn color="primary" text @click="endRemoveJob">{{$t("frequentlyUsed.yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

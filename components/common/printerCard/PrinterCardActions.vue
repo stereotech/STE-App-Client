@@ -3,9 +3,7 @@
     <v-container fluid>
       <v-row dense v-if="printing || paused">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">
-            Current printjob:
-          </div>
+          <div class="title text-truncate">{{$t("common.printerCard.currentPrintjob")}}</div>
           <div class="title text-truncate">
             {{ jobNameFomatted }}
           </div>
@@ -32,36 +30,28 @@
       </v-row>
       <v-row dense v-else-if="done || failed">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">
-            Clean the buildplate
-          </div>
-          <div class="title text-truncate">
-            and select state
-          </div>
+          <div class="title text-truncate">{{$t("common.printerCard.cleanTheBuildplate")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.andSelectState")}}</div>
         </v-col>
         <v-col cols="12" sm="4" md="12">
           <v-select
             filled
             :items="['Idle', 'Maintenance']"
-            label="Select state"
+            :label="$tc('labels.selectState')"
             @change="setPrinterState"
           />
         </v-col>
       </v-row>
       <v-row dense v-else-if="idle">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">
-            Printer is waiting
-          </div>
-          <div class="title text-truncate">
-            for printjob
-          </div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsWaiting")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.forPrintJob")}}</div>
         </v-col>
         <v-col cols="12" sm="4" md="12">
           <v-select
             filled
             :items="['Idle', 'Maintenance']"
-            label="Select state"
+            :label="$tc('labels.selectState')"
             :value="stateText"
             @change="setPrinterState"
           />
@@ -69,18 +59,14 @@
       </v-row>
       <v-row dense v-else-if="maintenance">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">
-            Printer is ready
-          </div>
-          <div class="title text-truncate">
-            for maintenance
-          </div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsReady")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.forMaintenance")}}</div>
         </v-col>
         <v-col cols="12" sm="4" md="12">
           <v-select
             filled
             :items="['Idle', 'Maintenance']"
-            label="Select state"
+            :label="$tc('labels.selectState')"
             :value="stateText"
             @change="setPrinterState"
           />
@@ -88,9 +74,7 @@
       </v-row>
       <v-row dense v-else-if="loading">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">
-            Waiting...
-          </div>
+          <div class="title text-truncate">{{$t("common.printerCard.waiting")}}</div>
         </v-col>
         <v-col cols="12" sm="4" md="12">
           <v-progress-circular indeterminate color="primary" />
@@ -98,12 +82,8 @@
       </v-row>
       <v-row dense v-else-if="notAvaliable">
         <v-col cols="12" sm="8" md="12">
-          <div class="title text-truncate">
-            Printer is not avaliable
-          </div>
-          <div class="title text-truncate">
-            in the current network
-          </div>
+          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvaliable")}}</div>
+          <div class="title text-truncate">{{$t("common.printerCard.inTheCurrentNetwork")}}</div>
         </v-col>
       </v-row>
     </v-container>

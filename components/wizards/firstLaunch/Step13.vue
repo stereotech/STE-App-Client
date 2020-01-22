@@ -12,7 +12,7 @@
           />
         </v-col>
         <v-col cols="12">
-          <p>Heating...</p>
+          <p>{{$t("printers.wizards.firstLaunch.heating")}}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +21,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(13)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(13)">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -101,12 +101,16 @@ export default class extends Vue {
   }
 
   private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = 'Load new spool, insert material into bowden tube and press Next button'
+  private description: string = ''
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
+
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step13desc').toString()
+  }  
 }
 </script>
 

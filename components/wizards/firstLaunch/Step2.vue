@@ -3,7 +3,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(2)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(2)">{{$t("frequentlyUsed.next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -29,12 +29,15 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
-  private description: string =
-    'Please remove all the transportation fixtures and press Next'
+  private description: string = ''
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted() {
+    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step2desc').toString()
   }
 }
 </script>
