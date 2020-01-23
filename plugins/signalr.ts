@@ -53,12 +53,12 @@ const hubManagement: Plugin = ({ app, store }, inject) => {
 
         hub.on('PrintJobDone', (args: { id: string, printJobName: string, time: number }) => {
             let duration: string = moment.duration(args.time, 'seconds').humanize()
-            app.$notify(`${args.printJobName} has been succesfully printed on ${args.id.toUpperCase()} for ${duration}`, 'success', false)
+            app.$notify(app.i18n.t('notifications.printJobDone', [args.printJobName, args.id.toUpperCase(), duration]).toString(), 'success', false)
         })
 
         hub.on('PrintJobFailed', (args: { id: string, printJobName: string, time: number, reason: string }) => {
             let duration: string = moment.duration(args.time, 'seconds').humanize()
-            app.$notify(`${args.printJobName} has been failed on ${args.id.toUpperCase()} for ${duration} cause of ${args.reason}`, 'error', false)
+            app.$notify(app.i18n.t('notifications.printJobDone', [args.printJobName, args.id.toUpperCase(), duration, args.reason]).toString(), 'error', false)
         })
 
         //UpdateState
@@ -67,11 +67,11 @@ const hubManagement: Plugin = ({ app, store }, inject) => {
         })
         hub.on('DownloadFailed', () => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.FailedDownload)
-            app.$notify(`New firmware download failed`, 'error', false)
+            app.$notify(app.i18n.t("notifications.downloadFailed").toString(), 'error', false)
         })
         hub.on('UpdateFoundOnUsb', (args: boolean) => {
             store.commit('updateState/setUpdateOnUsb', args)
-            app.$notify(`New firmware is found on USB. Check settings for install`, 'info', false)
+            app.$notify(app.i18n.t("notifications.updateFoundOnUsb").toString(), 'info', false)
         })
         hub.on('HasEqualFirmware', (args: string) => {
             store.commit('updateState/setCurrentVersion', args)
@@ -79,7 +79,7 @@ const hubManagement: Plugin = ({ app, store }, inject) => {
         hub.on('HasNewFirmware', (args: string) => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
             store.commit('updateState/setAvaliableVersion', args)
-            app.$notify(`New firmware is available, version ${args}. Check settings for install`, 'info', false)
+            app.$notify(app.i18n.t("notifications.hasNewFirmware", [args]).toString(), 'info', false)
         })
         hub.on('UpdateStateChanged', (state: SoftwareUpdateState, downloadProgress: number) => {
             store.commit('updateState/setDownloadProgress', downloadProgress)
