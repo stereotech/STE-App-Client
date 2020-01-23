@@ -24,11 +24,7 @@ const config: Configuration = {
    */
   css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css'],
 
-  /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: ['~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
-  /*
+    /*
    ** Nuxt.js modules
    */
   modules: [
@@ -40,6 +36,11 @@ const config: Configuration = {
   ],
 
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/moment'],
+
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: ['~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
 
   typescript: {
     typeCheck: {

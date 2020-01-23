@@ -283,5 +283,12 @@
         "powerOff": "Power Off",
         "settings": "Settings",
         "retry": "Retry"
+    },
+    "notifications": {
+        "printJobDone": "{0} has been succesfully printed on {1} for {2}",
+        "printJobFailed": "{0} has been failed on {1} for {2} cause of {3}",
+        "downloadFailed": "New firmware download failed",
+        "updateFoundOnUsb": "New firmware is found on USB. Check settings for install",
+        "hasNewFirmware": "New firmware is available, version {0}. Check settings for install"
     }
 }

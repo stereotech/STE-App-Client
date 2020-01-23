@@ -7,7 +7,7 @@
     "selectLanguage": "Выберите язык",
     "total": "Всего",
     "owned": "Занято",
-    "available": "Доступно",
+    "available": "доступно",
     "uploadUpdate": "Загрузить Обновление",
     "wiFiPassword": "Пароль Wi-Fi",
     "jobName": "Имя задания",
@@ -63,7 +63,7 @@
       "offline": "Не в сети",
       "loading": "Загрузка...",
       "idle": "Ожидание",
-      "notAvailable": "Недоступен",
+      "notAvailable": "Не доступно",
       "e1Target": "Цель E1",
       "e2Target": "Цель E2",
       "bedTarget": "Цель платформа:",
@@ -122,7 +122,7 @@
         "title": "Память"
       },
       "updateDialog": {
-        "title": "Обновления системы",
+        "title": "Обновление системы",
         "currentVersion": "Текущая версия: {0}",
         "checkForUpdate": "Проверить наличие обновлений",
         "latestFirmware": "У вас самая последняя версия",
@@ -140,7 +140,7 @@
         "currentNetwork": "Текущая сеть",
         "forget": "Забыть",
         "forgetNetworkName": "Забыть {0}?",
-        "availableNetworks": "Доступные сети",
+        "availableNetworks": "Доступная сеть",
         "enterWifiPassword": "Введите пароль Wi-Fi для {0}",
         "connectToNetwork": "Подключиться к сети?",
         "wifiPassword": "Пароль Wi-Fi"
@@ -283,5 +283,12 @@
     "powerOff": "Выключить",
     "settings": "Настройки",
     "retry": "Повторить"
+  },
+  "notifications": {
+    "printJobDone": "{0} было успешно напечатано на {1} за {2}",
+    "printJobFailed": "{0} потерпело неудачу на {1} за {2} по причине {3}",
+    "downloadFailed": "Не удалось загрузить новую версию ПО",
+    "updateFoundOnUsb": "Новое ПО найдено на USB. Проверьте настройки для установки",
+    "hasNewFirmware": "Доступна новое ПО, версия {0}. Проверьте настройки для установки"
   }
 }
