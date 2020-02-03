@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header>
-      <span class="headline font-weight-light">{{$t("printers.wizardsPanel.title")}}</span>
+      <span class="headline font-weight-light">{{$t("Wizards")}}</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <v-container fluid>
@@ -9,10 +9,9 @@
           <v-col v-for="wizard in data" :key="wizard.id" cols="6" sm="3" lg="2">
             <WizardCard
               v-if="wizard.type == printerType || wizard.type == 2"
-              :name="wizard.name" 
+              :name="wizard.translatedName"
               :image="wizard.image"
               :description="wizard.description"
-              
               :to="'/printers/' + $route.params.id + '/' + wizard.link"
             />
           </v-col>
@@ -26,10 +25,10 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import WizardCard from '~/components/printers/WizardCard.vue'
 import { PrinterType } from '~/types/printerType'
-import { Action, Getter, namespace } from 'vuex-class' 
+import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo } from '../../types/printer'
 
-const printers = namespace ('printersState')
+const printers = namespace('printersState')
 @Component({
   components: {
     WizardCard
@@ -38,12 +37,13 @@ const printers = namespace ('printersState')
 export default class WizardsPanel extends Vue {
 
   @Prop({ default: '', type: String }) id!: string
-  @Prop({default: 1, type:Number}) printerType!:Number
-  @printers.Getter certainTypePrinters!:PrinterInfo[]
+  @Prop({ default: 1, type: Number }) printerType!: Number
+  @printers.Getter certainTypePrinters!: PrinterInfo[]
   private data: any[] = [
     {
       id: 1,
       name: 'Bed leveling',
+      translatedName: 'Bed leveling',
       image: 'bed_leveling/bed_leveling',
       link: 'bed-leveling',
       type: PrinterType.threeAxis,
@@ -52,20 +52,34 @@ export default class WizardsPanel extends Vue {
     {
       id: 2,
       name: 'Change material',
+      translatedName: 'Change material',
       image: 'change_material/change_material',
       link: 'change-material',
       type: PrinterType.both,
       description: 'This wizard will help you to change, insert or remove the material'
     },
     {
-      id:3,
+      id: 3,
       name: '5D callibration',
+      translatedName: '5D callibration',
       image: '5d_callibration/bed_leveling',
-      link:'5d-callibration',
-      type:PrinterType.fiveAxis,
-      description:'This wizard will help you to tune 5-axis printers'
+      link: '5d-callibration',
+      type: PrinterType.fiveAxis,
+      description: 'This wizard will help you to tune 5-axis printers'
     }
   ]
+
+  mounted () {
+    this.data.forEach(element => {
+      element.translatedName = this.$tc(`${element.name}`)
+    })
+  }
+
+  updated () {
+    this.data.forEach(element => {
+      element.translatedName = this.$tc(`${element.name}`)
+    })
+  }
 
 }
 </script>

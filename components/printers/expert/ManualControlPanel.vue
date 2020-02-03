@@ -1,13 +1,13 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header>
-      <span class="headline font-weight-light">{{$t("printers.expert.manualControlPanel.title")}}</span>
+      <span class="headline font-weight-light">{{$t("Manual Control")}}</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <v-container fluid>
         <v-row dense>
           <v-col cols="12" md="6">
-            <JogCard :id="id" :printing="printing" :isFiveAxis="isFiveAxis"/>
+            <JogCard :id="id" :printing="printing" :isFiveAxis="isFiveAxis" />
           </v-col>
           <v-col cols="12" md="6">
             <ExtruderCard :id="id" :printing="printing" />
@@ -43,7 +43,7 @@ import { PrinterInfo } from '~/types/printer.ts'
 export default class ManualControlPanel extends Vue {
   @Prop({ default: false, type: Boolean }) printing?: boolean
   @Prop({ default: '', type: String }) id?: string
-  @Prop({default: false, type: Boolean}) isFiveAxis?: boolean
+  @Prop({ default: false, type: Boolean }) isFiveAxis?: boolean
 }
 </script>
 

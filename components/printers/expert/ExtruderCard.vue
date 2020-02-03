@@ -1,40 +1,22 @@
 <template>
   <v-card>
-    <v-card-title class="title">
-      {{$t("printers.expert.extruderCard.title")}}
-    </v-card-title>
+    <v-card-title class="title">{{$t("Extruder")}}</v-card-title>
     <v-container fluid>
       <v-row dense class="text-center">
         <v-col cols="6" sm="3" order-sm="1">
-          <v-btn
-            x-large
-            outlined
-            text
-            icon
-            color="primary"
-            :disabled="printing"
-            @click="retract"
-          >
+          <v-btn x-large outlined text icon color="primary" :disabled="printing" @click="retract">
             <v-icon>mdi-chevron-double-up</v-icon>
           </v-btn>
         </v-col>
         <v-col cols="6" sm="3" order-sm="3">
-          <v-btn
-            x-large
-            outlined
-            text
-            icon
-            color="primary"
-            :disabled="printing"
-            @click="extrude"
-          >
+          <v-btn x-large outlined text icon color="primary" :disabled="printing" @click="extrude">
             <v-icon>mdi-chevron-double-down</v-icon>
           </v-btn>
         </v-col>
         <v-col class="pt-6" cols="12" sm="9" order-sm="1">
           <v-slider
             v-model="flow"
-            :label="$tc('labels.flow')"
+            :label="$tc('Flow')"
             thumb-label
             min="50"
             max="150"
@@ -46,7 +28,7 @@
             v-model="selectedExtruder"
             filled
             :items="extruders"
-            :label="$tc('labels.selectExtruder')"
+            :label="$tc('Select extruder')"
             item-text="key"
             item-value="value"
             :disabled="printing"
@@ -55,18 +37,10 @@
 
         <v-col cols="12" sm="6" order-sm="3">
           <v-btn-toggle v-model="selectedAmount" mandatory rounded>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">
-              0.1
-            </v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 1">
-              1
-            </v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 10">
-              10
-            </v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 100">
-              100
-            </v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
+            <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-col>
         <v-col cols="12" sm="3" order-sm="3">

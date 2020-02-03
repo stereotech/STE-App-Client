@@ -4,13 +4,13 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.action" mandatory>
-            <v-radio :label="$tc('labels.unloadMaterial')" :value="0" color="secondary"></v-radio>
-            <v-radio :label="$tc('labels.changeMaterial')" :value="1" color="secondary"></v-radio>
-            <v-radio :label="$tc('labels.loadMaterial')" :value="2" color="secondary"></v-radio>
+            <v-radio :label="$tc('Unload material')" :value="0" color="secondary"></v-radio>
+            <v-radio :label="$tc('Change material')" :value="1" color="secondary"></v-radio>
+            <v-radio :label="$tc('Load material')" :value="2" color="secondary"></v-radio>
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -61,8 +61,12 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
-   mounted() {
-    this.description = this.$t('printers.wizards.changeMatreial.descriptions.step2desc').toString()
+  mounted () {
+    this.description = this.$tc('Select the needed action')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the needed action')
   }
 }
 </script>

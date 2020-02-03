@@ -3,10 +3,10 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="auto">
-          <h1 class="display-4">{{$t("frequentlyUsed.done")}}</h1>
+          <h1 class="display-4">{{$t("Done")}}</h1>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finishSetup">{{$t("frequentlyUsed.finish")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finishSetup">{{$t("Finish")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>

@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("printers.expert.jogCard.title")}}</v-card-title>
+    <v-card-title class="title">{{$t("Jog")}}</v-card-title>
     <v-container>
       <v-row dense class="text-center" align="center" justify="center">
         <template v-if="isFiveAxis">
@@ -315,7 +315,7 @@
           <v-col class="pt-6" cols="12" order-sm="5">
             <v-slider
               v-model="feed"
-              :label="$tc('labels.feed')"
+              :label="$tc('Feed')"
               thumb-label
               min="50"
               max="150"

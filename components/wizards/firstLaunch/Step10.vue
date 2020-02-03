@@ -4,15 +4,15 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio :label="$tc('labels.extruder1')" :value="0" color="secondary" />
-            <v-radio :label="$tc('labels.extruder2')" :value="1" color="secondary" />
+            <v-radio :label="$tc('Extruder 1')" :value="0" color="secondary" />
+            <v-radio :label="$tc('Extruder 2')" :value="1" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(14)">{{$t("frequentlyUsed.skip")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(14)">{{$t("Skip")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -64,9 +64,13 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step10desc').toString()
-  } 
+  mounted () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
+  }
 }
 </script>
 

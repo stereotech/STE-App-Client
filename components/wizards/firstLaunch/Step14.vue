@@ -3,13 +3,13 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("printers.wizards.firstLaunch.unload")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="load">{{$t("printers.wizards.firstLaunch.load")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="load">{{$t("Load")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finish">{{$t("frequentlyUsed.finish")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">{{$t("Finish")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -95,9 +95,13 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step14desc').toString()
-  }  
+  mounted () {
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
+  }
+
+  updated () {
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
+  }
 }
 </script>
 

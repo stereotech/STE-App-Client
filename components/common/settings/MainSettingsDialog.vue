@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("common.settings.mainSettingsDialog.title")}}</template>
+    <template slot="title">{{$t("Settings")}}</template>
     <v-list>
       <template v-for="(setting, index) in settings">
         <v-list-item :key="setting.title" @click="setting.page = true">
@@ -8,7 +8,7 @@
             <v-icon>{{ setting.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="setting.title" />
+            <v-list-item-title v-text="setting.translatedTitle" />
           </v-list-item-content>
         </v-list-item>
         <v-divider :key="index" inset />
@@ -61,38 +61,50 @@ export default class extends Vue {
     {
       icon: 'mdi-wifi',
       title: 'Wi-Fi',
+      translatedTitle: 'Wi-Fi',
       page: false
     },
     {
       icon: 'mdi-clock-outline',
-      title: 'Date and Time',
+      title: 'Date And Time',
+      translatedTitle: 'Date And Time',
       page: false
     },
     {
       icon: 'mdi-translate',
       title: 'Language',
+      translatedTitle: 'Language',
       page: false
     },
     {
       icon: 'mdi-sd   ',
       title: 'Storage',
+      translatedTitle: 'Storage',
       page: false
     },
     {
       icon: 'mdi-backup-restore',
       title: 'Reset and Restore',
+      translatedTitle: 'Reset and Restore',
       page: false
     },
     {
       icon: 'mdi-update',
       title: 'Update',
+      translatedTitle: 'Update',
       page: false
     }
   ]
 
-  mounted() {
+  mounted () {
     this.settings.forEach(element => {
-      element.title = this.$t(`common.settings.settingsTitle.${element.title}`).toString()
+      element.translatedTitle = this.$tc(`${element.title}`)
+    });
+  }
+
+  updated () {
+    this.settings.forEach(element => {
+      element.translatedTitle = this.$tc(`${element.title}`)
     });
   }
 }
@@ -100,10 +112,12 @@ export default class extends Vue {
 class Setting {
   icon: string
   title: string
+  translatedTitle: string
   page: boolean
   constructor (icon: string, title: string) {
     this.icon = icon
     this.title = title
+    this.translatedTitle = title
     this.page = false
   }
 }

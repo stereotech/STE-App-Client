@@ -3,7 +3,7 @@
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
-          <span class="headline font-weight-light">{{$t("dashboard.queue.title")}}</span>
+          <span class="headline font-weight-light">{{$t("Queue")}}</span>
         </v-card-title>
         <v-spacer />
         <v-btn small fab depressed dark color="primary" @click="createJob">
@@ -18,15 +18,18 @@
       >
         <v-list-item v-for="(job) in queuedJobs" :key="job.id">
           <v-list-item-content>
-            <v-list-item-title>{{ job.name }}<v-chip color="info" v-if="job.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
-    
+            <v-list-item-title>
+              {{ job.name }}
+              <v-chip color="info" v-if="job.isFiveAxis" class="ml-2" outlined label>5D</v-chip>
+            </v-list-item-title>
+
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
             <v-list-item-subtitle
               v-else
               class="body-1"
-            >{{ $t("dashboard.queue.printers",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
+            >{{ $t("Printers: {0}",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ $moment(job.creationTime).fromNow() }}</v-list-item-action-text>
@@ -42,13 +45,13 @@
                   <v-list-item-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("dashboard.queue.edit")}}</v-list-item-title>
+                  <v-list-item-title>{{$t("Edit")}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startRemoveJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("dashboard.queue.remove")}}</v-list-item-title>
+                  <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -62,7 +65,7 @@
           </v-col>
           <v-col cols="12">
             <h6 class="title text-center">
-              {{$t("dashboard.queue.noQueuedJobs")}}
+              {{$t("There are no queued print jobs yet. Add new one by clicking")}}
               <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
             </h6>
           </v-col>
@@ -83,9 +86,10 @@
           <v-btn icon dark @click="closeDialog(undefined)">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{ $t('dashboard.queue.jobAction', [editMode ? 'Edit' : 'Create']) }}</v-toolbar-title>
+          <v-toolbar-title v-if="editMode">{{ $t("Edit job") }}</v-toolbar-title>
+          <v-toolbar-title v-else>{{ $t("Create job") }}</v-toolbar-title>
           <v-spacer />
-          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">{{$t("frequentlyUsed.save")}}</v-btn>
+          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">{{$t("Save")}}</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
           <v-container fluid>
@@ -94,7 +98,7 @@
                 <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
                   <v-text-field
                     v-model="editedJob.name"
-                    :label="$tc('labels.jobName')"
+                    :label="$tc('Job name')"
                     filled
                     clearable
                     :rules="nameRules"
@@ -106,7 +110,7 @@
               <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
                   v-model="editedJob.fileUri"
-                  :label="$tc('labels.fileAssignment')"
+                  :label="$tc('File assignment')"
                   filled
                   :items="avaliableFiles"
                   item-text="name"
@@ -118,7 +122,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
-                  :label="$tc('labels.printerAssignment')"
+                  :label="$tc('Printer assignment')"
                   v-model="editedJob.printers"
                   filled
                   chips
@@ -134,7 +138,7 @@
                 <v-autocomplete
                   v-if="!editMode"
                   v-model="copiesCount"
-                  :label="$tc('labels.copies')"
+                  :label="$tc('Copies')"
                   filled
                   :items="Array.from(new Array(100),(val,index)=>index+1)"
                   :menu-props="menuProps"
@@ -145,7 +149,7 @@
                   <v-textarea
                     v-model="editedJob.description"
                     filled
-                    :label="$tc('labels.description')"
+                    :label="$tc('Description')"
                     auto-grow
                     @click="descriptionKeyboard = true"
                   />
@@ -158,10 +162,10 @@
     </v-dialog>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">{{$t("dashboard.queue.removeJob")}}</v-card-title>
+        <v-card-title class="headline">{{$t("Do you want to remove the job?")}}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">{{$t("frequentlyUsed.no")}}</v-btn>
-          <v-btn color="primary" text @click="endRemoveJob">{{$t("frequentlyUsed.yes")}}</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
+          <v-btn color="primary" text @click="endRemoveJob">{{$t("Yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -194,8 +198,8 @@ export default class extends Vue {
   @printJobs.Action addJob: any
 
   @printers.Getter printers!: PrinterInfo[]
-  @printers.Getter certainTypePrinters!:(type: PrinterType)=>PrinterInfo[]
-  @storage.Getter avaliableFiles!: { name: string, uri: string, isFiveAxis: boolean}[]
+  @printers.Getter certainTypePrinters!: (type: PrinterType) => PrinterInfo[]
+  @storage.Getter avaliableFiles!: { name: string, uri: string, isFiveAxis: boolean }[]
 
   private overlay: boolean = false
   private dialog: boolean = false
@@ -204,17 +208,17 @@ export default class extends Vue {
 
   private nameWasChanged: boolean = false
 
-  get numberValueOfFiveAxis(): number{
+  get numberValueOfFiveAxis (): number {
     let isFiveAx = this.editedJob.isFiveAxis
-    if(this.editedJob!=null){
-        if (isFiveAx==true){
-          return PrinterType.fiveAxis;
-        }
-        else {
-          return PrinterType.threeAxis;
-        }
+    if (this.editedJob != null) {
+      if (isFiveAx == true) {
+        return PrinterType.fiveAxis;
+      }
+      else {
+        return PrinterType.threeAxis;
+      }
     }
-    else{
+    else {
       return PrinterType.both;
     }
   }
@@ -227,9 +231,9 @@ export default class extends Vue {
       }
     }
 
-    let file = this.avaliableFiles.find(el=> el.uri === value)
-    if (file !== undefined){
-      this.editedJob.isFiveAxis=file.isFiveAxis
+    let file = this.avaliableFiles.find(el => el.uri === value)
+    if (file !== undefined) {
+      this.editedJob.isFiveAxis = file.isFiveAxis
     }
   }
 
@@ -268,7 +272,7 @@ export default class extends Vue {
     printers: [],
     lastPrintTime: 0,
     successful: false,
-    isFiveAxis:undefined,
+    isFiveAxis: undefined,
     state: ''
   }
 
@@ -281,7 +285,7 @@ export default class extends Vue {
       description: '',
       printers: [],
       fileUri: '',
-      isFiveAxis:undefined,
+      isFiveAxis: undefined,
       creationTime: Date.now(),
       lastPrintTime: 0,
       successful: false,
@@ -345,7 +349,7 @@ export default class extends Vue {
       description: '',
       creationTime: 0,
       fileUri: '',
-      isFiveAxis:false,
+      isFiveAxis: false,
       printers: [],
       lastPrintTime: 0,
       successful: false,

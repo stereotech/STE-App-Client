@@ -2,7 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(1)">
-        {{$t("frequentlyUsed.start")}}
+        {{$t("Start")}}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
@@ -42,8 +42,12 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step1desc').toString()
+  mounted () {
+    this.description = this.$tc('Perform bed leveling if there is too much distance between the nozzles and the build plate')
+  }
+
+  updated () {
+    this.description = this.$tc('Perform bed leveling if there is too much distance between the nozzles and the build plate')
   }
 }
 </script>
