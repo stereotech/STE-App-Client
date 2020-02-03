@@ -12,7 +12,7 @@
           />
         </v-col>
         <v-col cols="12">
-          <p>{{$t("printers.wizards.firstLaunch.heating")}}</p>
+          <p>{{$t("Heating...")}}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +21,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("printers.wizards.firstLaunch.unload")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
         </v-col>
         <v-col v-if="additionalData.action === 0" cols="12">
           <v-btn
@@ -34,7 +34,7 @@
           >Finish</v-btn>
         </v-col>
         <v-col v-else cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(12)">{{$t("frequentlyUsed.next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(12)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -128,9 +128,13 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step12desc').toString()
-  }  
+  mounted () {
+    this.description = this.$tc('Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading')
+  }
+
+  updated () {
+    this.description = this.$tc('Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading')
+  }
 }
 </script>
 

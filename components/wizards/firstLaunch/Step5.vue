@@ -39,7 +39,7 @@
 
         <v-col cols="12">
           <v-btn x-large block depressed color="accent" @click="next(5)">
-            {{$t("frequentlyUsed.next")}}
+            {{$t("Next")}}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
         </v-col>
@@ -96,8 +96,12 @@ export default class extends Vue {
   private jog (dir: number) {
     this.jogCommand({ id: this.settings.systemId, z: dir * this.amount })
   }
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step5desc').toString()
+  mounted () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed')
+  }
+
+  updated () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed')
   }
   @printers.Action customCommand: any
   @printers.Action jogCommand: any

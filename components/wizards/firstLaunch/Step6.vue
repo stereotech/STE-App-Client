@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(6)">
-      {{$t("frequentlyUsed.next")}}
+      {{$t("Next")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -47,8 +47,12 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step6desc').toString()
+  mounted () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed')
+  }
+
+  updated () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed')
   }
   @printers.Action customCommand: any
   @settings.Getter settings!: Settings

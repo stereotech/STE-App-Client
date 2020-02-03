@@ -7,7 +7,7 @@
       :to="'/printers/' + id"
       ripple
     >
-      {{$t("common.printerCard.controlPanel")}}
+      {{$t("Control Panel")}}
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
     <v-btn
@@ -37,16 +37,10 @@
       <v-card>
         <v-card-title
           class="headline"
-        >
-          {{$t("common.printerCard.doYouWantToRemove",[printer(id) ? printer(id).name : ''])}}
-        </v-card-title>
+        >{{$t("Do you want to remove {0} from cluster?",[printer(id) ? printer(id).name : ''])}}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">
-            {{$t("frequentlyUsed.no")}}
-          </v-btn>
-          <v-btn color="primary" text @click="removeFromCluster">
-            {{$t("frequentlyUsed.yes")}}
-          </v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
+          <v-btn color="primary" text @click="removeFromCluster">{{$t("Yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

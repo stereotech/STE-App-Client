@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="finish">
-      {{$t("frequentlyUsed.finish")}}
+      {{$t("Finish")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -43,8 +43,12 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
-   mounted() {
-    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step6desc').toString()
+  mounted () {
+    this.description = this.$tc('Calibration complete!')
+  }
+
+  updated () {
+    this.description = this.$tc('Calibration complete!')
   }
 }
 </script>

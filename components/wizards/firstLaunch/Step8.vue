@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(8)">
-      {{$t("frequentlyUsed.next")}}
+      {{$t("Next")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -49,8 +49,12 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step8desc').toString()
+  mounted () {
+    this.description = this.$tc('Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment')
+  }
+
+  updated () {
+    this.description = this.$tc('Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment')
   }
 
   @printers.Action customCommand: any

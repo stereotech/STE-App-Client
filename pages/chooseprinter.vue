@@ -6,7 +6,7 @@
       </v-avatar>
       <v-toolbar-title>
         <span class="text-uppercase font-weight-regular">STE App</span>
-        <span class="text-uppercase font-weight-medium">{{$t("chooseprinter.selectCluster")}}</span>
+        <span class="text-uppercase font-weight-medium">{{$t("Select Cluster")}}</span>
       </v-toolbar-title>
     </v-toolbar>
     <v-container>
@@ -29,8 +29,8 @@
                   <div
                     v-if="printer.printers > 1"
                     class="body-1 text-center"
-                  >{{ $t("chooseprinter.printers",[printer.printers])}}</div>
-                  <div class="body-1 text-center">{{$t("printers.addPrinterDialog.address", [printer.ipAddress])}}</div>
+                  >{{ $t("{0} printers",[printer.printers])}}</div>
+                  <div class="body-1 text-center">{{$t("Address: {0}", [printer.ipAddress])}}</div>
                 </v-col>
               </v-row>
             </v-container>

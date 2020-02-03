@@ -3,7 +3,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <p class="headline">{{$t("printers.wizards.firstLaunch.setDateTime")}}</p>
+          <p class="headline">{{$t("Set Date and Time")}}</p>
         </v-col>
         <v-col cols="12">
           <v-dialog
@@ -19,7 +19,7 @@
               <v-text-field
                 v-model="dateModel"
                 filled
-                :label="$tc('labels.setDate')"
+                :label="$tc('Set Date')"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-on="on"
@@ -27,8 +27,8 @@
             </template>
             <v-date-picker v-model="dateModel" scrollable>
               <v-spacer />
-              <v-btn x-large depressed color="primary" @click="modal = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
-              <v-btn x-large depressed color="primary" @click="setDate(dateModel)">{{$t("frequentlyUsed.ok")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="modal = false">{{$t("Cancel")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="setDate(dateModel)">{{$t("OK")}}</v-btn>
             </v-date-picker>
           </v-dialog>
         </v-col>
@@ -45,7 +45,7 @@
               <v-text-field
                 v-model="timeModel"
                 filled
-                :label="$tc('labels.setTime')"
+                :label="$tc('Set Time')"
                 prepend-icon="mdi-clock-outline"
                 readonly
                 v-on="on"
@@ -53,13 +53,13 @@
             </template>
             <v-time-picker v-if="modal2" v-model="timeModel" full-width format="24hr">
               <v-spacer />
-              <v-btn x-large depressed color="primary" @click="modal2 = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
-              <v-btn x-large depressed color="primary" @click="setTime(timeModel)">{{$t("frequentlyUsed.ok")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="modal2 = false">{{$t("Cancel")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="setTime(timeModel)">{{$t("OK")}}</v-btn>
             </v-time-picker>
           </v-dialog>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("frequentlyUsed.next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>

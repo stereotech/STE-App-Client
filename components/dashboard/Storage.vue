@@ -17,10 +17,20 @@
       >
         <v-list-item v-for="(file, index) in dataStorage.children" :key="index">
           <v-list-item-content>
-            <v-list-item-title class="subheading">{{ file.display }}<v-chip color="info" v-if="file.gCodeAnalysis.isFiveAxis" class="ml-2" outlined label>5D</v-chip></v-list-item-title>
+            <v-list-item-title class="subheading">
+              {{ file.display }}
+              <v-chip
+                color="info"
+                v-if="file.gCodeAnalysis.isFiveAxis"
+                class="ml-2"
+                outlined
+                label
+              >5D</v-chip>
+            </v-list-item-title>
 
-            <v-list-item-subtitle class="body-1">{{$t("dashboard.storage.uploaded")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
-            
+            <v-list-item-subtitle
+              class="body-1"
+            >{{$t("Uploaded ")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-menu>
@@ -34,7 +44,7 @@
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("dashboard.storage.remove")}}</v-list-item-title>
+                  <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -54,7 +64,7 @@
           <v-col cols="12">
             <h6
               class="title text-center"
-            >{{$t("dashboard.storage.noUploadedFiles")}}</h6>
+            >{{$t("You don't have any uploaded files yet. You could add new files using field below")}}</h6>
           </v-col>
         </v-row>
       </v-container>
@@ -66,7 +76,7 @@
               chips
               multiple
               display-size
-              :label="$tc('labels.uplGCodeFls')"
+              :label="$tc('Upload G-Code Files')"
               accept=".gcode"
             />
           </v-col>
@@ -100,7 +110,7 @@ export default class extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
   @Prop({ type: String }) display?: string
-  
+
 
   @storage.Getter localStorage!: FileOrFolder
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
@@ -119,7 +129,7 @@ export default class extends Vue {
   private overlay: boolean = false
 
   private files: File[] = []
-//
+  //
 
   showMenu: boolean = false
   menuX: number = 0

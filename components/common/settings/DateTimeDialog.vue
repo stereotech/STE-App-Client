@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("common.settings.dateTimeDialog.title")}}</template>
+    <template slot="title">{{$t("Date And Time")}}</template>
     <v-dialog
       ref="datedialog"
       v-model="modal"
@@ -13,7 +13,7 @@
         <v-text-field
           v-model="dateModel"
           filled
-          :label="$tc('labels.setDate')"
+          :label="$tc('Set date')"
           prepend-icon="mdi-calendar"
           readonly
           v-on="on"
@@ -21,22 +21,16 @@
       </template>
       <v-date-picker v-model="dateModel" scrollable>
         <v-spacer></v-spacer>
-        <v-btn text color="primary" @click="modal = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
-        <v-btn text color="primary" @click="setDate(dateModel)">{{$t("frequentlyUsed.ok")}}</v-btn>
+        <v-btn text color="primary" @click="modal = false">{{$t("Cancel")}}</v-btn>
+        <v-btn text color="primary" @click="setDate(dateModel)">{{$t("OK")}}</v-btn>
       </v-date-picker>
     </v-dialog>
-    <v-dialog
-      ref="dialog"
-      v-model="modal2"
-      :return-value.sync="timeModel"
-      persistent
-      width="290px"
-    >
+    <v-dialog ref="dialog" v-model="modal2" :return-value.sync="timeModel" persistent width="290px">
       <template v-slot:activator="{ on }">
         <v-text-field
           v-model="timeModel"
           filled
-          :label="$tc('labels.setTime')"
+          :label="$tc('Set time')"
           prepend-icon="mdi-clock-outline"
           readonly
           v-on="on"
@@ -44,8 +38,8 @@
       </template>
       <v-time-picker v-if="modal2" v-model="timeModel" format="24hr">
         <v-spacer></v-spacer>
-        <v-btn text color="primary" @click="modal2 = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
-        <v-btn text color="primary" @click="setTime(timeModel)">{{$t("frequentlyUsed.ok")}}</v-btn>
+        <v-btn text color="primary" @click="modal2 = false">{{$t("Cancel")}}</v-btn>
+        <v-btn text color="primary" @click="setTime(timeModel)">{{$t("OK")}}</v-btn>
       </v-time-picker>
     </v-dialog>
   </SettingsDialog>

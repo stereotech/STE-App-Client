@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("common.settings.updateDialog.title")}}</template>
+    <template slot="title">{{$t("Update")}}</template>
     <v-container>
       <v-row dense>
         <v-col cols="12">
@@ -14,44 +14,44 @@
                     outlined
                     color="primary"
                     @click="checkForUpdateManually"
-                  >{{$t("common.settings.updateDialog.checkForUpdate")}}</v-btn>
+                  >{{$t("Check for update")}}</v-btn>
                   <h5
                     class="headline primary--text text-center"
-                  >{{$t("common.settings.updateDialog.currentVersion", [currentVersion])}}</h5>
-                  <h5 class="text-center">{{$t("common.settings.updateDialog.latestFirmware")}}</h5>
+                  >{{$t("Current version:{0}", [currentVersion])}}</h5>
+                  <h5 class="text-center">{{$t("You have the latest firmware")}}</h5>
                 </v-col>
                 <v-col v-if="softwareUpdateState == 1" cols="12">
                   <h5
                     class="headline success--text text-center"
-                  >{{$t("common.settings.updateDialog.newVersion", [avaliableVersion])}}</h5>
-                  <h5 class="text-center">{{$t("common.settings.updateDialog.currentVersion", [currentVersion])}}</h5>
+                  >{{$t("New version available: {0}", [avaliableVersion])}}</h5>
+                  <h5 class="text-center">{{$t("Current version:{0}", [currentVersion])}}</h5>
                   <v-btn
                     depressed
                     block
                     color="success"
                     @click="downloadUpdateVersion"
-                  >{{$t("common.settings.updateDialog.downloadUpdate")}}</v-btn>
+                  >{{$t("Download update")}}</v-btn>
                 </v-col>
                 <v-col v-if="softwareUpdateState == 2" cols="12">
-                  <h5 class="headline text-center">{{$t("common.settings.updateDialog.downloadingVersion", [avaliableVersion])}}</h5>
+                  <h5 class="headline text-center">{{$t("Downloading {0}...", [avaliableVersion])}}</h5>
                   <v-progress-linear :indeterminate="true" />
                 </v-col>
                 <v-col v-if="softwareUpdateState == 3" cols="12">
-                  <h5 class="headline text-center">{{$t("common.settings.updateDialog.progress", [downloadProgress])}}</h5>
+                  <h5 class="headline text-center">{{$t("Downloading {0}%", [downloadProgress])}}</h5>
                   <v-progress-linear :value="downloadProgress" />
                 </v-col>
                 <v-col v-if="softwareUpdateState == 4" cols="12">
                   <h5
                     class="headline text-center"
-                  >{{$t("common.settings.updateDialog.finish")}}</h5>
+                  >{{$t("Download finished. Please reboot printer to finish update")}}</h5>
                   <v-progress-linear :indeterminate="true" />
                 </v-col>
                 <v-col v-if="softwareUpdateState == 5" cols="12">
-                  <h5 class="headline text-center">{{$t("common.settings.updateDialog.copying")}}</h5>
+                  <h5 class="headline text-center">{{$t("Copying")}}</h5>
                   <v-progress-linear :indeterminate="true" />
                 </v-col>
                 <v-col v-if="softwareUpdateState == 6" cols="12">
-                  <h5 class="headline error--text text-center">{{$t("common.settings.updateDialog.failed")}}</h5>
+                  <h5 class="headline error--text text-center">{{$t("Download failed")}}</h5>
                 </v-col>
               </v-row>
             </v-container>
@@ -66,7 +66,7 @@
                     v-model="file"
                     chips
                     display-size
-                    :label="$tc('labels.uploadUpdate')"
+                    :label="$tc('Upload Update')"
                     accept=".stu"
                   />
                 </v-col>

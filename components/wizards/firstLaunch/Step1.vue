@@ -3,19 +3,21 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="auto">
-          <h1 class="display-4">{{$t("printers.wizards.firstLaunch.hello")}}</h1>
+          <h1 class="display-4">{{$t("Hello!")}}</h1>
         </v-col>
         <v-col cols="12">
           <v-select
-            :items="settings.avaliableLanguages"
+            :items="languages"
+            item-value="value"
+            item-text="key"
             :value="settings.language"
-            @input="sendLanguage"
-            :label="$tc('labels.selectLanguage')"
+            @input="setLanguage"
+            :label="$tc('Select language')"
             outline
           ></v-select>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(1)">{{$t("printers.wizards.firstLaunch.start")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">{{$t("Let's Start")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -52,13 +54,13 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  private languages:{key:string, value:string}[]=[
-    {key:'English', value:'en'},
-    {key:'Русский', value:'ru'}
+  private languages: { key: string, value: string }[] = [
+    { key: 'English', value: 'en' },
+    { key: 'Русский', value: 'ru' }
   ]
-  private setLanguage(value:string){
-    this.setLanguage(value)
-    this.$i18n.locale=value
+  private setLanguage (value: string) {
+    this.sendLanguage(value)
+    this.$i18n.setLocale(value)
     //@ts-ignore
     this.$moment.locale(value)
   }

@@ -3,55 +3,37 @@
     <v-container fluid>
       <v-row dense>
         <v-col v-if="lastTempDataPoint(id).tool0" cols="4">
-          <div class="body-1 text-truncate">
-            {{$t("common.printerCard.e1Target")}}
-          </div>
-          <div class="body-1">
-            {{ lastTempDataPoint(id).tool0.target }}&deg;C
-          </div>
+          <div class="body-1 text-truncate">{{$t("E1 Target")}}</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool0.actual / 3.2"
             :color="e1Color"
-          >
-            {{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}
-          </v-progress-circular>
+          >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
         <v-col v-if="lastTempDataPoint(id).tool1" cols="4">
-          <div class="body-1 text-truncate">
-            {{$t("common.printerCard.e2Target")}}
-          </div>
-          <div class="body-1">
-            {{ lastTempDataPoint(id).tool1.target }}&deg;C
-          </div>
+          <div class="body-1 text-truncate">{{$t("E2 Target")}}</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
-          >
-            {{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}
-          </v-progress-circular>
+          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
         <v-col v-if="lastTempDataPoint(id).bed" cols="4">
-          <div class="body-1 text-truncate">
-            {{$t("common.printerCard.bedTarget")}}
-          </div>
+          <div class="body-1 text-truncate">{{$t("Bed Target")}}</div>
           <div
             v-if="lastTempDataPoint(id).bed"
             class="body-1"
-          >
-            {{ lastTempDataPoint(id).bed.target }}&deg;C
-          </div>
+          >{{ lastTempDataPoint(id).bed.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).bed.actual / 1.5"
             :color="bedColor"
-          >
-            {{ lastTempDataPoint(id).bed.actual | currency('', 0) }}
-          </v-progress-circular>
+          >{{ lastTempDataPoint(id).bed.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
       </v-row>
     </v-container>
