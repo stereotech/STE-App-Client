@@ -17,7 +17,7 @@ const config: Configuration = {
 
   router: {
     mode: 'hash',
-    middleware: ['chooser', 'firstLaunch', 'localization'],
+    middleware: ['chooser', 'firstLaunch'] //, 'localization'],
   },
   /*
    ** Global CSS
