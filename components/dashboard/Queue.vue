@@ -66,7 +66,7 @@
           <v-col cols="12">
             <h6 class="title text-center">
               {{$t("There are no queued print jobs yet. Add new one by clicking")}}
-              <v-icon color="primary">mdi-plus-circle</v-icon>&nbsp;button
+              <v-icon color="primary">mdi-plus-circle</v-icon>
             </h6>
           </v-col>
         </v-row>
