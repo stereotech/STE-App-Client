@@ -143,5 +143,10 @@
     "Retry": "Retry",
     "Dashboard": "Dashboard",
     "Printers": "Printers",
-    "{0} printers": "{0} printers"
+    "{0} printers": "{0} printers",
+    "{0} has been succesfully printed on {1} for {2}": "{0} has been succesfully printed on {1} for {2}",
+    "{0} has been failed on {1} for {2} cause of {3}": "{0} has been failed on {1} for {2} cause of {3}",
+    "New firmware download failed": "New firmware download failed",
+    "New firmware is found on USB. Check settings for install": "New firmware is found on USB. Check settings for install",
+    "New firmware is available, version {0}. Check settings for install": "New firmware is available, version {0}. Check settings for install"
 }
