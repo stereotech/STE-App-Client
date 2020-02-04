@@ -3,7 +3,7 @@
     <v-card v-if="dataStorage" transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
         <v-card-title>
-          <span class="headline font-weight-light">{{ local ? 'Storage' : 'USB' }}</span>
+          <span class="headline font-weight-light">{{ local ? $t('Storage') : $t('USB') }}</span>
           <span v-if="name" class="headline font-weight-light">&nbsp;at {{ display }}</span>
         </v-card-title>
         <v-spacer />

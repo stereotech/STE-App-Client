@@ -5,6 +5,30 @@
         <v-col cols="12">
           <v-card>
             <v-list light>
+              <v-list-item>
+                <v-list-item-action>
+                  <v-switch
+                    false-value="WIRELESS"
+                    true-value="HOTSPOT"
+                    v-model="currentMethod"
+                    @change="setConnectedMethod"
+                  ></v-switch>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-if="currentMethod === 'HOTSPOT'"
+                  >{{ $t("Disable Wi-Fi hotspot") }}</v-list-item-title>
+                  <v-list-item-title v-else>{{ $t("Enable Wi-Fi hotspot") }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item @click="refreshNetworks">
+                <v-list-item-action>
+                  <v-icon>mdi-cached</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>{{ $t("Refresh networks") }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
               <v-subheader>{{$t("Available networks")}}</v-subheader>
               <template v-for="(network, index) in avaliableNetworks">
                 <v-list-item :key="network.id" @click="startConnection(network)">
@@ -32,7 +56,7 @@
                 </v-list-item>
                 <v-divider :key="index" inset />
               </template>
-              <v-dialog v-model="confirmation" max-width="425">
+              <v-dialog v-model="confirmation" max-width="425" light>
                 <v-card>
                   <v-card-title
                     v-if="setupNetwork.security"
@@ -135,10 +159,15 @@ export default class extends Vue {
   }
 
   @settings.Getter avaliableNetworks!: Network[]
-  @settings.Getter currentNetwork: Network | undefined
+  @settings.Getter currentNetwork!: Network[]
+  @settings.Getter connectedMethod!: string
   @settings.Action getWifiNetworks: any
   @settings.Action connectWifiNetwork: any
   @settings.Action forgetWifiNetwork: any
+  @settings.Action getConnectedMethod: any
+  @settings.Action setConnectedMethod: any
+
+  private currentMethod: string = 'WIRELESS'
 
   private startConnection (network: Network) {
     if (network) {
@@ -158,15 +187,21 @@ export default class extends Vue {
     this.confirmation = false
   }
 
-  private startForgetting () {
+  private startForgetting (index: number) {
     if (this.currentNetwork !== undefined) {
-      this.forgetWifiNetwork(this.currentNetwork.id)
+      this.forgetWifiNetwork(this.currentNetwork[index].id)
     }
     this.forgetConfirmation = false
   }
 
   async mounted () {
+    await this.refreshNetworks()
+  }
+
+  private async refreshNetworks () {
+    await this.getConnectedMethod()
     await this.getWifiNetworks()
+    this.currentMethod = this.connectedMethod
   }
 
   private next (step: number) {
