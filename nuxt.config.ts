@@ -107,6 +107,7 @@ const config: Configuration = {
     langDir: 'locales/',
     strategy: 'no_prefix',
     defaultLocale: 'en',
+    detectBrowserLanguage: false,
     vueI18n: {
       fallbackLocale: 'en'
     }
