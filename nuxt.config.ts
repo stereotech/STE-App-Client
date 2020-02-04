@@ -24,9 +24,9 @@ const config: Configuration = {
    */
   css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css'],
 
-    /*
-   ** Nuxt.js modules
-   */
+  /*
+ ** Nuxt.js modules
+ */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
