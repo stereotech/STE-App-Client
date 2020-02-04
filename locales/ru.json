@@ -141,7 +141,12 @@
   "Reboot": "Перезагрузить",
   "Power Off": "Выключить",
   "Retry": "Повторить",
-  "Dashboard": "Печать",
+  "Dashboard": "3D печать",
   "Printers": "Принтеры",
-  "{0} printers": "{0} принтеров"
+  "{0} printers": "{0} принтеров",
+  "{0} has been succesfully printed on {1} for {2}": "{0} было успешно напечатано на {1} за {2}",
+  "{0} has been failed on {1} for {2} cause of {3}": "{0} потерпело неудачу на {1} за {2} по причине {3}",
+  "New firmware download failed": "Не удалось загрузить новую версию ПО",
+  "New firmware is found on USB. Check settings for install": "Новое ПО найдено на USB. Проверьте настройки для установки",
+  "New firmware is available, version {0}. Check settings for install": "Доступна новое ПО, версия {0}. Проверьте настройки для установки"
 }
