@@ -21,7 +21,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(13)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(7)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -52,7 +52,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 12
+  private step?: number = 6//12
   private curStep?: number = this.currentStep
 
   @printers.Getter status!: (id: string) => CurrentState | undefined

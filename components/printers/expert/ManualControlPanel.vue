@@ -13,7 +13,7 @@
             <ExtruderCard :id="id" :printing="printing" />
           </v-col>
           <v-col cols="12" md="6">
-            <TemperatureFan :id="id" chamber-fan />
+            <TemperatureFan :id="id" chamber-fan :bed-heater="!isFiveAxis" />
           </v-col>
           <v-col cols="12" md="6">
             <TerminalCard :id="id" />

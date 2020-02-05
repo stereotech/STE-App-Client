@@ -21,7 +21,7 @@
               {{ file.display }}
               <v-chip
                 color="info"
-                v-if="file.gCodeAnalysis.isFiveAxis"
+                v-if="file.gcodeAnalysis && file.gcodeAnalysis.isFiveAxis"
                 class="ml-2"
                 outlined
                 label

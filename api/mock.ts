@@ -113,7 +113,7 @@ const localStorage = {
             name: 'File_3D.gcode',
             size: 15315451,
             origin: 'st_aaa',
-            gCodeAnalysis: {
+            gcodeAnalysis: {
                 isFiveAxis: false
             },
             path: '/Storage/File_3D.gcode',
@@ -130,7 +130,7 @@ const localStorage = {
             name: 'File_5D.gcode',
             size: 15315451,
             origin: 'st_aaa',
-            gCodeAnalysis: {
+            gcodeAnalysis: {
                 isFiveAxis: true
             },
             path: '/Storage/File_5D.gcode',

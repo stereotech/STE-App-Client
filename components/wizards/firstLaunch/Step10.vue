@@ -12,7 +12,7 @@
           <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(14)">{{$t("Skip")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(8)">{{$t("Skip")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -42,7 +42,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 9
+  private step?: number = 3//9
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material.jpg'
@@ -57,7 +57,7 @@ export default class extends Vue {
     } else {
       this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 240 })
     }
-    this.next(10)
+    this.next(4)//10)
   }
 
   private next (step: number) {

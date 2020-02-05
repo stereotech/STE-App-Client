@@ -6,15 +6,22 @@
     <v-expansion-panel-content>
       <v-container fluid>
         <v-row dense>
-          <v-col v-for="wizard in data" :key="wizard.id" cols="6" sm="3" lg="2">
-            <WizardCard
+          <template v-for="wizard in data">
+            <v-col
+              :key="wizard.id"
+              cols="6"
+              sm="3"
+              lg="2"
               v-if="wizard.type == printerType || wizard.type == 2"
-              :name="wizard.translatedName"
-              :image="wizard.image"
-              :description="wizard.description"
-              :to="'/printers/' + $route.params.id + '/' + wizard.link"
-            />
-          </v-col>
+            >
+              <WizardCard
+                :name="wizard.translatedName"
+                :image="wizard.image"
+                :description="wizard.description"
+                :to="'/printers/' + $route.params.id + '/' + wizard.link"
+              />
+            </v-col>
+          </template>
         </v-row>
       </v-container>
     </v-expansion-panel-content>
@@ -51,21 +58,21 @@ export default class WizardsPanel extends Vue {
     },
     {
       id: 2,
+      name: '5D calibration',
+      translatedName: '5D calibration',
+      image: '5d_calibration/5d_calibration',
+      link: '5d-callibration',
+      type: PrinterType.fiveAxis,
+      description: 'This wizard will help you to tune 5-axis printers'
+    },
+    {
+      id: 3,
       name: 'Change material',
       translatedName: 'Change material',
       image: 'change_material/change_material',
       link: 'change-material',
       type: PrinterType.both,
       description: 'This wizard will help you to change, insert or remove the material'
-    },
-    {
-      id: 3,
-      name: '5D callibration',
-      translatedName: '5D callibration',
-      image: '5d_callibration/bed_leveling',
-      link: '5d-callibration',
-      type: PrinterType.fiveAxis,
-      description: 'This wizard will help you to tune 5-axis printers'
     }
   ]
 

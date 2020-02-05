@@ -20,7 +20,7 @@
 
           <div class="caption">{{ model }}</div>
           <div v-if="printing || paused" class="caption">
-            <span>Spent {{ $moment.duration(printTime, 'seconds').humanize() }}</span>
+            <span>{{$t("Spent ")}} {{ $moment.duration(printTime, 'seconds').humanize() }}</span>
             <span
               v-if="printTimeLeft"
             >, {{ $moment.duration(printTimeLeft, 'seconds').humanize() }} left</span>

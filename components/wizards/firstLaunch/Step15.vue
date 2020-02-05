@@ -101,7 +101,7 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(15)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(9)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -128,7 +128,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 14
+  private step?: number = 8//14
   private curStep?: number = this.currentStep
 
   private keyboard: boolean = false

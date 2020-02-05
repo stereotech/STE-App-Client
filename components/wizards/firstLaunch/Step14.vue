@@ -40,7 +40,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 13
+  private step?: number = 7//13
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material04.jpg'
@@ -87,7 +87,7 @@ export default class extends Vue {
 
   private finish () {
     this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
-    this.next(14)
+    this.next(8)//14)
   }
 
   private next (step: number) {

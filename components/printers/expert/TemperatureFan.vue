@@ -50,7 +50,7 @@
           />
         </v-col>
       </v-row>
-      <v-row dense v-else>
+      <v-row dense v-if="bedHeater">
         <v-col cols="2">
           <v-switch v-model="bedTargetSet" color="error" hide-details @change="setBed" />
         </v-col>
@@ -93,6 +93,7 @@ const printers = namespace('printersState')
 @Component
 export default class TemperatureFanCard extends Vue {
   @Prop({ default: false, type: Boolean }) printing!: boolean
+  @Prop({ default: false, type: Boolean }) bedHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberFan!: boolean
   @Prop({ default: '', type: String, required: true }) id!: string
