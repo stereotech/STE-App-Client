@@ -34,7 +34,7 @@
           >Finish</v-btn>
         </v-col>
         <v-col v-else cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(12)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(6)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -65,7 +65,7 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 11
+  private step?: number = 5//11
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material03.jpg'

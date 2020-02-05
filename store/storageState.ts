@@ -37,7 +37,7 @@ export const getters: GetterTree<StorageState, RootState> = {
         result.push(
           ...state.local[0].children.map(
             (element: FileOrFolder) => {
-              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gCodeAnalysis !== undefined ? element.gCodeAnalysis.isFiveAxis : undefined }
+              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
             }
           )
         )
@@ -48,7 +48,7 @@ export const getters: GetterTree<StorageState, RootState> = {
         result.push(
           ...element.children.map(
             (value: FileOrFolder) => {
-              return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gCodeAnalysis !== undefined ? element.gCodeAnalysis.isFiveAxis : undefined }
+              return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
             }
           )
         )

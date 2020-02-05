@@ -28,7 +28,7 @@
         <v-col cols="12" sm="4" md="12">
           <v-select
             filled
-            :items="['Idle', 'Maintenance']"
+            :items="stateItems"
             :label="$tc('Select state')"
             @change="setPrinterState"
           />
@@ -42,7 +42,7 @@
         <v-col cols="12" sm="4" md="12">
           <v-select
             filled
-            :items="['Idle', 'Maintenance']"
+            :items="stateItems"
             :label="$tc('Select state')"
             :value="stateText"
             @change="setPrinterState"
@@ -57,7 +57,7 @@
         <v-col cols="12" sm="4" md="12">
           <v-select
             filled
-            :items="['Idle', 'Maintenance']"
+            :items="stateItems"
             :label="$tc('Select state')"
             :value="stateText"
             @change="setPrinterState"
@@ -137,6 +137,29 @@ export default class PrinterCardActions extends Vue {
     if (toggle) {
       this.cancelPrintJob(this.id)
     }
+  }
+
+  private stateItems: { text: string, value: string }[] = [
+    {
+      value: 'Maintenance',
+      text: 'Maintenance'
+    },
+    {
+      value: 'Idle',
+      text: 'Idle'
+    }
+  ]
+
+  mounted () {
+    this.stateItems.forEach(element => {
+      element.text = this.$tc(`${element.value}`)
+    });
+  }
+
+  updated () {
+    this.stateItems.forEach(element => {
+      element.text = this.$tc(`${element.value}`)
+    });
   }
 }
 </script>

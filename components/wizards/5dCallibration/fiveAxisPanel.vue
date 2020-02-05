@@ -1,6 +1,6 @@
 <template>
   <v-card light>
-    <v-card-title class="title">Jog</v-card-title>
+    <v-card-title class="title">{{ $t("Jog") }}</v-card-title>
     <v-container grid-list-xs>
       <v-layout row wrap class="text-center" align-center justify-center>
         <v-flex xs12 sm9 order-sm1>
@@ -17,8 +17,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large color="primary" disabled>
-          </v-btn>
+          <v-btn outlined text icon x-large color="primary" disabled></v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
           <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogXPlus">
@@ -39,8 +38,7 @@
           </v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm3>
-          <v-btn outlined text icon x-large color="primary" disabled>
-          </v-btn>
+          <v-btn outlined text icon x-large color="primary" disabled></v-btn>
         </v-flex>
         <v-flex xs4 sm3 order-sm2>
           <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="jogZMinus">
@@ -52,15 +50,13 @@
             <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
             <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
             <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
-           
           </v-btn-toggle>
         </v-flex>
         <!-- <v-flex xs4 sm3 order-sm5>
           <v-btn x-large text color="primary" :disabled="printing" outlined icon @click="motorsOff">
             <v-icon>mdi-engine-off-outline</v-icon>
           </v-btn>
-        </v-flex> -->
-
+        </v-flex>-->
       </v-layout>
     </v-container>
   </v-card>
@@ -91,7 +87,7 @@ export default class fiveAxisPanel extends Vue {
     this.jogCommand({ id: this.id, a: this.amount })
   }
   private jogBPlus () {
-    this.jogCommand({ id: this.id, b: this.amount })
+    this.jogCommand({ id: this.id, c: this.amount })
   }
   private jogXMinus () {
     this.jogCommand({ id: this.id, x: -this.amount })
@@ -106,7 +102,7 @@ export default class fiveAxisPanel extends Vue {
     this.jogCommand({ id: this.id, a: -this.amount })
   }
   private jogBMinus () {
-    this.jogCommand({ id: this.id, b: -this.amount })
+    this.jogCommand({ id: this.id, c: -this.amount })
   }
 
 

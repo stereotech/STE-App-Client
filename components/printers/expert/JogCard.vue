@@ -353,7 +353,7 @@ export default class JogCard extends Vue {
     this.jogCommand({ id: this.id, a: this.amount })
   }
   private jogCPlus () {
-    this.jogCommand({ id: this.id, b: this.amount })
+    this.jogCommand({ id: this.id, c: this.amount })
   }
   private jogXMinus () {
     this.jogCommand({ id: this.id, x: -this.amount })
@@ -368,7 +368,7 @@ export default class JogCard extends Vue {
     this.jogCommand({ id: this.id, a: -this.amount })
   }
   private jogCMinus () {
-    this.jogCommand({ id: this.id, b: -this.amount })
+    this.jogCommand({ id: this.id, c: -this.amount })
   }
 
   private homeXY () {
@@ -380,11 +380,11 @@ export default class JogCard extends Vue {
   }
 
   private homeA () {
-    this.homeCommand({ id: this.id, rotary: true })
+    this.customCommand({ id: this.id, command: 'G28 A0' })
   }
 
   private homeC () {
-    this.homeCommand({ id: this.id, rotary: true })
+    this.customCommand({ id: this.id, command: 'G0 C0 F3000' })
   }
 
   private setFeed (value: number) {

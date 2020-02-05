@@ -2,7 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-flex xs12>
       <v-btn block x-large depressed color="accent" @click="next(1)">
-        Start
+        {{ $t("Start") }}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-flex>
@@ -30,13 +30,13 @@ export default class extends Vue {
   private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling.jpg'
+  private image: string = '/wizards/5d_calibration/5d_calibration.jpg'
   private description: string = 'some description'
 
   @printers.Action homeCommand: any
 
   private next (step: number) {
-   // this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+    // this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
 
     this.$emit('change', step)
     this.curStep = step

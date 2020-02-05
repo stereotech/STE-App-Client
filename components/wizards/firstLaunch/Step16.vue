@@ -34,7 +34,7 @@ export default class extends Vue {
 
   @settings.Action sendFinishSetup: any
 
-  private step?: number = 15
+  private step?: number = 9//15
   private curStep?: number = this.currentStep
 
   private next (step: number) {

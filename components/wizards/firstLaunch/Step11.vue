@@ -41,7 +41,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 10
+  private step?: number = 4//10
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material02.jpg'
@@ -54,9 +54,9 @@ export default class extends Vue {
     this.customCommand({ id: this.settings.systemId, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
-      this.next(12)
+      this.next(6)//12)
     } else {
-      this.next(11)
+      this.next(5)//11)
     }
   }
 
