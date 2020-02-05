@@ -153,5 +153,9 @@
     "New firmware is available, version {0}. Check settings for install": "New firmware is available, version {0}. Check settings for install",
     "Refresh networks": "Refresh networks",
     "Disable Wi-Fi hotspot": "Disable Wi-Fi hotspot",
-    "Enable Wi-Fi hotspot": "Enable Wi-Fi hotspot"
+    "Enable Wi-Fi hotspot": "Enable Wi-Fi hotspot",
+    "This wizard will help you calibrate five axis module": "This wizard will help you calibrate five axis module",
+    "Place the calibration tool into the five axis module and press Next": "Place the calibration tool into the five axis module and press Next",
+    "Move nozzle to the nearest tip of the calibration tool and press Next": "Move nozzle to the nearest tip of the calibration tool and press Next",
+    "Calibration complete! Please remove calibration tool": "Calibration complete! Please remove calibration tool"
 }

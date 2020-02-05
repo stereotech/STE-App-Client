@@ -1,6 +1,6 @@
 <template>
-  <v-card>
-    <v-card-title class="title">{{$t("Jog")}}</v-card-title>
+  <v-card light>
+    <v-card-title class="title" v-if="!dense">{{$t("Jog")}}</v-card-title>
     <v-container>
       <v-row dense class="text-center" align="center" justify="center">
         <template v-if="isFiveAxis">
@@ -34,7 +34,15 @@
             </v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="3">
-            <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeXY">
+            <v-btn
+              outlined
+              text
+              icon
+              x-large
+              color="primary"
+              :disabled="printing || dense"
+              @click="homeXY"
+            >
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
@@ -81,7 +89,15 @@
             </v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="3">
-            <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeZ">
+            <v-btn
+              outlined
+              text
+              icon
+              x-large
+              color="primary"
+              :disabled="printing || dense"
+              @click="homeZ"
+            >
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
@@ -117,7 +133,15 @@
             </v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="3">
-            <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeA">
+            <v-btn
+              outlined
+              text
+              icon
+              x-large
+              color="primary"
+              :disabled="printing || dense"
+              @click="homeA"
+            >
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
@@ -152,7 +176,15 @@
             </v-btn>
           </v-col>
           <v-col cols="4" sm="2" order-sm="3">
-            <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeC">
+            <v-btn
+              outlined
+              text
+              icon
+              x-large
+              color="primary"
+              :disabled="printing || dense"
+              @click="homeC"
+            >
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
@@ -178,7 +210,7 @@
               <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
             </v-btn-toggle>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="5">
+          <v-col cols="4" sm="2" order-sm="5" v-if="!dense">
             <v-btn
               x-large
               text
@@ -191,8 +223,15 @@
               <v-icon>mdi-engine-off-outline</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="12" order-sm="5" pt-6>
-            <v-slider v-model="feed" label="Feed" thumb-label min="50" max="150" @change="setFeed"></v-slider>
+          <v-col cols="12" order-sm="5" pt-6 v-if="!dense">
+            <v-slider
+              v-model="feed"
+              :label="$tc('Feed')"
+              thumb-label
+              min="50"
+              max="150"
+              @change="setFeed"
+            ></v-slider>
           </v-col>
         </template>
         <template v-else>
@@ -227,7 +266,15 @@
             </v-btn>
           </v-col>
           <v-col cols="4" sm="3" order-sm="3">
-            <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeXY">
+            <v-btn
+              outlined
+              text
+              icon
+              x-large
+              color="primary"
+              :disabled="printing || dense"
+              @click="homeXY"
+            >
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
@@ -274,7 +321,15 @@
             </v-btn>
           </v-col>
           <v-col cols="4" sm="3" order-sm="3">
-            <v-btn outlined text icon x-large color="primary" :disabled="printing" @click="homeZ">
+            <v-btn
+              outlined
+              text
+              icon
+              x-large
+              color="primary"
+              :disabled="printing || dense"
+              @click="homeZ"
+            >
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
@@ -299,7 +354,7 @@
               <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
             </v-btn-toggle>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="5">
+          <v-col cols="4" sm="3" order-sm="5" v-if="!dense">
             <v-btn
               x-large
               text
@@ -312,7 +367,7 @@
               <v-icon>mdi-engine-off-outline</v-icon>
             </v-btn>
           </v-col>
-          <v-col class="pt-6" cols="12" order-sm="5">
+          <v-col class="pt-6" cols="12" order-sm="5" v-if="!dense">
             <v-slider
               v-model="feed"
               :label="$tc('Feed')"
@@ -400,6 +455,7 @@ export default class JogCard extends Vue {
   }
 
   @Prop({ default: false, type: Boolean }) isFiveAxis?: boolean
+  @Prop({ default: false, type: Boolean }) dense?: boolean
   @Prop({ default: false, type: Boolean }) printing?: boolean
   @Prop({ default: '', type: String }) id?: string
 

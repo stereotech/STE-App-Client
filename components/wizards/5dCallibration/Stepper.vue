@@ -1,5 +1,5 @@
 <template>
-  <WizardStepper :stepCount="9" v-model="currentStep">
+  <WizardStepper :stepCount="12" v-model="currentStep">
     <template slot="title">{{$t("5D calibration") }}</template>
     <Step1 v-model="currentStep" />
     <Step2 v-model="currentStep" />
@@ -10,6 +10,9 @@
     <Step7 v-model="currentStep" />
     <Step8 v-model="currentStep" />
     <Step9 v-model="currentStep" />
+    <Step10 v-model="currentStep" />
+    <Step11 v-model="currentStep" />
+    <Step12 v-model="currentStep" />
   </WizardStepper>
 </template>
 
@@ -25,6 +28,9 @@ import Step6 from '~/components/wizards/5dCallibration/Step6.vue'
 import Step7 from '~/components/wizards/5dCallibration/Step7.vue'
 import Step8 from '~/components/wizards/5dCallibration/Step8.vue'
 import Step9 from '~/components/wizards/5dCallibration/Step9.vue'
+import Step10 from '~/components/wizards/5dCallibration/Step10.vue'
+import Step11 from '~/components/wizards/5dCallibration/Step11.vue'
+import Step12 from '~/components/wizards/5dCallibration/Step12.vue'
 
 @Component({
   components: {
@@ -37,7 +43,10 @@ import Step9 from '~/components/wizards/5dCallibration/Step9.vue'
     Step6,
     Step7,
     Step8,
-    Step9
+    Step9,
+    Step10,
+    Step11,
+    Step12
   }
 })
 export default class fiveCallibrationStepper extends Vue {

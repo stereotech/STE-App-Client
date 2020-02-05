@@ -1,38 +1,25 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs12>
-            <fiveAxisPanel/>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block depressed color="accent" @click="next(2)">
-            Next
-            <v-icon right dark>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-flex>
- 
-      </v-layout>
-  
-
-    </v-container>
-
+    <v-col cols="12">
+      <v-btn block x-large depressed color="accent" @click="next(2)">
+        {{ $t("Next") }}
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-col>
   </WizardStep>
-
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import fiveAxisPanel from '~/components/wizards/5dCallibration/fiveAxisPanel.vue'
+
 
 const printers = namespace('printersState')
 
 @Component({
   components: {
-    WizardStep,
-    fiveAxisPanel
+    WizardStep
   }
 })
 export default class extends Vue {
@@ -46,25 +33,32 @@ export default class extends Vue {
   }
   async performStep () {
     await this.customCommand({ id: this.$route.params.id, command: 'M1005 S0' })
-    //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling02.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration02.jpg'
   private description: string = ''
 
 
   private async next (step: number) {
-    
+
     this.$emit('change', step)
     this.curStep = step
   }
 
-  private async back (step: number){
-    
+  private async back (step: number) {
+
   }
   @printers.Action customCommand: any
+
+  mounted () {
+    this.description = this.$i18n.tc("Place the calibration tool into the five axis module and press Next")
+  }
+
+  updated () {
+    this.description = this.$i18n.tc("Place the calibration tool into the five axis module and press Next")
+  }
 
 }
 </script>

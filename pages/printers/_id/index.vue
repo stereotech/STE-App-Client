@@ -3,9 +3,17 @@
     <PrinterCard :id="$route.params.id" toolbar />
     <v-col cols="12">
       <v-expansion-panels v-model="panel" multiple>
-        <!--<WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />-->
-        <WizardsPanel :id="$route.params.id"  :printerType="printerType" />
-        <ManualControlPanel :printing="isPrinting" :id="$route.params.id" :isFiveAxis="printerType==1" />
+        <WizardsPanel
+          :id="$route.params.id"
+          v-if="isMaintenance || isPaused"
+          :printerType="printerType"
+        />
+        <!--<WizardsPanel :id="$route.params.id" :printerType="printerType" />-->
+        <ManualControlPanel
+          :printing="isPrinting"
+          :id="$route.params.id"
+          :isFiveAxis="printerType==1"
+        />
       </v-expansion-panels>
     </v-col>
   </v-row>
@@ -33,13 +41,13 @@ export default class PrinterPage extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
-  get printerType(): number {
+  get printerType (): number {
     let printer = this.printer(this.$route.params.id)
-    if(printer!=null){
-      if(printer.isFiveAxis==true){
+    if (printer != null) {
+      if (printer.isFiveAxis == true) {
         return PrinterType.fiveAxis
       }
-      else{
+      else {
         return PrinterType.threeAxis
       }
     }

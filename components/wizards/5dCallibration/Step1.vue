@@ -1,11 +1,11 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-flex xs12>
+    <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(1)">
         {{ $t("Start") }}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
-    </v-flex>
+    </v-col>
   </WizardStep>
 </template>
 
@@ -30,8 +30,8 @@ export default class extends Vue {
   private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/5d_calibration/5d_calibration.jpg'
-  private description: string = 'some description'
+  private image: string = 'wizards/5d_calibration/5d_calibration.jpg'
+  private description: string = ''
 
   @printers.Action homeCommand: any
 
@@ -40,6 +40,14 @@ export default class extends Vue {
 
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted () {
+    this.description = this.$i18n.tc("This wizard will help you calibrate five axis module")
+  }
+
+  updated () {
+    this.description = this.$i18n.tc("This wizard will help you calibrate five axis module")
   }
 }
 </script>

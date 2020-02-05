@@ -1,17 +1,17 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs12>
-            <fiveAxisPanel/>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block depressed color="accent" @click="next(8)">
-            Next
+      <v-row>
+        <v-col cols="12">
+          <JogCard dense />
+        </v-col>
+        <v-col cols="12">
+          <v-btn x-large block depressed color="accent" @click="next(8)">
+            {{ $t("Next") }}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
-        </v-flex> 
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
@@ -20,13 +20,13 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import fiveAxisPanel from '~/components/wizards/5dCallibration/fiveAxisPanel.vue'
+import JogCard from '~/components/printers/expert/JogCard.vue'
 const printers = namespace('printersState')
 
 @Component({
   components: {
     WizardStep,
-    fiveAxisPanel
+    JogCard
   }
 })
 export default class extends Vue {
@@ -45,14 +45,22 @@ export default class extends Vue {
   private step?: number = 7
   private curStep?: number = this.currentStep
 
-  private image: string = '/wizards/bed_leveling/bed_leveling03.jpg'
-  private description: string = 'Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed'
+  private image: string = 'wizards/5d_calibration/5d_calibration03.jpg'
+  private description: string = ''
 
 
   private async next (step: number) {
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted () {
+    this.description = this.$i18n.tc("Move nozzle to the nearest tip of the calibration tool and press Next")
+  }
+
+  updated () {
+    this.description = this.$i18n.tc("Move nozzle to the nearest tip of the calibration tool and press Next")
   }
 
   @printers.Action customCommand: any
