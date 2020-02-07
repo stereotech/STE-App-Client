@@ -157,5 +157,16 @@
     "This wizard will help you calibrate five axis module": "This wizard will help you calibrate five axis module",
     "Place the calibration tool into the five axis module and press Next": "Place the calibration tool into the five axis module and press Next",
     "Move nozzle to the nearest tip of the calibration tool and press Next": "Move nozzle to the nearest tip of the calibration tool and press Next",
-    "Calibration complete! Please remove calibration tool": "Calibration complete! Please remove calibration tool"
+    "Calibration complete! Please remove calibration tool": "Calibration complete! Please remove calibration tool",
+    "This wizard helps you to setup zero point for proper 5D printing": "This wizard helps you to setup zero point for proper 5D printing",
+    "Zero point setup": "Zero point setup",
+    "Classic mode (3D)": "Classic mode (3D)",
+    "Coil 5D": "Coil 5D",
+    "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use",
+    "Please place needed base in the 5D Module and press Next": "Please place needed base in the 5D Module and press Next",
+    "Move nozzle to the center of the base and press Next": "Move nozzle to the center of the base and press Next",
+    "Name is required": "Name is required",
+    "Enter the diameter of the base and press Next": "Enter the diameter of the base and press Next",
+    "Setup Complete!": "Setup Complete!",
+    "at ": "at "
 }

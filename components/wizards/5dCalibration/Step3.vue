@@ -6,7 +6,7 @@
           <JogCard dense />
         </v-col>
         <v-col cols="12">
-          <v-btn x-large block depressed color="accent" @click="next(7)">
+          <v-btn x-large block depressed color="accent" @click="next(3)">
             {{ $t("Next") }}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
@@ -39,13 +39,13 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S5' })
+    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S1' })
     //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
-  private step?: number = 6
+  private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/5d_calibration/5d_calibration03.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration2.jpg'
   private description: string = ''
 
 
@@ -55,6 +55,8 @@ export default class extends Vue {
     this.curStep = step
   }
 
+  @printers.Action customCommand: any
+
   mounted () {
     this.description = this.$i18n.tc("Move nozzle to the nearest tip of the calibration tool and press Next")
   }
@@ -63,6 +65,5 @@ export default class extends Vue {
     this.description = this.$i18n.tc("Move nozzle to the nearest tip of the calibration tool and press Next")
   }
 
-  @printers.Action customCommand: any
 }
 </script>

@@ -4,7 +4,7 @@
       <v-toolbar flat color="secondary">
         <v-card-title>
           <span class="headline font-weight-light">{{ local ? $t('Storage') : $t('USB') }}</span>
-          <span v-if="name" class="headline font-weight-light">&nbsp;at {{ display }}</span>
+          <span v-if="name" class="headline font-weight-light">&nbsp;{{$t('at ')}} {{ display }}</span>
         </v-card-title>
         <v-spacer />
       </v-toolbar>
@@ -25,6 +25,7 @@
                 class="ml-2"
                 outlined
                 label
+                x-small
               >5D</v-chip>
             </v-list-item-title>
 

@@ -8,12 +8,11 @@
         <slot name="title" />
       </span>
       <div class="flex-grow-1" />
-      <v-progress-circular :value="progressStep" size="48">
-        {{ currentStep + 1 }}/{{ stepCount }}
-      </v-progress-circular>
+      <v-progress-circular :value="progressStep" size="48">{{ currentStep + 1 }}/{{ stepCount }}</v-progress-circular>
     </v-toolbar>
     <v-card color="primary" dark flat>
       <v-window
+        touchless
         v-model="currentStep"
         :vertical="landscapeMode"
         @change="$emit('change', currentStep)"

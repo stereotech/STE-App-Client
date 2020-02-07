@@ -1,16 +1,16 @@
 <template>
   <v-flex xs12>
-    <fiveCallibrationStepper/>
+    <zeroPointSetupStepper />
   </v-flex>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import fiveCallibrationStepper from '~/components/wizards/5dCallibration/Stepper.vue'
+import zeroPointSetupStepper from '~/components/wizards/zeroPointSetup/Stepper.vue'
 
 @Component({
   components: {
-    fiveCallibrationStepper
+    zeroPointSetupStepper
   }
 })
 export default class extends Vue {

@@ -20,7 +20,7 @@
           <v-list-item-content>
             <v-list-item-title>
               {{ job.name }}
-              <v-chip color="info" v-if="job.isFiveAxis" class="ml-2" outlined label>5D</v-chip>
+              <v-chip color="info" v-if="job.isFiveAxis" class="ml-2" outlined label x-small>5D</v-chip>
             </v-list-item-title>
 
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">

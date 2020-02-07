@@ -6,7 +6,7 @@
           <JogCard dense />
         </v-col>
         <v-col cols="12">
-          <v-btn x-large block depressed color="accent" @click="next(4)">
+          <v-btn x-large block depressed color="accent" @click="next(5)">
             {{ $t("Next") }}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
@@ -39,13 +39,13 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S2' })
+    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S3' })
     //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
-  private step?: number = 3
+  private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/5d_calibration/5d_calibration03.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration2.jpg'
   private description: string = ''
 
 
