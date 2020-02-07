@@ -157,5 +157,16 @@
   "This wizard will help you calibrate five axis module": "Этот мастер поможет вам откалибровать пятиосевой модуль",
   "Place the calibration tool into the five axis module and press Next": "Поместите калибровочный инструмент в пятиосевой модуль и нажмите кнопку Далее",
   "Move nozzle to the nearest tip of the calibration tool and press Next": "Переместите сопло к ближайшему наконечнику калибровочного инструмента и нажмите кнопку Далее",
-  "Calibration complete! Please remove calibration tool": "Калибровка завершена! Пожалуйста, снимите калибровочный инструмент"
+  "Calibration complete! Please remove calibration tool": "Калибровка завершена! Пожалуйста, снимите калибровочный инструмент",
+  "This wizard helps you to setup zero point for proper 5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 5D печати",
+  "Zero point setup": "Установка нулевой точки",
+  "Classic mode (3D)": "Классический режим (3D)",
+  "Coil 5D": "Coil 5D",
+  "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "Этот мастер поможет вам настроить нулевую точку для правильной 3D/5D печати Пожалуйста, выберите режим печати, который вы хотите использовать",
+  "Please place needed base in the 5D Module and press Next": "Пожалуйста, поместите необходимое основание в модуль 5D и нажмите Далее",
+  "Move nozzle to the center of the base and press Next": "Переместите сопло к центру основания и нажмите кнопку Далее",
+  "Name is required": "Имя обязательно",
+  "Enter the diameter of the base and press Next": "Введите диаметр основания и нажмите кнопку Далее",
+  "Setup Complete!": "Настройка Завершена!",
+  "at ": "на  "
 }

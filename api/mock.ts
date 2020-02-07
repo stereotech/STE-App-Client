@@ -18,7 +18,7 @@ const printers = [
         role: 'host'
     },
     {
-        id: 'st-aab',
+        id: 'st-bbb',
         model: 'STE520',
         name: 'ST-BBB',
         isLocal: false,
@@ -181,28 +181,6 @@ const apiMock: ServerMiddleware = function (req, res, next) {
         res.end(JSON.stringify(printJobs))
     }
     else if (req.url === '/printers/') {
-        let printers: PrinterInfo[] = [{
-            id: 'st-aaa',
-            model: 'STE320',
-            name: 'ST-AAA',
-            isLocal: true,
-            address: '192.168.0.100',
-            apiKey: '',
-            octoApiKey: '',
-            role: 'host',
-            isFiveAxis: false
-        },
-        {
-            id: 'st-aaa',
-            model: 'STE520',
-            name: 'ST-BBB',
-            isLocal: false,
-            address: '192.168.0.101',
-            apiKey: '',
-            octoApiKey: '',
-            role: 'client',
-            isFiveAxis: true
-        }]
         res.end(JSON.stringify(printers))
     }
     else if (req.url === '/scanner') {

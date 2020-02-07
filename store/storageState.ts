@@ -35,7 +35,7 @@ export const getters: GetterTree<StorageState, RootState> = {
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
         result.push(
-          ...state.local[0].children.map(
+          ...state.local[0].children.filter(el => el.type === "machinecode").map(
             (element: FileOrFolder) => {
               return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
             }
@@ -46,7 +46,7 @@ export const getters: GetterTree<StorageState, RootState> = {
     state.usb.forEach(element => {
       if (element.children !== undefined) {
         result.push(
-          ...element.children.map(
+          ...element.children.filter(el => el.type === "machinecode").map(
             (value: FileOrFolder) => {
               return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
             }
@@ -63,7 +63,7 @@ export const mutations: MutationTree<StorageState> = {
   setLocal (state: StorageState, localStorage: FileOrFolder) {
     state.local = []
     if (localStorage.children !== undefined) {
-      localStorage.children.sort((a, b) => {
+      localStorage.children = localStorage.children.filter(el => el.type === "machinecode").sort((a, b) => {
         if (a.date !== undefined && b.date !== undefined) {
           return b.date - a.date
         }
@@ -74,6 +74,17 @@ export const mutations: MutationTree<StorageState> = {
   },
 
   setUsbs (state: StorageState, usbs: FileOrFolder[]) {
+    state.usb = []
+    usbs.forEach(usb => {
+      if (usb.children !== undefined) {
+        usb.children = usb.children.filter(el => el.type === "machinecode").sort((a, b) => {
+          if (a.date !== undefined && b.date !== undefined) {
+            return b.date - a.date
+          }
+          return 0
+        })
+      }
+    });
     state.usb = usbs
   },
 

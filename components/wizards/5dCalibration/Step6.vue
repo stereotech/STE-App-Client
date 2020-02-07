@@ -45,7 +45,7 @@ export default class extends Vue {
   private step?: number = 5
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/5d_calibration/5d_calibration03.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration2.jpg'
   private description: string = ''
 
 

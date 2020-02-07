@@ -19,7 +19,7 @@
           <v-list-item-content>
             <v-list-item-title class="subheading">
               {{ doneJob.name }}
-              <v-chip color="info" v-if="doneJob.isFiveAxis" class="ml-2" outlined label>5D</v-chip>
+              <v-chip color="info" v-if="doneJob.isFiveAxis" class="ml-2" outlined label x-small>5D</v-chip>
             </v-list-item-title>
             <v-list-item-subtitle v-if="doneJob.state === 'Revert'">
               <v-progress-linear :indeterminate="true" />
