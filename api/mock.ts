@@ -107,6 +107,99 @@ const connectedMethod = 'WIFI'
 const localStorage = {
     children: [
         {
+            display: 'folder1',
+            hash:'ab4dfcda52ce69a64dabc21cfb2417013b4f68e1',
+            name: 'folder1',
+            size:'20',
+            path:'/Storage/folder1',
+            type: 'folder',
+            typePath: 'folder',
+            refs:{},
+            children:[
+                {
+                    display: 'folder1-1',
+                    hash:'cb8ffcda11ad69a64dabc21cfb2417013b4f68e1',
+                    name: 'folder1-1',
+                    size: '15',
+                    path:'/Storage/folder1/folder1-1',
+                    type: 'folder',
+                    typePath:'folder',
+                    refs:{}                    
+                },
+                {
+                    display: 'folder1-2',
+                    hash:'ad9efcda11ad69a64dabc21cfb8444013b4f68e1',
+                    name: 'folder1-2',
+                    size: '5',
+                    path:'/Storage/folder1/folder1-2',
+                    type: 'folder',
+                    typePath:'folder',
+                    refs:{},
+                    children:[{
+                        date: Date.now(),
+                        display: 'Internal_3D.gcode',
+                        hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                        name: 'Internal_3D.gcode',
+                        size: 15315451,
+                        origin: 'st_aaa',
+                        gcodeAnalysis: {
+                            isFiveAxis: false
+                        },
+                        path: '/Storage/folder1/folder1-2/Internal_3D.gcode',
+                        type: 'machinecode',
+                        typePath: ['machinecode', 'gcode'],
+                        refs: {
+                            download: 'localhost:3000/internal3D.gcode',
+                        }
+                    }]
+                }
+            ]
+        },
+        {
+            display: 'folder2',
+            hash:'ab4deaea52ce54a64dcde43cfb9650013b4f68c5',
+            name: 'folder2',
+            size: '350',
+            path: '/Storage/folder2',
+            type: 'folder',
+            typePath: 'folder',
+            refs:{},
+            children:[{
+                date: Date.now(),
+                display: '1_3D.gcode',
+                hash: 'bc4dfcda52ce54b84dcde43cfb2417013b4f68e1',
+                name: '1_3D.gcode',
+                size: 145,
+                origin: 'st_aaa',
+                gcodeAnalysis: {
+                    isFiveAxis: false
+                },
+                path: '/Storage/folder2/1_3D.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/13D.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: '2_3D.gcode',
+                hash: 'ef4dfcda52ad54a64dcde43cfb2417013b4f68e1',
+                name: '2_3D.gcode',
+                size: 36,
+                origin: 'st_aaa',
+                gcodeAnalysis: {
+                    isFiveAxis: false
+                },
+                path: '/Storage/folder2/2_3D.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/2.gcode',
+                }
+            }]
+        },
+        {
             date: Date.now(),
             display: 'File_3D.gcode',
             hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',

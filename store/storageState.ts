@@ -2,6 +2,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
 import { PrinterInfo } from '~/types/printer'
+import { isJSXSpreadChild } from '@babel/types';
 
 const localStorageEndpoint = 'storage/local'
 const usbStorageEndpoint = 'storage/usb'
@@ -17,8 +18,23 @@ export const state = (): StorageState => ({
 })
 
 export const getters: GetterTree<StorageState, RootState> = {
-  localStorage (state: StorageState): FileOrFolder {
-    return state.local[0]
+  localStorage (state: StorageState) {
+    return (path:string[]): FileOrFolder =>{
+      let currentFolder = state.local[0]
+      path.forEach(el =>{
+        if (currentFolder.children !== undefined){
+          let subfolder = currentFolder.children.filter(f => f.type === "folder").find(child => child.name === el)
+          if (subfolder==undefined){
+            //break
+            return currentFolder
+          }
+          else{
+            currentFolder=subfolder
+          }
+        }
+      })
+      return currentFolder
+    }
   },
 
   usbStorage (state: StorageState) {
@@ -29,13 +45,16 @@ export const getters: GetterTree<StorageState, RootState> = {
     return state.usb
   },
 
+  // avaliableFolders(state: StorageState):{name:string, uri: string}[]{
+  //   return {}
+  // },
   avaliableFiles (state: StorageState): { name: string, uri: string, isFiveAxis?: boolean }[] {
     const result: { name: string, uri: string, isFiveAxis?: boolean }[] = []
     // tslint:disable-next-line: strict-type-predicates
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
         result.push(
-          ...state.local[0].children.filter(el => el.type === "machinecode").map(
+          ...state.local[0].children.map(
             (element: FileOrFolder) => {
               return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
             }
@@ -63,7 +82,7 @@ export const mutations: MutationTree<StorageState> = {
   setLocal (state: StorageState, localStorage: FileOrFolder) {
     state.local = []
     if (localStorage.children !== undefined) {
-      localStorage.children = localStorage.children.filter(el => el.type === "machinecode").sort((a, b) => {
+      localStorage.children = localStorage.children.sort((a, b) => {
         if (a.date !== undefined && b.date !== undefined) {
           return b.date - a.date
         }
@@ -151,4 +170,8 @@ export const actions: ActionTree<StorageState, RootState> = {
     });
     await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
+
+  // async createFolder({commit}, folderPath: string){
+  //   await 
+  // }
 }
