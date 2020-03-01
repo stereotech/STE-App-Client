@@ -24,7 +24,7 @@ export const getters: GetterTree<StorageState, RootState> = {
       path.forEach(el =>{
         if (currentFolder.children !== undefined){
           let subfolder = currentFolder.children.filter(f => f.type === "folder").find(child => child.name === el)
-          if (subfolder==undefined){
+          if (subfolder==undefined||subfolder.children==undefined){
             //break
             return currentFolder
           }
@@ -32,6 +32,9 @@ export const getters: GetterTree<StorageState, RootState> = {
             currentFolder=subfolder
           }
         }
+        // else{
+
+        // }
       })
       return currentFolder
     }

@@ -6,6 +6,9 @@
           <span class="headline font-weight-light">{{ local ? $t('Storage') : $t('USB') }}</span>
           <span v-if="name" class="headline font-weight-light">&nbsp;{{$t('at ')}} {{ display }}</span>
         </v-card-title>
+        <v-card-subtitle>
+          
+        </v-card-subtitle>
         <v-spacer />
         <v-spacer></v-spacer>
         <v-btn outlined icon color="primary" v-if="local" @click="isOpen=true">
@@ -237,7 +240,9 @@ export default class extends Vue {
       return this.path
     }
     else{
-      return this.path.splice(this.path.length-1,1)
+      this.path.splice(this.path.length-2,2)
+      //this.btnUpVisibility()
+      return this.path
     }
   }
 

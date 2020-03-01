@@ -124,7 +124,8 @@ const localStorage = {
                     path:'/Storage/folder1/folder1-1',
                     type: 'folder',
                     typePath:'folder',
-                    refs:{}                    
+                    refs:{},
+                    children:[]                    
                 },
                 {
                     display: 'folder1-2',
