@@ -109,7 +109,7 @@ export const mutations: MutationTree<StorageState> = {
     });
     state.usb = usbs
   },
-
+  
   deleteLocalFile (state: StorageState, file: FileOrFolder) {
     if (state.local[0].children !== undefined) {
       const index = state.local[0].children.indexOf(file)
@@ -172,9 +172,10 @@ export const actions: ActionTree<StorageState, RootState> = {
       data.append("files", file, file.name)
     });
     await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
-  }
+  },
 
-  // async createFolder({commit}, folderPath: string){
-  //   await 
-  // }
+  async addFolder({commit}, payload:{name: string, path: string}){
+
+    await this.$axios.$post(this.state.apiUrl+localStorageEndpoint, payload)
+  }
 }

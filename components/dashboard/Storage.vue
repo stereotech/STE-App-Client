@@ -7,7 +7,7 @@
           <span v-if="name" class="headline font-weight-light">&nbsp;{{$t('at ')}} {{ display }}</span>
         </v-card-title>
         <v-card-subtitle>
-          
+          {{$t(this.path.join(''))}}
         </v-card-subtitle>
         <v-spacer />
         <v-spacer></v-spacer>
@@ -34,7 +34,7 @@
           <v-form v-model="valid">
             <BottomInput >
               <v-text-field
-
+                  v-model="folderName"
                   :label="$tc('Folder name')"
                   filled
                   clearable
@@ -43,7 +43,7 @@
                   @click="nameKeyboard = true"
               />
             </BottomInput>
-            <v-btn :disabled="!valid">
+            <v-btn :disabled="!valid" @click="createFolder()">
               Create
             </v-btn>
             <v-btn>
@@ -173,6 +173,7 @@ export default class extends Vue {
 
   @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
+  @storage.Action addFolder: any
 
   get isWeb (): boolean {
     return process.env.NUXT_ENV_PLATFORM == 'WEB'
@@ -187,10 +188,17 @@ export default class extends Vue {
   private isOpen: boolean = false
   private nameWasChanged: boolean = false
   private valid: boolean = false
+  private folderName:string = ""
   private files: File[] = []
   private path: string[] = []
   //
-
+  // private addedFolder: FileOrFolder = {
+  //   name: '',
+  //   display: '',
+  //   origin: '',
+  //   path: '',
+  //   size: 0
+  // }
   private folderNameRules = [
     v=>!!v || 'Folder name is required!'
   ]
@@ -253,6 +261,18 @@ export default class extends Vue {
     else{
       this.isVisible=true
     }
+  }
+  private  createFolder(){
+
+    this.$emit('input', false)
+    let data = {
+      name: this.folderName,
+      path: this.path.join('')
+    }
+    this.overlay = true
+    this.addFolder(data)
+    this.overlay =false
+    this.isOpen=false
   }
 
 }
