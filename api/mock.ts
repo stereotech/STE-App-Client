@@ -19,7 +19,7 @@ const printers = [
     },
     {
         id: 'st-bbb',
-        model: 'STE520',
+        model: 'SGE520',
         name: 'ST-BBB',
         isLocal: false,
         isFiveAxis: true,
@@ -41,6 +41,18 @@ const printJobs: PrintJob[] = [
         successful: true,
         lastPrintTime: Date.now(),
         state: 'Queued',
+        printers: []
+    },
+    {
+        id: 2,
+        name: 'job1',
+        description: '',
+        creationTime: Date.now(),
+        fileUri: 'file.gcode',
+        isFiveAxis: true,
+        successful: true,
+        lastPrintTime: Date.now(),
+        state: 'Completed',
         printers: []
     },
     {
@@ -97,10 +109,12 @@ const networks = [
         id: 'network_8484443',
         name: 'Wifi 2',
         security: true,
-        state: 'ready',
+        state: 'idle',
         strength: 50
     }
 ]
+
+const updateVersion = '1.0.0'
 
 const connectedMethod = 'WIFI'
 
@@ -201,6 +215,9 @@ const apiMock: ServerMiddleware = function (req, res, next) {
     }
     else if (req.url === '/network/wifi') {
         res.end(JSON.stringify(networks))
+    }
+    else if (req.url === '/update') {
+        res.end(updateVersion)
     } else {
         next()
     }

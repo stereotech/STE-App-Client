@@ -63,6 +63,7 @@ export default class PrinterCardTemps extends Vue {
   @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
 
   @Prop({ default: false, type: Boolean }) chamber?: boolean
+  @Prop({ default: false, type: Boolean }) glaze?: boolean
   @Prop({ default: 0, type: Number }) chamberTemp?: number
   @Prop({ default: 0, type: Number }) chamberTarget?: number
 

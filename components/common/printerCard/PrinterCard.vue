@@ -20,6 +20,7 @@
             :maintenance="isMaintenance"
             :idle="isIdle"
             :isFiveAxis="computedPrinter.isFiveAxis"
+            :isGlaze="computedPrinter.isGlaze"
             :printing="isPrinting"
             :done="isDone"
             :failed="isFailed"
@@ -27,7 +28,12 @@
             :loading="isLoading"
             :not-avaliable="!isAvaliable"
           />
-          <PrinterCardTemps v-if="isAvaliable" :id="id" :offline="isOffline" />
+          <PrinterCardTemps
+            v-if="isAvaliable"
+            :id="id"
+            :offline="isOffline"
+            :glaze="computedPrinter.isGlaze"
+          />
           <PrinterCardActions
             :id="id"
             :job-name="computedStatus ? computedStatus.job.file.display : ''"

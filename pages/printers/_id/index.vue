@@ -11,6 +11,7 @@
         <WizardsPanel :id="$route.params.id" :printerType="printerType" />
         <ManualControlPanel
           :printing="isPrinting"
+          :glaze="isGlaze"
           :id="$route.params.id"
           :isFiveAxis="printerType==1"
         />
@@ -73,6 +74,14 @@ export default class PrinterPage extends Vue {
     }
     return false
   }
+
+  get isGlaze (): boolean {
+    if (this.printer(this.$route.params.id) !== undefined) {
+      return this.printer(this.$route.params.id)!.isGlaze!
+    }
+    return false
+  }
+
   get isMaintenance (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
       return this.status(this.$route.params.id)!.state.text === 'Maintenance'
