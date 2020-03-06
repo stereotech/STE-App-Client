@@ -12,13 +12,15 @@
             :label="$tc('E1')"
             thumb-label
             min="0"
-            max="300"
-            step="5"
+            :max="glaze ? 60 : 300"
+            :step="glaze ? 1 : 5"
+            :color="glaze ? 'brown' : 'primary'"
+            :track-color="glaze ? 'brown lighten-4' : ''"
             @change="changeE1"
           />
         </v-col>
       </v-row>
-      <v-row dense>
+      <v-row dense v-if="!glaze">
         <v-col cols="2">
           <v-switch v-model="e2TargetSet" color="error" hide-details @change="setE2" />
         </v-col>
@@ -34,7 +36,7 @@
           />
         </v-col>
       </v-row>
-      <v-row dense v-if="chamberHeater">
+      <v-row dense v-if="chamberHeater && !glaze">
         <v-col cols="2">
           <v-switch v-model="chamberTargetSet" color="error" hide-details @change="setChamber" />
         </v-col>
@@ -50,7 +52,7 @@
           />
         </v-col>
       </v-row>
-      <v-row dense v-if="bedHeater">
+      <v-row dense v-if="bedHeater && !glaze">
         <v-col cols="2">
           <v-switch v-model="bedTargetSet" color="error" hide-details @change="setBed" />
         </v-col>
@@ -93,6 +95,7 @@ const printers = namespace('printersState')
 @Component
 export default class TemperatureFanCard extends Vue {
   @Prop({ default: false, type: Boolean }) printing!: boolean
+  @Prop({ default: false, type: Boolean }) glaze!: boolean
   @Prop({ default: false, type: Boolean }) bedHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberFan!: boolean

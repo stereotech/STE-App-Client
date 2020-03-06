@@ -16,6 +16,7 @@
             {{ name }}
             <v-chip color="primary" v-if="local" outlined label>{{$t("Host")}}</v-chip>
             <v-chip color="info" v-if="isFiveAxis" outlined label>{{$t("5D")}}</v-chip>
+            <v-chip color="brown" v-if="isGlaze" outlined label>{{$t("Glaze")}}</v-chip>
           </div>
 
           <div class="caption">{{ model }}</div>
@@ -58,6 +59,7 @@ export default class PrinterCardInfo extends Vue {
   @Prop({ default: '', type: String }) name!: number
   @Prop({ default: false, type: Boolean }) local!: boolean
   @Prop({ default: false, type: Boolean }) isFiveAxis!: boolean
+  @Prop({ default: false, type: Boolean }) isGlaze!: boolean
   @Prop({ default: false, type: Boolean }) printing!: boolean
   @Prop({ default: false, type: Boolean }) paused!: boolean
   @Prop({ default: true, type: Boolean }) maintenance!: boolean

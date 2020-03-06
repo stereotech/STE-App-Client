@@ -11,6 +11,8 @@ export interface PrinterInfo {
   apiKey: string
   octoApiKey: string
   address: string
+  //Additional properties
+  isGlaze?: boolean
 }
 
 export interface TemperatureData {
