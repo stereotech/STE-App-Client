@@ -33,6 +33,7 @@
             :id="id"
             :offline="isOffline"
             :glaze="computedPrinter.isGlaze"
+            :fiveAxis="computedPrinter.isFiveAxis"
           />
           <PrinterCardActions
             :id="id"

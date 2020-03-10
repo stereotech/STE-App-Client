@@ -7,13 +7,7 @@
       <v-container fluid>
         <v-row dense>
           <template v-for="wizard in data">
-            <v-col
-              :key="wizard.id"
-              cols="6"
-              sm="3"
-              lg="2"
-              v-if="wizard.type == printerType || wizard.type == 2"
-            >
+            <v-col :key="wizard.id" cols="6" sm="3" lg="2" v-if="validWizard(wizard)">
               <WizardCard
                 :name="wizard.translatedName"
                 :image="wizard.image"
@@ -44,6 +38,7 @@ const printers = namespace('printersState')
 export default class WizardsPanel extends Vue {
 
   @Prop({ default: '', type: String }) id!: string
+  @Prop({ default: false, type: Boolean }) glaze!: boolean
   @Prop({ default: 1, type: Number }) printerType!: Number
   @printers.Getter certainTypePrinters!: PrinterInfo[]
   private data: {
@@ -103,6 +98,13 @@ export default class WizardsPanel extends Vue {
     this.data.forEach(element => {
       element.translatedName = this.$tc(`${element.name}`)
     })
+  }
+
+  validWizard (wizard: any): boolean {
+    if (wizard.type == this.printerType || wizard.type == 2)
+      if (wizard.id != 4 && !this.glaze)
+        return true
+    return false
   }
 
 }
