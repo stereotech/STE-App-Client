@@ -84,7 +84,7 @@
       <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="closeDialog(undefined)">
-            <v-icon>mdi-close</v-icon>
+            <v-icon>mdi-close</v-icon>           
           </v-btn>
           <v-toolbar-title v-if="editMode">{{ $t("Edit job") }}</v-toolbar-title>
           <v-toolbar-title v-else>{{ $t("Create job") }}</v-toolbar-title>

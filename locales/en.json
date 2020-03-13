@@ -168,5 +168,9 @@
     "Name is required": "Name is required",
     "Enter the diameter of the base and press Next": "Enter the diameter of the base and press Next",
     "Setup Complete!": "Setup Complete!",
-    "at ": "at "
+    "at ": "at ",
+    "Folder name": "Folder name",
+    "Create": "Create",
+    "Input folder name": "Input folder name",
+    "USB": "USB"
 }
