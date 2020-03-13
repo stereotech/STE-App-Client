@@ -168,5 +168,9 @@
   "Name is required": "Имя обязательно",
   "Enter the diameter of the base and press Next": "Введите диаметр основания и нажмите кнопку Далее",
   "Setup Complete!": "Настройка Завершена!",
-  "at ": "на  "
+  "at ": "на  ",
+  "Folder name": "Имя папки",
+  "Create": "Создать",
+  "Input folder name": "Введите имя папки",
+  "USB": "USB"
 }

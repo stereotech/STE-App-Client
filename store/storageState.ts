@@ -19,17 +19,17 @@ export const state = (): StorageState => ({
 
 export const getters: GetterTree<StorageState, RootState> = {
   localStorage (state: StorageState) {
-    return (path:string[]): FileOrFolder =>{
+    return (path: string[]): FileOrFolder => {
       let currentFolder = state.local[0]
-      path.forEach(el =>{
-        if (currentFolder.children !== undefined){
+      path.forEach(el => {
+        if (currentFolder.children !== undefined) {
           let subfolder = currentFolder.children.filter(f => f.type === "folder").find(child => child.name === el)
-          if (subfolder==undefined||subfolder.children==undefined){
+          if (subfolder == undefined || subfolder.children == undefined) {
             //break
             return currentFolder
           }
-          else{
-            currentFolder=subfolder
+          else {
+            currentFolder = subfolder
           }
         }
         // else{
@@ -53,27 +53,43 @@ export const getters: GetterTree<StorageState, RootState> = {
   // },
   avaliableFiles (state: StorageState): { name: string, uri: string, isFiveAxis?: boolean }[] {
     const result: { name: string, uri: string, isFiveAxis?: boolean }[] = []
+
+    const flatten = (prefix: string, routes: FileOrFolder[]): { name: string, uri: string, isFiveAxis?: boolean }[] => {
+      const ret: { name: string, uri: string, isFiveAxis?: boolean }[] = []
+      routes.forEach(route => {
+        if (route.children && route.children.length) {
+          ret.push(...flatten(prefix + route.name + '/', route.children))
+        } else {
+          ret.push({ name: prefix + route.display, uri: route.refs !== undefined ? route.refs.download : '', isFiveAxis: route.gcodeAnalysis !== undefined ? route.gcodeAnalysis.isFiveAxis : undefined })
+        }
+      })
+      return ret
+    }
     // tslint:disable-next-line: strict-type-predicates
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
-        result.push(
-          ...state.local[0].children.map(
-            (element: FileOrFolder) => {
-              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
-            }
-          )
-        )
+        result.push(...flatten('Storage/', state.local[0].children))
+
+        //result.push(
+        //  ...state.local[0].children.map(
+        //    (element: FileOrFolder) => {
+        //      return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
+        //    }
+        //  )
+        //)
       }
     }
     state.usb.forEach(element => {
       if (element.children !== undefined) {
-        result.push(
-          ...element.children.filter(el => el.type === "machinecode").map(
-            (value: FileOrFolder) => {
-              return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
-            }
-          )
-        )
+        result.push(...flatten('USB/' + element.origin.toUpperCase(), element.children))
+
+        //result.push(
+        //  ...element.children.filter(el => el.type === "machinecode").map(
+        //    (value: FileOrFolder) => {
+        //      return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
+        //    }
+        //  )
+        //)
       }
     })
     return result
@@ -109,7 +125,7 @@ export const mutations: MutationTree<StorageState> = {
     });
     state.usb = usbs
   },
-  
+
   deleteLocalFile (state: StorageState, file: FileOrFolder) {
     if (state.local[0].children !== undefined) {
       const index = state.local[0].children.indexOf(file)
@@ -174,8 +190,8 @@ export const actions: ActionTree<StorageState, RootState> = {
     await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
   },
 
-  async addFolder({commit}, payload:{name: string, path: string}){
+  async addFolder ({ commit }, payload: { name: string, path: string }) {
 
-    await this.$axios.$post(this.state.apiUrl+localStorageEndpoint, payload)
+    await this.$axios.$post(this.state.apiUrl + localStorageEndpoint, payload)
   }
 }

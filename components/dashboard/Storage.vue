@@ -5,35 +5,36 @@
         <v-card-title>
           <span class="headline font-weight-light">{{ local ? $t('Storage') : $t('USB') }}</span>
           <span v-if="name" class="headline font-weight-light">&nbsp;{{$t('at ')}} {{ display }}</span>
+          <span class="headline font-weight-light">{{ this.path.join('') }}</span>
         </v-card-title>
-        <v-card-subtitle>
-          {{$t(this.path.join(''))}}
-        </v-card-subtitle>
         <v-spacer />
-        <v-spacer></v-spacer>
-        <v-btn outlined icon color="primary" v-if="local" @click="isOpen=true">
+        <v-btn small fab outlined color="primary" v-if="local" @click="isOpen=true">
           <v-icon>mdi-folder-plus</v-icon>
         </v-btn>
-        <v-btn outlined icon color="primary" v-if="isVisible && local" @click="deleteLastFolder(), btnUpVisibility()">
+        <v-btn
+          class="ml-2"
+          small
+          fab
+          outlined
+          color="primary"
+          v-if="isVisible && local"
+          @click="deleteLastFolder(), btnUpVisibility()"
+        >
           <v-icon>mdi-arrow-up</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-dialog
-        v-model="isOpen"
-        max-width="425"
-        persistent
-        :fullscreen="$vuetify.breakpoint.smAndDown"
-      >
+      <v-dialog v-model="isOpen" max-width="425" persistent>
         <v-card>
           <v-toolbar dark color="primary">
             <v-btn icon dark @click="closeDialog(undefined)">
               <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title>Input folder name</v-toolbar-title> 
+            <v-toolbar-title>{{ $t('Input folder name')}}</v-toolbar-title>
           </v-toolbar>
-          <v-form v-model="valid">
-            <BottomInput >
-              <v-text-field
+          <v-card-text>
+            <v-form v-model="valid">
+              <BottomInput>
+                <v-text-field
                   v-model="folderName"
                   :label="$tc('Folder name')"
                   filled
@@ -41,15 +42,16 @@
                   :rules="folderNameRules"
                   @input="nameWasChanged = true"
                   @click="nameKeyboard = true"
-              />
-            </BottomInput>
-            <v-btn :disabled="!valid" @click="createFolder()">
-              Create
-            </v-btn>
-            <v-btn>
-              Cancel
-            </v-btn>
-          </v-form>
+                />
+              </BottomInput>
+              <v-btn
+                text
+                color="primary"
+                :disabled="!valid"
+                @click="createFolder()"
+              >{{ $t('Create')}}</v-btn>
+            </v-form>
+          </v-card-text>
         </v-card>
       </v-dialog>
       <v-list
@@ -58,53 +60,57 @@
         :style="styleObj"
         class="overflow-y-auto"
       >
-        <v-list-item v-for="(file, index) in dataStorage.children" :key="index">
-            <v-list-item-icon v-if="file.type=='folder'">
-              <v-icon>mdi-folder</v-icon>
-            </v-list-item-icon>
-          <v-list-item-content :disabled="file.type=='machinecode'||file.type=='gcode'"
+        <template v-for="(file, index) in dataStorage.children">
+          <v-list-item
+            :key="index"
+            v-if="file.type == 'folder'"
             @click="addFolderToPath(file.name), btnUpVisibility()"
           >
+            <v-list-item-icon>
+              <v-icon>mdi-folder</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
+              <v-list-item-subtitle class="body-1">{{ file.size | prettyBytes(1) }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-else :key="index">
+            <v-list-item-content>
+              <v-list-item-title class="subheading">
+                {{ file.display }}
+                <v-chip
+                  color="info"
+                  v-if="file.gcodeAnalysis && file.gcodeAnalysis.isFiveAxis"
+                  class="ml-2"
+                  outlined
+                  label
+                  x-small
+                >5D</v-chip>
+              </v-list-item-title>
 
-            <v-list-item-title class="subheading">
-              {{ file.display }}
-              <v-chip
-                color="info"
-                v-if="file.gcodeAnalysis && file.gcodeAnalysis.isFiveAxis"
-                class="ml-2"
-                outlined
-                label
-                x-small
-              >5D</v-chip>
-            </v-list-item-title>
-
-            <v-list-item-subtitle
-              v-if="file.type=='machinecode'||file.type=='gcode'"
-              class="body-1"
-            >{{$t("Uploaded ")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
-            <v-list-item-subtitle
-              v-else
-              class="body-1"
-            >{{$t(file.size)}} {{$t("Kb")}}</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-menu>
-              <template v-slot:activator="{ on }">
-                <v-btn icon v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item @click="deleteFile(file)">
-                  <v-list-item-action>
-                    <v-icon>mdi-delete</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-list-item-action>
-        </v-list-item>
+              <v-list-item-subtitle
+                class="body-1"
+              >{{$t("Uploaded ")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-menu>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="deleteFile(file)">
+                    <v-list-item-action>
+                      <v-icon>mdi-delete</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list-item-action>
+          </v-list-item>
+        </template>
       </v-list>
       <v-container v-else>
         <v-row dense align="center" justify="center">
@@ -161,7 +167,11 @@ import BottomInput from '~/components/common/BottomInput.vue'
 
 const storage = namespace('storageState')
 
-@Component
+@Component({
+  components: {
+    BottomInput
+  }
+})
 export default class extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
@@ -188,7 +198,7 @@ export default class extends Vue {
   private isOpen: boolean = false
   private nameWasChanged: boolean = false
   private valid: boolean = false
-  private folderName:string = ""
+  private folderName: string = ""
   private files: File[] = []
   private path: string[] = []
   //
@@ -200,7 +210,7 @@ export default class extends Vue {
   //   size: 0
   // }
   private folderNameRules = [
-    v=>!!v || 'Folder name is required!'
+    v => !!v || 'Folder name is required!'
   ]
   showMenu: boolean = false
   menuX: number = 0
@@ -222,7 +232,7 @@ export default class extends Vue {
     this.overlay = false
   }
 
-  private async closeDialog(add: boolean | undefined){
+  private async closeDialog (add: boolean | undefined) {
     this.isOpen = false
   }
   get dataStorage () {
@@ -233,36 +243,36 @@ export default class extends Vue {
     }
   }
 
-  private addFolderToPath(name: string | undefined){
-    if(this.path===undefined){
+  private addFolderToPath (name: string | undefined) {
+    if (this.path === undefined) {
       return this.path
     }
-    else{
+    else {
       return this.path.push("/", name as string)
     }
 
   }
 
-  private deleteLastFolder(){
-    if(this.path==undefined){
+  private deleteLastFolder () {
+    if (this.path == undefined) {
       return this.path
     }
-    else{
-      this.path.splice(this.path.length-2,2)
+    else {
+      this.path.splice(this.path.length - 2, 2)
       //this.btnUpVisibility()
       return this.path
     }
   }
 
-  private btnUpVisibility(){
-    if(this.path.length==0){
-      this.isVisible=false 
+  private btnUpVisibility () {
+    if (this.path.length == 0) {
+      this.isVisible = false
     }
-    else{
-      this.isVisible=true
+    else {
+      this.isVisible = true
     }
   }
-  private  createFolder(){
+  private createFolder () {
 
     this.$emit('input', false)
     let data = {
@@ -271,8 +281,9 @@ export default class extends Vue {
     }
     this.overlay = true
     this.addFolder(data)
-    this.overlay =false
-    this.isOpen=false
+    this.overlay = false
+    this.isOpen = false
+    this.folderName = ''
   }
 
 }
