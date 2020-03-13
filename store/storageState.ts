@@ -69,27 +69,11 @@ export const getters: GetterTree<StorageState, RootState> = {
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
         result.push(...flatten('Storage/', state.local[0].children))
-
-        //result.push(
-        //  ...state.local[0].children.map(
-        //    (element: FileOrFolder) => {
-        //      return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
-        //    }
-        //  )
-        //)
       }
     }
     state.usb.forEach(element => {
       if (element.children !== undefined) {
         result.push(...flatten('USB/' + element.origin.toUpperCase(), element.children))
-
-        //result.push(
-        //  ...element.children.filter(el => el.type === "machinecode").map(
-        //    (value: FileOrFolder) => {
-        //      return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
-        //    }
-        //  )
-        //)
       }
     })
     return result
@@ -192,6 +176,6 @@ export const actions: ActionTree<StorageState, RootState> = {
 
   async addFolder ({ commit }, payload: { name: string, path: string }) {
 
-    await this.$axios.$post(this.state.apiUrl + localStorageEndpoint, payload)
+    await this.$axios.$put(this.state.apiUrl + localStorageEndpoint, payload)
   }
 }
