@@ -2,11 +2,7 @@
   <v-col xl="4" lg="6" md="6" sm="12" cols="12">
     <v-card v-if="dataStorage" transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat color="secondary">
-        <v-card-title>
-          <span class="headline font-weight-light">{{ local ? $t('Storage') : $t('USB') }}</span>
-          <span v-if="name" class="headline font-weight-light">&nbsp;{{$t('at ')}} {{ display }}</span>
-          <span class="headline font-weight-light">{{ this.path.join('') }}</span>
-        </v-card-title>
+        <v-card-title class="headline font-weight-light d-inline-block text-truncate">{{cardTitle}}</v-card-title>
         <v-spacer />
         <v-btn small fab outlined color="primary" v-if="local" @click="isOpen=true">
           <v-icon>mdi-folder-plus</v-icon>
@@ -73,6 +69,23 @@
               <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
               <v-list-item-subtitle class="body-1">{{ file.size | prettyBytes(1) }}</v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-action>
+              <v-menu>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="deleteFile(file)">
+                    <v-list-item-action>
+                      <v-icon>mdi-delete</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list-item-action>
           </v-list-item>
           <v-list-item v-else :key="index">
             <v-list-item-content>
@@ -201,6 +214,21 @@ export default class extends Vue {
   private folderName: string = ""
   private files: File[] = []
   private path: string[] = []
+
+  get viewPath (): string {
+    if (this.path.length > 2) {
+      return '/../' + this.path[this.path.length - 1]
+    } else {
+      return this.path.join('')
+    }
+  }
+
+  get cardTitle () {
+    let prefix = this.local ? this.$tc('Storage') : this.$tc('USB')
+    prefix += this.name ? ` ${this.$tc('at ')} ${this.display}` : ''
+    prefix += this.viewPath
+    return prefix
+  }
   //
   // private addedFolder: FileOrFolder = {
   //   name: '',
