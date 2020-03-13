@@ -47,6 +47,6 @@ export interface FileOrFolder {
   path: string
   refs?: Refs
   size: number
-  type?: string // USB or local
+  type?: string // file or folder
   typePath?: string[]
 }

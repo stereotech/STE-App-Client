@@ -2,6 +2,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { FileOrFolder, Refs } from '~/types/fileOrFolder'
 import { RootState } from '.'
 import { PrinterInfo } from '~/types/printer'
+import { isJSXSpreadChild } from '@babel/types';
 
 const localStorageEndpoint = 'storage/local'
 const usbStorageEndpoint = 'storage/usb'
@@ -17,8 +18,26 @@ export const state = (): StorageState => ({
 })
 
 export const getters: GetterTree<StorageState, RootState> = {
-  localStorage (state: StorageState): FileOrFolder {
-    return state.local[0]
+  localStorage (state: StorageState) {
+    return (path: string[]): FileOrFolder => {
+      let currentFolder = state.local[0]
+      path.forEach(el => {
+        if (currentFolder.children !== undefined) {
+          let subfolder = currentFolder.children.filter(f => f.type === "folder").find(child => child.name === el)
+          if (subfolder == undefined || subfolder.children == undefined) {
+            //break
+            return currentFolder
+          }
+          else {
+            currentFolder = subfolder
+          }
+        }
+        // else{
+
+        // }
+      })
+      return currentFolder
+    }
   },
 
   usbStorage (state: StorageState) {
@@ -29,29 +48,32 @@ export const getters: GetterTree<StorageState, RootState> = {
     return state.usb
   },
 
+  // avaliableFolders(state: StorageState):{name:string, uri: string}[]{
+  //   return {}
+  // },
   avaliableFiles (state: StorageState): { name: string, uri: string, isFiveAxis?: boolean }[] {
     const result: { name: string, uri: string, isFiveAxis?: boolean }[] = []
+
+    const flatten = (prefix: string, routes: FileOrFolder[]): { name: string, uri: string, isFiveAxis?: boolean }[] => {
+      const ret: { name: string, uri: string, isFiveAxis?: boolean }[] = []
+      routes.forEach(route => {
+        if (route.children && route.children.length) {
+          ret.push(...flatten(prefix + route.name + '/', route.children))
+        } else {
+          ret.push({ name: prefix + route.display, uri: route.refs !== undefined ? route.refs.download : '', isFiveAxis: route.gcodeAnalysis !== undefined ? route.gcodeAnalysis.isFiveAxis : undefined })
+        }
+      })
+      return ret
+    }
     // tslint:disable-next-line: strict-type-predicates
     if (state.local[0] !== undefined) {
       if (state.local[0].children !== undefined) {
-        result.push(
-          ...state.local[0].children.filter(el => el.type === "machinecode").map(
-            (element: FileOrFolder) => {
-              return { name: 'Storage/' + element.display, uri: element.refs !== undefined ? element.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
-            }
-          )
-        )
+        result.push(...flatten('Storage/', state.local[0].children))
       }
     }
     state.usb.forEach(element => {
       if (element.children !== undefined) {
-        result.push(
-          ...element.children.filter(el => el.type === "machinecode").map(
-            (value: FileOrFolder) => {
-              return { name: 'USB/' + element.origin.toUpperCase() + '/' + value.display, uri: value.refs !== undefined ? value.refs.download : '', isFiveAxis: element.gcodeAnalysis !== undefined ? element.gcodeAnalysis.isFiveAxis : undefined }
-            }
-          )
-        )
+        result.push(...flatten('USB/' + element.origin.toUpperCase(), element.children))
       }
     })
     return result
@@ -63,7 +85,7 @@ export const mutations: MutationTree<StorageState> = {
   setLocal (state: StorageState, localStorage: FileOrFolder) {
     state.local = []
     if (localStorage.children !== undefined) {
-      localStorage.children = localStorage.children.filter(el => el.type === "machinecode").sort((a, b) => {
+      localStorage.children = localStorage.children.sort((a, b) => {
         if (a.date !== undefined && b.date !== undefined) {
           return b.date - a.date
         }
@@ -150,5 +172,10 @@ export const actions: ActionTree<StorageState, RootState> = {
       data.append("files", file, file.name)
     });
     await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+  },
+
+  async addFolder ({ commit }, payload: { name: string, path: string }) {
+
+    await this.$axios.$put(this.state.apiUrl + localStorageEndpoint, payload)
   }
 }
