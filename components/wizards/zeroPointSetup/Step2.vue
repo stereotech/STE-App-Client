@@ -40,11 +40,11 @@ export default class extends Vue {
 
   async performStep () {
     await this.customCommand({ id: this.$route.params.id, command: 'G28' })
-
     if (this.additionalData.printingMode == PrintingMode.Classic) {
+      await this.customCommand({ id: this.$route.params.id, command: 'G10 L2 P2 X0 Y0 Z0' })
       await this.customCommand({ id: this.$route.params.id, command: 'G0 Z100 A0' })
     } else if (this.additionalData.printingMode == PrintingMode.Coil5D) {
-
+      await this.customCommand({ id: this.$route.params.id, command: 'G10 L2 P3 X0 Y0 Z0' })
       await this.customCommand({ id: this.$route.params.id, command: 'G0 Z100 A90' })
     }
   }

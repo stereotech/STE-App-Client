@@ -118,10 +118,10 @@ export default class TemperatureFanCard extends Vue {
   private chamberTargetSet: boolean = false
 
   mounted () {
-    this.e1Target = this.lastTempDataPoint(this.id).tool0.target
-    this.e2Target = this.lastTempDataPoint(this.id).tool1.target
-    this.bedTarget = this.lastTempDataPoint(this.id).bed.target
-    this.chamberTarget = this.lastTempDataPoint(this.id).bed.target
+    this.e1Target = this.lastTempDataPoint(this.id).tool0 ? this.lastTempDataPoint(this.id).tool0.target : 0
+    this.e2Target = this.lastTempDataPoint(this.id).tool1 ? this.lastTempDataPoint(this.id).tool1.target : 0
+    this.bedTarget = this.lastTempDataPoint(this.id).bed ? this.lastTempDataPoint(this.id).bed.target : 0
+    this.chamberTarget = this.lastTempDataPoint(this.id).bed ? this.lastTempDataPoint(this.id).bed.target : 0
 
     this.e1TargetSet = this.e1Target > 0
     this.e2TargetSet = this.e2Target > 0
