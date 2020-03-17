@@ -3,7 +3,7 @@
     <v-container grid-list-xs>
       <v-row>
         <v-col cols="12">
-          <JogCard dense />
+          <JogCard dense :id="$route.params.id" />
         </v-col>
         <v-col cols="12">
           <v-btn x-large block depressed color="accent" @click="next(4)">
@@ -50,7 +50,7 @@ export default class extends Vue {
 
 
   private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+    //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
   }
