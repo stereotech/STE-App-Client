@@ -47,7 +47,7 @@ export default class extends Vue {
     this.$router.go(-1)
   }
   private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+    //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
   }
