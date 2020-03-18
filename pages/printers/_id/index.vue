@@ -3,12 +3,12 @@
     <PrinterCard :id="$route.params.id" toolbar />
     <v-col cols="12">
       <v-expansion-panels v-model="panel" multiple>
-        <!--<WizardsPanel
+        <WizardsPanel
           :id="$route.params.id"
           v-if="isMaintenance || isPaused"
           :printerType="printerType"
-        />-->
-        <WizardsPanel :id="$route.params.id" :printerType="printerType" />
+        />
+        <!--<WizardsPanel :id="$route.params.id" :printerType="printerType" />-->
         <ManualControlPanel
           :printing="isPrinting"
           :glaze="isGlaze"
