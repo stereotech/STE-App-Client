@@ -1,57 +1,39 @@
 <template>
   <v-col v-if="!offline" class="d-flex" md="4" cols="12" sm="6">
-    <v-container fluid>
+    <v-container>
       <v-row dense>
-        <v-col v-if="lastTempDataPoint(id).tool0" cols="4">
-          <div class="body-1 text-truncate">
-            E1 Target:
-          </div>
-          <div class="body-1">
-            {{ lastTempDataPoint(id).tool0.target }}&deg;C
-          </div>
+        <v-col v-if="lastTempDataPoint(id).tool0" :cols="glaze ? 12 : 4">
+          <div class="body-1 text-truncate">{{$t("E1 Target")}}</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
-            :value="lastTempDataPoint(id).tool0.actual / 3.2"
-            :color="e1Color"
-          >
-            {{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}
-          </v-progress-circular>
+            :value="glaze ? lastTempDataPoint(id).tool0.actual * 1.6 : lastTempDataPoint(id).tool0.actual / 3.2"
+            :color="glaze ? 'brown': e1Color"
+          >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
-        <v-col v-if="lastTempDataPoint(id).tool1" cols="4">
-          <div class="body-1 text-truncate">
-            E2 Target:
-          </div>
-          <div class="body-1">
-            {{ lastTempDataPoint(id).tool1.target }}&deg;C
-          </div>
+        <v-col v-if="lastTempDataPoint(id).tool1 && !glaze" cols="4">
+          <div class="body-1 text-truncate">{{$t("E2 Target")}}</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
-          >
-            {{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}
-          </v-progress-circular>
+          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
-        <v-col v-if="lastTempDataPoint(id).bed" cols="4">
-          <div class="body-1 text-truncate">
-            Bed Target:
-          </div>
+        <v-col v-if="lastTempDataPoint(id).bed && !glaze && !fiveAxis" cols="4">
+          <div class="body-1 text-truncate">{{$t("Bed Target")}}</div>
           <div
             v-if="lastTempDataPoint(id).bed"
             class="body-1"
-          >
-            {{ lastTempDataPoint(id).bed.target }}&deg;C
-          </div>
+          >{{ lastTempDataPoint(id).bed.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).bed.actual / 1.5"
             :color="bedColor"
-          >
-            {{ lastTempDataPoint(id).bed.actual | currency('', 0) }}
-          </v-progress-circular>
+          >{{ lastTempDataPoint(id).bed.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
       </v-row>
     </v-container>
@@ -81,6 +63,8 @@ export default class PrinterCardTemps extends Vue {
   @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
 
   @Prop({ default: false, type: Boolean }) chamber?: boolean
+  @Prop({ default: false, type: Boolean }) glaze?: boolean
+  @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
   @Prop({ default: 0, type: Number }) chamberTemp?: number
   @Prop({ default: 0, type: Number }) chamberTarget?: number
 

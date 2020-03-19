@@ -5,11 +5,14 @@ export interface PrinterInfo {
   model: string
   name: string
   isLocal: boolean
+  isFiveAxis: boolean
   role: string
   hostname?: string
   apiKey: string
   octoApiKey: string
   address: string
+  //Additional properties
+  isGlaze?: boolean
 }
 
 export interface TemperatureData {

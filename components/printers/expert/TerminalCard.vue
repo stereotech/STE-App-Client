@@ -1,23 +1,19 @@
 <template>
   <v-card>
-    <v-card-title class="title">
-      Terminal
-    </v-card-title>
+    <v-card-title class="title">{{$t("Terminal")}}</v-card-title>
     <v-container fluid>
       <v-row dense>
         <v-col cols="12">
           <v-card height="500">
             <v-list id="terminal-list" dense style="max-height: 500px" class="overflow-y-auto">
               <template v-for="(line, index) in printerLogs(id)">
-                <TerminalString :key="index" @mounted="scrollToBottom">
-                  {{ line }}
-                </TerminalString>
+                <TerminalString :key="index" @mounted="scrollToBottom">{{ line }}</TerminalString>
               </template>
             </v-list>
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-checkbox v-model="autoscroll" label="Autoscroll" />
+          <v-checkbox v-model="autoscroll" :label="$tc('Autoscroll')" />
         </v-col>
         <v-col cols="12">
           <BottomInput v-model="keyboard" :input.sync="gcodeString">
@@ -27,7 +23,7 @@
               filled
               clear-icon="mdi-close-circle"
               clearable
-              label="G-Code Command"
+              :label="$tc('G-Code Command')"
               type="text"
               @click:append="misc"
               @click="keyboard = true"

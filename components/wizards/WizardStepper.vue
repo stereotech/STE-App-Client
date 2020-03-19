@@ -8,12 +8,11 @@
         <slot name="title" />
       </span>
       <div class="flex-grow-1" />
-      <v-progress-circular :value="progressStep" size="48">
-        {{ currentStep + 1 }}/{{ stepCount }}
-      </v-progress-circular>
+      <v-progress-circular :value="progressStep" size="48">{{ currentStep + 1 }}/{{ stepCount }}</v-progress-circular>
     </v-toolbar>
     <v-card color="primary" dark flat>
       <v-window
+        touchless
         v-model="currentStep"
         :vertical="landscapeMode"
         @change="$emit('change', currentStep)"
@@ -29,7 +28,7 @@ import { Vue, Component, Prop, Model } from 'nuxt-property-decorator'
 
 @Component({
 })
-export default class extends Vue {
+export default class WizardStepper extends Vue {
   @Model('change', { type: Number, required: true, default: 1 }) currentStep?: number
 
   @Prop({ type: Number, default: 0, required: true }) stepCount?: number

@@ -4,15 +4,15 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio label="Extruder 1" :value="0" color="secondary" />
-            <v-radio label="Extruder 2" :value="1" color="secondary" />
+            <v-radio :label="$tc('Extruder 1')" :value="0" color="secondary" />
+            <v-radio :label="$tc('Extruder 2')" :value="1" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(14)">Skip</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(8)">{{$t("Skip")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -42,11 +42,11 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 9
+  private step?: number = 3//9
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = 'Select the extruder, where you want change the material'
+  private description: string = ''
 
   @printers.Action toolTempCommand: any
   @settings.Getter settings!: Settings
@@ -57,12 +57,19 @@ export default class extends Vue {
     } else {
       this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 240 })
     }
-    this.next(10)
+    this.next(4)//10)
   }
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+  mounted () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
   }
 }
 </script>

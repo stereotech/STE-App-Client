@@ -8,7 +8,8 @@
   >
     <template v-slot:activator="{ on }">
       <v-btn color="primary" large outlined @click="startScan" v-on="on">
-        <v-icon>mdi-plus</v-icon>&nbsp;Add printer
+        <v-icon>mdi-plus</v-icon>
+        &nbsp;{{$t("Add printer")}}
       </v-btn>
     </template>
     <v-card>
@@ -16,7 +17,7 @@
         <v-btn icon dark @click="closeDialog">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Add printer</v-toolbar-title>
+        <v-toolbar-title>{{$t("Add printer")}}</v-toolbar-title>
         <v-spacer />
         <v-btn icon dark @click="startScan">
           <v-icon>mdi-refresh</v-icon>
@@ -28,28 +29,18 @@
             <v-col v-for="printer in results" :key="printer.id" class="d-flex" cols="6">
               <v-card hover ripple @click="confirmation = true">
                 <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" />
-                <div class="title text-center">
-                  {{ printer.name }}
-                </div>
-                <div class="body-1 text-center">
-                  {{ printer.model }}
-                </div>
-                <div class="body-1 text-center">
-                  Address: {{ printer.ipAddress }}
-                </div>
+                <div class="title text-center">{{ printer.name }}</div>
+                <div class="body-1 text-center">{{ printer.model }}</div>
+                <div class="body-1 text-center">{{$t("Address: {0}", [printer.ipAddress])}}</div>
               </v-card>
               <v-dialog v-model="confirmation" max-width="425">
                 <v-card>
-                  <v-card-title class="headline">
-                    Do you want to add {{ printer.name }} to cluster?
-                  </v-card-title>
+                  <v-card-title
+                    class="headline"
+                  >{{ $t("Do you want to add {0} to cluster?",[printer.name]) }}</v-card-title>
                   <v-card-actions>
-                    <v-btn color="primary" text @click="confirmation = false">
-                      No
-                    </v-btn>
-                    <v-btn color="primary" text @click="startConnection(printer)">
-                      Yes
-                    </v-btn>
+                    <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
+                    <v-btn color="primary" text @click="startConnection(printer)">{{$t("Yes")}}</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>

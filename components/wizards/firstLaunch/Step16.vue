@@ -3,10 +3,10 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="auto">
-          <h1 class="display-4">Done!</h1>
+          <h1 class="display-4">{{$t("Done")}}</h1>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finishSetup">Finish</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finishSetup">{{$t("Finish")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -34,7 +34,7 @@ export default class extends Vue {
 
   @settings.Action sendFinishSetup: any
 
-  private step?: number = 15
+  private step?: number = 9//15
   private curStep?: number = this.currentStep
 
   private next (step: number) {

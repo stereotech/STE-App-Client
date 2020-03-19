@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(8)">
-      Next
+      {{$t("Next")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -40,12 +40,21 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/bed_leveling/bed_leveling04.jpg'
-  private description: string = 'Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed'
+  private description: string = ''
+
 
   private async next (step: number) {
     await this.customCommand({ id: this.settings.systemId, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted () {
+    this.description = this.$tc('Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment')
+  }
+
+  updated () {
+    this.description = this.$tc('Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment')
   }
 
   @printers.Action customCommand: any

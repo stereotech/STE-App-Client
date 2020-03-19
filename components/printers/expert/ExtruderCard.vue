@@ -1,8 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">
-      Extruder
-    </v-card-title>
+    <v-card-title class="title">{{$t("Extruder")}}</v-card-title>
     <v-container fluid>
       <v-row dense class="text-center">
         <v-col cols="6" sm="3" order-sm="1">
@@ -11,7 +9,7 @@
             outlined
             text
             icon
-            color="primary"
+            :color="glaze ? 'brown' : 'primary' "
             :disabled="printing"
             @click="retract"
           >
@@ -24,7 +22,7 @@
             outlined
             text
             icon
-            color="primary"
+            :color="glaze ? 'brown' : 'primary' "
             :disabled="printing"
             @click="extrude"
           >
@@ -34,19 +32,21 @@
         <v-col class="pt-6" cols="12" sm="9" order-sm="1">
           <v-slider
             v-model="flow"
-            label="Flow"
+            :label="$tc('Flow')"
             thumb-label
             min="50"
             max="150"
             @change="setFlow"
+            :color="glaze ? 'brown' : 'primary' "
+            :track-color="glaze ? 'brown lighten-4' : ''"
           />
         </v-col>
-        <v-col class="order-sm-2" cols="12" sm="9" offset-sm="3">
+        <v-col class="order-sm-2" cols="12" sm="9" offset-sm="3" v-if="!glaze">
           <v-select
             v-model="selectedExtruder"
             filled
             :items="extruders"
-            label="Select extruder"
+            :label="$tc('Select extruder')"
             item-text="key"
             item-value="value"
             :disabled="printing"
@@ -55,18 +55,30 @@
 
         <v-col cols="12" sm="6" order-sm="3">
           <v-btn-toggle v-model="selectedAmount" mandatory rounded>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">
-              0.1
-            </v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 1">
-              1
-            </v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 10">
-              10
-            </v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 100">
-              100
-            </v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 0.1"
+            >0.1</v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 1"
+            >1</v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 10"
+            >10</v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 100"
+            >100</v-btn>
           </v-btn-toggle>
         </v-col>
         <v-col cols="12" sm="3" order-sm="3">
@@ -75,7 +87,7 @@
             outlined
             text
             icon
-            color="primary"
+            :color="glaze ? 'brown' : 'primary' "
             :disabled="printing"
             @click="servicePos"
           >
@@ -90,6 +102,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
+import { PrinterInfo } from '../../../types/printer'
 
 const printers = namespace('printersState')
 
@@ -132,7 +145,10 @@ export default class ExtruderCard extends Vue {
     this.customCommand({ id: this.id, command: 'G0 X100 Y5' })
   }
 
+
+
   @Prop({ default: false, type: Boolean }) printing?: boolean
+  @Prop({ default: false, type: Boolean }) glaze?: boolean
   @Prop({ default: '', type: String }) id?: string
 }
 </script>

@@ -28,24 +28,25 @@ export interface PrintingArea {
   minZ: number
 }
 
-export interface GCodeAnalysis {
+export interface gcodeAnalysis {
   dimensions: Dimensions
   estimatedPrintTime: number
   filament: Filament
   printingArea: PrintingArea
+  isFiveAxis: boolean
 }
 
 export interface FileOrFolder {
   children?: FileOrFolder[]
   date?: number
   display: string
-  gCodeAnalysis?: GCodeAnalysis
+  gcodeAnalysis?: gcodeAnalysis
   hash?: string
   name: string
   origin: string // Printer name
   path: string
   refs?: Refs
   size: number
-  type?: string // USB or local
+  type?: string // file or folder
   typePath?: string[]
 }

@@ -4,12 +4,12 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio label="Extruder 1" :value="0" color="secondary" />
-            <v-radio label="Extruder 2" :value="1" color="secondary" />
+            <v-radio :label="$tc('Extruder 1')" :value="0" color="secondary" />
+            <v-radio :label="$tc('Extruder 2')" :value="1" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -41,7 +41,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = 'Select the extruder, where you want change the material'
+  private description: string = ''
 
   @printers.Action toolTempCommand: any
 
@@ -57,6 +57,13 @@ export default class extends Vue {
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+  mounted () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
   }
 }
 </script>

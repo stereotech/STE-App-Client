@@ -5,7 +5,31 @@
         <v-col cols="12">
           <v-card>
             <v-list light>
-              <v-subheader>Avaliable networks</v-subheader>
+              <v-list-item>
+                <v-list-item-action>
+                  <v-switch
+                    false-value="WIRELESS"
+                    true-value="HOTSPOT"
+                    v-model="currentMethod"
+                    @change="setConnectedMethod"
+                  ></v-switch>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-if="currentMethod === 'HOTSPOT'"
+                  >{{ $t("Disable Wi-Fi hotspot") }}</v-list-item-title>
+                  <v-list-item-title v-else>{{ $t("Enable Wi-Fi hotspot") }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item @click="refreshNetworks">
+                <v-list-item-action>
+                  <v-icon>mdi-cached</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>{{ $t("Refresh networks") }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-subheader>{{$t("Available networks")}}</v-subheader>
               <template v-for="(network, index) in avaliableNetworks">
                 <v-list-item :key="network.id" @click="startConnection(network)">
                   <v-list-item-action v-if="network.strength > 81">
@@ -32,13 +56,13 @@
                 </v-list-item>
                 <v-divider :key="index" inset />
               </template>
-              <v-dialog v-model="confirmation" max-width="425">
+              <v-dialog v-model="confirmation" max-width="425" light>
                 <v-card>
                   <v-card-title
                     v-if="setupNetwork.security"
                     class="headline"
-                  >Enter Wi-Fi password for {{ setupNetwork.name }}</v-card-title>
-                  <v-card-title v-else class="headline">Connect to network?</v-card-title>
+                  >{{$t("Enter Wi-Fi password for {0}", [setupNetwork.name])}}</v-card-title>
+                  <v-card-title v-else class="headline">{{$t("Connect to network?")}}</v-card-title>
                   <v-container v-if="setupNetwork.security">
                     <BottomInput v-model="keyboard" :input.sync="password">
                       <v-text-field
@@ -48,7 +72,7 @@
                         :rules="[ rules.required, rules.min ]"
                         :type="showPassword ? 'text' : 'password'"
                         name="input-10-2"
-                        label="Wi-Fi password"
+                        :label="$tc('Wi-Fi password')"
                         class="input-group--focused"
                         @click:append="showPassword = !showPassword"
                         @click="keyboard = true"
@@ -57,14 +81,19 @@
                   </v-container>
 
                   <v-card-actions>
-                    <v-btn x-large color="primary" depressed @click="confirmation = false">Cancel</v-btn>
+                    <v-btn
+                      x-large
+                      color="primary"
+                      depressed
+                      @click="confirmation = false"
+                    >{{$t("Cancel")}}</v-btn>
                     <v-btn
                       x-large
                       color="primary"
                       depressed
                       :disabled="isMin"
                       @click="startConnecting"
-                    >Connect</v-btn>
+                    >{{$t("Connect")}}</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -72,7 +101,7 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(15)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(9)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -99,7 +128,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 14
+  private step?: number = 8//14
   private curStep?: number = this.currentStep
 
   private keyboard: boolean = false
@@ -130,10 +159,15 @@ export default class extends Vue {
   }
 
   @settings.Getter avaliableNetworks!: Network[]
-  @settings.Getter currentNetwork: Network | undefined
+  @settings.Getter currentNetwork!: Network[]
+  @settings.Getter connectedMethod!: string
   @settings.Action getWifiNetworks: any
   @settings.Action connectWifiNetwork: any
   @settings.Action forgetWifiNetwork: any
+  @settings.Action getConnectedMethod: any
+  @settings.Action setConnectedMethod: any
+
+  private currentMethod: string = 'WIRELESS'
 
   private startConnection (network: Network) {
     if (network) {
@@ -153,15 +187,21 @@ export default class extends Vue {
     this.confirmation = false
   }
 
-  private startForgetting () {
+  private startForgetting (index: number) {
     if (this.currentNetwork !== undefined) {
-      this.forgetWifiNetwork(this.currentNetwork.id)
+      this.forgetWifiNetwork(this.currentNetwork[index].id)
     }
     this.forgetConfirmation = false
   }
 
   async mounted () {
+    await this.refreshNetworks()
+  }
+
+  private async refreshNetworks () {
+    await this.getConnectedMethod()
     await this.getWifiNetworks()
+    this.currentMethod = this.connectedMethod
   }
 
   private next (step: number) {
