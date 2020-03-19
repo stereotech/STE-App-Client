@@ -65,6 +65,10 @@ export default class BottomInput extends Vue {
       this.$emit('update:input', this.inputLocal)
       return
     }
+    if (button === '{space}') {
+      this.inputLocal += ' '
+      this.$emit('update:input', this.inputLocal)
+    }
     if (button.startsWith('{') && button.endsWith('}')) {
       return
     }

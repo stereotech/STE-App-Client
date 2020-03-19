@@ -29,7 +29,7 @@
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid">
-              <BottomInput>
+              <BottomInput v-model="folderKeyboard" :input.sync="folderName">
                 <v-text-field
                   v-model="folderName"
                   :label="$tc('Folder name')"
@@ -37,7 +37,7 @@
                   clearable
                   :rules="folderNameRules"
                   @input="nameWasChanged = true"
-                  @click="nameKeyboard = true"
+                  @click="folderKeyboard = true"
                 />
               </BottomInput>
               <v-btn
@@ -211,6 +211,7 @@ export default class extends Vue {
   private isOpen: boolean = false
   private nameWasChanged: boolean = false
   private valid: boolean = false
+  private folderKeyboard: boolean = false
   private folderName: string = ""
   private files: File[] = []
   private path: string[] = []
