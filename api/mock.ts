@@ -11,6 +11,18 @@ const printers = [
         model: 'STE320',
         name: 'ST-AAA',
         isLocal: true,
+        isFiveAxis: false,
+        address: '192.168.0.100',
+        apiKey: '',
+        octoApiKey: '',
+        role: 'host'
+    },
+    {
+        id: 'st-bbb',
+        model: 'SGE520',
+        name: 'ST-BBB',
+        isLocal: false,
+        isFiveAxis: true,
         address: '192.168.0.100',
         apiKey: '',
         octoApiKey: '',
@@ -25,21 +37,35 @@ const printJobs: PrintJob[] = [
         description: '',
         creationTime: Date.now(),
         fileUri: 'file.gcode',
+        isFiveAxis: true,
         successful: true,
         lastPrintTime: Date.now(),
-        printers: [],
-        state: "Queued"
+        state: 'Queued',
+        printers: []
     },
     {
         id: 2,
-        name: 'job2',
+        name: 'job1',
         description: '',
         creationTime: Date.now(),
-        fileUri: 'Storage/File_1.gcode',
-        printers: ['st-aaa'],
-        successful: false,
+        fileUri: 'file.gcode',
+        isFiveAxis: true,
+        successful: true,
         lastPrintTime: Date.now(),
-        state: "Queued",
+        state: 'Completed',
+        printers: []
+    },
+    {
+        id: 3,
+        name: 'job3',
+        description: '',
+        isFiveAxis: true,
+        creationTime: Date.now(),
+        fileUri: 'Storage/File_1.gcode',
+        successful: true,
+        lastPrintTime: Date.now(),
+        state: 'Queued',
+        printers: ['st-aaa']
     }
 ]
 
@@ -64,8 +90,8 @@ const settings: Settings = {
     systemId: 'st-aaa',
     role: 'host',
     firstLaunch: false,
-    avaliableLanguages: ['English', 'Русский'],
-    language: 'English',
+    avaliableLanguages: ['en', 'ru'],
+    language: 'ru',
     storageTotal: 6864843434384,
     storageFree: 3564684646846,
     dateTime: 1550665494
@@ -83,27 +109,143 @@ const networks = [
         id: 'network_8484443',
         name: 'Wifi 2',
         security: true,
-        state: 'ready',
+        state: 'idle',
         strength: 50
     }
 ]
+
+const updateVersion = '1.0.0'
 
 const connectedMethod = 'WIFI'
 
 const localStorage = {
     children: [
         {
+            display: 'folder1',
+            hash:'ab4dfcda52ce69a64dabc21cfb2417013b4f68e1',
+            name: 'folder1',
+            size:'20',
+            path:'/Storage/folder1',
+            type: 'folder',
+            typePath: 'folder',
+            refs:{},
+            children:[
+                {
+                    display: 'folder1-1',
+                    hash:'cb8ffcda11ad69a64dabc21cfb2417013b4f68e1',
+                    name: 'folder1-1',
+                    size: '15',
+                    path:'/Storage/folder1/folder1-1',
+                    type: 'folder',
+                    typePath:'folder',
+                    refs:{},
+                    children:[]                    
+                },
+                {
+                    display: 'folder1-2',
+                    hash:'ad9efcda11ad69a64dabc21cfb8444013b4f68e1',
+                    name: 'folder1-2',
+                    size: '5',
+                    path:'/Storage/folder1/folder1-2',
+                    type: 'folder',
+                    typePath:'folder',
+                    refs:{},
+                    children:[{
+                        date: Date.now(),
+                        display: 'Internal_3D.gcode',
+                        hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+                        name: 'Internal_3D.gcode',
+                        size: 15315451,
+                        origin: 'st_aaa',
+                        gcodeAnalysis: {
+                            isFiveAxis: false
+                        },
+                        path: '/Storage/folder1/folder1-2/Internal_3D.gcode',
+                        type: 'machinecode',
+                        typePath: ['machinecode', 'gcode'],
+                        refs: {
+                            download: 'localhost:3000/internal3D.gcode',
+                        }
+                    }]
+                }
+            ]
+        },
+        {
+            display: 'folder2',
+            hash:'ab4deaea52ce54a64dcde43cfb9650013b4f68c5',
+            name: 'folder2',
+            size: '350',
+            path: '/Storage/folder2',
+            type: 'folder',
+            typePath: 'folder',
+            refs:{},
+            children:[{
+                date: Date.now(),
+                display: '1_3D.gcode',
+                hash: 'bc4dfcda52ce54b84dcde43cfb2417013b4f68e1',
+                name: '1_3D.gcode',
+                size: 145,
+                origin: 'st_aaa',
+                gcodeAnalysis: {
+                    isFiveAxis: false
+                },
+                path: '/Storage/folder2/1_3D.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/13D.gcode',
+                }
+            },
+            {
+                date: Date.now(),
+                display: '2_3D.gcode',
+                hash: 'ef4dfcda52ad54a64dcde43cfb2417013b4f68e1',
+                name: '2_3D.gcode',
+                size: 36,
+                origin: 'st_aaa',
+                gcodeAnalysis: {
+                    isFiveAxis: false
+                },
+                path: '/Storage/folder2/2_3D.gcode',
+                type: 'machinecode',
+                typePath: ['machinecode', 'gcode'],
+                refs: {
+                    download: 'localhost:3000/2.gcode',
+                }
+            }]
+        },
+        {
             date: Date.now(),
-            display: 'File_1.gcode',
+            display: 'File_3D.gcode',
             hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-            name: 'File_1.gcode',
+            name: 'File_3D.gcode',
             size: 15315451,
             origin: 'st_aaa',
-            path: '/Storage/File_1.gcode',
+            gcodeAnalysis: {
+                isFiveAxis: false
+            },
+            path: '/Storage/File_3D.gcode',
             type: 'machinecode',
             typePath: ['machinecode', 'gcode'],
             refs: {
-                download: 'localhost:3000/file1.gcode',
+                download: 'localhost:3000/file3D.gcode',
+            }
+        },
+        {
+            date: Date.now(),
+            display: 'File_5D.gcode',
+            hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
+            name: 'File_5D.gcode',
+            size: 15315451,
+            origin: 'st_aaa',
+            gcodeAnalysis: {
+                isFiveAxis: true
+            },
+            path: '/Storage/File_5D.gcode',
+            type: 'machinecode',
+            typePath: ['machinecode', 'gcode'],
+            refs: {
+                download: 'localhost:3000/file5D.gcode',
             }
         }
     ],
@@ -119,90 +261,6 @@ const localStorage = {
 const usbs = [
     {
         children: [
-            {
-                date: Date.now(),
-                display: 'File_24534.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_234534553.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2345345534.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_2.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_234534435.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2345534345.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_234645346.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_267868565.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_276856885.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_258768786.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_267867868.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_26786786.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2768676.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_2678678678.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_2.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_27686786.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
         ],
         display: 'Storage',
         name: 'Storage',
@@ -214,90 +272,6 @@ const usbs = [
     },
     {
         children: [
-            {
-                date: Date.now(),
-                display: 'File_2678678678.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_26786787868.gcode',
-                size: 15315451,
-                origin: 'st-bbb',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb1/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_26786758.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_25766768678.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_256867856.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_2.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_256867585.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_5656867582.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_56786782.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_25678568.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_265867867.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
-            {
-                date: Date.now(),
-                display: 'File_2547657.gcode',
-                hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
-                name: 'File_246876678.gcode',
-                size: 15315451,
-                origin: 'st-aaa',
-                path: '/USB/File_2.gcode',
-                type: 'machinecode',
-                typePath: ['machinecode', 'gcode'],
-                refs: {
-                    download: 'localhost:3000/usb/file2.gcode',
-                }
-            },
         ],
         display: 'Storage',
         name: 'Storage',
@@ -315,16 +289,6 @@ const apiMock: ServerMiddleware = function (req, res, next) {
         res.end(JSON.stringify(printJobs))
     }
     else if (req.url === '/printers/') {
-        let printers: PrinterInfo[] = [{
-            id: 'st-aaa',
-            model: 'STE320',
-            name: 'ST-AAA',
-            isLocal: true,
-            address: '192.168.0.100',
-            apiKey: '',
-            octoApiKey: '',
-            role: 'host'
-        }]
         res.end(JSON.stringify(printers))
     }
     else if (req.url === '/scanner') {
@@ -334,7 +298,7 @@ const apiMock: ServerMiddleware = function (req, res, next) {
         res.end(JSON.stringify(settings))
     }
     else if (req.url === '/storage/local') {
-        localStorage.children = []
+
         res.end(JSON.stringify(localStorage))
     }
     else if (req.url === '/storage/usb') {
@@ -345,6 +309,9 @@ const apiMock: ServerMiddleware = function (req, res, next) {
     }
     else if (req.url === '/network/wifi') {
         res.end(JSON.stringify(networks))
+    }
+    else if (req.url === '/update') {
+        res.end(updateVersion)
     } else {
         next()
     }

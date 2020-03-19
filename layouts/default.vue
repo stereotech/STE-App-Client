@@ -13,8 +13,8 @@
     >
       <v-list shaped nav>
         <v-list-item
-          v-for="menuItem in mainMenu"
-          :key="menuItem.title"
+          v-for="(menuItem, index) in mainMenu"
+          :key="index"
           nuxt
           ripple
           link
@@ -26,7 +26,7 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+            <v-list-item-title>{{ menuItem.translatedTitle }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -38,7 +38,7 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>Select cluster</v-list-item-title>
+              <v-list-item-title>{{$t("Select cluster")}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -50,7 +50,7 @@
         <v-icon v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'" />
       </v-btn>
       <v-avatar size="36px" class="mx-2">
-        <img src="/icon.png" alt="Logo">
+        <img src="/icon.png" alt="Logo" />
       </v-avatar>
       <v-toolbar-title>
         <span class="text-uppercase font-weight-regular">STE App</span>
@@ -68,20 +68,20 @@
             <v-list-item-action>
               <v-icon>mdi-settings</v-icon>
             </v-list-item-action>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>{{$t("Settings")}}</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="rebootSystem">
             <v-list-item-action>
               <v-icon>mdi-refresh</v-icon>
             </v-list-item-action>
-            <v-list-item-title>Reboot</v-list-item-title>
+            <v-list-item-title>{{$t("Reboot")}}</v-list-item-title>
           </v-list-item>
           <v-list-item @click="poweroffSystem">
             <v-list-item-action>
               <v-icon>mdi-power</v-icon>
             </v-list-item-action>
-            <v-list-item-title>Power Off</v-list-item-title>
+            <v-list-item-title>{{$t("Power Off")}}</v-list-item-title>
           </v-list-item>
           <template v-if="isMobile">
             <v-divider inset />
@@ -91,7 +91,7 @@
               </v-list-item-action>
 
               <v-list-item-content>
-                <v-list-item-title>Select cluster</v-list-item-title>
+                <v-list-item-title>{{$t("Select Cluster")}}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -107,23 +107,21 @@
         <template slot="default" slot-scope="props">
           <v-alert
             :type="props.snackbar && props.snackbar.color"
-          >
-            {{ props.snackbar && props.snackbar.message }}
-          </v-alert>
+          >{{ props.snackbar && props.snackbar.message }}</v-alert>
         </template>
       </v-snackbar-queue>
       <v-dialog-queue />
     </v-content>
     <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
       <v-btn
-        v-for="menuItem in mainMenu"
-        :key="menuItem.title"
+        v-for="(menuItem, index) in mainMenu"
+        :key="index"
         text
         nuxt
         :to="menuItem.link"
         color="primary"
       >
-        <span>{{ menuItem.title }}</span>
+        <span>{{ menuItem.translatedTitle }}</span>
         <v-icon>{{ menuItem.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -154,11 +152,13 @@ export default class extends Vue {
     {
       icon: 'mdi-view-dashboard',
       title: 'Dashboard',
+      translatedTitle: 'Dashboard',
       link: '/'
     },
     {
       icon: 'mdi-printer-3d',
       title: 'Printers',
+      translatedTitle: 'Printers',
       link: '/printers'
     }
   ]
@@ -172,7 +172,7 @@ export default class extends Vue {
       return obj.link.includes(this.$route.fullPath.substring(0, 4))
     })
     if (name) {
-      return name.title
+      return name.translatedTitle
     }
     return undefined
   }
@@ -181,16 +181,27 @@ export default class extends Vue {
     if (Notification.permission === 'default') {
       Notification.requestPermission()
     }
+    this.mainMenu.forEach(element => {
+      element.translatedTitle = this.$tc(`${element.title}`)
+    });
+  }
+
+  updated () {
+    this.mainMenu.forEach(element => {
+      element.translatedTitle = this.$tc(`${element.title}`)
+    });
   }
 }
 
 class MenuItem {
   icon: string
   title: string
+  translatedTitle: string
   link: string
-  constructor (icon: string, title: string, link: string) {
+  constructor (icon: string, title: string, translatedTitle: string, link: string) {
     this.icon = icon
     this.title = title
+    this.translatedTitle = translatedTitle
     this.link = link
   }
 }

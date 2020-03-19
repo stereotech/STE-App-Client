@@ -1,14 +1,14 @@
 <template>
-  <WizardStepper v-model="currentStep" :step-count="16" :closeable="false">
+  <WizardStepper v-model="currentStep" :step-count="10" :closeable="false">
     <Step1 v-model="currentStep" />
     <Step2 v-model="currentStep" />
     <Step3 v-model="currentStep" />
-    <Step4 v-model="currentStep" />
+    <!--<Step4 v-model="currentStep" />
     <Step5 v-model="currentStep" />
     <Step6 v-model="currentStep" />
     <Step7 v-model="currentStep" />
     <Step8 v-model="currentStep" />
-    <Step9 v-model="currentStep" />
+    <Step9 v-model="currentStep" />-->
     <Step10 v-model="currentStep" :additional-data="additionalData" />
     <Step11 v-model="currentStep" :additional-data="additionalData" />
     <Step12 v-model="currentStep" :additional-data="additionalData" />

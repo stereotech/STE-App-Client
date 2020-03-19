@@ -17,7 +17,7 @@ const config: Configuration = {
 
   router: {
     mode: 'hash',
-    middleware: ['chooser', 'firstLaunch'],
+    middleware: ['chooser', 'firstLaunch'] //, 'localization'],
   },
   /*
    ** Global CSS
@@ -25,20 +25,22 @@ const config: Configuration = {
   css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css'],
 
   /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: ['~plugins/filters', '~/plugins/prettyBytes', '~plugins/i18n', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
-  /*
-   ** Nuxt.js modules
-   */
+ ** Nuxt.js modules
+ */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    'nuxt-i18n'
   ],
 
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/moment'],
+
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: ['~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
 
   typescript: {
     typeCheck: {
@@ -85,6 +87,32 @@ const config: Configuration = {
     },
     iconfont: 'mdi'
   },
+  moment: {
+    locales: ['ru']
+  },
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en.json'
+      },
+      {
+        code: 'ru',
+        name: 'Русский',
+        file: 'ru.json'
+      }
+    ],
+    lazy: true,
+    langDir: 'locales/',
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    detectBrowserLanguage: false,
+    vueI18n: {
+      fallbackLocale: 'en'
+    }
+  },
+
   loading: { color: '#263238' },
   loadingIndicator: {
     name: 'folding-cube',

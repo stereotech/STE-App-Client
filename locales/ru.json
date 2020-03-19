@@ -1,148 +1,176 @@
 {
-    "frequentlyUsed": {
-        "no": "Нет",
-        "yes": "Да",
-        "cancel": "Отменить",
-        "ok": "Ок",
-        "forget": "Забыть",
-        "connect": "Подключиться",
-        "remove": "Удалить",
-        "save": "Сохранить",
-        "next": "Далее",
-        "retry": "Повторить"
-    },
-    "common": {
-        "printerCard": {
-            "title": "Панель управления",
-            "printing": "Печатаем...",
-            "paused": "Приостановлено",
-            "maintenance": "Поддержка",
-            "printingDone": "Печать готова !",
-            "offline": "Не в сети",
-            "e1Target": "Т экструдера1",
-            "e2Target": "Т экструдера 2",
-            "bedTarget": "Температура подставки",
-            "chamberTarget": "Целевая плата",
-            "tryToReconnect": "Попробуйте переподключиться",
-            "currentFile": "Текущий файл:",
-            "currentPrintjob": "Текущая работа принтера:",
-            "cleanTheBuildplate": "Очистите пластину сборки и выбирите состояние",
-            "printerIsWaiting": "Принтер ожидает работы",
-            "printerIsReady": "Принтер готов к обслуживанию",
-            "doYouWantToRemove": "Хотите убрать {0} из кластера?",
-            "no": "Нет",
-            "yes": "Да"
-        },
-        "settings": {
-            "settingsTitle": {
-                "Wi-Fi": "Wi-Fi",
-                "Date and Time": "Дата и время",
-                "Language": "Язык",
-                "Storage": "Хранилище",
-                "Reset and Restore": "Сброс и Восстановление",
-                "Update": "Обновление"
-            },
-            "dateTimeDialog": {
-                "title": "Дата и время"
-            },
-            "languageDialog": {
-                "title": "Выбор языка"
-            },
-            "mainSettingsDialog": {
-                "title": "Настройки"
-            },
-            "resetDialog": {
-                "title": "Восстановление и перезагрузка",
-                "factoryReset": "К заводским настройкам",
-                "factoryResetClearStorage": "К заводским настройкам (стереть память)",
-                "sureFactoryReset": "Вы уверены, что хотите вернуться к заводским настройкам?",
-                "sureFactoryResetClear": "Вы уверены, что хотите вернуться к заводским настройкам и стереть все пользовательские данные?",
-                "rebootMessage": "Принтер буден перезагружен после подтверждения"
-            },
-            "settingsDialog": {
-                "title": "Настройки",
-                "reboot": "Перезагрузка",
-                "powerOff": "Выключение"
-            },
-            "storageDialog": {
-                "title": "Хранилище"
-            },
-            "updateDialog": {
-                "title": "Обновление системы",
-                "currentVersion": "Текущая версия:",
-                "checkForUpdate": "Проверить обновления",
-                "downloadAndInstall": "Скачать и установить"
-            },
-            "wifiDialog": {
-                "title": "Настройки Wi-Fi",
-                "currentNetwork": "Текущая сеть",
-                "forgetNetworkName": "Забыть",
-                "avaliableNetworks": "Доступные сети",
-                "enterWifiPassword": "Введите пароль для",
-                "connectToNetwork": "Подключиться к сети?",
-                "wifiPassword": "Пароль Wi-Fi"
-            }
-        }
-    },
-    "dashboard": {
-        "doneJobs": {
-            "title": "Готово",
-            "printed": "Напечатано:",
-            "revert": "Повторить"
-        },
-        "printersPanel": {},
-        "queue": {
-            "title": "Очередь",
-            "edit": "редактировать",
-            "removeJob": "Хотите удалить работу?"
-        },
-        "storage": {
-            "title": "",
-            "uploaded": "Загруженно "
-        }
-    },
-    "materials": {
-        "materialDialog": {
-            "title": "Добавить материал",
-            "updateMaterial": "Обновить материал",
-            "colorCode": "Код цвета"
-        }
-    },
-    "printers": {
-        "expert": {
-            "extruderCard": {
-                "title": "Экструдер"
-            },
-            "jogCard": {
-                "title": "Управление"
-            },
-            "manualControlPanel": {
-                "title": "Ручное управление"
-            },
-            "miscCard": {
-                "title": "Разное"
-            },
-            "temperatureFan": {
-                "title": "Температура и вентилятор"
-            }
-        },
-        "addPrinterDialog": {
-            "title": "Добавить принтер",
-            "address": "Адрес:",
-            "doYouWantToAdd": "Вы хотите добавить {0} в кластер?"
-        },
-        "wizardCard": {},
-        "wizardsPanel": {
-            "title": "Maстер установки"
-        }
-    },
-    "chooseprinter": {
-        "address": "Адрес"
-    },
-    "navigationPanel": {
-        "Dashboard": "Мониторинг",
-        "Printers": "Принтеры",
-        "Materials": "Материалы",
-        "Select cluster": "Выбор кластера"
-    }
+  "Current printjob:": "Текущее задание печати:",
+  "Clean the buildplate": "Очистите платформу",
+  "and select state": "и выберите состояние",
+  "Printer is waiting": "Принтер ожидает",
+  "for printjob": "задание печати",
+  "Printer is ready": "Принтер готов",
+  "for maintenance": "к обслуживанию",
+  "Waiting...": "Ожидание...",
+  "Select state": "Выберите состояние",
+  "Printer is not available": "Принтер не доступен",
+  "in the current network": "в текущей сети",
+  "Host": "Хост",
+  "5D": "5D",
+  "Printing...": "Печать...",
+  "Paused at": "Остановлено на",
+  "Maintenance": "Обслуживание",
+  "Idle": "Ожидание",
+  "Spent ": "Прошло ",
+  "Printing Done!": "Печать Закончена!",
+  "Printing Failed": "Ошибка Печати",
+  "Offline": "Не в сети",
+  "Loading...": "Загрузка...",
+  "Not Available": "Не доступно",
+  "E1 Target": "Цель E1",
+  "E2 Target": "Цель E2",
+  "Bed Target": "Цель платформа:",
+  "Control Panel": "Панель управления",
+  "No": "Нет",
+  "Yes": "Да",
+  "Do you want to remove {0} from cluster?": "Вы хотите удалить {0} из кластера?",
+  "label": "заголовок",
+  "Date And Time": "Дата и Время",
+  "Set date": "Установить дату",
+  "Set time": "Установить время",
+  "Cancel": "Отменить",
+  "OK": "ОК",
+  "Skip": "Пропустить",
+  "Next": "Далее",
+  "Language": "Язык",
+  "Select language": "Выберите язык",
+  "Settings": "Настройки",
+  "Wi-Fi": "Wi-Fi",
+  "Storage": "Память",
+  "Reset and Restore": "Сброс и Восстановление",
+  "Update": "Обновление",
+  "Factory Reset": "Сброс к заводским настройкам",
+  "Factory reset (clear storage)": "Сброс к заводским настройкам (очистить хранилище)",
+  "Are you sure want to make factory reset?": "Вы уверены, что хотите выполнить сброс к заводским настройкам?",
+  "Printer will reboot after confirmation": "Принтер перезагрузится после подтверждения",
+  "Are you sure want to make factory reset and clear all user data?": "Вы уверены, что хотите сделать сброс настроек и очистить все пользовательские данные?",
+  "Connect": "Подключиться",
+  "Total": "Всего",
+  "Owned": "Занято",
+  "Available": "Доступно",
+  "Check for update": "Проверить наличие обновлений",
+  "Current version:{0}": "Текущая версия: {0}",
+  "You have the latest firmware": "У вас самая последняя версия",
+  "New version available: {0}": "Новая версия доступна: {0}",
+  "Download update": "Загрузка обновлений",
+  "Downloading {0}...": "Загрузка {0}...",
+  "Downloading {0}%": "Загрузка {0}%",
+  "Download finished. Please reboot printer to finish update": "Загрузка завершена. Пожалуйста, перезагрузите принтер, чтобы завершить обновление",
+  "Copying": "Копирование",
+  "Download failed": "Ошибка загрузки",
+  "Upload Update": "Загрузить Обновление",
+  "Current Network": "Текущая сеть",
+  "Forget {0}?": "Забыть {0}?",
+  "Forget": "Забыть",
+  "Available networks": "Доступная сеть",
+  "Enter Wi-Fi password for {0}": "Введите пароль Wi-Fi для {0}",
+  "Connect to network?": "Подключиться к сети?",
+  "Wi-Fi password": "Пароль Wi-Fi",
+  "Done Jobs": "Выполненные Задания",
+  "Printed: ": "Напечатано: ",
+  "Revert": "Повторить",
+  "Remove": "Удалить",
+  "Here you will see done print jobs. Successful prints marked with": "Здесь вы увидите выполненные задания печати. Удачные задания, отмеченны",
+  "Queue": "Очередь",
+  "Printers: {0}": "Принтеры: {0}",
+  "Edit": "Редактировать",
+  "There are no queued print jobs yet. Add new one by clicking": "Заданий на печать пока нет. Добавьте новое задание, выбрав",
+  "Edit job": "Редактировать задание",
+  "Create job": "Создать задание",
+  "Save": "Сохранить",
+  "Job name": "Имя задания",
+  "Copies": "Копии",
+  "File assignment": "Назначение файлов",
+  "Printer assignment": "Назначение принтера",
+  "Description": "Описание",
+  "Do you want to remove the job?": "Вы хотите удалить это задание?",
+  "Uploaded ": "Загружено ",
+  "You don't have any uploaded files yet. You could add new files using field below": "У вас еще нет загруженных файлов. Вы можете добавить новые файлы, используя поле ниже",
+  "Upload G-Code Files": "Загрузка G-Code Файлов",
+  "Add printer": "Добавить принтер",
+  "Address: {0}": "Адрес: {0}",
+  "Do you want to add {0} to cluster?": "Вы хотите добавить {0} в кластер?",
+  "Extruder": "Экструдер",
+  "Flow": "Поток",
+  "Select extruder": "Выберите экструдер",
+  "Jog": "Оси",
+  "Feed": "Скорость",
+  "Manual Control": "Ручное управление",
+  "Temperature And Fan": "Температура и Охлаждение",
+  "E1": "Е1",
+  "E2": "Е2",
+  "Chamber": "Камера",
+  "Bed": "Платформа",
+  "Cooling": "Охлаждение",
+  "Terminal": "Терминал",
+  "Autoscroll": "Автопрокрутка",
+  "G-Code Command": "Команда G-Code",
+  "Wizards": "Менеджеры",
+  "Bed leveling": "Выравнивание платформы",
+  "Change material": "Сменить материал",
+  "5D calibration": "5D калибровка",
+  "Start": "Начать",
+  "Finish": "Готово",
+  "Done": "Готово",
+  "Perform bed leveling if there is too much distance between the nozzles and the build plate": "Выполните выравнивание платформы, если между соплом и платформой слишком большое расстояние",
+  "Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed": "Подождите, пока платформа и печатающая головка остановятся и отрегулируйте первое колесо установочного винта на дальней стороне платформы",
+  "Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed": "Подождите, пока платформа и печатающая головка остановятся и отрегулируйте второе колесо установочного винта на левой стороне платформы",
+  "Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed": "Подождите, пока платформа и печатающая головка остановятся и отрегулируйте третье колесо установочного винта на правой стороне платформы",
+  "Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment": "Отрегулируйте зазор между левым соплом и платформы с помощью стрелок. При необходимости можно повторить корректировку точек",
+  "Calibration complete!": "Калибровка завершена!",
+  "Extruder 1": "Экструдер 1",
+  "Extruder 2": "Экструдер 2",
+  "Unload material": "Выгрузить материал",
+  "Load material": "Загрузить материал",
+  "Select the extruder, where you want change the material": "Выберите экструдер, где вы хотите сменить материал",
+  "Select the needed action": "Выберите необходимое действие",
+  "Heating...": "Нагрев...",
+  "Unload": "Выгрузить",
+  "Load": "Загрузить",
+  "Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading": "Нажмите кнопку Выгрузить и дождитесь выгрузки материала и снимите катушку. Если это необходимо, вы можете нажать кнопку Выгрузки еще раз, чтобы повторить выгрузку",
+  "Load new spool, insert material into bowden tube and press Next button": "Загрузите новую катушку, вставьте материал в трубку и нажмите кнопку Далее",
+  "Use Load and Unload buttons to load material untill it comes from nozzle": "Используйте кнопки Загрузки и Выгрузки для загрузки материала, пока он не выйдет из сопла",
+  "Hello!": "Привет!",
+  "Let's Start": "Давайте начнем",
+  "Please remove all the transportation fixtures and press Next": "Пожалуйста, снимите все транспортные приспособления и нажмите кнопку Далее",
+  "Set Date and Time": "Установить дату и время",
+  "Select cluster": "Выберите кластер",
+  "Reboot": "Перезагрузить",
+  "Power Off": "Выключить",
+  "Retry": "Повторить",
+  "Dashboard": "Печать",
+  "Printers": "Принтеры",
+  "{0} printers": "{0} принтеров",
+  "{0} has been succesfully printed on {1} for {2}": "{0} было успешно напечатано на {1} за {2}",
+  "{0} has been failed on {1} for {2} cause of {3}": "{0} потерпело неудачу на {1} за {2} по причине {3}",
+  "New firmware download failed": "Не удалось загрузить новую версию ПО",
+  "New firmware is found on USB. Check settings for install": "Новое ПО найдено на USB. Проверьте настройки для установки",
+  "New firmware is available, version {0}. Check settings for install": "Доступна новое ПО, версия {0}. Проверьте настройки для установки",
+  "Refresh networks": "Обновить список сетей",
+  "Disable Wi-Fi hotspot": "Отключить точку доступа Wi-Fi",
+  "Enable Wi-Fi hotspot": "Включить точку доступа Wi-Fi",
+  "This wizard will help you calibrate five axis module": "Этот мастер поможет вам откалибровать пятиосевой модуль",
+  "Place the calibration tool into the five axis module and press Next": "Поместите калибровочный инструмент в пятиосевой модуль и нажмите кнопку Далее",
+  "Move nozzle to the nearest tip of the calibration tool and press Next": "Переместите сопло к ближайшему наконечнику калибровочного инструмента и нажмите кнопку Далее",
+  "Calibration complete! Please remove calibration tool": "Калибровка завершена! Пожалуйста, снимите калибровочный инструмент",
+  "This wizard helps you to setup zero point for proper 5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 5D печати",
+  "Zero point setup": "Установка нулевой точки",
+  "Classic mode (3D)": "Классический режим (3D)",
+  "Coil 5D": "Coil 5D",
+  "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "Этот мастер поможет вам настроить нулевую точку для правильной 3D/5D печати Пожалуйста, выберите режим печати, который вы хотите использовать",
+  "Please place needed base in the 5D Module and press Next": "Пожалуйста, поместите необходимое основание в модуль 5D и нажмите Далее",
+  "Move nozzle to the center of the base and press Next": "Переместите сопло к центру основания и нажмите кнопку Далее",
+  "Name is required": "Имя обязательно",
+  "Enter the diameter of the base and press Next": "Введите диаметр основания и нажмите кнопку Далее",
+  "Setup Complete!": "Настройка Завершена!",
+  "at ": "на  ",
+  "Folder name": "Имя папки",
+  "Create": "Создать",
+  "Input folder name": "Введите имя папки",
+  "USB": "USB"
 }

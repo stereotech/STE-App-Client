@@ -4,13 +4,13 @@
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
           <v-radio-group v-model="additionalData.action" mandatory>
-            <v-radio label="Unload material" :value="0" color="secondary" />
-            <v-radio label="Change material" :value="1" color="secondary" />
-            <v-radio label="Load material" :value="2" color="secondary" />
+            <v-radio :label="$tc('Unload material')" :value="0" color="secondary" />
+            <v-radio :label="$tc('Change material')" :value="1" color="secondary" />
+            <v-radio :label="$tc('Load material')" :value="2" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -41,11 +41,11 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 10
+  private step?: number = 4//10
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material02.jpg'
-  private description: string = 'Select the needed action'
+  private description: string = ''
 
   @printers.Action customCommand: any
   @settings.Getter settings!: Settings
@@ -54,15 +54,23 @@ export default class extends Vue {
     this.customCommand({ id: this.settings.systemId, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
-      this.next(12)
+      this.next(6)//12)
     } else {
-      this.next(11)
+      this.next(5)//11)
     }
   }
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted () {
+    this.description = this.$tc('Select the needed action')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the needed action')
   }
 }
 </script>

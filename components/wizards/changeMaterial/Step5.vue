@@ -3,13 +3,13 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">Unload</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="load">Load</v-btn>
+          <v-btn block x-large depressed color="accent" @click="load">{{$t("Load")}}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finish">Finish</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">{{$t("Finish")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -42,7 +42,7 @@ export default class extends Vue {
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material04.jpg'
-  private description: string = 'Use Load and Unload buttons to load material untill it comes from nozzle'
+  private description: string = ''
 
   @printers.Action retractCommand: any
   @printers.Action extrudeCommand: any
@@ -90,6 +90,14 @@ export default class extends Vue {
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted () {
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
+  }
+
+  updated () {
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
   }
 }
 </script>

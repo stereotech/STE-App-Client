@@ -12,7 +12,7 @@
           />
         </v-col>
         <v-col cols="12">
-          <p>Heating...</p>
+          <p>{{$t("Heating..")}}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +21,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(4)">Next</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(4)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -98,11 +98,19 @@ export default class extends Vue {
   }
 
   private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = 'Load new spool, insert material into bowden tube and press Next button'
+  private description: string = ''
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
+  }
+
+  mounted () {
+    this.description = this.$tc('Load new spool, insert material into bowden tube and press Next button')
+  }
+
+  updated () {
+    this.description = this.$tc('Load new spool, insert material into bowden tube and press Next button')
   }
 }
 </script>
