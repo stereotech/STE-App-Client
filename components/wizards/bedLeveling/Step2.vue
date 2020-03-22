@@ -80,7 +80,7 @@ export default class extends Vue {
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
+  private image: string = 'wizards/bed_leveling/bed_leveling05.jpg'
   private description: string = ''
 
 
@@ -94,13 +94,15 @@ export default class extends Vue {
   private jog (dir: number) {
     this.jogCommand({ id: this.$route.params.id, z: dir * this.amount })
   }
+
   mounted () {
-    this.description = this.$tc('Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed')
+    this.description = this.$tc('Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment')
   }
 
   updated () {
-    this.description = this.$tc('Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed')
+    this.description = this.$tc('Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment')
   }
+
   @printers.Action customCommand: any
 
   @printers.Action jogCommand: any
