@@ -102,7 +102,9 @@ export default class WizardsPanel extends Vue {
 
   validWizard (wizard: any): boolean {
     if (wizard.type == this.printerType || wizard.type == 2)
-      if (wizard.id != 4 && !this.glaze)
+      if (this.glaze && wizard.id == 4)
+        return false
+      else
         return true
     return false
   }
