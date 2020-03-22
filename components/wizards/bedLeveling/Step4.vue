@@ -35,7 +35,7 @@ export default class extends Vue {
   private step?: number = 3
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling04.jpg'
+  private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
   private description: string = ''
 
 
@@ -45,13 +45,15 @@ export default class extends Vue {
     this.curStep = step
   }
 
+
   mounted () {
-    this.description = this.$tc('Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed')
+    this.description = this.$tc('Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed')
   }
 
   updated () {
-    this.description = this.$tc('Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed')
+    this.description = this.$tc('Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed')
   }
+
   @printers.Action customCommand: any
 }
 </script>
