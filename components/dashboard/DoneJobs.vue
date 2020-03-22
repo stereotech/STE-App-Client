@@ -26,7 +26,7 @@
             </v-list-item-subtitle>
             <v-list-item-subtitle
               v-else
-            >{{ $t("Printed: ")}}{{$moment(doneJob.lastPrintTime).fromNow() }}</v-list-item-subtitle>
+            >{{ $t("Printed: ")}}{{$moment.unix(doneJob.lastPrintTime).fromNow() }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-menu>
