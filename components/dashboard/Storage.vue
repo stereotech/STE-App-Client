@@ -103,7 +103,7 @@
 
               <v-list-item-subtitle
                 class="body-1"
-              >{{$t("Uploaded ")}}{{ $moment(file.date).fromNow()}}</v-list-item-subtitle>
+              >{{$t("Uploaded ")}}{{ $moment.unix(file.date).fromNow()}}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <v-menu>

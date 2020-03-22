@@ -39,7 +39,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 9
+  private step?: number = 1
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material02.jpg'
@@ -48,7 +48,7 @@ export default class extends Vue {
   @printers.Action customCommand: any
 
   private nextStep () {
-    this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
+    this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
       this.next(3)

@@ -2,16 +2,10 @@
   <WizardStep v-if="heating" :step="step">
     <v-container>
       <v-row dense align="center" justify="space-around">
-        <v-col cols="12">
-          <v-progress-circular
-            :size="70"
-            :width="7"
-            color="secondary"
-            :max="240"
-            :value="heatingValue"
-          />
+        <v-col cols="4">
+          <v-progress-circular :size="70" :width="7" color="secondary" :value="heatingValue /2.4" />
         </v-col>
-        <v-col cols="12">
+        <v-col cols="4">
           <p>{{$t("Heating..")}}</p>
         </v-col>
       </v-row>

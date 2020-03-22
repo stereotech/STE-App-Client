@@ -74,12 +74,12 @@ export default class extends Vue {
     return true
   }
 
-  private repeat () {
-    this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
+  private async repeat () {
+    await this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
   }
 
-  private load () {
-    this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+  private async load () {
+    await this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private finish () {

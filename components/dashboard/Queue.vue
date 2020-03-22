@@ -32,7 +32,7 @@
             >{{ $t("Printers: {0}",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-list-item-action-text>{{ $moment(job.creationTime).fromNow() }}</v-list-item-action-text>
+            <v-list-item-action-text>{{ $moment.unix(job.creationTime).fromNow() }}</v-list-item-action-text>
 
             <v-menu v-if="job.state === 'Queued'">
               <template v-slot:activator="{ on }">
@@ -84,7 +84,7 @@
       <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="closeDialog(undefined)">
-            <v-icon>mdi-close</v-icon>           
+            <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title v-if="editMode">{{ $t("Edit job") }}</v-toolbar-title>
           <v-toolbar-title v-else>{{ $t("Create job") }}</v-toolbar-title>
