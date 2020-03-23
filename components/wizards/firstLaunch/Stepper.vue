@@ -1,5 +1,5 @@
 <template>
-  <WizardStepper v-model="currentStep" :step-count="10" :closeable="false">
+  <WizardStepper v-model="currentStep" :step-count="5" :closeable="false">
     <Step1 v-model="currentStep" />
     <Step2 v-model="currentStep" />
     <Step3 v-model="currentStep" />
