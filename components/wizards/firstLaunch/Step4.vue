@@ -101,7 +101,7 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(9)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(4)">{{$t("Next")}}</v-btn>
         </v-col>
       </v-row>
     </v-container>
