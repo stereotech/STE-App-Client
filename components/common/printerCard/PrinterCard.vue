@@ -5,7 +5,7 @@
         :id="id"
         :toolbar="toolbar"
         :control-panel="controlPanel"
-        :removable="!computedPrinter.isLocal && (isMaintenance || !isAvaliable) && controlPanel"
+        :removable="!computedPrinter.isLocal && !isPrinting && controlPanel"
       />
       <v-container fluid>
         <v-row dense>
