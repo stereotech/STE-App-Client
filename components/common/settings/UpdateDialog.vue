@@ -77,7 +77,7 @@
                     color="primary"
                     @click="upload"
                     :disabled="file.length < 1"
-                  >Upload</v-btn>
+                  >{{$t("common.settings.updateDialog.upload")}}</v-btn>
                 </v-flex>
                 <v-flex xs12 v-if="updateOnUsb">
                   <v-btn
@@ -86,7 +86,7 @@
                     block
                     color="primary"
                     @click="startUpdateFromUsb"
-                  >Install update from USB</v-btn>
+                  >{{$t("common.settings.updateDialog.installFromUSB")}}</v-btn>
                 </v-flex>
               </v-layout>
               <v-overlay :value="overlay" absolute>

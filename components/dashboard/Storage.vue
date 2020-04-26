@@ -77,7 +77,7 @@
               color="primary"
               @click="upload"
               :disabled="files.length < 1"
-            >Upload</v-btn>
+            >{{$t("dashboard.storage.upload")}}</v-btn>
           </v-flex>
         </v-layout>
         <v-overlay :value="overlay" absolute z-index="3">
