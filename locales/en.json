@@ -131,7 +131,9 @@
                 "progress":"Downloading {2}%",
                 "finish":"Download finished. Please reboot printer to finish update",
                 "copying":"Copying",
-                "failed":"Download failed"
+                "failed":"Download failed",
+                "upload":"Upload",
+                "installFromUSB":"Install update from USB"
             },
             "wifiDialog": {
                 "title": "Wi-Fi Setup",
@@ -167,7 +169,8 @@
             "title": "",
             "uploaded": "Uploaded {time}",
             "remove":"Remove",
-            "noUploadedFiles":"You don't have any uploaded files yet. You could add new files using dropzone below"
+            "noUploadedFiles":"You don't have any uploaded files yet. You could add new files using dropzone below",
+            "upload":"Upload"
         }
     },
     "materials": {

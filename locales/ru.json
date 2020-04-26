@@ -71,7 +71,9 @@
                 "title": "Обновление системы",
                 "currentVersion": "Текущая версия:",
                 "checkForUpdate": "Проверить обновления",
-                "downloadAndInstall": "Скачать и установить"
+                "downloadAndInstall": "Скачать и установить",
+                "upload":"Загрузить",
+                "installFromUSB":"Установить обновление с USB"
             },
             "wifiDialog": {
                 "title": "Настройки Wi-Fi",
@@ -98,7 +100,8 @@
         },
         "storage": {
             "title": "",
-            "uploaded": "Загруженно "
+            "uploaded": "Загруженно ",
+            "upload":"Загрузить"
         }
     },
     "materials": {
