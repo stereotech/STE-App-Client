@@ -161,7 +161,7 @@
               color="primary"
               :disabled="files.length < 1"
               @click="upload"
-            >Upload</v-btn>
+            >{{$t("Upload")}}</v-btn>
           </v-col>
         </v-row>
         <v-overlay :value="overlay" absolute z-index="3">
