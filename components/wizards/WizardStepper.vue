@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12">
     <v-toolbar color="primary" flat dense>
-      <v-btn v-if="closeable && currentStep == 0" x-large text icon @click="$router.back()">
+      <v-btn v-if="closeable" x-large text icon nuxt :to="`/printers/${$route.params.id}`" exact>
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <span class="headline font-weight-light">
