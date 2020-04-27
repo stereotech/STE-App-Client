@@ -1,44 +1,26 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense>
+      <v-row dense justify="space-around" class="text-center">
+        <v-col cols="6">
+          <v-btn x-large outlined depressed color="secondary" icon @click="jog(-1)">
+            <v-icon>mdi-chevron-up</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="6">
+          <v-btn x-large outlined depressed color="secondary" icon @click="jog(1)">
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </v-col>
         <v-col cols="12">
-          <v-container>
-            <v-row dense class="text-center" align="center" justify="center">
-              <v-col cols="6">
-                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(-1)">
-                  <v-icon>mdi-chevron-up</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="6">
-                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(1)">
-                  <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="12">
-                <v-btn-toggle v-model="selectedAmount" mandatory>
-                  <v-btn
-                    x-large
-                    outlined
-                    color="primary"
-                    text-color="secondary"
-                    @click="amount = 0.1"
-                  >0.1</v-btn>
-                  <v-btn
-                    x-large
-                    outlined
-                    color="primary"
-                    text-color="secondary"
-                    @click="amount = 1"
-                  >1</v-btn>
-                </v-btn-toggle>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-btn-toggle v-model="selectedAmount" mandatory light class="my-10">
+            <v-btn x-large outlined color="primary" text-color="secondary" @click="amount = 0.1">0.1</v-btn>
+            <v-btn x-large outlined color="primary" text-color="secondary" @click="amount = 1">1</v-btn>
+          </v-btn-toggle>
         </v-col>
 
         <v-col cols="12">
-          <v-btn x-large block depressed color="accent" @click="next(2)">
+          <v-btn x-large block depressed color="accent" @click="next(3)">
             {{$t("Next")}}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
@@ -74,7 +56,7 @@ export default class extends Vue {
   private amount: number = 0.1
 
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y100 F3600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y190 F3600' })
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z5 F600' })
   }
   private step?: number = 1
