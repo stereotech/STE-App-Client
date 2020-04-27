@@ -2,6 +2,7 @@ import { ServerMiddleware } from '@nuxt/types'
 import { PrinterInfo, CurrentState } from '~/types/printer'
 import { Settings } from '~/types/settings'
 import { PrintJob } from '~/types/printJob'
+import { ScannerResult } from '~/types/scannerResult'
 
 
 
@@ -69,20 +70,22 @@ const printJobs: PrintJob[] = [
     }
 ]
 
-const scannerResults = [
+const scannerResults: ScannerResult[] = [
     {
         id: 'st-ddd',
         model: 'STE320',
         name: 'ST-DDD',
         role: 'host',
-        ipAddress: '192.168.0.200'
+        ipAddress: '192.168.0.200',
+        printers: 1
     },
     {
         id: 'st-eee',
         model: 'STE320',
         name: 'ST-EEE',
         role: 'host',
-        ipAddress: '192.168.0.20'
+        ipAddress: '192.168.0.20',
+        printers: 1
     }
 ]
 
@@ -122,35 +125,35 @@ const localStorage = {
     children: [
         {
             display: 'folder1',
-            hash:'ab4dfcda52ce69a64dabc21cfb2417013b4f68e1',
+            hash: 'ab4dfcda52ce69a64dabc21cfb2417013b4f68e1',
             name: 'folder1',
-            size:'20',
-            path:'/Storage/folder1',
+            size: '20',
+            path: '/Storage/folder1',
             type: 'folder',
             typePath: 'folder',
-            refs:{},
-            children:[
+            refs: {},
+            children: [
                 {
                     display: 'folder1-1',
-                    hash:'cb8ffcda11ad69a64dabc21cfb2417013b4f68e1',
+                    hash: 'cb8ffcda11ad69a64dabc21cfb2417013b4f68e1',
                     name: 'folder1-1',
                     size: '15',
-                    path:'/Storage/folder1/folder1-1',
+                    path: '/Storage/folder1/folder1-1',
                     type: 'folder',
-                    typePath:'folder',
-                    refs:{},
-                    children:[]                    
+                    typePath: 'folder',
+                    refs: {},
+                    children: []
                 },
                 {
                     display: 'folder1-2',
-                    hash:'ad9efcda11ad69a64dabc21cfb8444013b4f68e1',
+                    hash: 'ad9efcda11ad69a64dabc21cfb8444013b4f68e1',
                     name: 'folder1-2',
                     size: '5',
-                    path:'/Storage/folder1/folder1-2',
+                    path: '/Storage/folder1/folder1-2',
                     type: 'folder',
-                    typePath:'folder',
-                    refs:{},
-                    children:[{
+                    typePath: 'folder',
+                    refs: {},
+                    children: [{
                         date: Date.now(),
                         display: 'Internal_3D.gcode',
                         hash: 'ab4dfcda52ce54a64dcde43cfb2417013b4f68e1',
@@ -172,14 +175,14 @@ const localStorage = {
         },
         {
             display: 'folder2',
-            hash:'ab4deaea52ce54a64dcde43cfb9650013b4f68c5',
+            hash: 'ab4deaea52ce54a64dcde43cfb9650013b4f68c5',
             name: 'folder2',
             size: '350',
             path: '/Storage/folder2',
             type: 'folder',
             typePath: 'folder',
-            refs:{},
-            children:[{
+            refs: {},
+            children: [{
                 date: Date.now(),
                 display: '1_3D.gcode',
                 hash: 'bc4dfcda52ce54b84dcde43cfb2417013b4f68e1',

@@ -27,30 +27,28 @@
         <v-container fluid>
           <v-row dense v-if="results.length > 0">
             <v-col v-for="printer in results" :key="printer.id" class="d-flex" cols="6">
-              <v-card hover ripple @click="confirmation = true">
+              <v-card hover ripple @click="selectedPrinter = printer; confirmation = true">
                 <v-img :src="'/printers/'+ printer.model +'.png'" alt="Avatar" />
                 <div class="title text-center">{{ printer.name }}</div>
                 <div class="body-1 text-center">{{ printer.model }}</div>
                 <div class="body-1 text-center">{{$t("Address: {0}", [printer.ipAddress])}}</div>
               </v-card>
-              <v-dialog v-model="confirmation" max-width="425">
-                <v-card>
-                  <v-card-title
-                    class="headline"
-                  >{{ $t("Do you want to add {0} to cluster?",[printer.name]) }}</v-card-title>
-                  <v-card-actions>
-                    <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
-                    <v-btn color="primary" text @click="startConnection(printer)">{{$t("Yes")}}</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
             </v-col>
+            <v-dialog v-model="confirmation" max-width="425">
+              <v-card v-if="selectedPrinter !== undefined">
+                <v-card-title
+                  class="headline"
+                >{{ $t("Do you want to add {0} to cluster?",[selectedPrinter.name]) }}</v-card-title>
+                <v-card-actions>
+                  <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
+                  <v-btn color="primary" text @click="startConnection">{{$t("Yes")}}</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-row>
-          <v-row dense v-else>
-            <v-col class="d-flex" cols="12">
-              <div class="title text-center">
-                <v-progress-circular :size="50" color="primary" indeterminate />
-              </div>
+          <v-row dense v-else justify="center">
+            <v-col cols="2">
+              <v-progress-circular :size="50" color="primary" indeterminate />
             </v-col>
           </v-row>
         </v-container>
@@ -75,16 +73,37 @@ export default class AddPrinterDialog extends Vue {
 
   private dialog: boolean = false
   private confirmation: boolean = false
+  private selectedPrinter: ScannerResult = {
+    id: 'st-aaa',
+    name: 'ST-AAA',
+    model: 'STE320',
+    ipAddress: '192.168.0.1',
+    printers: 1,
+    role: 'host'
+  }
 
   async startScan () {
     this.dialog = true
     await this.fetchResults()
+    if (this.results && this.results.length > 0) {
+      this.selectedPrinter = this.results[0]
+    }
   }
 
-  async startConnection (printer: ScannerResult) {
+  async startConnection () {
     this.confirmation = false
     this.dialog = false
-    this.connect(printer)
+    if (this.selectedPrinter) {
+      this.connect(this.selectedPrinter)
+    }
+    this.selectedPrinter = {
+      id: 'st-aaa',
+      name: 'ST-AAA',
+      model: 'STE320',
+      ipAddress: '192.168.0.1',
+      printers: 1,
+      role: 'host'
+    }
   }
 
   private closeDialog () {
