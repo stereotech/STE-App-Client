@@ -21,10 +21,10 @@ export default (ctx, inject) => {
 
             try {
                 if (process.env.NUXT_ENV_PLATFORM == 'MOBILE') {
+
                     console.log('Zeroconf start')
                     // @ts-ignore
-                    var zeroconf = window.cordova.plugins.zeroconf
-                    zeroconf.watch('_stereotech._tcp.', 'local.', function (result) {
+                    window.cordova.plugins.zeroconf.watch('_stereotech._tcp.', 'local.', function (result) {
                         let action = result.action
                         let service = result.service
                         if (action == 'added') {
@@ -48,6 +48,7 @@ export default (ctx, inject) => {
                             store.commit('clusterDiscoveryState/removeAvaliable', service)
                         }
                     })
+
                 }
             } catch (err) {
                 console.error('zeroconf failed', err)
