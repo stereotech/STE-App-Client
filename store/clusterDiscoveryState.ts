@@ -30,6 +30,9 @@ export const mutations: MutationTree<ClusterDiscoveryState> = {
                 role: device.txtRecord.role,
                 printers: device.txtRecord.printers,
             }
+            if (!newService.name || newService.name === '') {
+                return
+            }
             if (newService.ipAddress) {
                 let existingIdx = state.avaliable.findIndex(s => s.id === newService.id)
                 if (existingIdx > -1) {
