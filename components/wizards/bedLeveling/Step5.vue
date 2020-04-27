@@ -1,61 +1,16 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <v-container grid-list-md>
-            <v-layout row wrap class="text-center" align-center justify-center>
-              <v-flex xs6>
-                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(-1)">
-                  <v-icon>mdi-chevron-up</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex xs6>
-                <v-btn x-large outlined depressed color="accent" icon dark @click="jog(1)">
-                  <v-icon>mdi-chevron-down</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex xs12>
-                <v-btn-toggle mandatory v-model="selectedAmount">
-                  <v-btn
-                    x-large
-                    outlined
-                    color="primary"
-                    text-color="secondary"
-                    @click="amount = 0.1"
-                  >0.1</v-btn>
-                  <v-btn
-                    x-large
-                    outlined
-                    color="primary"
-                    text-color="secondary"
-                    @click="amount = 1"
-                  >1</v-btn>
-                </v-btn-toggle>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn x-large block depressed color="accent" @click="next(1)">
-            <v-icon left dark>mdi-chevron-left</v-icon>{{$t("printers.wizards.bedLeveling.step5.setPointsAgain")}}
-          </v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn x-large block depressed color="accent" @click="next(5)">
-            {{$t("frequentlyUsed.next")}}
-            <v-icon right dark>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <v-btn x-large block depressed color="accent" @click="next(5)">
+      {{$t("Next")}}
+      <v-icon right dark>mdi-chevron-right</v-icon>
+    </v-btn>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -74,17 +29,15 @@ export default class extends Vue {
     }
   }
 
-  private selectedAmount: number = 1
-  private amount: number = 0.1
-
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y100 F3600' })
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z5 F600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 X190 Y10 F3600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
+
   private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling05.jpg'
+  private image: string = 'wizards/bed_leveling/bed_leveling04.jpg'
   private description: string = ''
 
 
@@ -94,18 +47,17 @@ export default class extends Vue {
     this.curStep = step
   }
 
- mounted() {
-    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step5desc').toString()
+  mounted () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed')
   }
-  private jog (dir: number) {
-    this.jogCommand({ id: this.$route.params.id, z: dir * this.amount })
+
+  updated () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed')
   }
 
   @printers.Action customCommand: any
-  @printers.Action jogCommand: any
 }
 </script>
-
 
 <style>
 </style>

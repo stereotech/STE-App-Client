@@ -1,11 +1,11 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="next(2)">{{$t("frequentlyUsed.next")}}</v-btn>
-        </v-flex>
-      </v-layout>
+    <v-container>
+      <v-row dense align="center" justify="space-around">
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="next(2)">{{$t("Next")}}</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
@@ -28,7 +28,7 @@ export default class extends Vue {
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
+  private image: string = 'wizards/first_launch/remove_fixtures.jpg'
   private description: string = ''
 
   private next (step: number) {
@@ -36,8 +36,12 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step2desc').toString()
+  mounted () {
+    this.description = this.$tc('Please remove all the transportation fixtures and press Next')
+  }
+
+  updated () {
+    this.description = this.$tc('Please remove all the transportation fixtures and press Next')
   }
 }
 </script>

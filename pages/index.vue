@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap>
+  <v-row dense>
     <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index" />
     <DoneJobs />
     <Queue />
@@ -10,20 +10,20 @@
       :name="usbStorage.origin"
       :display="usbStorage.origin"
     />
-  </v-layout>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { State, Action, Getter, namespace } from 'vuex-class'
+import { StorageState } from '../store/storageState'
+import { FileOrFolder } from '../types/fileOrFolder'
+import { PrinterInfo } from '../types/printer'
 import DoneJobs from '~/components/dashboard/DoneJobs.vue'
 import Storage from '~/components/dashboard/Storage.vue'
 import Queue from '~/components/dashboard/Queue.vue'
 import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
 import BottomInput from '~/components/common/BottomInput.vue'
-import { State, Action, Getter, namespace } from 'vuex-class'
-import { StorageState } from '../store/storageState';
-import { FileOrFolder } from '../types/fileOrFolder';
-import { PrinterInfo } from '../types/printer';
 
 const storage = namespace('storageState')
 const printers = namespace('printersState')
@@ -38,7 +38,6 @@ const printers = namespace('printersState')
   }
 })
 export default class Dashboard extends Vue {
-
   @storage.Getter allUsbStorages!: FileOrFolder[]
 
   @printers.Getter printers!: PrinterInfo[]
@@ -63,6 +62,5 @@ export default class Dashboard extends Vue {
       this.$store.dispatch('printJobsState/fetchJobs')
     }
   }
-
 }
 </script>

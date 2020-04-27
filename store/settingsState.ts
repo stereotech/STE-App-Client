@@ -43,16 +43,19 @@ export const getters: GetterTree<SettingsState, RootState> = {
   },
   avaliableNetworks (state: SettingsState): Network[] {
     return state.networking.networks.filter(
-      (value: Network) => value.state !== 'online'
+      (value: Network) => value.state === 'idle'
     )
   },
-  currentNetwork (state: SettingsState): Network | undefined {
-    return state.networking.networks.find(
+  currentNetwork (state: SettingsState): Network[] {
+    return state.networking.networks.filter(
       (value: Network) => {
-        return value.state === 'online';
+        return value.state === 'online' || value.state === 'ready';
       }
     )
   },
+  connectedMethod (state: SettingsState): string {
+    return state.networking.connectedMethod
+  }
 }
 
 export const mutations: MutationTree<SettingsState> = {
@@ -91,7 +94,6 @@ export const actions: ActionTree<SettingsState, RootState> = {
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { language: lang })
     if (response.status === 200) {
       commit('setSettings', response.data)
-      this.$setLocale(lang)
     }
   },
 
@@ -108,6 +110,10 @@ export const actions: ActionTree<SettingsState, RootState> = {
     if (response.status === 200) {
       commit('setConnectedMethod', response.data)
     }
+  },
+
+  async setConnectedMethod ({ commit }, method: string) {
+    await this.$axios.$put(this.state.apiUrl + networkEndpoint + `?method=${method}`)
   },
 
   async getWifiNetworks ({ commit }) {

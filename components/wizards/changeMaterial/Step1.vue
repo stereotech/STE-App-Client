@@ -1,25 +1,25 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
+    <v-container>
+      <v-row dense align="center" justify="space-around">
+        <v-col cols="12">
           <v-radio-group v-model="additionalData.tool" mandatory>
-            <v-radio :label="$tc('labels.extruder1')" :value="0" color="secondary"></v-radio>
-            <v-radio :label="$tc('labels.extruder2')" :value="1" color="secondary"></v-radio>
+            <v-radio :label="$tc('Extruder 1')" :value="0" color="secondary" />
+            <v-radio :label="$tc('Extruder 2')" :value="1" color="secondary" />
           </v-radio-group>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -58,12 +58,15 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
-     mounted() {
-    this.description = this.$t('printers.wizards.changeMatreial.descriptions.step1desc').toString()
+  mounted () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the extruder, where you want change the material')
   }
 }
 </script>
-
 
 <style>
 </style>

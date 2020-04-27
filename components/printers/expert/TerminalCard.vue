@@ -1,39 +1,39 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("printers.expert.terminalCard.title")}}</v-card-title>
-    <v-container fluid grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs12>
+    <v-card-title class="title">{{$t("Terminal")}}</v-card-title>
+    <v-container fluid>
+      <v-row dense>
+        <v-col cols="12">
           <v-card height="500">
-            <v-list dense style="max-height: 500px" class="overflow-y-auto" id="terminal-list">
+            <v-list id="terminal-list" dense style="max-height: 500px" class="overflow-y-auto">
               <template v-for="(line, index) in printerLogs(id)">
-                <TerminalString :key="index" @mounted="scrollToBottom">{{line}}</TerminalString>
+                <TerminalString :key="index" @mounted="scrollToBottom">{{ line }}</TerminalString>
               </template>
             </v-list>
           </v-card>
-        </v-flex>
-        <v-flex xs12>
-          <v-checkbox :label="$tc('labels.autoscroll')" v-model="autoscroll"></v-checkbox>
-        </v-flex>
-        <v-flex xs12>
-          <BottomInput :input.sync="gcodeString" v-model="keyboard">
+        </v-col>
+        <v-col cols="12">
+          <v-checkbox v-model="autoscroll" :label="$tc('Autoscroll')" />
+        </v-col>
+        <v-col cols="12">
+          <BottomInput v-model="keyboard" :input.sync="gcodeString">
             <v-text-field
+              v-model="gcodeString"
               append-icon="mdi-send"
+              filled
+              clear-icon="mdi-close-circle"
+              clearable
+              :label="$tc('G-Code Command')"
+              type="text"
               @click:append="misc"
               @click="keyboard = true"
               @keydown.enter="misc"
               @keydown.up="prevGCode"
               @keydown.down="nextGCode"
-              filled
-              clear-icon="mdi-close-circle"
-              clearable
-              :label="$tc('labels.gCodeCommand')"
-              type="text"
-              v-model="gcodeString"
-            ></v-text-field>
+            />
           </BottomInput>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>
@@ -68,18 +68,15 @@ export default class TerminalCard extends Vue {
   private temperature: boolean = false
   private keyboard: boolean = false
 
-
   private scrollToBottom () {
     if (!this.autoscroll) {
       return
     }
-    let options: GoToOptions = {
+    const options: GoToOptions = {
       container: '#terminal-list'
     }
     this.$vuetify.goTo(9999999, options)
   }
-
-
 
   private misc () {
     this.customCommand({ id: this.id, command: this.gcodeString })
@@ -90,16 +87,15 @@ export default class TerminalCard extends Vue {
 
   private prevGCode () {
     this.previousIndex--
-    if (this.previousIndex < 0) this.previousIndex = 0
+    if (this.previousIndex < 0) { this.previousIndex = 0 }
     this.gcodeString = this.previousGCode[this.previousIndex]
   }
 
   private nextGCode () {
     this.previousIndex++
-    if (this.previousIndex > this.previousGCode.length) this.previousIndex = this.previousGCode.length
+    if (this.previousIndex > this.previousGCode.length) { this.previousIndex = this.previousGCode.length }
     this.gcodeString = this.previousGCode[this.previousIndex]
   }
-
 }
 </script>
 

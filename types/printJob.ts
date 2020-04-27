@@ -6,6 +6,7 @@ export interface PrintJob {
   description: string
   target?: string
   creationTime: number
+  isFiveAxis?:boolean
   fileUri: string
   printers: string[]
   lastPrintTime: number

@@ -1,289 +1,176 @@
 {
-    "labels":{
-        "label":"label",
-        "selectState":"Select state",
-        "setTime":"Set time",
-        "setDate":"Set date",
-        "selectLanguage":"Select language",
-        "total":"Total",
-        "owned":"Owned",
-        "avaliable":"avaliable",
-        "uploadUpdate":"Upload Update",
-        "wiFiPassword":"Wi-Fi password",
-        "jobName":"Job name",
-        "fileAssignment":"File assignment",
-        "printerAssignment":"Printer assignment",
-        "copies":"Copies",
-        "description":"Description",
-        "uplGCodeFls":"Upload G-Code Files",
-        "selectExtruder":"Select extruder",
-        "flow":"Flow",
-        "feed":"Feed",
-        "e1":"E1",
-        "e2":"E2",
-        "chamber":"Chamber",
-        "bed":"Bed",
-        "cooling":"Cooling",
-        "autoscroll":"Autoscroll",
-        "gCodeCommand":"G-Code Command",
-        "extruder1":"Extruder 1",
-        "extruder2":"Extruder 2",
-        "unloadMaterial":"Unload material",
-        "changeMaterial":"Change material",
-        "loadMaterial":"Load material"
-    },
-    "pagesTitles":{
-        "printers":"Printers",
-        "dashboard":"Dashboard"
-    },
-    "frequentlyUsed": {
-        "no": "No",
-        "yes": "Yes",
-        "cancel": "Cancel",
-        "ok": "OK",
-        "forget": "Forget",
-        "connect": "Connect",
-        "remove": "Remove",
-        "save": "Save",
-        "retry": "Retry",
-        "start": "Start",
-        "next": "Next",
-        "finish":"Finish",
-        "skip": "Skip",
-        "done":"Done!"
-    },
-    "common": {
-        "printerCard": {
-            "title": "Control Panel",
-            "printing": "Printing...",
-            "paused": "Paused at",
-            "maintenance": "Maintenance",
-            "printingDone": "Printing Done!",
-	        "failed": "Printing Failed",	
-            "offline": "Offline",
-	        "loading":"Loading...",
-	        "idle" : "Idle",
-	        "notAvaliable" : "Not Avaliable",
-            "e1Target": "E1 Target",
-            "e2Target": "E2 Target",
-            "bedTarget": "Bed Target:",
-            "chamberTarget": "Chamber Target",
-            "tryToReconnect": "Try to reconnect",
-            "currentFile": "Current file:",
-            "currentPrintjob": "Current printjob:",
-            "cleanTheBuildplate": "Clean the buildplate",
-	        "andSelectState" : "and select state",
-            "printerIsWaiting": "Printer is waiting", 
-	        "forPrintJob":	"for printjob",
-	        "waiting" : "Waiting...",
-            "printerIsReady": "Printer is ready",
-	        "forMaintenance": "for maintenance",
-            "printerIsNotAvaliable":"Printer is not avaliable",	
-            "inTheCurrentNetwork":"in the current network",
-            "doYouWantToRemove": "Do you want to remove {0} from cluster?",
-            "no": "No",
-            "yes": "Yes",
-            "host":"Host"
-        },
-        "settings": {
-            "settingsTitle": {
-                "Wi-Fi": "Wi-Fi",
-                "Date and Time": "Date and Time",
-                "Language": "Language",
-                "Storage": "Storage",
-                "Reset and Restore": "Reset and Restore",
-                "Update": "Update"
-            },
-            "dateTimeDialog": {
-                "title": "Date And Time"
-            },
-            "languageDialog": {
-                "title": "Language"
-            },
-            "mainSettingsDialog": {
-                "title": "Settings"
-            },
-            "resetDialog": {
-                "title": "Reset And restore",
-                "factoryReset": "Factory Reset",
-                "factoryResetClearStorage": "Factory reste (clear storage)",
-                "sureFactoryReset": "Are you sure want to make factory reset?",
-                "sureFactoryResetClear": "Are you sure want to make factory reset and clear all user data?",
-                "rebootMessage": "Printer will reboot after confirmation"
-            },
-            "settingsDialog": {
-                "title": "Settings",
-                "reboot": "Reboot",
-                "powerOff": "Power Off"
-            },
-            "storageDialog": {
-                "title": "Storage"
-            },
-            "updateDialog": {
-                "title": "Sistem updates",
-                "currentVersion": "Current version:{0}",
-                "checkForUpdate": "Check for update",
-                "latestFirmware": "You have the latest firmware",
-                "downloadAndInstall": "download and install",
-                "newVersion":"New version avaliable: {{ ver }}",
-                "downloadUpdate":"Download update",
-                "downloadingVersion":"Downloading {1}...",
-                "progress":"Downloading {2}%",
-                "finish":"Download finished. Please reboot printer to finish update",
-                "copying":"Copying",
-                "failed":"Download failed",
-                "upload":"Upload",
-                "installFromUSB":"Install update from USB"
-            },
-            "wifiDialog": {
-                "title": "Wi-Fi Setup",
-                "currentNetwork": "Current Network",
-                "forget":"Forget",
-                "forgetNetworkName": "Forget{name}?",
-                "avaliableNetworks": "Avaliable networks",
-                "enterWifiPassword": "Enter Wi-Fi passord for {ntwkName}",
-                "connectToNetwork": "Connect to network?",
-                "wifiPassword": "Wi-Fi password"
-            }
-        }
-    },
-    "dashboard": {
-        "doneJobs": {
-            "title": "Done Jobs",
-            "printed": "Printed: {time}",
-            "revert": "Revert",
-            "remove":"Remove",
-            "seeDoneJobs":"Here you will see done print jobs. Succesful prints marked with"
-        },
-        "printersPanel": {},
-        "queue": {
-            "jobAction":"{action} job",
-            "printers":"Printers: {prnts}",
-            "title": "Queue",
-            "edit": "Edit",
-            "remove":"Remove",
-            "removeJob": "Do you want to remove the job?",
-            "noQueuedJobs":"There are no queued print jobs yet. Add new one by clicking"
-        },
-        "storage": {
-            "title": "",
-            "uploaded": "Uploaded {time}",
-            "remove":"Remove",
-            "noUploadedFiles":"You don't have any uploaded files yet. You could add new files using dropzone below",
-            "upload":"Upload"
-        }
-    },
-    "materials": {
-        "materialDialog": {
-            "title": "Add Material",
-            "updateMaterial": "Update material"
-        }
-    },
-    "printers": {
-        "expert": {
-            "extruderCard": {
-                "title": "Extruder"
-            },
-            "jogCard": {
-                "title": "Jog"
-            },
-            "manualControlPanel": {
-                "title": "Manual Control"
-            },
-            "miscCard": {
-                "title": "Misc"
-            },
-            "temperatureFan": {
-                "title": "Temperature And Fan"
-            },
-            "terminalCard":{
-                "title":"Terminal",
-                "autoscroll":"Autoscroll"
-            }
-        },
-        "addPrinterDialog": {
-            "title": "Add printer",
-            "address": "Address: {ip}",
-            "doYouWantToAdd": "Do you want to add {0} to cluster?"
-        },
-        "wizardCard": {},
-        "wizardsPanel": {
-            "title": "Wizard"
-        },
-        "wizards":{
-            "bedLeveling":{
-                "descriptions":{
-                    "step1desc":"Perform bed leveling if there is too much distance between the nozzles and the build plate",
-                    "step2desc":"Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
-                    "step3desc":"Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
-                    "step4desc":"Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
-                    "step5desc":"Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
-                    "step6desc":"Calibration complete!"
-                },
-                "stepper":{
-                    "title":"Bed leveling"
-                },
-                "step5":{
-                    "setPointsAgain":"Set points again"
-                }
-            },
-            "changeMatreial":{
-                "title":"Change material",
-                "heating":"Heating...",
-                "unload":"Unload",
-                "load":"Load",
-                "descriptions":{
-                    "step1desc":"Select the extruder, where you want change the material",
-                    "step2desc":"Select the needed action",
-                    "step3desc":"Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
-                    "step4desc":"Load new spool, insert material into bowden tube and press Next button",
-                    "step5desc":"Use Load and Unload buttons to load material untill it comes from nozzle"
-                }
-            },
-            "firstLaunch":{
-                "hello":"Hello!",
-                "start":"Let's Start",
-                "setDateTime":"Set Date and Time",
-                "setPoints":"Set points again",
-                "heating":"Heating...",
-                "unload":"Unload",
-                "load":"Load",
-                "connect":"Connect",
-                "descriptions":{
-                    "step2desc":"Please remove all the transportation fixtures and press Next",
-                    "step3desc":"",
-                    "step4desc":"Perform bed leveling if there is too much distance between the nozzles and the build plate",
-                    "step5desc":"Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
-                    "step6desc":"Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
-                    "step7desc":"Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
-                    "step8desc":"Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
-                    "step9desc":"Calibration complete!",
-                    "step10desc":"Select the extruder, where you want change the material",
-                    "step11desc":"Select the needed action",
-                    "step12desc":"Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
-                    "step13desc":"Load new spool, insert material into bowden tube and press Next button",
-                    "step14desc":"Use Load and Unload buttons to load material untill it comes from nozzle"
-
-                }
-            }
-        }
-    },
-    "chooseprinter": {
-        "address": "Address",
-        "selectCluster":"Select cluster",
-        "printers":"{0} printers"
-    },
-    "navigationPanel": {
-        "Dashboard": "Dashboard",
-        "Printers": "Printers",
-        "Materials": "Materials",
-        "Select cluster": "Select cluster"
-    },
-    "layout":{
-        "selectCluster":"",
-        "reboot":"",
-        "powerOff":"",
-        "settings":"Settings",
-        "retry":"Retry"
-    }
+    "Current printjob:": "Current printjob:",
+    "Clean the buildplate": "Clean the buildplate",
+    "and select state": "and select state",
+    "Printer is waiting": "Printer is waiting",
+    "for printjob": "for printjob",
+    "Printer is ready": "Printer is ready",
+    "for maintenance": "for maintenance",
+    "Waiting...": "Waiting...",
+    "Select state": "Select state",
+    "Printer is not available": "Printer is not available",
+    "in the current network": "in the current network",
+    "Host": "Host",
+    "5D": "5D",
+    "Printing...": "Printing...",
+    "Paused at": "Paused at",
+    "Maintenance": "Maintenance",
+    "Idle": "Idle",
+    "Spent ": "Spent ",
+    "Printing Done!": "Printing Done!",
+    "Printing Failed": "Printing Failed",
+    "Offline": "Offline",
+    "Loading...": "Loading...",
+    "Not Available": "Not Available",
+    "E1 Target": "E1 Target",
+    "E2 Target": "E2 Target",
+    "Bed Target": "Bed Target",
+    "Control Panel": "Control Panel",
+    "No": "No",
+    "Yes": "Yes",
+    "Do you want to remove {0} from cluster?": "Do you want to remove {0} from cluster?",
+    "label": "label",
+    "Date And Time": "Date And Time",
+    "Set date": "Set date",
+    "Set time": "Set time",
+    "Cancel": "Cancel",
+    "OK": "OK",
+    "Skip": "Skip",
+    "Next": "Next",
+    "Language": "Language",
+    "Select language": "Select language",
+    "Settings": "Settings",
+    "Wi-Fi": "Wi-Fi",
+    "Storage": "Storage",
+    "Reset and Restore": "Reset and Restore",
+    "Update": "Update",
+    "Factory Reset": "Factory Reset",
+    "Factory reset (clear storage)": "Factory reset (clear storage)",
+    "Are you sure want to make factory reset?": "Are you sure want to make factory reset?",
+    "Printer will reboot after confirmation": "Printer will reboot after confirmation",
+    "Are you sure want to make factory reset and clear all user data?": "Are you sure want to make factory reset and clear all user data?",
+    "Connect": "Connect",
+    "Total": "Total",
+    "Owned": "Owned",
+    "Available": "Available",
+    "Check for update": "Check for update",
+    "Current version:{0}": "Current version:{0}",
+    "You have the latest firmware": "You have the latest firmware",
+    "New version available: {0}": "New version available: {0}",
+    "Download update": "Download update",
+    "Downloading {0}...": "Downloading {0}...",
+    "Downloading {0}%": "Downloading {0}%",
+    "Download finished. Please reboot printer to finish update": "Download finished. Please reboot printer to finish update",
+    "Copying": "Copying",
+    "Download failed": "Download failed",
+    "Upload Update": "Upload Update",
+    "Current Network": "Current Network",
+    "Forget {0}?": "Forget {0}?",
+    "Forget": "Forget",
+    "Available networks": "Available networks",
+    "Enter Wi-Fi password for {0}": "Enter Wi-Fi password for {0}",
+    "Connect to network?": "Connect to network?",
+    "Wi-Fi password": "Wi-Fi password",
+    "Done Jobs": "Done Jobs",
+    "Printed: ": "Printed: ",
+    "Revert": "Revert",
+    "Remove": "Remove",
+    "Here you will see done print jobs. Successful prints marked with": "Here you will see done print jobs. Successful prints marked with",
+    "Queue": "Queue",
+    "Printers: {0}": "Printers: {0}",
+    "Edit": "Edit",
+    "There are no queued print jobs yet. Add new one by clicking": "There are no queued print jobs yet. Add new one by clicking",
+    "Edit job": "Edit job",
+    "Create job": "Create job",
+    "Save": "Save",
+    "Job name": "Job name",
+    "Copies": "Copies",
+    "File assignment": "File assignment",
+    "Printer assignment": "Printer assignment",
+    "Description": "Description",
+    "Do you want to remove the job?": "Do you want to remove the job?",
+    "Uploaded ": "Uploaded ",
+    "You don't have any uploaded files yet. You could add new files using field below": "You don't have any uploaded files yet. You could add new files using field below",
+    "Upload G-Code Files": "Upload G-Code Files",
+    "Add printer": "Add printer",
+    "Address: {0}": "Address: {0}",
+    "Do you want to add {0} to cluster?": "Do you want to add {0} to cluster?",
+    "Extruder": "Extruder",
+    "Flow": "Flow",
+    "Select extruder": "Select extruder",
+    "Jog": "Jog",
+    "Feed": "Feed",
+    "Manual Control": "Manual Control",
+    "Temperature And Fan": "Temperature And Fan",
+    "E1": "E1",
+    "E2": "E2",
+    "Chamber": "Chamber",
+    "Bed": "Bed",
+    "Cooling": "Cooling",
+    "Terminal": "Terminal",
+    "Autoscroll": "Autoscroll",
+    "G-Code Command": "G-Code Command",
+    "Wizards": "Wizards",
+    "Bed leveling": "Bed leveling",
+    "Change material": "Change material",
+    "5D calibration": "5D calibration",
+    "Start": "Start",
+    "Finish": "Finish",
+    "Done": "Done",
+    "Perform bed leveling if there is too much distance between the nozzles and the build plate": "Perform bed leveling if there is too much distance between the nozzles and the build plate",
+    "Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed": "Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed",
+    "Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed": "Wait until bed and printhead stop and adjust second thumb wheel on the left side of the bed",
+    "Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed": "Wait until bed and printhead stop and adjust third thumb wheel on the right side of the bed",
+    "Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment": "Adjust gap between left nozzle and bed using controls. If needed, you can repeat points adjustment",
+    "Calibration complete!": "Calibration complete!",
+    "Extruder 1": "Extruder 1",
+    "Extruder 2": "Extruder 2",
+    "Unload material": "Unload material",
+    "Load material": "Load material",
+    "Select the extruder, where you want change the material": "Select the extruder, where you want change the material",
+    "Select the needed action": "Select the needed action",
+    "Heating...": "Heating...",
+    "Unload": "Unload",
+    "Load": "Load",
+    "Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading": "Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading",
+    "Load new spool, insert material into bowden tube and press Next button": "Load new spool, insert material into bowden tube and press Next button",
+    "Use Load and Unload buttons to load material untill it comes from nozzle": "Use Load and Unload buttons to load material untill it comes from nozzle",
+    "Hello!": "Hello!",
+    "Let's Start": "Let's Start",
+    "Please remove all the transportation fixtures and press Next": "Please remove all the transportation fixtures and press Next",
+    "Set Date and Time": "Set Date and Time",
+    "Select cluster": "Select cluster",
+    "Reboot": "Reboot",
+    "Power Off": "Power Off",
+    "Retry": "Retry",
+    "Dashboard": "Dashboard",
+    "Printers": "Printers",
+    "{0} printers": "{0} printers",
+    "{0} has been succesfully printed on {1} for {2}": "{0} has been succesfully printed on {1} for {2}",
+    "{0} has been failed on {1} for {2} cause of {3}": "{0} has been failed on {1} for {2} cause of {3}",
+    "New firmware download failed": "New firmware download failed",
+    "New firmware is found on USB. Check settings for install": "New firmware is found on USB. Check settings for install",
+    "New firmware is available, version {0}. Check settings for install": "New firmware is available, version {0}. Check settings for install",
+    "Refresh networks": "Refresh networks",
+    "Disable Wi-Fi hotspot": "Disable Wi-Fi hotspot",
+    "Enable Wi-Fi hotspot": "Enable Wi-Fi hotspot",
+    "This wizard will help you calibrate five axis module": "This wizard will help you calibrate five axis module",
+    "Place the calibration tool into the five axis module and press Next": "Place the calibration tool into the five axis module and press Next",
+    "Move nozzle to the nearest tip of the calibration tool and press Next": "Move nozzle to the nearest tip of the calibration tool and press Next",
+    "Calibration complete! Please remove calibration tool": "Calibration complete! Please remove calibration tool",
+    "This wizard helps you to setup zero point for proper 5D printing": "This wizard helps you to setup zero point for proper 5D printing",
+    "Zero point setup": "Zero point setup",
+    "Classic mode (3D)": "Classic mode (3D)",
+    "Coil 5D": "Coil 5D",
+    "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use",
+    "Please place needed base in the 5D Module and press Next": "Please place needed base in the 5D Module and press Next",
+    "Move nozzle to the center of the base and press Next": "Move nozzle to the center of the base and press Next",
+    "Name is required": "Name is required",
+    "Enter the diameter of the base and press Next": "Enter the diameter of the base and press Next",
+    "Setup Complete!": "Setup Complete!",
+    "at ": "at ",
+    "Folder name": "Folder name",
+    "Create": "Create",
+    "Input folder name": "Input folder name",
+    "USB": "USB"
 }

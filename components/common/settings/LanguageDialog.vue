@@ -1,23 +1,23 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("common.settings.languageDialog.title")}}</template>
+    <template slot="title">{{$t("Language")}}</template>
     <v-select
       :items="$i18n.locales"
       item-value="code"
       item-text="name"
       :value="settings.language"
-      @input="sendLanguage"
       filled
-      :label="$tc('labels.selectLanguage')"
+      :label="$tc('Select language')"
+      @input="setLanguage"
     ></v-select>
   </SettingsDialog>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
 
 const settings = namespace('settingsState')
 
@@ -48,8 +48,8 @@ export default class extends Vue {
   ]
 
   private setLanguage (value: string) {
-    this.setLanguage(value)
-    this.$i18n.locale = value
+    this.sendLanguage(value)
+    this.$i18n.setLocale(value)
     //@ts-ignore
     this.$moment.locale(value)
   }

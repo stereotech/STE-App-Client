@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-content class="light-blue darken-3">
-      <v-container fluid fill-height>
-        <v-layout column wrap>
+      <v-container fluid>
+        <v-row dense>
           <nuxt />
-        </v-layout>
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
@@ -24,7 +24,6 @@ export default class Solid extends Vue {
   }
 }
 </script>
-
 
 <style>
 </style>

@@ -1,26 +1,27 @@
 <template>
-  <div :class="keyboardClass"></div>
+  <div :class="keyboardClass" />
 </template>
 
 <script>
-import Keyboard from "simple-keyboard";
-import "simple-keyboard/build/css/index.css";
+import Keyboard from 'simple-keyboard'
+import 'simple-keyboard/build/css/index.css'
 
 export default {
-  name: "SimpleKeyboard",
+  name: 'SimpleKeyboard',
   props: {
     keyboardClass: {
-      default: "simple-keyboard",
+      default: 'simple-keyboard',
       type: String
     },
     input: {
+      default: '',
       type: String
     }
   },
   data: () => ({
     keyboard: null
   }),
-  mounted() {
+  mounted () {
     this.keyboard = new Keyboard({
       onChange: this.onChange,
       onKeyPress: this.onKeyPress,
@@ -39,36 +40,35 @@ export default {
           '{shift} Z X C V B N M < > ?',
           '{space}'
         ]
-      },
-    });
+      }
+    })
   },
   methods: {
-    onChange(input) {
-      this.$emit("onChange", input);
+    onChange (input) {
+      this.$emit('onChange', input)
     },
-    onKeyPress(button) {
-      this.$emit("onKeyPress", button);
+    onKeyPress (button) {
+      this.$emit('onKeyPress', button)
 
       /**
        * If you want to handle the shift and caps lock buttons
        */
-      if (button === "{shift}" || button === "{lock}") this.handleShift();
+      if (button === '{shift}' || button === '{lock}') { this.handleShift() }
     },
-    handleShift() {
-      let currentLayout = this.keyboard.options.layoutName;
-      let shiftToggle = currentLayout === "default" ? "shift" : "default";
+    handleShift () {
+      const currentLayout = this.keyboard.options.layoutName
+      const shiftToggle = currentLayout === 'default' ? 'shift' : 'default'
 
       this.keyboard.setOptions({
         layoutName: shiftToggle
-      });
+      })
     }
   },
 
-
-  input(input) {
-    this.keyboard.setInput(input);
+  input (input) {
+    this.keyboard.setInput(input)
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

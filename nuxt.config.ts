@@ -17,7 +17,7 @@ const config: Configuration = {
 
   router: {
     mode: 'hash',
-    middleware: ['chooser', 'firstLaunch', 'localization'],
+    middleware: ['chooser', 'firstLaunch'] //, 'localization'],
   },
   /*
    ** Global CSS
@@ -25,21 +25,8 @@ const config: Configuration = {
   css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css'],
 
   /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: [
-    '~/plugins/filters',
-    '~/plugins/prettyBytes',
-    //'~/plugins/i18n',
-    //'~/plugins/locale',
-    '~/plugins/cordova',
-    '~/plugins/snackbarQueue',
-    '~/plugins/dialogQueue',
-    '~/plugins/notificationSystem',
-    '~/plugins/signalr'],
-  /*
-   ** Nuxt.js modules
-   */
+ ** Nuxt.js modules
+ */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
@@ -49,6 +36,11 @@ const config: Configuration = {
   ],
 
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify', '@nuxtjs/moment'],
+
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: ['~plugins/filters', '~/plugins/prettyBytes', '~/plugins/cordova', '~/plugins/snackbarQueue', '~/plugins/dialogQueue', '~/plugins/notificationSystem', '~/plugins/signalr'],
 
   typescript: {
     typeCheck: {
@@ -66,7 +58,7 @@ const config: Configuration = {
     progress: false
   },
   proxy: {
-    '/api/': { target: '*' },
+    '/api': { target: '*' },
   },
   vuetify: {
     treeShake: false,
@@ -115,6 +107,7 @@ const config: Configuration = {
     langDir: 'locales/',
     strategy: 'no_prefix',
     defaultLocale: 'en',
+    detectBrowserLanguage: false,
     vueI18n: {
       fallbackLocale: 'en'
     }
@@ -137,8 +130,8 @@ const config: Configuration = {
     "start_url": "/"
   },
   serverMiddleware: [
-    { path: '/api', handler: '~/api/mock.js' },
-    { path: '/nuxtfiles', handler: '~/servermiddleware/assets.js' }
+    { path: '/api', handler: '~/api/mock.ts' },
+    { path: '/nuxtfiles', handler: '~/servermiddleware/assets.ts' }
   ],
   build: {
     publicPath: '/nuxtfiles/',

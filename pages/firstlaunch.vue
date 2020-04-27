@@ -1,7 +1,7 @@
 <template>
-  <v-flex xs12>
-    <firstLaunchStepper/>
-  </v-flex>
+  <v-col cols="12">
+    <firstLaunchStepper />
+  </v-col>
 </template>
 
 <script lang="ts">

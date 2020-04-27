@@ -1,9 +1,11 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn x-large block depressed color="accent" @click="next(9)">
-      {{$t("frequentlyUsed.finish")}}
-      <v-icon right dark>mdi-chevron-right</v-icon>
-    </v-btn>
+    <v-col cols="12">
+      <v-btn block x-large depressed color="accent" @click="next(1)">
+        {{ $t("Start") }}
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-col>
   </WizardStep>
 </template>
 
@@ -24,25 +26,28 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 8
+
+  private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration.jpg'
   private description: string = ''
 
   @printers.Action homeCommand: any
 
   private next (step: number) {
+    // this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+
     this.$emit('change', step)
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step9desc').toString()
+  mounted () {
+    this.description = this.$i18n.tc("This wizard will help you calibrate five axis module")
+  }
+
+  updated () {
+    this.description = this.$i18n.tc("This wizard will help you calibrate five axis module")
   }
 }
 </script>
-
-
-<style>
-</style>

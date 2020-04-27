@@ -80,6 +80,8 @@ public
 
 # IDE
 .idea
+.vs
+.vscode
 deps.txt
 material_model.json
 

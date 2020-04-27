@@ -1,36 +1,44 @@
 <template>
-  <v-flex xs12 v-if="computedPrinter">
+  <v-col v-if="computedPrinter" cols="12">
     <v-card>
       <PrinterCardToolbar
         :id="id"
         :toolbar="toolbar"
-        :controlPanel="controlPanel"
-        :removable="!computedPrinter.isLocal && (isMaintenance || !isAvaliable) && controlPanel"
+        :control-panel="controlPanel"
+        :removable="!computedPrinter.isLocal && !isPrinting && controlPanel"
       />
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
+      <v-container fluid>
+        <v-row dense>
           <PrinterCardInfo
             :name="computedPrinter.name"
             :model="computedPrinter.model"
             :progress="computedStatus ? computedStatus.progress.completion : 0"
-            :printTime="computedStatus ? computedStatus.progress.printTime : 0"
-            :printTimeLeft="computedStatus ? computedStatus.progress.printTimeLeft : 0"
+            :print-time="computedStatus ? computedStatus.progress.printTime : 0"
+            :print-time-left="computedStatus ? computedStatus.progress.printTimeLeft : 0"
             :local="computedPrinter.isLocal"
             :paused="isPaused"
             :maintenance="isMaintenance"
             :idle="isIdle"
+            :isFiveAxis="computedPrinter.isFiveAxis"
+            :isGlaze="computedPrinter.isGlaze"
             :printing="isPrinting"
             :done="isDone"
             :failed="isFailed"
             :offline="isOffline"
             :loading="isLoading"
-            :notAvaliable="!isAvaliable"
+            :not-avaliable="!isAvaliable"
           />
-          <PrinterCardTemps v-if="isAvaliable" :id="id" :offline="isOffline" />
+          <PrinterCardTemps
+            v-if="isAvaliable"
+            :id="id"
+            :offline="isOffline"
+            :glaze="computedPrinter.isGlaze"
+            :fiveAxis="computedPrinter.isFiveAxis"
+          />
           <PrinterCardActions
             :id="id"
-            :jobName="computedStatus ? computedStatus.job.file.display : ''"
-            :stateText="computedStatus ? computedStatus.state.text : ''"
+            :job-name="computedStatus ? computedStatus.job.file.display : ''"
+            :state-text="computedStatus ? computedStatus.state.text : ''"
             :paused="isPaused"
             :maintenance="isMaintenance"
             :idle="isIdle"
@@ -39,12 +47,12 @@
             :failed="isFailed"
             :offline="isOffline"
             :loading="isLoading"
-            :notAvaliable="!isAvaliable"
+            :not-avaliable="!isAvaliable"
           />
-        </v-layout>
+        </v-row>
       </v-container>
     </v-card>
-  </v-flex>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -74,7 +82,6 @@ export default class PrinterCard extends Vue {
 
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => CurrentState | undefined
-
 
   get computedStatus () {
     return this.status(this.id)
@@ -136,6 +143,5 @@ export default class PrinterCard extends Vue {
   get isAvaliable (): boolean {
     return (this.computedStatus !== undefined && this.computedPrinter !== undefined)
   }
-
 }
 </script>

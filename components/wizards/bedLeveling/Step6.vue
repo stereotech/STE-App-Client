@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="finish">
-      {{$t("frequentlyUsed.finish")}}
+      {{$t("Finish")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -9,8 +9,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -31,8 +31,10 @@ export default class extends Vue {
   private description: string = ''
 
   @printers.Action homeCommand: any
+  @printers.Action customCommand: any
 
-  private finish () {
+  private async finish () {
+    await this.customCommand({ id: this.$route.params.id, command: 'M500' })
     this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
     this.$router.go(-1)
   }
@@ -41,12 +43,15 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
-   mounted() {
-    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step6desc').toString()
+  mounted () {
+    this.description = this.$tc('Calibration complete!')
+  }
+
+  updated () {
+    this.description = this.$tc('Calibration complete!')
   }
 }
 </script>
-
 
 <style>
 </style>

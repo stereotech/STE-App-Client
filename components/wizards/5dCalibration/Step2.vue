@@ -1,9 +1,11 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-btn x-large block depressed color="accent" @click="next(6)">
-      {{$t("frequentlyUsed.next")}}
-      <v-icon right dark>mdi-chevron-right</v-icon>
-    </v-btn>
+    <v-col cols="12">
+      <v-btn block x-large depressed color="accent" @click="next(2)">
+        {{ $t("Next") }}
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-col>
   </WizardStep>
 </template>
 
@@ -11,6 +13,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+
 
 const printers = namespace('printersState')
 
@@ -29,29 +32,33 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X10 Y10 F3600' })
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S0' })
   }
-  private step?: number = 5
+  private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration1.jpg'
   private description: string = ''
 
 
   private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+
     this.$emit('change', step)
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step6desc').toString()
+  private async back (step: number) {
+
   }
   @printers.Action customCommand: any
+
+  mounted () {
+    this.description = this.$i18n.tc("Place the calibration tool into the five axis module and press Next")
+  }
+
+  updated () {
+    this.description = this.$i18n.tc("Place the calibration tool into the five axis module and press Next")
+  }
+
 }
 </script>
-
-
-<style>
-</style>

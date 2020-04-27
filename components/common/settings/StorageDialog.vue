@@ -1,9 +1,9 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("common.settings.storageDialog.title")}}</template>
-    <v-text-field :label="$tc('labels.total')" filled readonly :value="bytesTotal | prettyBytes"></v-text-field>
-    <v-text-field :label="$tc('labels.owned')" filled readonly :value="bytesOwned | prettyBytes"></v-text-field>
-    <v-text-field :label="$tc('labels.avaliable')" filled readonly :value="bytesAvaliable | prettyBytes"></v-text-field>
+    <template slot="title">{{$t("Storage")}}</template>
+    <v-text-field :label="$tc('Total')" filled readonly :value="bytesTotal | prettyBytes"></v-text-field>
+    <v-text-field :label="$tc('Owned')" filled readonly :value="bytesOwned | prettyBytes"></v-text-field>
+    <v-text-field :label="$tc('Available')" filled readonly :value="bytesAvaliable | prettyBytes"></v-text-field>
     <v-progress-circular
       :rotate="-90"
       :width="50"
@@ -16,9 +16,9 @@
 
 <script lang="ts">
 import { Vue, Component, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
 
 const settings = namespace('settingsState')
 

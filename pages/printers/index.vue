@@ -1,24 +1,24 @@
 <template>
-  <v-layout row wrap>  
-      <PrinterCard
-        toolbar
-        controlPanel
-        v-for="printer in printers"
-        :id="printer.id"
-        :key="printer.id"
-      />
-    <v-flex xs12 class="text-center">
+  <v-row dense>
+    <PrinterCard
+      v-for="printer in printers"
+      :id="printer.id"
+      :key="printer.id"
+      toolbar
+      control-panel
+    />
+    <v-col cols="12" class="text-center">
       <AddPrinterDialog />
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
-import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
 import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo, CurrentState } from 'types/printer'
+import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
+import AddPrinterDialog from '~/components/printers/AddPrinterDialog.vue'
 
 const printers = namespace('printersState')
 
