@@ -77,7 +77,7 @@
                     color="primary"
                     :disabled="file.length < 1"
                     @click="upload"
-                  >Upload</v-btn>
+                  >{{$t("Upload")}}</v-btn>
                 </v-col>
                 <v-col v-if="updateOnUsb" cols="12">
                   <v-btn
@@ -86,7 +86,7 @@
                     block
                     color="primary"
                     @click="startUpdateFromUsb"
-                  >Install update from USB</v-btn>
+                  >{{$t("Install update from USB")}}</v-btn>
                 </v-col>
               </v-row>
               <v-overlay :value="overlay" absolute>
