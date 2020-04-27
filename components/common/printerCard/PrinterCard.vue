@@ -38,7 +38,7 @@
           <PrinterCardActions
             :id="id"
             :job-name="computedStatus ? computedStatus.job.file.display : ''"
-            :state-text="computedStatus ? computedStatus.state.text : ''"
+            :state-text="stateText"
             :paused="isPaused"
             :maintenance="isMaintenance"
             :idle="isIdle"
@@ -82,6 +82,16 @@ export default class PrinterCard extends Vue {
 
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => CurrentState | undefined
+
+  get stateText (): string {
+    if (!this.computedStatus) {
+      return ''
+    }
+    if (this.isDone || this.isFailed) {
+      return 'Maintenance'
+    }
+    return this.computedStatus.state.text
+  }
 
   get computedStatus () {
     return this.status(this.id)
