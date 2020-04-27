@@ -30,6 +30,7 @@
             filled
             :items="stateItems"
             :label="$tc('Select state')"
+            :value="stateText"
             @change="setPrinterState"
           />
         </v-col>

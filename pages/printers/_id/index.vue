@@ -5,7 +5,7 @@
       <v-expansion-panels v-model="panel" multiple>
         <WizardsPanel
           :id="$route.params.id"
-          v-if="isMaintenance || isPaused"
+          v-if="isMaintenance || isPaused || isDone || isFailed"
           :printerType="printerType"
         />
         <!--<WizardsPanel :id="$route.params.id" :printerType="printerType" />-->
@@ -91,6 +91,18 @@ export default class PrinterPage extends Vue {
   get isPaused (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
       return this.status(this.$route.params.id)!.state.text === 'Paused'
+    }
+    return false
+  }
+  get isDone (): boolean {
+    if (this.status(this.$route.params.id) !== undefined) {
+      return this.status(this.$route.params.id)!.state.text === 'Done'
+    }
+    return false
+  }
+  get isFailed (): boolean {
+    if (this.status(this.$route.params.id) !== undefined) {
+      return this.status(this.$route.params.id)!.state.text === 'Failed'
     }
     return false
   }
