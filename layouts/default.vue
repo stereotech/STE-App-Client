@@ -20,6 +20,7 @@
           link
           :to="menuItem.link"
           color="primary"
+          exact
         >
           <v-list-item-action>
             <v-icon>{{ menuItem.icon }}</v-icon>
@@ -120,6 +121,7 @@
         nuxt
         :to="menuItem.link"
         color="primary"
+        exact
       >
         <span>{{ menuItem.translatedTitle }}</span>
         <v-icon>{{ menuItem.icon }}</v-icon>
