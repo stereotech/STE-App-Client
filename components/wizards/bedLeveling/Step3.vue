@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-btn x-large block depressed color="accent" @click="next(3)">
-      {{$t("frequentlyUsed.next")}}
+      {{$t("Next")}}
       <v-icon right dark>mdi-chevron-right</v-icon>
     </v-btn>
   </WizardStep>
@@ -9,8 +9,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -29,13 +29,13 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X10 Y10 F3600' })
+    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y190 F3600' })
     await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
   private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling03.jpg'
+  private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
   private description: string = ''
 
 
@@ -45,13 +45,18 @@ export default class extends Vue {
     this.curStep = step
   }
 
- mounted() {
-    this.description = this.$t('printers.wizards.bedLeveling.descriptions.step3desc').toString()
+
+  mounted () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed')
   }
+
+  updated () {
+    this.description = this.$tc('Wait until bed and printhead stop and adjust first thumb wheel on the far side of the bed')
+  }
+
   @printers.Action customCommand: any
 }
 </script>
-
 
 <style>
 </style>

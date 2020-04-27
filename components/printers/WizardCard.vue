@@ -4,12 +4,12 @@
       :src="'/wizards/' + image + '.jpg'"
       gradient="to top, rgba(100,115,201,.0), rgba(38, 50, 56, 1)"
     >
-      <v-container fill-height fluid>
-        <v-layout fill-height>
-          <v-flex xs12 align-end flexbox>
+      <v-container fluid>
+        <v-row dense>
+          <v-col class="align-end flexbox" cols="12">
             <span class="white--text title font-weight-light">{{ name }}</span>
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
     </v-img>
   </v-card>

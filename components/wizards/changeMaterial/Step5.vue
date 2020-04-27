@@ -1,26 +1,26 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("printers.wizards.changeMatreial.unload")}}</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="load">{{$t("printers.wizards.changeMatreial.load")}}</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="finish">{{$t("frequentlyUsed.finish")}}</v-btn>
-        </v-flex>
-      </v-layout>
+    <v-container>
+      <v-row dense align="center" justify="space-around">
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="load">{{$t("Load")}}</v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="finish">{{$t("Finish")}}</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -59,17 +59,14 @@ export default class extends Vue {
         let deviation = 0
         if (this.additionalData.tool === 0) {
           if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
-            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
+            const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
+            const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
             deviation = Math.abs(target - actual)
           }
-
-        } else {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-            let target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
-            let actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-            deviation = Math.abs(target - actual)
-          }
+        } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
+          const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
+          const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
+          deviation = Math.abs(target - actual)
         }
         return deviation > 10
       }
@@ -77,12 +74,12 @@ export default class extends Vue {
     return true
   }
 
-  private repeat () {
-    this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
+  private async repeat () {
+    await this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
   }
 
-  private load () {
-    this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+  private async load () {
+    await this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private finish () {
@@ -95,12 +92,15 @@ export default class extends Vue {
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.changeMatreial.descriptions.step5desc').toString()
+  mounted () {
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
+  }
+
+  updated () {
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
   }
 }
 </script>
-
 
 <style>
 </style>

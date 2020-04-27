@@ -1,11 +1,11 @@
 <template>
-  <WizardStepper :stepCount="5" v-model="currentStep">
-    <template slot="title">{{$t("printers.wizards.changeMatreial.title")}}</template>
-    <Step1 v-model="currentStep" :additional-data="additionalData"/>
-    <Step2 v-model="currentStep" :additional-data="additionalData"/>
-    <Step3 v-model="currentStep" :additional-data="additionalData"/>
-    <Step4 v-model="currentStep" :additional-data="additionalData"/>
-    <Step5 v-model="currentStep" :additional-data="additionalData"/>
+  <WizardStepper v-model="currentStep" :step-count="5">
+    <template slot="title">{{$t("Change material")}}</template>
+    <Step1 v-model="currentStep" :additional-data="additionalData" />
+    <Step2 v-model="currentStep" :additional-data="additionalData" />
+    <Step3 v-model="currentStep" :additional-data="additionalData" />
+    <Step4 v-model="currentStep" :additional-data="additionalData" />
+    <Step5 v-model="currentStep" :additional-data="additionalData" />
   </WizardStepper>
 </template>
 

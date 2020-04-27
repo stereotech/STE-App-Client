@@ -1,84 +1,86 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("printers.expert.temperatureFan.title")}}</v-card-title>
-    <v-container fluid grid-list-xs>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="e1TargetSet" @change="setE1"></v-switch>
-        </v-flex>
-        <v-flex xs10>
+    <v-card-title class="title">{{$t("Temperature And Fan")}}</v-card-title>
+    <v-container fluid>
+      <v-row dense>
+        <v-col cols="2">
+          <v-switch v-model="e1TargetSet" color="error" hide-details @change="setE1" />
+        </v-col>
+        <v-col cols="10">
           <v-slider
-            :label="$tc('labels.e1')"
-            thumb-label
-            min="0"
-            max="300"
-            step="5"
             v-model="e1Target"
+            :label="$tc('E1')"
+            thumb-label
+            min="0"
+            :max="glaze ? 60 : 300"
+            :step="glaze ? 1 : 5"
+            :color="glaze ? 'brown' : 'primary'"
+            :track-color="glaze ? 'brown lighten-4' : ''"
             @change="changeE1"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="e2TargetSet" @change="setE2"></v-switch>
-        </v-flex>
-        <v-flex xs10>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-if="!glaze">
+        <v-col cols="2">
+          <v-switch v-model="e2TargetSet" color="error" hide-details @change="setE2" />
+        </v-col>
+        <v-col cols="10">
           <v-slider
-            :label="$tc('labels.e2')"
+            v-model="e2Target"
+            :label="$tc('E2')"
             thumb-label
             min="0"
             max="300"
             step="5"
-            v-model="e2Target"
             @change="changeE2"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-if="chamberHeater">
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="chamberTargetSet" @change="setChamber"></v-switch>
-        </v-flex>
-        <v-flex xs10>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-if="chamberHeater && !glaze">
+        <v-col cols="2">
+          <v-switch v-model="chamberTargetSet" color="error" hide-details @change="setChamber" />
+        </v-col>
+        <v-col cols="10">
           <v-slider
-            :label="$tc('labels.chamber')"
+            v-model="chamberTarget"
+            :label="$tc('Chamber')"
             thumb-label
             min="0"
             max="100"
             step="5"
-            v-model="chamberTarget"
             @change="setBed"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else>
-        <v-flex xs2>
-          <v-switch color="error" hide-details v-model="bedTargetSet" @change="setBed"></v-switch>
-        </v-flex>
-        <v-flex xs10>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-if="bedHeater && !glaze">
+        <v-col cols="2">
+          <v-switch v-model="bedTargetSet" color="error" hide-details @change="setBed" />
+        </v-col>
+        <v-col cols="10">
           <v-slider
-            :label="$tc('labels.bed')"
+            v-model="bedTarget"
+            :label="$tc('Bed')"
             thumb-label
             min="0"
             max="120"
             step="5"
-            v-model="bedTarget"
             @change="changeBed"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense>
+        <v-col cols="12">
           <v-slider
-            :label="$tc('labels.cooling')"
+            v-model="coolingFanTarget"
+            :label="$tc('Cooling')"
             thumb-label
             min="0"
             max="100"
             step="5"
-            v-model="coolingFanTarget"
             @change="setCoolingFan"
-          ></v-slider>
-        </v-flex>
-      </v-layout>
+          />
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>
@@ -93,6 +95,8 @@ const printers = namespace('printersState')
 @Component
 export default class TemperatureFanCard extends Vue {
   @Prop({ default: false, type: Boolean }) printing!: boolean
+  @Prop({ default: false, type: Boolean }) glaze!: boolean
+  @Prop({ default: false, type: Boolean }) bedHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberFan!: boolean
   @Prop({ default: '', type: String, required: true }) id!: string
@@ -114,10 +118,10 @@ export default class TemperatureFanCard extends Vue {
   private chamberTargetSet: boolean = false
 
   mounted () {
-    this.e1Target = this.lastTempDataPoint(this.id).tool0.target
-    this.e2Target = this.lastTempDataPoint(this.id).tool1.target
-    this.bedTarget = this.lastTempDataPoint(this.id).bed.target
-    this.chamberTarget = this.lastTempDataPoint(this.id).bed.target
+    this.e1Target = this.lastTempDataPoint(this.id).tool0 ? this.lastTempDataPoint(this.id).tool0.target : 0
+    this.e2Target = this.lastTempDataPoint(this.id).tool1 ? this.lastTempDataPoint(this.id).tool1.target : 0
+    this.bedTarget = this.lastTempDataPoint(this.id).bed ? this.lastTempDataPoint(this.id).bed.target : 0
+    this.chamberTarget = this.lastTempDataPoint(this.id).bed ? this.lastTempDataPoint(this.id).bed.target : 0
 
     this.e1TargetSet = this.e1Target > 0
     this.e2TargetSet = this.e2Target > 0

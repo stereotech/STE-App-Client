@@ -1,38 +1,38 @@
 <template>
   <WizardStep :step="step">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
-          <p class="headline">{{$t("printers.wizards.firstLaunch.setDateTime")}}</p>
-        </v-flex>
-        <v-flex xs12>
+    <v-container>
+      <v-row dense align="center" justify="space-around">
+        <v-col cols="12">
+          <p class="headline">{{$t("Set Date and Time")}}</p>
+        </v-col>
+        <v-col cols="12">
           <v-dialog
             ref="datedialog"
             v-model="modal"
             :return-value.sync="dateModel"
-            @update:return-value="setDate"
             persistent
             full-width
             width="290px"
+            @update:return-value="setDate"
           >
             <template v-slot:activator="{ on }">
               <v-text-field
-                v-on="on"
                 v-model="dateModel"
                 filled
-                :label="$tc('labels.setDate')"
+                :label="$tc('Set date')"
                 prepend-icon="mdi-calendar"
                 readonly
-              ></v-text-field>
+                v-on="on"
+              />
             </template>
             <v-date-picker v-model="dateModel" scrollable>
-              <v-spacer></v-spacer>
-              <v-btn x-large depressed color="primary" @click="modal = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
-              <v-btn x-large depressed color="primary" @click="setDate(dateModel)">{{$t("frequentlyUsed.ok")}}</v-btn>
+              <v-spacer />
+              <v-btn x-large depressed color="primary" @click="modal = false">{{$t("Cancel")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="setDate(dateModel)">{{$t("OK")}}</v-btn>
             </v-date-picker>
           </v-dialog>
-        </v-flex>
-        <v-flex xs12>
+        </v-col>
+        <v-col cols="12">
           <v-dialog
             ref="dialog"
             v-model="modal2"
@@ -43,34 +43,34 @@
           >
             <template v-slot:activator="{ on }">
               <v-text-field
-                v-on="on"
                 v-model="timeModel"
                 filled
-                :label="$tc('labels.setTime')"
+                :label="$tc('Set time')"
                 prepend-icon="mdi-clock-outline"
                 readonly
-              ></v-text-field>
+                v-on="on"
+              />
             </template>
             <v-time-picker v-if="modal2" v-model="timeModel" full-width format="24hr">
-              <v-spacer></v-spacer>
-              <v-btn x-large depressed color="primary" @click="modal2 = false">{{$t("frequentlyUsed.cancel")}}</v-btn>
-              <v-btn x-large depressed color="primary" @click="setTime(timeModel)">{{$t("frequentlyUsed.ok")}}</v-btn>
+              <v-spacer />
+              <v-btn x-large depressed color="primary" @click="modal2 = false">{{$t("Cancel")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="setTime(timeModel)">{{$t("OK")}}</v-btn>
             </v-time-picker>
           </v-dialog>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("frequentlyUsed.next")}}</v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("Next")}}</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Settings } from '~/types/settings'
-import { Action, Getter, State, namespace } from 'vuex-class'
 
 const settings = namespace('settingsState')
 

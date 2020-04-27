@@ -1,41 +1,100 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("printers.expert.extruderCard.title")}}</v-card-title>
-    <v-container fluid grid-list-xs>
-      <v-layout row wrap class="text-center">
-        <v-flex xs6 sm3 order-sm1>
-          <v-btn x-large outlined text icon color="primary" :disabled="printing" @click="retract">
+    <v-card-title class="title">{{$t("Extruder")}}</v-card-title>
+    <v-container fluid>
+      <v-row dense class="text-center">
+        <v-col cols="6" sm="3" order-sm="1">
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            :color="glaze ? 'brown' : 'primary' "
+            :disabled="printing"
+            @click="retract"
+          >
             <v-icon>mdi-chevron-double-up</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs6 sm3 order-sm3>
-          <v-btn x-large outlined text icon color="primary" :disabled="printing" @click="extrude">
+        </v-col>
+        <v-col cols="6" sm="3" order-sm="3">
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            :color="glaze ? 'brown' : 'primary' "
+            :disabled="printing"
+            @click="extrude"
+          >
             <v-icon>mdi-chevron-double-down</v-icon>
           </v-btn>
-        </v-flex>
-        <v-flex xs12 sm9 order-sm1 pt-6>
-          <v-slider v-model="flow" :label="$tc('labels.flow')" thumb-label min="50" max="150" @change="setFlow"></v-slider>
-        </v-flex>
-        <v-flex xs12 sm9 offset-sm3 order-sm-2>
+        </v-col>
+        <v-col class="pt-6" cols="12" sm="9" order-sm="1">
+          <v-slider
+            v-model="flow"
+            :label="$tc('Flow')"
+            thumb-label
+            min="50"
+            max="150"
+            @change="setFlow"
+            :color="glaze ? 'brown' : 'primary' "
+            :track-color="glaze ? 'brown lighten-4' : ''"
+          />
+        </v-col>
+        <v-col class="order-sm-2" cols="12" sm="9" offset-sm="3" v-if="!glaze">
           <v-select
+            v-model="selectedExtruder"
             filled
             :items="extruders"
-            :label="$tc('labels.selectExtruder')"
+            :label="$tc('Select extruder')"
             item-text="key"
             item-value="value"
-            v-model="selectedExtruder"
             :disabled="printing"
-          ></v-select>
-        </v-flex>
-        <v-flex xs12 sm9 order-sm3>
-          <v-btn-toggle mandatory v-model="selectedAmount" rounded>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
-            <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
+          />
+        </v-col>
+
+        <v-col cols="12" sm="6" order-sm="3">
+          <v-btn-toggle v-model="selectedAmount" mandatory rounded>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 0.1"
+            >0.1</v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 1"
+            >1</v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 10"
+            >10</v-btn>
+            <v-btn
+              text
+              :color="glaze ? 'brown' : 'primary' "
+              :disabled="printing"
+              @click="amount = 100"
+            >100</v-btn>
           </v-btn-toggle>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12" sm="3" order-sm="3">
+          <v-btn
+            x-large
+            outlined
+            text
+            icon
+            :color="glaze ? 'brown' : 'primary' "
+            :disabled="printing"
+            @click="servicePos"
+          >
+            <v-icon>mdi-progress-wrench</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </v-card>
 </template>
@@ -43,6 +102,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
+import { PrinterInfo } from '../../../types/printer'
 
 const printers = namespace('printersState')
 
@@ -67,6 +127,7 @@ export default class ExtruderCard extends Vue {
   @printers.Action extrudeCommand: any
   @printers.Action retractCommand: any
   @printers.Action flowCommand: any
+  @printers.Action customCommand: any
 
   private extrude () {
     this.extrudeCommand({ id: this.id, toolId: this.selectedExtruder, amount: this.amount })
@@ -80,7 +141,14 @@ export default class ExtruderCard extends Vue {
     this.flowCommand({ id: this.id, flow: value })
   }
 
+  private servicePos () {
+    this.customCommand({ id: this.id, command: 'G0 X100 Y5' })
+  }
+
+
+
   @Prop({ default: false, type: Boolean }) printing?: boolean
+  @Prop({ default: false, type: Boolean }) glaze?: boolean
   @Prop({ default: '', type: String }) id?: string
 }
 </script>

@@ -2,8 +2,30 @@ import { HubConnectionBuilder, HttpTransportType, LogLevel, HubConnection, HubCo
 import { CurrentState } from '../types/printer'
 import moment, { version } from 'moment'
 import { SoftwareUpdateState } from '~/store/updateState';
+import { Plugin } from '@nuxt/types'
 
-export default ({ app, store }, inject) => {
+declare module 'vue/types/vue' {
+    interface Vue {
+        $startHub (): void
+        $stopHub (): void
+    }
+}
+
+declare module '@nuxt/types' {
+    interface NuxtAppOptions {
+        $startHub (): void
+        $stopHub (): void
+    }
+}
+
+declare module 'vuex/types/index' {
+    interface Store<S> {
+        $startHub (): void
+        $stopHub (): void
+    }
+}
+
+const hubManagement: Plugin = ({ app, store }, inject) => {
     function generateHub () {
         let hub = new HubConnectionBuilder()
             .withUrl(store.state.apiUrl + 'mainhub', { transport: HttpTransportType.WebSockets })
@@ -31,12 +53,12 @@ export default ({ app, store }, inject) => {
 
         hub.on('PrintJobDone', (args: { id: string, printJobName: string, time: number }) => {
             let duration: string = moment.duration(args.time, 'seconds').humanize()
-            app.$notify(`${args.printJobName} has been succesfully printed on ${args.id.toUpperCase()} for ${duration}`, 'success')
+            app.$notify(app.i18n.t("{0} has been succesfully printed on {1} for {2}", [args.printJobName, args.id.toUpperCase(), duration]).toString(), 'success', false)
         })
 
         hub.on('PrintJobFailed', (args: { id: string, printJobName: string, time: number, reason: string }) => {
             let duration: string = moment.duration(args.time, 'seconds').humanize()
-            app.$notify(`${args.printJobName} has been failed on ${args.id.toUpperCase()} for ${duration} cause of ${args.reason}`, 'error')
+            app.$notify(app.i18n.t("{0} has been failed on {1} for {2} cause of {3}", [args.printJobName, args.id.toUpperCase(), duration, args.reason]).toString(), 'error', false)
         })
 
         //UpdateState
@@ -45,11 +67,11 @@ export default ({ app, store }, inject) => {
         })
         hub.on('DownloadFailed', () => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.FailedDownload)
-            app.$notify(`New firmware download failed`, 'error')
+            app.$notify(app.i18n.t("New firmware download failed").toString(), 'error', false)
         })
         hub.on('UpdateFoundOnUsb', (args: boolean) => {
             store.commit('updateState/setUpdateOnUsb', args)
-            app.$notify(`New firmware is found on USB. Check settings for install`)
+            app.$notify(app.i18n.t("New firmware is found on USB. Check settings for install").toString(), 'info', false)
         })
         hub.on('HasEqualFirmware', (args: string) => {
             store.commit('updateState/setCurrentVersion', args)
@@ -57,7 +79,7 @@ export default ({ app, store }, inject) => {
         hub.on('HasNewFirmware', (args: string) => {
             store.commit('updateState/setSoftwareUpdateState', SoftwareUpdateState.IsNewFirmware)
             store.commit('updateState/setAvaliableVersion', args)
-            app.$notify(`New firmware is available, version ${args}. Check settings for install`)
+            app.$notify(app.i18n.t("New firmware is available, version {0}. Check settings for install", [args]).toString(), 'info', false)
         })
         hub.on('UpdateStateChanged', (state: SoftwareUpdateState, downloadProgress: number) => {
             store.commit('updateState/setDownloadProgress', downloadProgress)
@@ -118,3 +140,5 @@ export default ({ app, store }, inject) => {
 
     startHub()
 }
+
+export default hubManagement

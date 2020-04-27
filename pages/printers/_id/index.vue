@@ -1,14 +1,23 @@
 <template>
-  <v-layout row wrap>
-    <PrinterCard toolbar :id="$route.params.id" />
-    <v-flex xs12>
-      <v-expansion-panels multiple v-model="panel">
-        <!--<WizardsPanel :id="$route.params.id" v-if="isMaintenance || isPaused" />-->
-        <WizardsPanel :id="$route.params.id" />
-        <ManualControlPanel :printing="isPrinting" :id="$route.params.id" />
+  <v-row dense>
+    <PrinterCard :id="$route.params.id" toolbar />
+    <v-col cols="12">
+      <v-expansion-panels v-model="panel" multiple>
+        <WizardsPanel
+          :id="$route.params.id"
+          v-if="isMaintenance || isPaused"
+          :printerType="printerType"
+        />
+        <!--<WizardsPanel :id="$route.params.id" :printerType="printerType" />-->
+        <ManualControlPanel
+          :printing="isPrinting"
+          :glaze="isGlaze"
+          :id="$route.params.id"
+          :isFiveAxis="printerType==1"
+        />
       </v-expansion-panels>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
@@ -18,6 +27,7 @@ import WizardsPanel from '~/components/printers/WizardsPanel.vue'
 import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.vue'
 import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo, CurrentState } from 'types/printer'
+import { PrinterType } from '~/types/printerType'
 
 const printers = namespace('printersState')
 
@@ -31,6 +41,19 @@ const printers = namespace('printersState')
 export default class PrinterPage extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => CurrentState | undefined
+
+  get printerType (): number {
+    let printer = this.printer(this.$route.params.id)
+    if (printer != null) {
+      if (printer.isFiveAxis == true) {
+        return PrinterType.fiveAxis
+      }
+      else {
+        return PrinterType.threeAxis
+      }
+    }
+    else return PrinterType.threeAxis
+  }
 
   async mounted () {
     this.$store.dispatch('printersState/fetchPrinters')
@@ -51,6 +74,14 @@ export default class PrinterPage extends Vue {
     }
     return false
   }
+
+  get isGlaze (): boolean {
+    if (this.printer(this.$route.params.id) !== undefined) {
+      return this.printer(this.$route.params.id)!.isGlaze!
+    }
+    return false
+  }
+
   get isMaintenance (): boolean {
     if (this.status(this.$route.params.id) !== undefined) {
       return this.status(this.$route.params.id)!.state.text === 'Maintenance'

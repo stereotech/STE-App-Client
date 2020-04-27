@@ -1,30 +1,27 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container grid-list-xl>
-      <v-layout align-center justify-space-around column fill-height>
-        <v-flex xs12>
+    <v-container>
+      <v-row dense align="center" justify="space-around">
+        <v-col cols="12">
           <v-radio-group v-model="additionalData.action" mandatory>
-            <v-radio :label="$tc('labels.unloadMaterial')" :value="0" color="secondary"></v-radio>
-            <v-radio :label="$tc('labels.changeMaterial')" :value="1" color="secondary"></v-radio>
-            <v-radio :label="$tc('labels.loadMaterial')" :value="2" color="secondary"></v-radio>
+            <v-radio :label="$tc('Unload material')" :value="0" color="secondary"></v-radio>
+            <v-radio :label="$tc('Change material')" :value="1" color="secondary"></v-radio>
+            <v-radio :label="$tc('Load material')" :value="2" color="secondary"></v-radio>
           </v-radio-group>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.next")}}</v-btn>
-        </v-flex>
-        <v-flex xs12>
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("frequentlyUsed.skip")}}</v-btn>
-        </v-flex>
-      </v-layout>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
 
@@ -42,7 +39,7 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
-  private step?: number = 9
+  private step?: number = 1
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/change_material/change_material02.jpg'
@@ -51,7 +48,7 @@ export default class extends Vue {
   @printers.Action customCommand: any
 
   private nextStep () {
-    this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 Z200 F900\nG0 X100 Y100 F6000' })
+    this.customCommand({ id: this.$route.params.id, command: 'G28\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
       this.next(3)
@@ -64,12 +61,15 @@ export default class extends Vue {
     this.$emit('change', step)
     this.curStep = step
   }
-   mounted() {
-    this.description = this.$t('printers.wizards.changeMatreial.descriptions.step2desc').toString()
+  mounted () {
+    this.description = this.$tc('Select the needed action')
+  }
+
+  updated () {
+    this.description = this.$tc('Select the needed action')
   }
 }
 </script>
-
 
 <style>
 </style>

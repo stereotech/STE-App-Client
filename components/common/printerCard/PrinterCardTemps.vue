@@ -1,19 +1,19 @@
 <template>
-  <v-flex d-flex md4 xs12 sm6 v-if="!offline">
-    <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs4 v-if="lastTempDataPoint(id).tool0">
-          <div class="body-1 text-truncate">{{$t("common.printerCard.e1Target")}}</div>
+  <v-col v-if="!offline" class="d-flex" md="4" cols="12" sm="6">
+    <v-container>
+      <v-row dense>
+        <v-col v-if="lastTempDataPoint(id).tool0" :cols="glaze ? 12 : 4">
+          <div class="body-1 text-truncate">{{$t("E1 Target")}}</div>
           <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
           <v-progress-circular
             size="48"
             rotate="-90"
-            :value="lastTempDataPoint(id).tool0.actual / 3.2"
-            :color="e1Color"
+            :value="glaze ? lastTempDataPoint(id).tool0.actual * 1.6 : lastTempDataPoint(id).tool0.actual / 3.2"
+            :color="glaze ? 'brown': e1Color"
           >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
-        </v-flex>
-        <v-flex xs4 v-if="lastTempDataPoint(id).tool1">
-          <div class="body-1 text-truncate">{{$t("common.printerCard.e2Target")}}</div>
+        </v-col>
+        <v-col v-if="lastTempDataPoint(id).tool1 && !glaze" cols="4">
+          <div class="body-1 text-truncate">{{$t("E2 Target")}}</div>
           <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
           <v-progress-circular
             size="48"
@@ -21,12 +21,12 @@
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
           >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
-        </v-flex>
-        <v-flex xs4 v-if="lastTempDataPoint(id).bed">
-          <div class="body-1 text-truncate">{{$t("common.printerCard.bedTarget")}}</div>
+        </v-col>
+        <v-col v-if="lastTempDataPoint(id).bed && !glaze && !fiveAxis" cols="4">
+          <div class="body-1 text-truncate">{{$t("Bed Target")}}</div>
           <div
-            class="body-1"
             v-if="lastTempDataPoint(id).bed"
+            class="body-1"
           >{{ lastTempDataPoint(id).bed.target }}&deg;C</div>
           <v-progress-circular
             size="48"
@@ -34,10 +34,10 @@
             :value="lastTempDataPoint(id).bed.actual / 1.5"
             :color="bedColor"
           >{{ lastTempDataPoint(id).bed.actual | currency('', 0) }}</v-progress-circular>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
-  </v-flex>
+  </v-col>
   <!--
   <v-flex d-flex md4 xs12 sm6 v-else>
     <v-btn color="accent" rounded large depressed>
@@ -63,6 +63,8 @@ export default class PrinterCardTemps extends Vue {
   @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
 
   @Prop({ default: false, type: Boolean }) chamber?: boolean
+  @Prop({ default: false, type: Boolean }) glaze?: boolean
+  @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
   @Prop({ default: 0, type: Number }) chamberTemp?: number
   @Prop({ default: 0, type: Number }) chamberTarget?: number
 
@@ -92,4 +94,3 @@ export default class PrinterCardTemps extends Vue {
   }
 }
 </script>
-

@@ -1,18 +1,25 @@
 <template>
-  <WizardStep :step="step" :image="image" :description="description">
-    <v-btn x-large block depressed color="accent" @click="next(5)">
-      {{$t("frequentlyUsed.next")}}
-      <v-icon right dark>mdi-chevron-right</v-icon>
-    </v-btn>
+  <WizardStep :step="step">
+    <v-container>
+      <v-row dense align="center" justify="space-around">
+        <v-col cols="auto">
+          <h1 class="display-4">{{$t("Done")}}</h1>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="finishSetup">{{$t("Finish")}}</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </WizardStep>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import WizardStep from '~/components/wizards/WizardStep.vue'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -23,36 +30,24 @@ export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
+  }
 
-    if (this.curStep === this.step) {
-      this.performStep()
-    }
-  }
-  async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y190 F3600' })
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
-  }
-  private step?: number = 4
+  @settings.Action sendFinishSetup: any
+
+  private step?: number = 4//9//15
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/bed_leveling/bed_leveling02.jpg'
-  private description: string = ''
-
-
-  private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+  private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
 
-  mounted() {
-    this.description = this.$t('printers.wizards.firstLaunch.descriptions.step5desc').toString()
+  private async finishSetup () {
+    await this.sendFinishSetup()
+    this.$router.push('/')
   }
-  @printers.Action customCommand: any
-
 }
 </script>
-
 
 <style>
 </style>

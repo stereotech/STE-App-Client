@@ -1,12 +1,12 @@
 <template>
-  <v-flex d-flex md4 xs12 sm12>
-    <v-container fluid grid-list-md>
-      <v-layout row wrap v-if="printing || paused">
-        <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.currentPrintjob")}}</div>
+  <v-col class="d-flex" md="4" cols="12" sm="12">
+    <v-container fluid>
+      <v-row dense v-if="printing || paused">
+        <v-col cols="12" sm="8" md="12">
+          <div class="title text-truncate">{{$t("Current printjob:")}}</div>
           <div class="title text-truncate">{{ jobNameFomatted }}</div>
-        </v-flex>
-        <v-flex xs12 sm4 md12>
+        </v-col>
+        <v-col cols="12" sm="4" md="12">
           <v-btn-toggle mandatory depressed>
             <v-btn text depressed :value="printing" @click="resumeJob">
               <v-icon color="success">mdi-play</v-icon>
@@ -18,68 +18,68 @@
               <v-icon color="error">mdi-stop</v-icon>
             </v-btn>
           </v-btn-toggle>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else-if="done || failed">
-        <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.cleanTheBuildplate")}}</div>
-          <div class="title text-truncate">{{$t("common.printerCard.andSelectState")}}</div>
-        </v-flex>
-        <v-flex xs12 sm4 md12>
+        </v-col>
+      </v-row>
+      <v-row dense v-else-if="done || failed">
+        <v-col cols="12" sm="8" md="12">
+          <div class="title text-truncate">{{$t("Clean the buildplate")}}</div>
+          <div class="title text-truncate">{{$t("and select state")}}</div>
+        </v-col>
+        <v-col cols="12" sm="4" md="12">
           <v-select
             filled
-            :items="['Idle', 'Maintenance']"
-            :label="$tc('labels.selectState')"
+            :items="stateItems"
+            :label="$tc('Select state')"
             @change="setPrinterState"
-          ></v-select>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else-if="idle">
-        <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.printerIsWaiting")}}</div>
-          <div class="title text-truncate">{{$t("common.printerCard.forPrintJob")}}</div>
-        </v-flex>
-        <v-flex xs12 sm4 md12>
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-else-if="idle">
+        <v-col cols="12" sm="8" md="12">
+          <div class="title text-truncate">{{$t("Printer is waiting")}}</div>
+          <div class="title text-truncate">{{$t("for printjob")}}</div>
+        </v-col>
+        <v-col cols="12" sm="4" md="12">
           <v-select
             filled
-            :items="['Idle', 'Maintenance']"
-            :label="$tc('labels.selectState')"
-            @change="setPrinterState"
+            :items="stateItems"
+            :label="$tc('Select state')"
             :value="stateText"
-          ></v-select>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else-if="maintenance">
-        <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.printerIsReady")}}</div>
-          <div class="title text-truncate">{{$t("common.printerCard.forMaintenance")}}</div>
-        </v-flex>
-        <v-flex xs12 sm4 md12>
+            @change="setPrinterState"
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-else-if="maintenance">
+        <v-col cols="12" sm="8" md="12">
+          <div class="title text-truncate">{{$t("Printer is ready")}}</div>
+          <div class="title text-truncate">{{$t("for maintenance")}}</div>
+        </v-col>
+        <v-col cols="12" sm="4" md="12">
           <v-select
             filled
-            :items="['Idle', 'Maintenance']"
-            :label="$tc('labels.selectState')"
-            @change="setPrinterState"
+            :items="stateItems"
+            :label="$tc('Select state')"
             :value="stateText"
-          ></v-select>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else-if="loading">
-        <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.waiting")}}</div>
-        </v-flex>
-        <v-flex xs12 sm4 md12>
-          <v-progress-circular indeterminate color="primary"></v-progress-circular>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap v-else-if="notAvaliable">
-        <v-flex xs12 sm8 md12>
-          <div class="title text-truncate">{{$t("common.printerCard.printerIsNotAvaliable")}}</div>
-          <div class="title text-truncate">{{$t("common.printerCard.inTheCurrentNetwork")}}</div>
-        </v-flex>
-      </v-layout>
+            @change="setPrinterState"
+          />
+        </v-col>
+      </v-row>
+      <v-row dense v-else-if="loading">
+        <v-col cols="12" sm="8" md="12">
+          <div class="title text-truncate">{{$t("Waiting...")}}</div>
+        </v-col>
+        <v-col cols="12" sm="4" md="12">
+          <v-progress-circular indeterminate color="primary" />
+        </v-col>
+      </v-row>
+      <v-row dense v-else-if="notAvaliable">
+        <v-col cols="12" sm="8" md="12">
+          <div class="title text-truncate">{{$t("Printer is not available")}}</div>
+          <div class="title text-truncate">{{$t("in the current network")}}</div>
+        </v-col>
+      </v-row>
     </v-container>
-  </v-flex>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -137,6 +137,29 @@ export default class PrinterCardActions extends Vue {
     if (toggle) {
       this.cancelPrintJob(this.id)
     }
+  }
+
+  private stateItems: { text: string, value: string }[] = [
+    {
+      value: 'Maintenance',
+      text: 'Maintenance'
+    },
+    {
+      value: 'Idle',
+      text: 'Idle'
+    }
+  ]
+
+  mounted () {
+    this.stateItems.forEach(element => {
+      element.text = this.$tc(`${element.value}`)
+    });
+  }
+
+  updated () {
+    this.stateItems.forEach(element => {
+      element.text = this.$tc(`${element.value}`)
+    });
   }
 }
 </script>
