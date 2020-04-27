@@ -72,21 +72,24 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
     }
   },
 
-  async removeJob ({ commit }, job: PrintJob) {
+  async removeJob ({ commit, dispatch }, job: PrintJob) {
     await this.$axios.$delete(this.state.apiUrl + jobsEndpoint + '/' + job.id)
+    dispatch('fetchJobs')
   },
 
-  async addJob ({ commit }, jobs: PrintJob[]) {
+  async addJob ({ commit, dispatch }, jobs: PrintJob[]) {
     await this.$axios.$post(this.state.apiUrl + jobsEndpoint, jobs)
+    dispatch('fetchJobs')
   },
 
-  async editJob ({ commit }, job: PrintJob) {
+  async editJob ({ commit, dispatch }, job: PrintJob) {
     await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
+    dispatch('fetchJobs')
   },
 
-  async revertJob ({ commit }, job: PrintJob) {
-    commit('revertJob', job)
+  async revertJob ({ commit, dispatch }, job: PrintJob) {
     await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
+    dispatch('fetchJobs')
   },
 
   async toggleSuccess ({ commit }, job: PrintJob) {
