@@ -8,7 +8,7 @@
               <v-img height="320" width="260" :src="imageSource" />
             </v-card>
           </v-col>
-          <v-col v-if="description" cols="6" order="3">
+          <v-col v-if="description" cols="12" order="3">
             <p>{{ description }}</p>
           </v-col>
           <v-col v-if="description" cols="6" order="2">
