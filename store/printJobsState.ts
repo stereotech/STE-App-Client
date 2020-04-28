@@ -14,7 +14,8 @@ export const state = (): PrintJobsState => ({
 
 export const getters: GetterTree<PrintJobsState, RootState> = {
   doneJobs (state): PrintJob[] {
-    return state.jobs.filter(value => value.state === ("Completed" || "Revert"))
+    return state.jobs.filter(value => value.state === ("Completed" || "Revert")).sort((a: PrintJob, b: PrintJob) => b.id - a.id)
+
   },
 
   queuedJobs (state): PrintJob[] {
