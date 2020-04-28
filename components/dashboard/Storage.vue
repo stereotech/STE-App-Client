@@ -87,19 +87,26 @@
               </v-menu>
             </v-list-item-action>
           </v-list-item>
-          <v-list-item v-else :key="index">
+          <v-list-item v-else :key="index" avatar>
+            <v-btn
+              icon
+              outlined
+              color="info"
+              :ripple="false"
+              class="mr-2"
+              v-if="file.gcodeAnalysis && file.gcodeAnalysis.isFiveAxis"
+            >5D</v-btn>
+            <v-btn
+              icon
+              outlined
+              color="primary"
+              :ripple="false"
+              class="mr-2"
+              v-else-if="file.gcodeAnalysis && !file.gcodeAnalysis.isFiveAxis"
+            >3D</v-btn>
+            <v-btn icon outlined loading color="primary" :ripple="false" class="mr-2" v-else></v-btn>
             <v-list-item-content>
-              <v-list-item-title class="subheading">
-                {{ file.display }}
-                <v-chip
-                  color="info"
-                  v-if="file.gcodeAnalysis && file.gcodeAnalysis.isFiveAxis"
-                  class="ml-2"
-                  outlined
-                  label
-                  x-small
-                >5D</v-chip>
-              </v-list-item-title>
+              <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
 
               <v-list-item-subtitle
                 class="body-1"
