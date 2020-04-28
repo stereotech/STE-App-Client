@@ -156,26 +156,29 @@ export const actions: ActionTree<StorageState, RootState> = {
     }
   },
 
-  async deleteFile ({ commit }, file: FileOrFolder) {
+  async deleteFile ({ commit, dispatch }, file: FileOrFolder) {
     if (file.origin == 'local') {
-      commit('deleteLocalFile', file)
-      let response = await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
+      await this.$axios.delete(this.state.apiUrl + localStorageEndpoint + '/' + file.name)
+      dispatch('fetchLocal')
     } else {
-      commit('deleteUsbFile', file)
-      let response = await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
+      await this.$axios.delete(this.state.apiUrl + usbStorageEndpoint + '/' + file.origin + '/' + file.name)
+      dispatch('fetchUsbs')
     }
   },
 
-  async uploadFiles ({ commit }, files: File[]) {
+  async uploadFiles ({ commit, dispatch }, files: File[]) {
     let data = new FormData()
     files.forEach(file => {
       data.append("files", file, file.name)
     });
     await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    dispatch('fetchLocal')
+    dispatch('fetchUsbs')
   },
 
-  async addFolder ({ commit }, payload: { name: string, path: string }) {
+  async addFolder ({ commit, dispatch }, payload: { name: string, path: string }) {
 
     await this.$axios.$put(this.state.apiUrl + localStorageEndpoint, payload)
+    dispatch('fetchLocal')
   }
 }

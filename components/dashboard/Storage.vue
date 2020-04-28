@@ -77,7 +77,7 @@
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item @click="deleteFile(file)">
+                  <v-list-item @click="overlay = true; deleteFile(file);">
                     <v-list-item-action>
                       <v-icon>mdi-delete</v-icon>
                     </v-list-item-action>
@@ -87,7 +87,7 @@
               </v-menu>
             </v-list-item-action>
           </v-list-item>
-          <v-list-item v-else :key="index" avatar>
+          <v-list-item v-else :key="index">
             <v-btn
               icon
               outlined
