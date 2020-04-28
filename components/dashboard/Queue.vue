@@ -17,11 +17,10 @@
         class="overflow-y-auto"
       >
         <v-list-item v-for="(job) in queuedJobs" :key="job.id">
+          <v-btn icon outlined color="info" :ripple="false" class="mr-2" v-if="job.isFiveAxis">5D</v-btn>
+          <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
           <v-list-item-content>
-            <v-list-item-title>
-              {{ job.name }}
-              <v-chip color="info" v-if="job.isFiveAxis" class="ml-2" outlined label x-small>5D</v-chip>
-            </v-list-item-title>
+            <v-list-item-title>{{ job.name }}</v-list-item-title>
 
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
@@ -94,7 +93,7 @@
         <v-form v-model="valid">
           <v-container fluid>
             <v-row dense>
-              <v-col cols="12" sm="6" md="12">
+              <v-col cols="12">
                 <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
                   <v-text-field
                     v-model="editedJob.name"
@@ -107,7 +106,7 @@
                   />
                 </BottomInput>
               </v-col>
-              <v-col cols="12" sm="6" md="12">
+              <v-col cols="12">
                 <v-autocomplete
                   v-model="editedJob.fileUri"
                   :label="$tc('File assignment')"
@@ -118,9 +117,29 @@
                   :rules="fileRules"
                   :menu-props="menuProps"
                   @input="changeNameFromFile"
-                />
+                >
+                  <template v-slot:item="{item}">
+                    <v-btn
+                      icon
+                      outlined
+                      color="info"
+                      :ripple="false"
+                      class="mr-2"
+                      v-if="item.isFiveAxis"
+                    >5D</v-btn>
+                    <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
+                    <v-list-item-content>
+                      <v-list-item-title class="subheading">{{ item.name }}</v-list-item-title>
+                    </v-list-item-content>
+                  </template>
+                  <template v-slot:selection="{item}">
+                    <v-chip v-if="item.isFiveAxis" small outlined color="info">5D</v-chip>
+                    <v-chip v-else small outlined color="primary">3D</v-chip>
+                    <div class="text-truncate">{{ item.name}}</div>
+                  </template>
+                </v-autocomplete>
               </v-col>
-              <v-col cols="12" sm="6" md="12">
+              <v-col cols="12">
                 <v-autocomplete
                   :label="$tc('Printer assignment')"
                   v-model="editedJob.printers"
@@ -134,7 +153,7 @@
                   :menu-props="menuProps"
                 />
               </v-col>
-              <v-col cols="12" sm="6" md="12">
+              <v-col cols="12">
                 <v-autocomplete
                   v-if="!editMode"
                   v-model="copiesCount"

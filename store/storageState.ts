@@ -59,7 +59,7 @@ export const getters: GetterTree<StorageState, RootState> = {
       routes.forEach(route => {
         if (route.children && route.children.length) {
           ret.push(...flatten(prefix + route.name + '/', route.children))
-        } else {
+        } else if (route.gcodeAnalysis) {
           ret.push({ name: prefix + route.display, uri: route.refs !== undefined ? route.refs.download : '', isFiveAxis: route.gcodeAnalysis !== undefined ? route.gcodeAnalysis.isFiveAxis : undefined })
         }
       })
