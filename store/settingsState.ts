@@ -25,6 +25,7 @@ export const state = (): SettingsState => ({
   },
   networking: {
     connectedMethod: '',
+    address: '',
     networks: []
   }
 })
@@ -55,6 +56,9 @@ export const getters: GetterTree<SettingsState, RootState> = {
   },
   connectedMethod (state: SettingsState): string {
     return state.networking.connectedMethod
+  },
+  address (state: SettingsState): string {
+    return state.networking.address
   }
 }
 
@@ -66,6 +70,10 @@ export const mutations: MutationTree<SettingsState> = {
 
   setConnectedMethod (state: SettingsState, connectedMethod: string) {
     state.networking.connectedMethod = connectedMethod
+  },
+
+  setCurrentAddress (state: SettingsState, currentAddress: string) {
+    state.networking.address = currentAddress
   },
 
   setNetworks (state: SettingsState, networks: Network[]) {
@@ -114,6 +122,13 @@ export const actions: ActionTree<SettingsState, RootState> = {
 
   async setConnectedMethod ({ commit }, method: string) {
     await this.$axios.$put(this.state.apiUrl + networkEndpoint + `?method=${method}`)
+  },
+
+  async getCurrentAddress ({ commit }) {
+    let response = await this.$axios.get<string>(this.state.apiUrl + networkEndpoint + '/address')
+    if (response.status === 200) {
+      commit('setCurrentAddress', response.data)
+    }
   },
 
   async getWifiNetworks ({ commit }) {

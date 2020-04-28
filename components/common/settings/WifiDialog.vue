@@ -2,6 +2,16 @@
   <SettingsDialog v-model="isOpen" @input="closeDialog">
     <template slot="title">{{$t("Wi-Fi")}}</template>
     <v-list>
+      <v-subheader v-if="address !== ''">{{$t("Current Address")}}</v-subheader>
+      <v-list-item>
+        <v-list-item-action>
+          <v-icon>mdi-ip-network-outline</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ address }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider />
       <v-list-item>
         <v-list-item-action>
           <v-switch
@@ -186,10 +196,12 @@ export default class extends Vue {
   @settings.Getter avaliableNetworks!: Network[]
   @settings.Getter currentNetwork!: Network[]
   @settings.Getter connectedMethod!: string
+  @settings.Getter address!: string
   @settings.Action getWifiNetworks: any
   @settings.Action connectWifiNetwork: any
   @settings.Action forgetWifiNetwork: any
   @settings.Action getConnectedMethod: any
+  @settings.Action getCurrentAddress: any
   @settings.Action setConnectedMethod: any
 
   private currentMethod: string = 'WIRELESS'
@@ -225,6 +237,7 @@ export default class extends Vue {
 
   private async refreshNetworks () {
     await this.getConnectedMethod()
+    await this.getCurrentAddress()
     await this.getWifiNetworks()
     this.currentMethod = this.connectedMethod
   }
