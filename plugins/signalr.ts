@@ -87,11 +87,13 @@ const hubManagement: Plugin = ({ app, store }, inject) => {
         })
 
 
-        hub.on('LocalStorageChanged', () => {
-            store.dispatch('storageState/fetchLocal')
+        hub.on('LocalStorageChanged', async () => {
+            await new Promise(r => setTimeout(r, 500));
+            await store.dispatch('storageState/fetchLocal')
         })
-        hub.on('USBStorageChanged', () => {
-            store.dispatch('storageState/fetchJobs')
+        hub.on('USBStorageChanged', async () => {
+            await new Promise(r => setTimeout(r, 500));
+            await store.dispatch('storageState/fetchUsbs')
         })
         hub.on('JobAdded', () => {
             store.dispatch('printJobsState/fetchJobs')
