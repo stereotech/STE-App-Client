@@ -7,7 +7,7 @@
       <v-container fluid>
         <v-row dense>
           <template v-for="wizard in data">
-            <v-col :key="wizard.id" cols="6" sm="3" lg="2" v-if="validWizard(wizard)">
+            <v-col :key="wizard.id" cols="6" sm="4" lg="2" v-if="validWizard(wizard)">
               <WizardCard
                 :name="wizard.translatedName"
                 :image="wizard.image"
