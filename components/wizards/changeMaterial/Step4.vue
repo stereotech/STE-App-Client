@@ -6,7 +6,7 @@
           <v-progress-circular :size="70" :width="7" color="secondary" :value="heatingValue /2.4" />
         </v-col>
         <v-col cols="4">
-          <p>{{$t("Heating..")}}</p>
+          <p>{{$t("Heating...")}}</p>
         </v-col>
       </v-row>
     </v-container>
