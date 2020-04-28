@@ -13,7 +13,7 @@ export interface RootState {
 }
 
 export const state = (): RootState => ({
-  apiUrl: process.env.NUXT_ENV_PLATFORM === 'PANEL' ? 'http://localhost/api/' : '/api/'
+  apiUrl: process.env.NUXT_ENV_PLATFORM === 'PANEL' ? 'http://localhost/api/' : 'http://192.168.1.175/api/'
 })
 
 export const getters: GetterTree<RootState, RootState> = {

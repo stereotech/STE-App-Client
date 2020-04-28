@@ -1,5 +1,6 @@
 export interface Networking {
   connectedMethod: string
+  address: string
   networks: Array<Network>
 }
 

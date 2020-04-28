@@ -176,5 +176,6 @@
     "Input folder name": "Введите имя папки",
     "USB": "USB",
     "Cancel printing?": "Отменить печать?",
-    "Yes and Park": "Да, Запарковать"
+    "Yes and Park": "Да, Запарковать",
+    "Current Address": "Текущий адрес в сети"
 }
