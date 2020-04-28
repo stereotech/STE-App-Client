@@ -80,6 +80,16 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="stopJobConfirmation" max-width="425">
+      <v-card>
+        <v-card-title class="headline">{{$t("Cancel printing?")}}</v-card-title>
+        <v-card-actions>
+          <v-btn color="primary" text @click="stopJobConfirmation = false">{{$t("No")}}</v-btn>
+          <v-btn color="primary" outlined @click="stopJobConfirmed(true)">{{$t("Yes and Park")}}</v-btn>
+          <v-btn color="primary" depressed @click="stopJobConfirmed">{{$t("Yes")}}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-col>
 </template>
 
@@ -110,6 +120,9 @@ export default class PrinterCardActions extends Vue {
   @printers.Action pausePrintJob: any
   @printers.Action resumePrintJob: any
   @printers.Action cancelPrintJob: any
+  @printers.Action customCommand: any
+
+  private stopJobConfirmation: boolean = false
 
   get jobNameFomatted (): string {
     if (this.jobName != null) {
@@ -136,8 +149,16 @@ export default class PrinterCardActions extends Vue {
 
   private stopJob (toggle: boolean) {
     if (toggle) {
-      this.cancelPrintJob(this.id)
+      this.stopJobConfirmation = true
     }
+  }
+
+  private stopJobConfirmed (park: boolean = false) {
+    this.cancelPrintJob(this.id)
+    if (park) {
+      this.customCommand({ id: this.id, command: 'G28' })
+    }
+    this.stopJobConfirmation = false
   }
 
   private stateItems: { text: string, value: string }[] = [

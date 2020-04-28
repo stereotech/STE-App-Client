@@ -90,8 +90,8 @@
     "Description": "Описание",
     "Do you want to remove the job?": "Вы хотите удалить это задание?",
     "Uploaded ": "Загружено ",
-    "Upload":"Загрузить",
-    "Install update from USB":"Установить обновление с USB",
+    "Upload": "Загрузить",
+    "Install update from USB": "Установить обновление с USB",
     "You don't have any uploaded files yet. You could add new files using field below": "У вас еще нет загруженных файлов. Вы можете добавить новые файлы, используя поле ниже",
     "Upload G-Code Files": "Загрузка G-Code Файлов",
     "Add printer": "Добавить принтер",
@@ -174,5 +174,7 @@
     "Folder name": "Имя папки",
     "Create": "Создать",
     "Input folder name": "Введите имя папки",
-    "USB": "USB"
+    "USB": "USB",
+    "Cancel printing?": "Отменить печать?",
+    "Yes and Park": "Да, Запарковать"
 }

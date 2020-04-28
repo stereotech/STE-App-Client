@@ -90,8 +90,8 @@
     "Description": "Description",
     "Do you want to remove the job?": "Do you want to remove the job?",
     "Uploaded ": "Uploaded ",
-    "Upload":"Upload",
-    "Install update from USB":"Install update from USB",
+    "Upload": "Upload",
+    "Install update from USB": "Install update from USB",
     "You don't have any uploaded files yet. You could add new files using field below": "You don't have any uploaded files yet. You could add new files using field below",
     "Upload G-Code Files": "Upload G-Code Files",
     "Add printer": "Add printer",
@@ -174,5 +174,7 @@
     "Folder name": "Folder name",
     "Create": "Create",
     "Input folder name": "Input folder name",
-    "USB": "USB"
+    "USB": "USB",
+    "Cancel printing?": "Cancel printing?",
+    "Yes and Park": "Yes and Park"
 }
