@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot />
-    <v-bottom-sheet v-if="isPanel" v-model="isOpen" @click:outside="closeKeyboard">
+    <v-bottom-sheet light v-if="isPanel" v-model="isOpen" @click:outside="closeKeyboard">
       <v-sheet>
         <v-container>
           <v-row dense>

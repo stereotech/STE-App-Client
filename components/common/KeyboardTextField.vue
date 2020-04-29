@@ -1,5 +1,5 @@
 <template>
-  <v-text-field name="name" :label="$tc('label')" id="id"></v-text-field>
+  <v-text-field light name="name" :label="$tc('label')" id="id"></v-text-field>
 </template>
 
 <script lang="ts">
