@@ -320,7 +320,6 @@ export default class extends Vue {
   }
 
   private startRemoveJob (job) {
-    console.log(job)
     this.confirmation = true
     Object.assign(this.editedJob, job)
   }
