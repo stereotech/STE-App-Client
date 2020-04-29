@@ -128,7 +128,7 @@
                 <v-list>
                   <v-list-item @click="createPrintJob(file)">
                     <v-list-item-action>
-                      <v-icon>mdi-plus</v-icon>
+                      <v-icon color="primary">mdi-plus-circle</v-icon>
                     </v-list-item-action>
                     <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
                   </v-list-item>

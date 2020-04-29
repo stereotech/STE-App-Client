@@ -179,5 +179,6 @@
   "Yes and Park": "Да, Запарковать",
   "Current Address": "Текущий адрес в сети",
   "Create printjob": "Создать задачу",
-  "This job created automatically from file {0}": "Эта задача была создана автоматически из файла {0}"
+  "This job created automatically from file {0}": "Эта задача была создана автоматически из файла {0}",
+  "Left": "осталось"
 }
