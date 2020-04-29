@@ -77,6 +77,12 @@
                   </v-btn>
                 </template>
                 <v-list>
+                  <v-list-item @click="createPrintJob">
+                    <v-list-item-action>
+                      <v-icon>mdi-plus</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
+                  </v-list-item>
                   <v-list-item @click="overlay = true; deleteFile(file);">
                     <v-list-item-action>
                       <v-icon>mdi-delete</v-icon>
@@ -120,6 +126,12 @@
                   </v-btn>
                 </template>
                 <v-list>
+                  <v-list-item @click="createPrintJob(file)">
+                    <v-list-item-action>
+                      <v-icon>mdi-plus</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
+                  </v-list-item>
                   <v-list-item @click="deleteFile(file)">
                     <v-list-item-action>
                       <v-icon>mdi-delete</v-icon>
@@ -184,8 +196,10 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { FileOrFolder } from '~/types/fileOrFolder'
 import BottomInput from '~/components/common/BottomInput.vue'
+import { PrintJob } from '../../types/printJob'
 
 const storage = namespace('storageState')
+const printjobs = namespace('printJobsState')
 
 @Component({
   components: {
@@ -204,6 +218,8 @@ export default class extends Vue {
   @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
   @storage.Action addFolder: any
+
+  @printjobs.Action addJob: any
 
   get isWeb (): boolean {
     return process.env.NUXT_ENV_PLATFORM == 'WEB'
@@ -320,6 +336,22 @@ export default class extends Vue {
     this.overlay = false
     this.isOpen = false
     this.folderName = ''
+  }
+
+  private createPrintJob (file: FileOrFolder) {
+    const jobs: PrintJob[] = [{
+      id: 1,
+      name: `Print ${file.name}`,
+      description: this.$t('This job created automatically from file {0}', [file.display]).toString(),
+      creationTime: Date.now(),
+      fileUri: file.refs ? file.refs.download : '',
+      printers: [],
+      lastPrintTime: 0,
+      successful: false,
+      state: 'Queued',
+      isFiveAxis: file.gcodeAnalysis ? file.gcodeAnalysis.isFiveAxis : false
+    }]
+    this.addJob(jobs)
   }
 
 }
