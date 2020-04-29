@@ -24,7 +24,7 @@
             <span>{{$t("Spent ")}} {{ $moment.duration(printTime, 'seconds').humanize() }}</span>
             <span
               v-if="printTimeLeft"
-            >, {{ $moment.duration(printTimeLeft, 'seconds').humanize() }} left</span>
+            >, {{ $moment.duration(printTimeLeft, 'seconds').humanize() }} {{$t("Left")}}</span>
           </div>
           <div v-if="printing" class="title">{{$t("Printing...")}}{{ progress | currency('', 1) }}%</div>
           <div
