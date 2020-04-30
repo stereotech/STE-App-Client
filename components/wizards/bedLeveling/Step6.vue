@@ -36,7 +36,7 @@ export default class extends Vue {
   private async finish () {
     await this.customCommand({ id: this.$route.params.id, command: 'M500' })
     this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
-    this.$router.go(-1)
+    this.$router.push(`/printers/${this.$route.params.id}`)
   }
 
   private next (step: number) {
