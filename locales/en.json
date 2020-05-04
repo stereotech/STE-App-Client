@@ -192,5 +192,6 @@
   "Normal": "Normal",
   "High": "High",
   "Queue passes number in priority": "Queue passes number in priority",
-  "Queue Settings": "Queue Settings"
+  "Queue Settings": "Queue Settings",
+  "Select Cluster": "Select Cluster"
 }
