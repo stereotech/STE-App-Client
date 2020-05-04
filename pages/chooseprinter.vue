@@ -77,9 +77,9 @@ export default class ChoosePrinter extends Vue {
     this.overlay = false
   }
 
-  mounted () {
+  async mounted () {
     let locale = navigator.language.split("-")[0]
-    this.$i18n.setLocale(locale)
+    await this.$i18n.setLocale(locale)
     this.overlay = false
     // @ts-ignore
     this.$stopHub()
