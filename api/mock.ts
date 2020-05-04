@@ -3,6 +3,7 @@ import { PrinterInfo, CurrentState } from '~/types/printer'
 import { Settings } from '~/types/settings'
 import { PrintJob } from '~/types/printJob'
 import { ScannerResult } from '~/types/scannerResult'
+import { Network } from '~/types/networking'
 
 
 
@@ -42,7 +43,8 @@ const printJobs: PrintJob[] = [
         successful: true,
         lastPrintTime: Date.now(),
         state: 'Queued',
-        printers: []
+        printers: [],
+        priority: 1
     },
     {
         id: 2,
@@ -54,7 +56,8 @@ const printJobs: PrintJob[] = [
         successful: true,
         lastPrintTime: Date.now(),
         state: 'Completed',
-        printers: []
+        printers: [],
+        priority: 1
     },
     {
         id: 3,
@@ -66,7 +69,8 @@ const printJobs: PrintJob[] = [
         successful: true,
         lastPrintTime: Date.now(),
         state: 'Queued',
-        printers: ['st-aaa']
+        printers: ['st-aaa'],
+        priority: 0
     }
 ]
 
@@ -97,10 +101,12 @@ const settings: Settings = {
     language: 'ru',
     storageTotal: 6864843434384,
     storageFree: 3564684646846,
-    dateTime: 1550665494
+    dateTime: 1550665494,
+    queuePass: 2,
+    queueProcessAll: false
 }
 
-const networks = [
+const networks: Network[] = [
     {
         id: 'network_8484442',
         name: 'Wifi 1',
@@ -313,8 +319,11 @@ const apiMock: ServerMiddleware = function (req, res, next) {
     else if (req.url === '/network/wifi') {
         res.end(JSON.stringify(networks))
     }
-    else if (req.url === '/update') {
-        res.end(updateVersion)
+    else if (req.url === '/network/address') {
+        res.end('192.168.1.0')
+    }
+    else if (req.url === '/update/') {
+        res.end('1.0.0')
     } else {
         next()
     }

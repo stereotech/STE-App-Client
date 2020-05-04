@@ -349,7 +349,8 @@ export default class extends Vue {
       lastPrintTime: 0,
       successful: false,
       state: 'Queued',
-      isFiveAxis: file.gcodeAnalysis ? file.gcodeAnalysis.isFiveAxis : false
+      isFiveAxis: file.gcodeAnalysis ? file.gcodeAnalysis.isFiveAxis : false,
+      priority: 1
     }]
     this.addJob(jobs)
   }
