@@ -17,9 +17,10 @@
     <WifiDialog v-model="settings[0].page" />
     <DateTimeDialog v-model="settings[1].page" />
     <LanguageDialog v-model="settings[2].page" />
-    <StorageDialog v-model="settings[3].page" />
-    <ResetDialog v-model="settings[4].page" />
-    <UpdateDialog v-model="settings[5].page" />
+    <PrioritySettingsDialog v-model="settings[3].page" />
+    <StorageDialog v-model="settings[4].page" />
+    <ResetDialog v-model="settings[5].page" />
+    <UpdateDialog v-model="settings[6].page" />
   </SettingsDialog>
 </template>
 
@@ -29,6 +30,7 @@ import SettingsDialog from '~/components/common/settings/SettingsDialog.vue'
 import WifiDialog from '~/components/common/settings/WifiDialog.vue'
 import DateTimeDialog from '~/components/common/settings/DateTimeDialog.vue'
 import LanguageDialog from '~/components/common/settings/LanguageDialog.vue'
+import PrioritySettingsDialog from '~/components/common/settings/PrioritySettingsDialog.vue'
 import StorageDialog from '~/components/common/settings/StorageDialog.vue'
 import ResetDialog from '~/components/common/settings/ResetDialog.vue'
 import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
@@ -39,6 +41,7 @@ import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
     WifiDialog,
     DateTimeDialog,
     LanguageDialog,
+    PrioritySettingsDialog,
     StorageDialog,
     ResetDialog,
     UpdateDialog
@@ -77,7 +80,13 @@ export default class extends Vue {
       page: false
     },
     {
-      icon: 'mdi-sd   ',
+      icon: 'mdi-format-list-bulleted-type',
+      title: 'Queue Settings',
+      translatedTitle: 'Queue Settings',
+      page: false
+    },
+    {
+      icon: 'mdi-sd',
       title: 'Storage',
       translatedTitle: 'Storage',
       page: false

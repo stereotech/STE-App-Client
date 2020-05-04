@@ -12,6 +12,7 @@ export interface PrintJob {
   lastPrintTime: number
   successful: boolean
   state: string
+  priority: PrintJobPriority
 }
 
 export interface JobInfo {
@@ -29,3 +30,10 @@ export interface ProgressInfo {
   printTimeLeft: number
   printTimeLeftOrigin: string
 }
+
+export enum PrintJobPriority{
+  Low,
+  Normal,
+  High
+}
+
