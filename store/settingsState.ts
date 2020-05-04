@@ -21,7 +21,9 @@ export const state = (): SettingsState => ({
     dateTime: 1,
     language: '',
     storageFree: 0,
-    storageTotal: 0
+    storageTotal: 0,
+    queuePass: 0,
+    queueProcessAll: false
   },
   networking: {
     connectedMethod: '',
@@ -86,6 +88,20 @@ export const actions: ActionTree<SettingsState, RootState> = {
     let response = await this.$axios.get<Settings>(this.state.apiUrl + systemEndpoint)
     if (response.status === 200) {
       let settings: Settings = response.data
+      commit('setSettings', response.data)
+    }
+  },
+
+  async sendQueueProcessAll ({ commit }, value: boolean) {
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { queueProcessAll: value })
+    if (response.status === 200) {
+      commit('setSettings', response.data)
+    }
+  },
+
+  async sendQueuePass ({ commit }, value: number) {
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { queuePass: value })
+    if (response.status === 200) {
       commit('setSettings', response.data)
     }
   },

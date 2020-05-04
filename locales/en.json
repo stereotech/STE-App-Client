@@ -31,6 +31,7 @@
   "Do you want to remove {0} from cluster?": "Do you want to remove {0} from cluster?",
   "label": "label",
   "Date And Time": "Date And Time",
+  "Printing Queue Settings": "Printing queue settings",
   "Set date": "Set date",
   "Set time": "Set time",
   "Cancel": "Cancel",
@@ -180,5 +181,16 @@
   "Current Address": "Current Address",
   "Create printjob": "Create printjob",
   "This job created automatically from file {0}": "This job created automatically from file {0}",
-  "Left": "left"
+  "Left": "left",
+  "High Priority": "High priority",
+  "Normal Priority": "Normal Priority",
+  "Low Priority": "Low Priority",
+  "Wait For All Jobs Completion In One Priority": "Wait for all jobs completion in one priority",
+  "Integer Is Required!": "Integer is required!",
+  "Priority": "Priority",
+  "Low": "Low",
+  "Normal": "Normal",
+  "High": "High",
+  "Queue passes number in priority": "Queue passes number in priority",
+  "Queue Settings": "Queue Settings"
 }

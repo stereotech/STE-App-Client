@@ -7,4 +7,6 @@ export interface Settings {
   dateTime: number
   storageTotal: number
   storageFree: number
+  queuePass: number
+  queueProcessAll: boolean
 }

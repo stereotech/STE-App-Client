@@ -1,5 +1,5 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
-import { PrintJob } from '~/types/printJob'
+import { PrintJob, PrintJobPriority } from '~/types/printJob'
 import { RootState } from '.'
 
 const jobsEndpoint = 'jobs'
@@ -26,6 +26,12 @@ export const getters: GetterTree<PrintJobsState, RootState> = {
 
   jobsCount (state): number {
     return state.jobs.length
+  },
+
+  printJobsByPriority(state) {
+    return (priority: PrintJobPriority): PrintJob[] => {
+      return state.jobs.filter(value => value.priority === priority && value.state === ("Queued" || "Dequeued"))
+    }
   }
 }
 
@@ -60,6 +66,13 @@ export const mutations: MutationTree<PrintJobsState> = {
     const index = state.jobs.findIndex(value => value.id === job.id)
     if (index > -1) {
       state.jobs[index].successful = !state.jobs[index].successful
+    }
+  },
+
+  changePriority (state: PrintJobsState, payload: {job: PrintJob, priority: PrintJobPriority}) {
+    const index = state.jobs.findIndex(value => value.id === payload.job.id)
+    if (index > -1){
+      state.jobs[index].priority = payload.priority
     }
   }
 }
@@ -96,5 +109,11 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
 
   async toggleSuccess ({ commit }, job: PrintJob) {
     await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
+  },
+  
+  async changePriority({ commit, dispatch }, payload: {job: PrintJob, priority: PrintJobPriority}) {
+    commit('changePriority', payload.job)
+    await this.$axios.$put(this.state.apiUrl + jobsEndpoint, payload.job)
+    dispatch('fetchJobs')
   }
 }
