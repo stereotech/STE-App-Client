@@ -5,7 +5,7 @@
       <v-list-item>
         <v-list-item-action>
           <v-checkbox
-            :value="settings.queuePriorityProcessAll"
+            :value="settings.queueProcessAll"
             @change="sendQueueProcessAll"
             color="primary"
           ></v-checkbox>
@@ -26,7 +26,7 @@
           inverse-label
           min="1"
           max="10"
-          :value="settings.queuePriorityPass"
+          :value="settings.queuePass"
           @change="sendQueuePass"
         ></v-slider>
       </v-list-item>
