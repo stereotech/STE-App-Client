@@ -57,15 +57,11 @@
         class="overflow-y-auto"
       >
         <template v-for="(file, index) in dataStorage.children">
-          <v-list-item
-            :key="index"
-            v-if="file.type == 'folder'"
-            @click="addFolderToPath(file.name), btnUpVisibility()"
-          >
+          <v-list-item :key="index" v-if="file.type == 'folder'">
             <v-list-item-icon>
               <v-icon>mdi-folder</v-icon>
             </v-list-item-icon>
-            <v-list-item-content>
+            <v-list-item-content @click="addFolderToPath(file.name), btnUpVisibility()">
               <v-list-item-title class="subheading">{{ file.display }}</v-list-item-title>
               <v-list-item-subtitle class="body-1">{{ file.size | prettyBytes(1) }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -77,13 +73,7 @@
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item @click="createPrintJob">
-                    <v-list-item-action>
-                      <v-icon>mdi-plus</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item @click="overlay = true; deleteFile(file);">
+                  <v-list-item @click="deleteFile(file);">
                     <v-list-item-action>
                       <v-icon>mdi-delete</v-icon>
                     </v-list-item-action>
