@@ -102,8 +102,8 @@ const settings: Settings = {
     storageTotal: 6864843434384,
     storageFree: 3564684646846,
     dateTime: 1550665494,
-    queuePriorityPass: 2,
-    queuePriorityProcessAll: false
+    queuePass: 2,
+    queueProcessAll: false
 }
 
 const networks: Network[] = [

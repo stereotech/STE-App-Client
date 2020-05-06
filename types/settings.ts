@@ -7,6 +7,6 @@ export interface Settings {
   dateTime: number
   storageTotal: number
   storageFree: number
-  queuePriorityPass: number
-  queuePriorityProcessAll: boolean
+  queuePass: number
+  queueProcessAll: boolean
 }
