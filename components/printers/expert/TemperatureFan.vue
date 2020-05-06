@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title class="title">{{$t("Temperature And Fan")}}</v-card-title>
     <v-container fluid>
-      <v-row dense>
+      <v-row dense v-if="e1Enabled">
         <v-col cols="2">
           <v-switch v-model="e1TargetSet" color="error" hide-details @change="setE1" />
         </v-col>
@@ -20,7 +20,7 @@
           />
         </v-col>
       </v-row>
-      <v-row dense v-if="!glaze">
+      <v-row dense v-if="!glaze && e2Enabled">
         <v-col cols="2">
           <v-switch v-model="e2TargetSet" color="error" hide-details @change="setE2" />
         </v-col>
@@ -127,6 +127,18 @@ export default class TemperatureFanCard extends Vue {
     this.e2TargetSet = this.e2Target > 0
     this.bedTargetSet = this.bedTarget > 0
     this.chamberTargetSet = this.chamberTarget > 0
+  }
+
+  get e1Enabled (): boolean {
+    return this.lastTempDataPoint(this.id).tool0 != null
+  }
+
+  get e2Enabled (): boolean {
+    return this.lastTempDataPoint(this.id).tool1 != null
+  }
+
+  get bedEnabled (): boolean {
+    return this.lastTempDataPoint(this.id).bed != null
   }
 
   private setCoolingFan (value: number) {
