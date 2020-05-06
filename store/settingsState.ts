@@ -93,6 +93,9 @@ export const actions: ActionTree<SettingsState, RootState> = {
   },
 
   async sendQueueProcessAll ({ commit }, value: boolean) {
+    if (!value) {
+      value = false
+    }
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { queueProcessAll: value })
     if (response.status === 200) {
       commit('setSettings', response.data)
