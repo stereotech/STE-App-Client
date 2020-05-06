@@ -92,6 +92,11 @@ export const mutations: MutationTree<StorageState> = {
     state.local = []
     if (localStorage.children !== undefined) {
       localStorage.children = localStorage.children.sort((a, b) => {
+        if (a.type === "folder") {
+          return -1
+        } else if (b.type === "folder") {
+          return 0
+        }
         if (a.date !== undefined && b.date !== undefined) {
           return b.date - a.date
         }
