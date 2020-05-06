@@ -184,7 +184,11 @@
           </v-col>
         </v-row>
         <v-overlay :value="overlay" absolute z-index="3">
-          <v-progress-circular indeterminate size="64" />
+          <v-progress-circular
+            :indeterminate="uploadProgress < 1"
+            size="64"
+            :value="uploadProgress"
+          >{{ uploadProgress }}</v-progress-circular>
         </v-overlay>
       </v-container>
     </v-card>
@@ -193,7 +197,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { State, Action, Getter, namespace } from 'vuex-class'
+import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 import { FileOrFolder } from '~/types/fileOrFolder'
 import BottomInput from '~/components/common/BottomInput.vue'
 import { PrintJob } from '../../types/printJob'
@@ -214,6 +218,9 @@ export default class extends Vue {
 
   @storage.Getter localStorage!: (path: string[]) => FileOrFolder | undefined
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined
+  @storage.Getter uploadProgress!: number
+
+  @storage.Mutation setUploadProgress!: any
 
   @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
@@ -282,6 +289,7 @@ export default class extends Vue {
     await this.uploadFiles(this.files)
     this.files = []
     this.overlay = false
+    this.setUploadProgress(0)
   }
 
   private async closeDialog (add: boolean | undefined) {

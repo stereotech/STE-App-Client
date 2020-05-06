@@ -10,11 +10,13 @@ const usbStorageEndpoint = 'storage/usb'
 export interface StorageState {
   local: FileOrFolder[]
   usb: FileOrFolder[]
+  uploadProgress: number
 }
 
 export const state = (): StorageState => ({
   local: [],
-  usb: []
+  usb: [],
+  uploadProgress: 0
 })
 
 export const getters: GetterTree<StorageState, RootState> = {
@@ -77,6 +79,10 @@ export const getters: GetterTree<StorageState, RootState> = {
       }
     })
     return result
+  },
+
+  uploadProgress (state: StorageState): number {
+    return state.uploadProgress
   }
 
 }
@@ -138,6 +144,10 @@ export const mutations: MutationTree<StorageState> = {
 
   clearUsbs (state: StorageState) {
     state.usb = []
+  },
+
+  setUploadProgress (state: StorageState, progress: number) {
+    state.uploadProgress = progress
   }
 }
 
@@ -171,7 +181,12 @@ export const actions: ActionTree<StorageState, RootState> = {
     files.forEach(file => {
       data.append("files", file, file.name)
     });
-    await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    await this.$axios.post(this.state.apiUrl + localStorageEndpoint, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }, onUploadProgress: (progressEvent: any) => {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        commit('setUploadProgress', percentCompleted)
+      }
+    })
     dispatch('fetchLocal')
     dispatch('fetchUsbs')
   },
