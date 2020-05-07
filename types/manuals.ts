@@ -9,9 +9,16 @@ export interface Manual {
     page: ManualPage
 }
 
-export const manualsPaths: { section: string, paths: string[] }[] = [
+export interface ManualSection {
+    name: string,
+    section: string,
+    manuals: Manual[]
+}
+
+export const manualsPaths: { name: string, section: string, paths: string[] }[] = [
     {
         section: 'ste320',
+        name: 'STE320',
         paths: [
             '1-introduction',
             '2-quickstart',

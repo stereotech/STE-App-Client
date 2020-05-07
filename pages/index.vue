@@ -60,6 +60,7 @@ export default class Dashboard extends Vue {
       this.$store.dispatch('storageState/fetchLocal')
       this.$store.dispatch('storageState/fetchUsbs')
       this.$store.dispatch('printJobsState/fetchJobs')
+      this.$store.dispatch('manualsState/fetchManuals')
     }
   }
 }

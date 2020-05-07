@@ -21,7 +21,7 @@ const printers = [
     },
     {
         id: 'st-bbb',
-        model: 'SGE520',
+        model: 'STE520',
         name: 'ST-BBB',
         isLocal: false,
         isFiveAxis: true,
