@@ -86,7 +86,7 @@
         <v-card-actions>
           <v-btn color="primary" text @click="stopJobConfirmation = false">{{$t("No")}}</v-btn>
           <v-btn color="primary" outlined @click="stopJobConfirmed(true)">{{$t("Yes and Park")}}</v-btn>
-          <v-btn color="primary" depressed @click="stopJobConfirmed">{{$t("Yes")}}</v-btn>
+          <v-btn color="primary" depressed @click="stopJobConfirmed(false)">{{$t("Yes")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
