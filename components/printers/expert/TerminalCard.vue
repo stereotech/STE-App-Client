@@ -6,7 +6,7 @@
         <v-col cols="12">
           <v-card height="500">
             <v-list id="terminal-list" dense style="max-height: 500px" class="overflow-y-auto">
-              <template v-for="(line, index) in printerLogs(id)">
+              <template v-for="(line, index) in printerLog">
                 <TerminalString :key="index" @mounted="scrollToBottom">{{ line }}</TerminalString>
               </template>
             </v-list>
@@ -14,6 +14,7 @@
         </v-col>
         <v-col cols="12">
           <v-checkbox v-model="autoscroll" :label="$tc('Autoscroll')" />
+          <v-checkbox v-model="hideTemperature" :label="$tc('Hide temperature messages')" />
         </v-col>
         <v-col cols="12">
           <BottomInput v-model="keyboard" :input.sync="gcodeString">
@@ -60,12 +61,21 @@ export default class TerminalCard extends Vue {
   @printers.Action customCommand: any
   @printers.Getter printerLogs!: (id: string) => string[]
 
+  get printerLog (): string[] {
+    if (this.hideTemperature) {
+      return this.printerLogs(this.id).filter(s => !s.match(this.tempRegex) && !s.match(this.sdStatusRegex))
+    }
+    return this.printerLogs(this.id).filter(s => !s.match(this.sdStatusRegex))
+  }
+
   private previousGCode: string[] = []
   private previousIndex: number = 0
   private gcodeString: string = ''
 
   private autoscroll: boolean = true
-  private temperature: boolean = false
+  private hideTemperature: boolean = false
+  private tempRegex: RegExp = /(Send: (N\d+\s+)?M105)|(Recv:\s+(ok\s+((P|B|N)\d+\s+)*)?(B|T\d*):\d+)/g
+  private sdStatusRegex: RegExp = /(Send: (N\d+\s+)?M27)|(Recv: SD printing byte)|(Recv: Not SD printing)/g
   private keyboard: boolean = false
 
   private scrollToBottom () {
