@@ -193,5 +193,6 @@
   "High": "High",
   "Queue passes number in priority": "Queue passes number in priority",
   "Queue Settings": "Queue Settings",
-  "Select Cluster": "Select Cluster"
+  "Select Cluster": "Select Cluster",
+  "Hide temperature messages": "Hide temperature messages"
 }
