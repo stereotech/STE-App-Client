@@ -156,7 +156,7 @@ export default class PrinterCardActions extends Vue {
   private stopJobConfirmed (park: boolean = false) {
     this.cancelPrintJob(this.id)
     if (park) {
-      this.customCommand({ id: this.id, command: 'G28' })
+      this.customCommand({ id: this.id, command: 'G54 G28' })
     }
     this.stopJobConfirmation = false
   }
