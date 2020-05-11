@@ -12,13 +12,15 @@ export interface Manual {
 export interface ManualSection {
     name: string,
     section: string,
+    image: string
     manuals: Manual[]
 }
 
-export const manualsPaths: { name: string, section: string, paths: string[] }[] = [
+export const manualsPaths: { name: string, section: string, image: string, paths: string[] }[] = [
     {
         section: 'ste320',
         name: 'STE320',
+        image: 'manuals/banner.webp',
         paths: [
             '1-introduction',
             '2-quickstart',

@@ -15,6 +15,23 @@ export const state = (): ManualsState => ({
     manuals: []
 })
 
+export const getters: GetterTree<ManualsState, RootState> = {
+    getManuals (state: ManualsState){
+        return (sectionName: string) =>  state.manuals.find(v=> v.section === sectionName)
+    }
+
+    // sectionManuals(state: ManualsState){
+    //     return (sectionName: string) : Manual[] | undefined => {
+    //         let chapters: Manual[] = []
+    //         if (state.manuals.find(v=> v.section === sectionName)!==undefined && sectionName!== undefined){
+    //             chapters = state.manuals.find(v=> v.section === sectionName).manuals
+    //         }
+
+    //         return chapters
+    //     }
+    // }
+}
+
 export const mutations: MutationTree<ManualsState> = {
     setManuals (state: ManualsState, payload: ManualSection[]) {
         state.manuals = payload
@@ -28,6 +45,7 @@ export const actions: ActionTree<ManualsState, RootState> = {
             let section: ManualSection = {
                 name: manual.name,
                 section: manual.section,
+                image: manual.image,
                 manuals: []
             }
             for (const path of manual.paths) {

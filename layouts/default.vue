@@ -162,6 +162,12 @@ export default class extends Vue {
       title: 'Printers',
       translatedTitle: 'Printers',
       link: '/printers'
+    },
+    {
+      icon: 'mdi-hammer-wrench',
+      title: 'Maintenance',
+      translatedTitle: 'Maintenance',
+      link: 'maintenance'
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
