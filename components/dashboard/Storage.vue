@@ -4,7 +4,10 @@
       <v-toolbar flat color="secondary">
         <v-card-title class="headline font-weight-light d-inline-block text-truncate">{{cardTitle}}</v-card-title>
         <v-spacer />
-        <v-btn small fab outlined color="primary" v-if="local" @click="isOpen=true">
+        <v-btn small fab outlined color="primary" @click="refreshStorage">
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
+        <v-btn class="ml-2" small fab outlined color="primary" v-if="local" @click="isOpen=true">
           <v-icon>mdi-folder-plus</v-icon>
         </v-btn>
         <v-btn
@@ -215,6 +218,8 @@ export default class extends Vue {
   @storage.Action uploadFiles: any
   @storage.Action deleteFile: any
   @storage.Action addFolder: any
+  @storage.Action fetchLocal: any
+  @storage.Action fetchUsb: any
 
   @printjobs.Action addJob: any
 
@@ -235,6 +240,14 @@ export default class extends Vue {
   private folderName: string = ""
   private files: File[] = []
   private path: string[] = []
+
+  refreshStorage () {
+    if (this.local) {
+      this.fetchLocal();
+    } else {
+      this.fetchUsb();
+    }
+  }
 
   get viewPath (): string {
     if (this.path.length > 2) {
