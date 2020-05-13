@@ -28,7 +28,7 @@ export const getters: GetterTree<PrintJobsState, RootState> = {
     return state.jobs.length
   },
 
-  printJobsByPriority(state) {
+  printJobsByPriority (state) {
     return (priority: PrintJobPriority): PrintJob[] => {
       return state.jobs.filter(value => value.priority === priority && value.state === ("Queued" || "Dequeued"))
     }
@@ -69,9 +69,9 @@ export const mutations: MutationTree<PrintJobsState> = {
     }
   },
 
-  changePriority (state: PrintJobsState, payload: {job: PrintJob, priority: PrintJobPriority}) {
+  changePriority (state: PrintJobsState, payload: { job: PrintJob, priority: PrintJobPriority }) {
     const index = state.jobs.findIndex(value => value.id === payload.job.id)
-    if (index > -1){
+    if (index > -1) {
       state.jobs[index].priority = payload.priority
     }
   }
@@ -110,10 +110,10 @@ export const actions: ActionTree<PrintJobsState, RootState> = {
   async toggleSuccess ({ commit }, job: PrintJob) {
     await this.$axios.$put(this.state.apiUrl + jobsEndpoint, job)
   },
-  
-  async changePriority({ commit, dispatch }, payload: {job: PrintJob, priority: PrintJobPriority}) {
-    commit('changePriority', payload.job)
+
+  async changePriority ({ commit, dispatch }, payload: { job: PrintJob, priority: PrintJobPriority }) {
+    commit('changePriority', payload)
     await this.$axios.$put(this.state.apiUrl + jobsEndpoint, payload.job)
-    dispatch('fetchJobs')
+    await dispatch('fetchJobs')
   }
 }
