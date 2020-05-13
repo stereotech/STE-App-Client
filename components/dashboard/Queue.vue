@@ -20,7 +20,7 @@
         <v-subheader class="error--text" v-if="highPriorityJobs.length > 0">
           <v-icon color="error" left>mdi-chevron-double-up</v-icon>
           {{$t("High Priority")}}
-          </v-subheader>
+        </v-subheader>
         <v-list-item v-for="(job) in highPriorityJobs" :key="job.id">
           <v-btn icon outlined color="info" :ripple="false" class="mr-2" v-if="job.isFiveAxis">5D</v-btn>
           <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
@@ -48,7 +48,7 @@
                 <v-list-item
                   color="error"
                   v-if="job.priority!=2"
-                  @click="changePriority(job, 2)"
+                  @click="changePriority({job: job, priority: 2})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-up</v-icon>
@@ -58,7 +58,7 @@
                 <v-list-item
                   color="primary"
                   v-if="job.priority!=1"
-                  @click="changePriority(job, 1)"
+                  @click="changePriority({job: job, priority: 1})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-circle-double</v-icon>
@@ -68,7 +68,7 @@
                 <v-list-item
                   color="gray"
                   v-if="job.priority!=0"
-                  @click="changePriority(job, 0)"
+                  @click="changePriority({job: job, priority: 0})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-down</v-icon>
@@ -122,7 +122,7 @@
                 <v-list-item
                   color="error"
                   v-if="job.priority!=2"
-                  @click="changePriority(job, 2)"
+                  @click="changePriority({job: job, priority: 2})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-up</v-icon>
@@ -132,7 +132,7 @@
                 <v-list-item
                   color="primary"
                   v-if="job.priority!=1"
-                  @click="changePriority(job, 1)"
+                  @click="changePriority({job: job, priority: 1})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-circle-double</v-icon>
@@ -142,7 +142,7 @@
                 <v-list-item
                   color="gray"
                   v-if="job.priority!=0"
-                  @click="changePriority(job, 0)"
+                  @click="changePriority({job: job, priority: 0})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-down</v-icon>
@@ -168,7 +168,7 @@
         <v-subheader class="gray--text" v-if="lowPriorityJobs.length > 0">
           <v-icon color="gray" left>mdi-chevron-double-down</v-icon>
           {{$t("Low Priority")}}
-          </v-subheader>
+        </v-subheader>
         <v-list-item v-for="(job) in lowPriorityJobs" :key="job.id">
           <v-btn icon outlined color="info" :ripple="false" class="mr-2" v-if="job.isFiveAxis">5D</v-btn>
           <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
@@ -196,7 +196,7 @@
                 <v-list-item
                   color="error"
                   v-if="job.priority!=2"
-                  @click="changePriority(job, 2)"
+                  @click="changePriority({job: job, priority: 2})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-up</v-icon>
@@ -206,7 +206,7 @@
                 <v-list-item
                   color="primary"
                   v-if="job.priority!=1"
-                  @click="changePriority(job, 1)"
+                  @click="changePriority({job: job, priority: 1})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-circle-double</v-icon>
@@ -216,7 +216,7 @@
                 <v-list-item
                   color="gray"
                   v-if="job.priority!=0"
-                  @click="changePriority(job, 0)"
+                  @click="changePriority({job: job, priority: 0})"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-down</v-icon>
@@ -343,15 +343,11 @@
                     <v-icon color="gray" left>mdi-chevron-double-down</v-icon>
                     {{$t('Low')}}
                   </v-btn>
-                  <v-btn
-                    text
-                    color="primary">
+                  <v-btn text color="primary">
                     <v-icon color="primary" left>mdi-circle-double</v-icon>
                     {{$t('Normal')}}
                   </v-btn>
-                  <v-btn
-                    text
-                    color="error">
+                  <v-btn text color="error">
                     <v-icon color="error" left>mdi-chevron-double-up</v-icon>
                     {{$t('High')}}
                   </v-btn>
