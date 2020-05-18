@@ -125,7 +125,7 @@
                   @click="changePriority({job: job, priority: 2})"
                 >
                   <v-list-item-action>
-                    <v-icon>mdi-chevron-double-up</v-icon>
+                    <v-icon color="error">mdi-chevron-double-up</v-icon>
                   </v-list-item-action>
                   <v-list-item-title>{{$t("High")}}</v-list-item-title>
                 </v-list-item>
@@ -135,7 +135,7 @@
                   @click="changePriority({job: job, priority: 1})"
                 >
                   <v-list-item-action>
-                    <v-icon>mdi-circle-double</v-icon>
+                    <v-icon color="primary">mdi-circle-double</v-icon>
                   </v-list-item-action>
                   <v-list-item-title>{{$t("Normal")}}</v-list-item-title>
                 </v-list-item>
@@ -199,7 +199,7 @@
                   @click="changePriority({job: job, priority: 2})"
                 >
                   <v-list-item-action>
-                    <v-icon>mdi-chevron-double-up</v-icon>
+                    <v-icon color="error">mdi-chevron-double-up</v-icon>
                   </v-list-item-action>
                   <v-list-item-title>{{$t("High")}}</v-list-item-title>
                 </v-list-item>
@@ -209,7 +209,7 @@
                   @click="changePriority({job: job, priority: 1})"
                 >
                   <v-list-item-action>
-                    <v-icon>mdi-circle-double</v-icon>
+                    <v-icon color="primary">mdi-circle-double</v-icon>
                   </v-list-item-action>
                   <v-list-item-title>{{$t("Normal")}}</v-list-item-title>
                 </v-list-item>
