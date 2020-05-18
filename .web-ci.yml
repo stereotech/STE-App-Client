@@ -4,10 +4,10 @@ buildWeb:
   cache:
     paths:
       # - node_modules
-      - .npm
+      - .npm/
   before_script:
     #- npm install --dev
-    - npm ci
+    - npm ci --cache .npm --prefer-offline
   script:
     - npm run build-web
   after_script:
