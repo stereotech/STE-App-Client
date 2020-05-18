@@ -3,9 +3,11 @@ buildWeb:
   stage: build
   cache:
     paths:
-      - node_modules
+      # - node_modules
+      - .npm
   before_script:
-    - npm install --dev
+    #- npm install --dev
+    - npm ci
   script:
     - npm run build-web
   after_script:
