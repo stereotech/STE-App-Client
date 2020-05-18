@@ -16,8 +16,17 @@ export const state = (): ManualsState => ({
 })
 
 export const getters: GetterTree<ManualsState, RootState> = {
-    getManuals (state: ManualsState){
-        return (sectionName: string) =>  state.manuals.find(v=> v.section === sectionName)
+    getManualPage (state: ManualsState){
+        return (sectionName: string, pageName: string): Manual | undefined => {
+            let section : ManualSection | undefined
+            section = state.manuals.find(v=> v.section === sectionName)
+            if(section===undefined){
+                return
+            }
+            else{
+                return section.manuals.find(v=>v.section === pageName)
+            }
+        } 
     }
 
     // sectionManuals(state: ManualsState){

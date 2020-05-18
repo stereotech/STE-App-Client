@@ -194,5 +194,6 @@
   "Queue passes number in priority": "Количество проходов очереди в одном приоритете",
   "Queue Settings": "Настройки очереди печати",
   "Select Cluster": "Выберите кластер",
-  "User Manuals": "Руководства пользователя"
+  "User Manuals": "Руководства пользователя",
+  "Back":"Назад"
 }

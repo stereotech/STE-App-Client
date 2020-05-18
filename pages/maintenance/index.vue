@@ -5,7 +5,7 @@
                 <v-container fluid>
                     <v-row justify="center">
                         <v-col v-for="(manualSection, index) in manualSections" :key="index" cols="12" sm="6" md="3">
-                            <v-card hover ripple nuxt exact :to="`/maintenance/${manualSection.section}/index`">
+                            <v-card hover ripple nuxt exact :to="`/maintenance/${manualSection.section}`">
                             <v-img
                                 :src="manualSection.image"
                                 gradient="to top, rgba(100,115,201,.0), rgba(38, 50, 56, 1)"
@@ -28,11 +28,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, namespace } from 'nuxt-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
+import { State, Action, Getter, namespace } from 'vuex-class'
 import { ManualSection, manualsPaths } from '~/types/manuals'
-
+const userManuals = namespace('manualsState')
 
 export default class Maintenance extends Vue {
+    @userManuals.Action fetchManuals
 
  manualSections: ManualSection[] = [
     {
@@ -55,6 +57,9 @@ export default class Maintenance extends Vue {
     }
   ]
 
+async mounted(){
+    await this.fetchManuals
+}
 
 }
 </script>
