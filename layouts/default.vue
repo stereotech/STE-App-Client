@@ -167,7 +167,7 @@ export default class extends Vue {
       icon: 'mdi-hammer-wrench',
       title: 'Maintenance',
       translatedTitle: 'Maintenance',
-      link: 'maintenance'
+      link: '/maintenance'
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly

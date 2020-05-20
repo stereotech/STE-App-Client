@@ -24,7 +24,10 @@ export const getters: GetterTree<ManualsState, RootState> = {
                 return
             }
             else{
-                return section.manuals.find(v=>v.section === pageName)
+                return section.manuals.find(v=>{
+                    let splitted = v.path.split('/')
+                    return splitted[splitted.length-1] === pageName
+                })
             }
         } 
     }

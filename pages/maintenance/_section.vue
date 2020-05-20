@@ -15,7 +15,9 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { State, Action, Getter, namespace } from 'vuex-class'
 import { ManualSection, manualsPaths } from '~/types/manuals'
 
+@Component({
 
+})
 export default class SectionManual extends Vue{
  
  //@userManuals.Getter getManuals!: (sectionName: string) => ManualSection | undefined

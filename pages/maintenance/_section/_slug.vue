@@ -1,20 +1,20 @@
 <template>
   <v-container>
-    <v-row v-if="certainPage === undefined">
+    <v-row v-if="certainPageTitle && certainPageBody === undefined">
       <v-col>
-        <v-btn dark color="primary" nuxt :to="`/maintenance`">
+        <v-btn dark color="primary" nuxt :to="'/maintenance'">
           {{$t('Back')}}
         </v-btn>
       </v-col>
     </v-row>
     <v-row v-else>
       <v-col cols="12">
-        <h1>{{ certainPage.attrs.title}}</h1>
+        <h1>{{ certainPageTitle}}</h1>
       </v-col>
       <v-col cols="12">
         <v-card>
           <v-container>
-            <HtmlParser :content="certainPage.body" />
+            <HtmlParser :content="certainPageBody" />
           </v-container>
         </v-card>
       </v-col>
@@ -53,19 +53,34 @@ export default class ManualSlug extends Vue{
   path: string = ''
   section: string = ''
 
-  get certainPage (){
+  get certainPageTitle (){
     let curPage: Manual | undefined
     curPage = this.getManualPage(this.$route.params.section, this.$route.params.slug)
     if (curPage !== undefined){
-      return curPage.page
+      console.log(curPage.page.attrs.title)
+      return curPage.page.attrs.title
     }
     else{
- 
-      //this.$router.go(-2)
+      return undefined
     }
     // console.log(this.$route.params.section)
     // console.log(this.$route.params.slug)
   }
+
+get certainPageBody (){
+  let curPage: Manual | undefined
+  curPage = this.getManualPage(this.$route.params.section, this.$route.params.slug)
+    function replaceImages(match) {
+    return "https://stereotech.org" + match
+  }
+  if (curPage !== undefined){
+    let str = curPage.page.body
+    let res = str.replace(/\/docs\/[a-z0-9\/]*\.(jpg|png|webp)/g, replaceImages)
+    console.log(str)
+    return res
+  }
+}
+
 
   get baseLink () {
     return '/maintenance/' + this.$route.params.section
