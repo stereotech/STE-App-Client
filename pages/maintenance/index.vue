@@ -33,9 +33,7 @@ import { State, Action, Getter, namespace } from 'vuex-class'
 import { ManualSection, manualsPaths } from '~/types/manuals'
 const userManuals = namespace('manualsState')
 
-@Component({
-
-})
+@Component
 export default class Maintenance extends Vue {
     @userManuals.Action fetchManuals
 
@@ -65,7 +63,7 @@ export default class Maintenance extends Vue {
   ]
 
 async mounted(){
-    await this.fetchManuals
+     this.$store.dispatch('manualsState/fetchManuals')
 }
 
 }

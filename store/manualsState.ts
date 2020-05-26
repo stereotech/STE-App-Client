@@ -30,18 +30,19 @@ export const getters: GetterTree<ManualsState, RootState> = {
                 })
             }
         } 
+    },
+    getAllManuals (state: ManualsState){
+        return (sectionName: string): Manual[] | [] => {
+            let section : ManualSection | undefined
+            section = state.manuals.find(v=> v.section === sectionName)
+            if (section===undefined){
+                return []
+            }
+            else{
+                return section.manuals
+            }
+        }
     }
-
-    // sectionManuals(state: ManualsState){
-    //     return (sectionName: string) : Manual[] | undefined => {
-    //         let chapters: Manual[] = []
-    //         if (state.manuals.find(v=> v.section === sectionName)!==undefined && sectionName!== undefined){
-    //             chapters = state.manuals.find(v=> v.section === sectionName).manuals
-    //         }
-
-    //         return chapters
-    //     }
-    // }
 }
 
 export const mutations: MutationTree<ManualsState> = {

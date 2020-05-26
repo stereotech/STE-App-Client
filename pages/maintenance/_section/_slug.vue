@@ -57,7 +57,6 @@ export default class ManualSlug extends Vue{
     let curPage: Manual | undefined
     curPage = this.getManualPage(this.$route.params.section, this.$route.params.slug)
     if (curPage !== undefined){
-      console.log(curPage.page.attrs.title)
       return curPage.page.attrs.title
     }
     else{
@@ -75,9 +74,14 @@ get certainPageBody (){
   }
   if (curPage !== undefined){
     let str = curPage.page.body
-    let res = str.replace(/\/docs\/[a-z0-9\/]*\.(jpg|png|webp)/g, replaceImages)
-    console.log(str)
-    return res
+    let matches = str.match(/https:\/\/stereotech.org\/docs/g)
+    if (matches==null){
+      let res = str.replace(/\/docs\/[a-z0-9\/]*\.(jpg|png|webp)/g, replaceImages)
+      return res
+    }
+    else{
+      return str
+    }
   }
 }
 
