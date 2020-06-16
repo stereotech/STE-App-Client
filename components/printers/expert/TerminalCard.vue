@@ -4,12 +4,18 @@
     <v-container fluid>
       <v-row dense>
         <v-col cols="12">
-          <v-card height="500">
-            <v-list id="terminal-list" dense style="max-height: 500px" class="overflow-y-auto">
-              <template v-for="(line, index) in printerLog">
-                <TerminalString :key="index" @mounted="scrollToBottom">{{ line }}</TerminalString>
+          <v-card>
+            <v-virtual-scroll
+              id="terminal-list"
+              max-height="500"
+              height="500"
+              :items="printerLog"
+              :item-height="50"
+            >
+              <template v-slot="{ item, index }">
+                <TerminalString :key="index" @mounted="scrollToBottom">{{ item }}</TerminalString>
               </template>
-            </v-list>
+            </v-virtual-scroll>
           </v-card>
         </v-col>
         <v-col cols="12">

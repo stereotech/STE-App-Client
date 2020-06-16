@@ -64,6 +64,10 @@ const config: Configuration = {
     treeShake: false,
     materialIcons: false,
     theme: {
+      dark: false,
+      disable: false,
+      default: false,
+      options: {},
       themes: {
         light: {
           primary: '#0277bd',
