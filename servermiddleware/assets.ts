@@ -11,8 +11,8 @@ const assets: ServerMiddleware = function (req, res, next) {
     res.setHeader('Vary', 'Origin')
 
     // remove _pwa_assets from path
-    req.originalUrl = req.originalUrl.replace('/nuxtfiles', '')
-
+    req.originalUrl = req.originalUrl?.replace('/nuxtfiles', '')
+    //@ts-ignore
     return serveAssets(req, res, next)
 }
 
