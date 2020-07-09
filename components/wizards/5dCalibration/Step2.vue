@@ -32,6 +32,7 @@ export default class extends Vue {
     }
   }
   async performStep () {
+    await this.customCommand({ id: this.$route.params.id, command: 'G28' })
     await this.customCommand({ id: this.$route.params.id, command: 'M1005 S0' })
   }
   private step?: number = 1
