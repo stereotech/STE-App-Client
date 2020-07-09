@@ -32,7 +32,8 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S10' })
+    //await this.customCommand({ id: this.$route.params.id, command: 'M1005 S10' })
+    await this.customCommand({ id: this.$route.params.id, command: 'M500' })
     //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
   }
   private step?: number = 11
@@ -43,7 +44,8 @@ export default class extends Vue {
 
   @printers.Action homeCommand: any
   private finish () {
-    this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: true })
+    this.customCommand({ id: this.$route.params.id, command: 'G28 X0 Y0 Z0' })
+    //this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: true })
     this.$router.push(`/printers/${this.$route.params.id}`)
 
   }
