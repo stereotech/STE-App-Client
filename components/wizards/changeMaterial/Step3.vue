@@ -15,6 +15,9 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="loadMaterial">{{$t("Load")}}</v-btn>
+        </v-col>
+        <v-col cols="12">
           <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
         </v-col>
         <v-col v-if="additionalData.action === 0" cols="12">
@@ -110,8 +113,11 @@ export default class extends Vue {
   }
 
   private async repeat () {
-    await this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
     await this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+  }
+
+  private async loadMaterial () {
+    await this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 20 })
   }
 
   private next (step: number) {
