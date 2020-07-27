@@ -141,8 +141,9 @@ export default class ExtruderCard extends Vue {
     this.flowCommand({ id: this.id, flow: value })
   }
 
-  private servicePos () {
-    this.customCommand({ id: this.id, command: 'G0 X100 Y5' })
+  private async servicePos () {
+    await this.customCommand({ id: this.id, command: 'G28' })
+    await this.customCommand({ id: this.id, command: 'G0 X100 Y30' })
   }
 
 
