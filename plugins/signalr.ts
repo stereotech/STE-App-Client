@@ -120,7 +120,9 @@ const hubManagement: Plugin = ({ app, store }, inject) => {
             store.commit('printersState/setError')
         })
 
-        hub.onclose(async () => {
+
+        hub.onclose(async (error) => {
+            console.error(error)
             await startHub()
         })
         store.commit('setHub', hub)
