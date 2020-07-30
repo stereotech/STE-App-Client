@@ -5,7 +5,7 @@
         <v-col cols="12">
           <v-radio-group v-model="additionalData.printingMode" mandatory>
             <v-radio :label="$tc('Classic mode (3D)')" :value="0" color="secondary" />
-            <v-radio :label="$tc('Coil 5D')" :value="1" color="secondary" />
+            <v-radio :label="$tc('Spiral 5D')" :value="1" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">
