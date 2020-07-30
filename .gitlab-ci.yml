@@ -2,9 +2,17 @@ stages:
   - build
   - test
   - deploy
+  - post-deploy
 
-include: 
+include:
   #- '.docker-ci.yml'
-  - '.web-ci.yml'
-  - '.panel-ci.yml'
-  - '.android-ci.yml'
+  - ".web-ci.yml"
+  - ".panel-ci.yml"
+  - ".android-ci.yml"
+
+trigger_testing_build:
+  stage: post-deploy
+  script:
+    - "curl -X POST -F token=$STEAPP_DEPLOY_TOKEN -F ref=develop https://gitlab.com/api/v4/projects/8875748/trigger/pipeline"
+  only:
+    - develop
