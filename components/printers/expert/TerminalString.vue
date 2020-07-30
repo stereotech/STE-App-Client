@@ -1,5 +1,5 @@
 <template>
-  <v-list-item>
+  <v-list-item three-line>
     <v-list-item-content>
       <slot />
     </v-list-item-content>
