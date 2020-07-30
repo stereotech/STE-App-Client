@@ -63,7 +63,7 @@ export default class PrinterPage extends Vue {
   }
 
   head () {
-    return { title: 'STE App Printers' }
+    return { title: this.$t('Printers') }
   }
 
   panel: number[] = [0, 1]

@@ -19,7 +19,7 @@ export default class extends Vue {
   }
 
   head () {
-    return { title: 'STE App First Launch' }
+    return { title: this.$t('First Launch') }
   }
 }
 </script>

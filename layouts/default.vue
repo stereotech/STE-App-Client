@@ -134,6 +134,7 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
+import { Settings } from '~/types/settings'
 
 const settings = namespace('settingsState')
 
@@ -143,8 +144,14 @@ const settings = namespace('settingsState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
+
   @settings.Action rebootSystem: any
   @settings.Action poweroffSystem: any
+
+  head () {
+    return { titleTemplate: `STE App - %s - ${this.settings.systemId.toUpperCase()}` }
+  }
 
   get isMobile (): boolean {
     return process.env.NUXT_ENV_PLATFORM == 'MOBILE'

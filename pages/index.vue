@@ -47,7 +47,7 @@ export default class Dashboard extends Vue {
   text: string = ''
 
   head () {
-    return { title: 'STE App Dashboard' }
+    return { title: this.$t('Dashboard') }
   }
 
   keyboard: boolean = true
