@@ -195,5 +195,6 @@
   "Queue Settings": "Queue Settings",
   "Select Cluster": "Select Cluster",
   "Hide temperature messages": "Hide temperature messages",
-  "Printing time: ": "Printing time: "
+  "Printing time: ": "Printing time: ",
+  "First Launch": "First Launch"
 }

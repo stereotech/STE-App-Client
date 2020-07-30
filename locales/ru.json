@@ -195,5 +195,6 @@
   "Queue Settings": "Настройки очереди печати",
   "Select Cluster": "Выберите кластер",
   "Hide temperature messages": "Скрывать сообщения температуры",
-  "Printing time: ": "Время печати: "
+  "Printing time: ": "Время печати: ",
+  "First Launch": "Первый Запуск"
 }

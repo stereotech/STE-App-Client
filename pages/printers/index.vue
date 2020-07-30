@@ -29,11 +29,10 @@ const printers = namespace('printersState')
   }
 })
 export default class PrintersPage extends Vue {
-  [x: string]: any;
   @printers.Getter printers!: PrinterInfo[]
 
   head () {
-    return { title: 'STE App Printers' }
+    return { title: this.$t('Printers') }
   }
 
   mounted () {

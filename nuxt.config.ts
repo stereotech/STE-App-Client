@@ -3,7 +3,7 @@ import { Configuration } from '@nuxt/types'
 const config: Configuration = {
   mode: 'spa',
   head: {
-    title: 'STE App',
+    titleTemplate: 'STE App - %s',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui' },
