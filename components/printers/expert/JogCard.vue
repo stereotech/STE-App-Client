@@ -4,10 +4,10 @@
     <v-container>
       <v-row dense class="text-center" align="center" justify="center">
         <template v-if="isFiveAxis">
-          <v-col cols="12" sm="6" order-sm="1">
+          <v-col cols="12" md="6" order-md="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
           </v-col>
-          <v-col cols="12" sm="6" order-sm="2">
+          <v-col cols="12" md="6" order-md="2">
             <v-btn
               outlined
               text
@@ -20,7 +20,7 @@
               <v-icon>mdi-chevron-up</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="3">
+          <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
               text
@@ -33,7 +33,7 @@
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="3">
+          <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
               text
@@ -46,7 +46,7 @@
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="3">
+          <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
               text
@@ -59,7 +59,7 @@
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="12" sm="6" order-sm="4">
+          <v-col cols="12" md="6" order-md="4">
             <v-btn
               outlined
               text
@@ -72,10 +72,10 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="12" sm="2" order-sm="1">
+          <v-col cols="12" md="2" order-md="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="4">
+          <v-col cols="4" md="2" order-md="4">
             <v-btn
               outlined
               text
@@ -88,7 +88,7 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="3">
+          <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
               text
@@ -101,7 +101,7 @@
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="2">
+          <v-col cols="4" md="2" order-md="2">
             <v-btn
               outlined
               text
@@ -116,10 +116,10 @@
           </v-col>
 
           <!-- A-axis просмотреть order-->
-          <v-col cols="12" sm="2" order-sm="1">
+          <v-col cols="12" md="2" order-md="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">a</v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="4">
+          <v-col cols="4" md="2" order-md="4">
             <v-btn
               outlined
               text
@@ -132,7 +132,7 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="3">
+          <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
               text
@@ -145,7 +145,7 @@
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="2">
+          <v-col cols="4" md="2" order-md="2">
             <v-btn
               outlined
               text
@@ -159,10 +159,10 @@
             </v-btn>
           </v-col>
           <!-- C-axis просмотреть order-->
-          <v-col cols="12" sm="2" order-sm="1">
+          <v-col cols="12" md="2" order-md="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">c</v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="4">
+          <v-col cols="4" md="2" order-md="4">
             <v-btn
               outlined
               text
@@ -175,7 +175,7 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="3">
+          <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
               text
@@ -188,7 +188,7 @@
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="2">
+          <v-col cols="4" md="2" order-md="2">
             <v-btn
               outlined
               text
@@ -202,7 +202,7 @@
             </v-btn>
           </v-col>
 
-          <v-col cols="8" sm="10" order-sm="5" pt-2>
+          <v-col cols="8" md="10" order-md="5" pt-2>
             <v-btn-toggle mandatory v-model="selectedAmount" rounded>
               <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
               <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
@@ -210,7 +210,7 @@
               <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
             </v-btn-toggle>
           </v-col>
-          <v-col cols="4" sm="2" order-sm="5" v-if="!dense">
+          <v-col cols="4" md="2" order-md="5" v-if="!dense">
             <v-btn
               x-large
               text
@@ -223,7 +223,7 @@
               <v-icon>mdi-engine-off-outline</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="12" order-sm="5" pt-6 v-if="!dense">
+          <v-col cols="12" order-md="5" pt-6 v-if="!dense">
             <v-slider
               v-model="feed"
               :label="$tc('Feed')"
@@ -235,11 +235,11 @@
           </v-col>
         </template>
         <template v-else>
-          <v-col cols="12" sm="9" order-sm="1">
+          <v-col cols="12" md="9" order-md="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
           </v-col>
 
-          <v-col cols="12" sm="9" order-sm="2">
+          <v-col cols="12" md="9" order-md="2">
             <v-btn
               outlined
               text
@@ -252,7 +252,7 @@
               <v-icon>mdi-chevron-up</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="3">
+          <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
               text
@@ -265,7 +265,7 @@
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="3">
+          <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
               text
@@ -278,7 +278,7 @@
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="3">
+          <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
               text
@@ -291,7 +291,7 @@
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="12" sm="9" order-sm="4">
+          <v-col cols="12" md="9" order-md="4">
             <v-btn
               outlined
               text
@@ -304,10 +304,10 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="12" sm="3" order-sm="1">
+          <v-col cols="12" md="3" order-md="1">
             <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="4">
+          <v-col cols="4" md="3" order-md="4">
             <v-btn
               outlined
               text
@@ -320,7 +320,7 @@
               <v-icon>mdi-chevron-down</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="3">
+          <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
               text
@@ -333,7 +333,7 @@
               <v-icon>mdi-home</v-icon>
             </v-btn>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="2">
+          <v-col cols="4" md="3" order-md="2">
             <v-btn
               outlined
               text
@@ -346,7 +346,7 @@
               <v-icon>mdi-chevron-up</v-icon>
             </v-btn>
           </v-col>
-          <v-col class="pt-2" cols="8" sm="9" order-sm="5">
+          <v-col class="pt-2" cols="8" md="9" order-md="5">
             <v-btn-toggle v-model="selectedAmount" mandatory rounded>
               <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
               <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
@@ -354,7 +354,7 @@
               <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
             </v-btn-toggle>
           </v-col>
-          <v-col cols="4" sm="3" order-sm="5" v-if="!dense">
+          <v-col cols="4" md="3" order-md="5" v-if="!dense">
             <v-btn
               x-large
               text
@@ -367,7 +367,7 @@
               <v-icon>mdi-engine-off-outline</v-icon>
             </v-btn>
           </v-col>
-          <v-col class="pt-6" cols="12" order-sm="5" v-if="!dense">
+          <v-col class="pt-6" cols="12" order-md="5" v-if="!dense">
             <v-slider
               v-model="feed"
               :label="$tc('Feed')"
