@@ -34,8 +34,8 @@
             v-model="flow"
             :label="$tc('Flow')"
             thumb-label
-            min="50"
-            max="150"
+            min="75"
+            max="125"
             @change="setFlow"
             :color="glaze ? 'brown' : 'primary' "
             :track-color="glaze ? 'brown lighten-4' : ''"
