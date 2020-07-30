@@ -2,6 +2,7 @@
     "browserWindow": {
         "kiosk": true,
         "autoHideMenuBar": true,
-        "alwaysOnTop": true
+        "alwaysOnTop": true,
+        "devTools": true
     }
 }
