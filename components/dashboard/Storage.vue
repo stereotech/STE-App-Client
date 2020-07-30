@@ -375,6 +375,7 @@ export default class extends Vue {
       fileUri: file.refs ? file.refs.download : '',
       printers: [],
       lastPrintTime: 0,
+      printingTime: 0,
       successful: false,
       state: 'Queued',
       isFiveAxis: file.gcodeAnalysis ? file.gcodeAnalysis.isFiveAxis : false,
