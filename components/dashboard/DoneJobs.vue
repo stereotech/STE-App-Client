@@ -31,7 +31,15 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="subheading">
-                  <v-chip color="info" v-if="item.isFiveAxis" class="mr-1" outlined label x-small>5D</v-chip>
+                  <template v-if="settings.queueIgnoreAnalisys"></template>
+                  <v-chip
+                    color="info"
+                    v-else-if="item.isFiveAxis"
+                    class="mr-1"
+                    outlined
+                    label
+                    x-small
+                  >5D</v-chip>
                   <v-chip color="primary" v-else class="mr-1" outlined label x-small>3D</v-chip>
                   {{ item.name }}
                 </v-list-item-title>
@@ -96,11 +104,15 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
 import { PrintJob } from '~/types/printJob'
+import { Settings } from '../../types/settings'
 
 const printJobs = namespace('printJobsState')
+const settings = namespace('settingsState')
 
 @Component
 export default class extends Vue {
+  @settings.Getter settings!: Settings
+
   @printJobs.Getter doneJobs!: PrintJob[]
   @printJobs.Action removeJob: any
   @printJobs.Action revertJob: any

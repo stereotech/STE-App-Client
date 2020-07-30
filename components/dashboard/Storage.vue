@@ -102,12 +102,20 @@
             </v-list-item>
             <v-list-item v-else :key="index">
               <v-btn
+                color="primary"
+                :ripple="false"
+                class="mr-2"
+                icon
+                outlined
+                v-if="settings.queueIgnoreAnalisys"
+              ></v-btn>
+              <v-btn
                 icon
                 outlined
                 color="info"
                 :ripple="false"
                 class="mr-2"
-                v-if="item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis"
+                v-else-if="item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis"
               >5D</v-btn>
               <v-btn
                 icon
@@ -117,6 +125,7 @@
                 class="mr-2"
                 v-else-if="item.gcodeAnalysis && !item.gcodeAnalysis.isFiveAxis"
               >3D</v-btn>
+
               <v-btn icon outlined loading color="primary" :ripple="false" class="mr-2" v-else></v-btn>
               <v-list-item-content>
                 <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
@@ -209,9 +218,11 @@ import { State, Action, Getter, Mutation, namespace } from 'vuex-class'
 import { FileOrFolder } from '~/types/fileOrFolder'
 import BottomInput from '~/components/common/BottomInput.vue'
 import { PrintJob } from '../../types/printJob'
+import { Settings } from '~/types/settings'
 
 const storage = namespace('storageState')
 const printjobs = namespace('printJobsState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -225,6 +236,7 @@ export default class extends Vue {
 
   collapsed: boolean = false
 
+  @settings.Getter settings!: Settings
 
   @storage.Getter localStorage!: (path: string[]) => FileOrFolder | undefined
   @storage.Getter usbStorage!: (name: string) => FileOrFolder | undefined

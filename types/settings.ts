@@ -9,4 +9,5 @@ export interface Settings {
   storageFree: number
   queuePass: number
   queueProcessAll: boolean
+  queueIgnoreAnalisys: boolean
 }

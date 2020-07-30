@@ -106,7 +106,8 @@ const settings: Settings = {
     storageFree: 3564684646846,
     dateTime: 1550665494,
     queuePass: 2,
-    queueProcessAll: false
+    queueProcessAll: false,
+    queueIgnoreAnalisys: true
 }
 
 const networks: Network[] = [

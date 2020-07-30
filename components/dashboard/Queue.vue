@@ -22,7 +22,16 @@
           {{$t("High Priority")}}
         </v-subheader>
         <v-list-item v-for="(job) in highPriorityJobs" :key="job.id">
-          <v-btn icon outlined color="info" :ripple="false" class="mr-2" v-if="job.isFiveAxis">5D</v-btn>
+          <template v-if="settings.queueIgnoreAnalisys"></template>
+          <v-btn
+            icon
+            outlined
+            color="info"
+            :ripple="false"
+            class="mr-2"
+            v-else-if="job.isFiveAxis"
+          >5D</v-btn>
+
           <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
@@ -96,7 +105,15 @@
           {{$t("Normal Priority")}}
         </v-subheader>
         <v-list-item v-for="(job) in normalPriorityJobs" :key="job.id">
-          <v-btn icon outlined color="info" :ripple="false" class="mr-2" v-if="job.isFiveAxis">5D</v-btn>
+          <template v-if="settings.queueIgnoreAnalisys"></template>
+          <v-btn
+            icon
+            outlined
+            color="info"
+            :ripple="false"
+            class="mr-2"
+            v-else-if="job.isFiveAxis"
+          >5D</v-btn>
           <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
@@ -170,7 +187,15 @@
           {{$t("Low Priority")}}
         </v-subheader>
         <v-list-item v-for="(job) in lowPriorityJobs" :key="job.id">
-          <v-btn icon outlined color="info" :ripple="false" class="mr-2" v-if="job.isFiveAxis">5D</v-btn>
+          <template v-if="settings.queueIgnoreAnalisys"></template>
+          <v-btn
+            icon
+            outlined
+            color="info"
+            :ripple="false"
+            class="mr-2"
+            v-else-if="job.isFiveAxis"
+          >5D</v-btn>
           <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
@@ -302,13 +327,14 @@
                   @input="changeNameFromFile"
                 >
                   <template v-slot:item="{item}">
+                    <template v-if="settings.queueIgnoreAnalisys"></template>
                     <v-btn
                       icon
                       outlined
                       color="info"
                       :ripple="false"
                       class="mr-2"
-                      v-if="item.isFiveAxis"
+                      v-else-if="item.isFiveAxis"
                     >5D</v-btn>
                     <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
                     <v-list-item-content>
@@ -316,7 +342,8 @@
                     </v-list-item-content>
                   </template>
                   <template v-slot:selection="{item}">
-                    <v-chip v-if="item.isFiveAxis" small outlined color="info">5D</v-chip>
+                    <template v-if="settings.queueIgnoreAnalisys"></template>
+                    <v-chip v-else-if="item.isFiveAxis" small outlined color="info">5D</v-chip>
                     <v-chip v-else small outlined color="primary">3D</v-chip>
                     <div class="text-truncate">{{ item.name}}</div>
                   </template>
@@ -330,7 +357,7 @@
                   chips
                   multiple
                   dense
-                  :items="certainTypePrinters(editedJob.isFiveAxis)"
+                  :items="settings.queueIgnoreAnalisys ? printers : certainTypePrinters(editedJob.isFiveAxis)"
                   item-text="name"
                   item-value="id"
                   :menu-props="menuProps"
@@ -399,10 +426,12 @@ import { FileOrFolder } from '~/types/fileOrFolder'
 import { PrintJob, PrintJobPriority } from '~/types/printJob'
 import BottomInput from '~/components/common/BottomInput.vue'
 import { PrinterType } from '~/types/printerType';
+import { Settings } from '../../types/settings'
 
 const printJobs = namespace('printJobsState')
 const printers = namespace('printersState')
 const storage = namespace('storageState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -410,6 +439,8 @@ const storage = namespace('storageState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
+
   @printJobs.Getter queuedJobs!: PrintJob[]
   @printJobs.Getter jobsCount!: number
   @printJobs.Getter printJobsByPriority !: (priority: PrintJobPriority) => PrintJob[]
