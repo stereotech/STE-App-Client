@@ -22,7 +22,7 @@
           {{$t("High Priority")}}
         </v-subheader>
         <v-list-item v-for="(job) in highPriorityJobs" :key="job.id">
-          <template v-if="settings.queueIgnoreAnalisys"></template>
+          <template v-if="settings.queueIgnoreAnalysis"></template>
           <v-btn
             icon
             outlined
@@ -105,7 +105,7 @@
           {{$t("Normal Priority")}}
         </v-subheader>
         <v-list-item v-for="(job) in normalPriorityJobs" :key="job.id">
-          <template v-if="settings.queueIgnoreAnalisys"></template>
+          <template v-if="settings.queueIgnoreAnalysis"></template>
           <v-btn
             icon
             outlined
@@ -187,7 +187,7 @@
           {{$t("Low Priority")}}
         </v-subheader>
         <v-list-item v-for="(job) in lowPriorityJobs" :key="job.id">
-          <template v-if="settings.queueIgnoreAnalisys"></template>
+          <template v-if="settings.queueIgnoreAnalysis"></template>
           <v-btn
             icon
             outlined
@@ -327,7 +327,7 @@
                   @input="changeNameFromFile"
                 >
                   <template v-slot:item="{item}">
-                    <template v-if="settings.queueIgnoreAnalisys"></template>
+                    <template v-if="settings.queueIgnoreAnalysis"></template>
                     <v-btn
                       icon
                       outlined
@@ -342,7 +342,7 @@
                     </v-list-item-content>
                   </template>
                   <template v-slot:selection="{item}">
-                    <template v-if="settings.queueIgnoreAnalisys"></template>
+                    <template v-if="settings.queueIgnoreAnalysis"></template>
                     <v-chip v-else-if="item.isFiveAxis" small outlined color="info">5D</v-chip>
                     <v-chip v-else small outlined color="primary">3D</v-chip>
                     <div class="text-truncate">{{ item.name}}</div>
@@ -357,7 +357,7 @@
                   chips
                   multiple
                   dense
-                  :items="settings.queueIgnoreAnalisys ? printers : certainTypePrinters(editedJob.isFiveAxis)"
+                  :items="settings.queueIgnoreAnalysis ? printers : certainTypePrinters(editedJob.isFiveAxis)"
                   item-text="name"
                   item-value="id"
                   :menu-props="menuProps"

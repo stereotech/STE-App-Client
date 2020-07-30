@@ -107,7 +107,7 @@
                 class="mr-2"
                 icon
                 outlined
-                v-if="settings.queueIgnoreAnalisys"
+                v-if="settings.queueIgnoreAnalysis"
               ></v-btn>
               <v-btn
                 icon
