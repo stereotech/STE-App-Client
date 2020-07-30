@@ -24,7 +24,7 @@ export const state = (): SettingsState => ({
     storageTotal: 0,
     queuePass: 0,
     queueProcessAll: false,
-    queueIgnoreAnalisys: false,
+    queueIgnoreAnalysis: false,
   },
   networking: {
     connectedMethod: '',
@@ -103,11 +103,11 @@ export const actions: ActionTree<SettingsState, RootState> = {
     }
   },
 
-  async sendQueueIgnoreAnalisys ({ commit }, value: boolean) {
+  async sendqueueIgnoreAnalysis ({ commit }, value: boolean) {
     if (!value) {
       value = false
     }
-    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { queueIgnoreAnalisys: value })
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { queueIgnoreAnalysis: value })
     if (response.status === 200) {
       commit('setSettings', response.data)
     }

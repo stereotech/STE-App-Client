@@ -31,7 +31,7 @@
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title class="subheading">
-                  <template v-if="settings.queueIgnoreAnalisys"></template>
+                  <template v-if="settings.queueIgnoreAnalysis"></template>
                   <v-chip
                     color="info"
                     v-else-if="item.isFiveAxis"

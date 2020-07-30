@@ -18,8 +18,8 @@
       <v-list-item>
         <v-list-item-action>
           <v-checkbox
-            :value="settings.queueIgnoreAnalisys"
-            @change="sendQueueIgnoreAnalisys"
+            :value="settings.queueIgnoreAnalysis"
+            @change="sendqueueIgnoreAnalysis"
             color="primary"
           ></v-checkbox>
         </v-list-item-action>
@@ -77,7 +77,7 @@ export default class extends Vue {
 
   @settings.Getter settings!: Settings
   @settings.Action sendQueueProcessAll!: any
-  @settings.Action sendQueueIgnoreAnalisys!: any
+  @settings.Action sendqueueIgnoreAnalysis!: any
   @settings.Action sendQueuePass!: any
 }
 </script>
