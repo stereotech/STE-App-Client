@@ -194,5 +194,6 @@
   "Queue passes number in priority": "Queue passes number in priority",
   "Queue Settings": "Queue Settings",
   "Select Cluster": "Select Cluster",
-  "Hide temperature messages": "Hide temperature messages"
+  "Hide temperature messages": "Hide temperature messages",
+  "Printing time: ": "Printing time: "
 }

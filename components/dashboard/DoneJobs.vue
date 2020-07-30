@@ -38,11 +38,12 @@
                 <v-list-item-subtitle v-if="item.state === 'Revert'">
                   <v-progress-linear :indeterminate="true" />
                 </v-list-item-subtitle>
-                <v-list-item-subtitle
-                  v-else
-                >{{ $t("Printed: ")}}{{$moment.unix(item.lastPrintTime).fromNow() }}</v-list-item-subtitle>
+                <template v-else>
+                  <v-list-item-subtitle>{{ $t("Printing time: ")}}{{$moment.duration(item.printingTime, 'seconds').humanize() }}</v-list-item-subtitle>
+                </template>
               </v-list-item-content>
               <v-list-item-action>
+                <v-list-item-action-text>{{$moment.unix(item.lastPrintTime).fromNow() }}</v-list-item-action-text>
                 <v-menu>
                   <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on">

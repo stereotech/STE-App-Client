@@ -100,7 +100,7 @@
       </v-menu>
     </v-app-bar>
     <MainSettingsDialog v-model="settingsDialog" />
-    <v-content>
+    <v-main>
       <v-container fluid class="pb-xs-4">
         <nuxt />
       </v-container>
@@ -112,7 +112,7 @@
         </template>
       </v-snackbar-queue>
       <v-dialog-queue />
-    </v-content>
+    </v-main>
     <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
       <v-btn
         v-for="(menuItem, index) in mainMenu"
