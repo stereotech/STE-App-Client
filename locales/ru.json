@@ -196,5 +196,6 @@
   "Select Cluster": "Выберите кластер",
   "Hide temperature messages": "Скрывать сообщения температуры",
   "Printing time: ": "Время печати: ",
-  "First Launch": "Первый Запуск"
+  "First Launch": "Первый Запуск",
+  "Allow to send printjobs without analysis": "Разрешать отравку заданий без анализа задачи"
 }

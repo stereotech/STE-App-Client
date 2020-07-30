@@ -16,6 +16,19 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
+        <v-list-item-action>
+          <v-checkbox
+            :value="settings.queueIgnoreAnalisys"
+            @change="sendQueueIgnoreAnalisys"
+            color="primary"
+          ></v-checkbox>
+        </v-list-item-action>
+
+        <v-list-item-content>
+          <v-list-item-title>{{$t("Allow to send printjobs without analysis")}}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item>
         <v-list-item-content>
           <v-list-item-title>{{$t('Queue passes number in priority')}}</v-list-item-title>
         </v-list-item-content>
@@ -64,6 +77,7 @@ export default class extends Vue {
 
   @settings.Getter settings!: Settings
   @settings.Action sendQueueProcessAll!: any
+  @settings.Action sendQueueIgnoreAnalisys!: any
   @settings.Action sendQueuePass!: any
 }
 </script>
