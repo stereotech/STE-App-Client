@@ -33,7 +33,7 @@
       "@nuxt/types",
       "@nuxtjs/vuetify",
       "@nuxtjs/axios",
-      "moment",
+      "@nuxtjs/moment",
       "nuxt-i18n"
     ]
   },

@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <v-content class="light-blue darken-3">
+    <v-main class="light-blue darken-3">
       <v-container fluid>
         <v-row dense>
           <nuxt />
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
