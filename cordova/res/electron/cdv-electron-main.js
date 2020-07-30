@@ -41,14 +41,6 @@ function createWindow() {
     const browserWindowOpts = Object.assign({}, cdvElectronSettings.browserWindow, { icon: appIcon });
     mainWindow = new BrowserWindow(browserWindowOpts);
 
-    mainWindow.addEventListener('keydown', (e) => {
-        if (e.which === 123) {
-            mainWindow.webContents.openDevTools()
-        }
-        else if (e.which === 116) {
-            location.reload()
-        }
-    })
     // and load the index.html of the app.
     // TODO: possibly get this data from config.xml
     mainWindow.loadURL(`file://${__dirname}/index.html`, { userAgent: 'Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36' });
