@@ -482,7 +482,8 @@ export default class extends Vue {
     offsetY: true,
     offsetOverflow: true,
     transition: false,
-    top: true  }
+    top: true
+  }
 
   private copiesCount: number = 1
 
@@ -505,6 +506,7 @@ export default class extends Vue {
     fileUri: '',
     printers: [],
     lastPrintTime: 0,
+    printingTime: 0,
     successful: false,
     isFiveAxis: undefined,
     state: '',
@@ -522,6 +524,7 @@ export default class extends Vue {
       fileUri: '',
       isFiveAxis: undefined,
       creationTime: Date.now(),
+      printingTime: 0,
       lastPrintTime: 0,
       successful: false,
       state: '',
@@ -587,6 +590,7 @@ export default class extends Vue {
       isFiveAxis: false,
       printers: [],
       lastPrintTime: 0,
+      printingTime: 0,
       successful: false,
       state: '',
       priority: 1
