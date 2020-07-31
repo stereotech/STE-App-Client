@@ -5,7 +5,7 @@
       <v-list-item>
         <v-list-item-action>
           <v-checkbox
-            :value="settings.queueProcessAll"
+            :input-value="settings.queueProcessAll"
             @change="sendQueueProcessAll"
             color="primary"
           ></v-checkbox>
@@ -18,7 +18,7 @@
       <v-list-item>
         <v-list-item-action>
           <v-checkbox
-            :value="settings.queueIgnoreAnalysis"
+            :input-value="settings.queueIgnoreAnalysis"
             @change="sendqueueIgnoreAnalysis"
             color="primary"
           ></v-checkbox>
