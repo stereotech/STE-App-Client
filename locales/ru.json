@@ -198,5 +198,7 @@
   "Printing time: ": "Время печати: ",
   "First Launch": "Первый Запуск",
   "Allow to send printjobs without analysis": "Разрешать отравку заданий без анализа задачи",
-  "Filter Items": "Отфильтровать элементы"
+  "Filter Items": "Отфильтровать элементы",
+  "Fiber Target": "Цель Fiber",
+  "Fiber": "Fiber"
 }

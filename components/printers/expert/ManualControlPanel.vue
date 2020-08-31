@@ -10,10 +10,16 @@
             <JogCard :id="id" :printing="printing" :isFiveAxis="isFiveAxis" />
           </v-col>
           <v-col cols="12" md="6">
-            <ExtruderCard :id="id" :printing="printing" :glaze="glaze" />
+            <ExtruderCard :id="id" :printing="printing" :glaze="glaze" :fiber="fiber" />
           </v-col>
           <v-col cols="12" md="6">
-            <TemperatureFan :id="id" chamber-fan :bed-heater="!isFiveAxis" :glaze="glaze" />
+            <TemperatureFan
+              :id="id"
+              chamber-fan
+              :bed-heater="!isFiveAxis"
+              :glaze="glaze"
+              :fiber="fiber"
+            />
           </v-col>
           <v-col cols="12" md="6">
             <TerminalCard :id="id" />
@@ -43,6 +49,7 @@ import { PrinterInfo } from '~/types/printer.ts'
 export default class ManualControlPanel extends Vue {
   @Prop({ default: false, type: Boolean }) printing?: boolean
   @Prop({ default: false, type: Boolean }) glaze?: boolean
+  @Prop({ default: false, type: Boolean }) fiber?: boolean
   @Prop({ default: '', type: String }) id?: string
   @Prop({ default: false, type: Boolean }) isFiveAxis?: boolean
 }

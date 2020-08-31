@@ -12,6 +12,7 @@
         <ManualControlPanel
           :printing="isPrinting"
           :glaze="isGlaze"
+          :fiber="isFiber"
           :id="$route.params.id"
           :isFiveAxis="printerType==1"
         />
@@ -78,6 +79,13 @@ export default class PrinterPage extends Vue {
   get isGlaze (): boolean {
     if (this.printer(this.$route.params.id) !== undefined) {
       return this.printer(this.$route.params.id)!.isGlaze!
+    }
+    return false
+  }
+
+  get isFiber (): boolean {
+    if (this.printer(this.$route.params.id) !== undefined) {
+      return this.printer(this.$route.params.id)!.isFiber!
     }
     return false
   }

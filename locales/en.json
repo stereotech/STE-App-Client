@@ -198,5 +198,7 @@
   "Printing time: ": "Printing time: ",
   "First Launch": "First Launch",
   "Allow to send printjobs without analysis": "Allow to send printjobs without analysis",
-  "Filter Items": "Filter Items"
+  "Filter Items": "Filter Items",
+  "Fiber Target": "Fiber Target",
+  "Fiber": "Fiber"
 }
