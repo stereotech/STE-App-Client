@@ -1,7 +1,7 @@
 <template>
   <v-col xl="4" lg="6" md="6" sm="12" cols="12">
     <v-card
-      v-if="dataStorage"
+      v-if="filteredDataStorage"
       transition="slide-y-reverse-transition"
       :height="collapsed ? 64 : 550"
     >
@@ -35,179 +35,196 @@
           <v-icon>mdi-arrow-up</v-icon>
         </v-btn>
       </v-toolbar>
-      <template v-if="!collapsed">
-        <v-dialog v-model="isOpen" max-width="425" persistent>
-          <v-card>
-            <v-toolbar dark color="primary">
-              <v-btn icon dark @click="closeDialog(undefined)">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-              <v-toolbar-title>{{ $t('Input folder name')}}</v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-              <v-form v-model="valid">
-                <BottomInput v-model="folderKeyboard" :input.sync="folderName">
-                  <v-text-field
-                    v-model="folderName"
-                    :label="$tc('Folder name')"
-                    filled
-                    clearable
-                    :rules="folderNameRules"
-                    @input="nameWasChanged = true"
-                    @click="folderKeyboard = true"
-                  />
-                </BottomInput>
-                <v-btn
-                  text
-                  color="primary"
-                  :disabled="!valid"
-                  @click="createFolder()"
-                >{{ $t('Create')}}</v-btn>
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-dialog>
-        <v-virtual-scroll
-          v-if="dataStorage && dataStorage.children.length > 0"
-          :height="this.local ? '336px' : '486px'"
-          :item-height="64"
-          :items="dataStorage.children"
-        >
-          <template v-slot="{item, index}">
-            <v-list-item :key="index" v-if="item.type == 'folder'">
-              <v-list-item-icon>
-                <v-icon>mdi-folder</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content @click="addFolderToPath(item.name), btnUpVisibility()">
-                <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
-                <v-list-item-subtitle class="body-1">{{ item.size | prettyBytes(1) }}</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-menu>
-                  <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item @click="deleteFile(item);">
-                      <v-list-item-action>
-                        <v-icon>mdi-delete</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-list-item-action>
-            </v-list-item>
-            <v-list-item v-else :key="index">
+      <v-card-text v-if="!collapsed">
+        <BottomInput v-model="keyboard" :input.sync="filter">
+          <v-text-field
+            v-model="filter"
+            outlined
+            dense
+            hide-details
+            clear-icon="mdi-close-circle"
+            clearable
+            :label="$tc('Filter Items')"
+            type="text"
+            @click="keyboard = true"
+          />
+        </BottomInput>
+      </v-card-text>
+      <v-dialog v-model="isOpen" max-width="425" persistent>
+        <v-card>
+          <v-toolbar dark color="primary">
+            <v-btn icon dark @click="closeDialog(undefined)">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>{{ $t('Input folder name')}}</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-form v-model="valid">
+              <BottomInput v-model="folderKeyboard" :input.sync="folderName">
+                <v-text-field
+                  v-model="folderName"
+                  :label="$tc('Folder name')"
+                  filled
+                  clearable
+                  :rules="folderNameRules"
+                  @input="nameWasChanged = true"
+                  @click="folderKeyboard = true"
+                />
+              </BottomInput>
               <v-btn
+                text
                 color="primary"
-                :ripple="false"
-                class="mr-2"
-                icon
-                outlined
-                v-if="settings.queueIgnoreAnalysis"
-              ></v-btn>
-              <v-btn
-                icon
-                outlined
-                color="info"
-                :ripple="false"
-                class="mr-2"
-                v-else-if="item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis"
-              >5D</v-btn>
-              <v-btn
-                icon
-                outlined
-                color="primary"
-                :ripple="false"
-                class="mr-2"
-                v-else-if="item.gcodeAnalysis && !item.gcodeAnalysis.isFiveAxis"
-              >3D</v-btn>
+                :disabled="!valid"
+                @click="createFolder()"
+              >{{ $t('Create')}}</v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-virtual-scroll
+        v-if="filteredDataStorage && filteredDataStorage.children.length > 0"
+        :height="this.local ? '302px' : '368px'"
+        :item-height="64"
+        bench="1"
+        :items="filteredDataStorage.children"
+      >
+        <template v-slot="{item, index}">
+          <v-list-item :key="index" v-if="item.type == 'folder'">
+            <v-list-item-icon>
+              <v-icon>mdi-folder</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content @click="addFolderToPath(item.name), btnUpVisibility()">
+              <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
+              <v-list-item-subtitle class="body-1">{{ item.size | prettyBytes(1) }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-menu>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="deleteFile(item);">
+                    <v-list-item-action>
+                      <v-icon>mdi-delete</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list-item-action>
+          </v-list-item>
+          <v-list-item v-else :key="index">
+            <v-btn
+              color="primary"
+              :ripple="false"
+              class="mr-2"
+              icon
+              outlined
+              v-if="settings.queueIgnoreAnalysis"
+            ></v-btn>
+            <v-btn
+              icon
+              outlined
+              color="info"
+              :ripple="false"
+              class="mr-2"
+              v-else-if="item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis"
+            >5D</v-btn>
+            <v-btn
+              icon
+              outlined
+              color="primary"
+              :ripple="false"
+              class="mr-2"
+              v-else-if="item.gcodeAnalysis && !item.gcodeAnalysis.isFiveAxis"
+            >3D</v-btn>
 
-              <v-btn icon outlined loading color="primary" :ripple="false" class="mr-2" v-else></v-btn>
-              <v-list-item-content>
-                <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
+            <v-btn icon outlined loading color="primary" :ripple="false" class="mr-2" v-else></v-btn>
+            <v-list-item-content>
+              <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
 
-                <v-list-item-subtitle
-                  class="body-1"
-                >{{$t("Uploaded ")}}{{ $moment.unix(item.date).fromNow()}}</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-menu>
-                  <template v-slot:activator="{ on }">
-                    <v-btn icon v-on="on">
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item @click="createPrintJob(item)">
-                      <v-list-item-action>
-                        <v-icon color="primary">mdi-plus-circle</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="deleteFile(item)">
-                      <v-list-item-action>
-                        <v-icon>mdi-delete</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-list-item-action>
-            </v-list-item>
-          </template>
-        </v-virtual-scroll>
-        <v-container v-else>
-          <v-row dense align="center" justify="center">
-            <v-col cols="auto">
-              <v-img
-                src="/empty-state/local-storage.svg"
-                height="192px"
-                width="192px"
-                aspect-ratio="1"
-              />
-            </v-col>
-            <v-col cols="12">
-              <h6
-                class="title text-center"
-              >{{$t("You don't have any uploaded files yet. You could add new files using field below")}}</h6>
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-container v-if="local && isWeb">
-          <v-row dense>
-            <v-col cols="12">
-              <v-file-input
-                v-model="files"
-                chips
-                multiple
-                display-size
-                :label="$tc('Upload G-Code Files')"
-                accept=".gcode"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-btn
-                depressed
-                block
-                color="primary"
-                :disabled="files.length < 1"
-                @click="upload"
-              >{{$t("Upload")}}</v-btn>
-            </v-col>
-          </v-row>
-          <v-overlay :value="overlay" absolute z-index="3">
-            <v-progress-circular
-              :indeterminate="uploadProgress < 1"
-              size="64"
-              :value="uploadProgress"
-            >{{ uploadProgress }}</v-progress-circular>
-          </v-overlay>
-        </v-container>
-      </template>
+              <v-list-item-subtitle
+                class="body-1"
+              >{{$t("Uploaded ")}}{{ $moment.unix(item.date).fromNow()}}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-menu>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="createPrintJob(item)">
+                    <v-list-item-action>
+                      <v-icon color="primary">mdi-plus-circle</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="deleteFile(item)">
+                    <v-list-item-action>
+                      <v-icon>mdi-delete</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-list-item-action>
+          </v-list-item>
+        </template>
+      </v-virtual-scroll>
+      <v-container v-else>
+        <v-row dense align="center" justify="center">
+          <v-col cols="auto">
+            <v-img
+              src="/empty-state/local-storage.svg"
+              height="192px"
+              width="192px"
+              aspect-ratio="1"
+            />
+          </v-col>
+          <v-col cols="12">
+            <h6
+              class="title text-center"
+            >{{$t("You don't have any uploaded files yet. You could add new files using field below")}}</h6>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container v-if="local && isWeb">
+        <v-row dense>
+          <v-col cols="12">
+            <v-file-input
+              v-model="files"
+              chips
+              multiple
+              outlined
+              dense
+              display-size
+              hide-details
+              :label="$tc('Upload G-Code Files')"
+              accept=".gcode"
+            />
+          </v-col>
+          <v-col cols="12">
+            <v-btn
+              depressed
+              block
+              color="primary"
+              :disabled="files.length < 1"
+              @click="upload"
+            >{{$t("Upload")}}</v-btn>
+          </v-col>
+        </v-row>
+        <v-overlay :value="overlay" absolute z-index="3">
+          <v-progress-circular
+            :indeterminate="uploadProgress < 1"
+            size="64"
+            :value="uploadProgress"
+          >{{ uploadProgress }}</v-progress-circular>
+        </v-overlay>
+      </v-container>
     </v-card>
   </v-col>
 </template>
@@ -229,12 +246,14 @@ const settings = namespace('settingsState')
     BottomInput
   }
 })
-export default class extends Vue {
+export default class Storage extends Vue {
   @Prop({ type: Boolean, default: false }) local?: boolean
   @Prop({ type: String }) name?: string
   @Prop({ type: String }) display?: string
 
   collapsed: boolean = false
+  keyboard: boolean = false
+  filter: string = ''
 
   @settings.Getter settings!: Settings
 
@@ -327,6 +346,16 @@ export default class extends Vue {
   private async closeDialog (add: boolean | undefined) {
     this.isOpen = false
   }
+
+  get filteredDataStorage (): FileOrFolder | undefined {
+    if (this.dataStorage) {
+      let newFolder = Object.assign({}, this.dataStorage)
+      newFolder.children = this.dataStorage?.children?.filter(i => i.display.toLowerCase().includes(this.filter?.toLowerCase() || ''))
+      return newFolder
+    }
+    return this.dataStorage
+  }
+
   get dataStorage () {
     if (this.local) {
       return this.localStorage(this.path)
