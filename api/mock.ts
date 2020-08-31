@@ -1,9 +1,8 @@
 import { ServerMiddleware } from '@nuxt/types'
-import { PrinterInfo, CurrentState } from '~/types/printer'
-import { Settings } from '~/types/settings'
+import { Network } from '~/types/networking'
 import { PrintJob } from '~/types/printJob'
 import { ScannerResult } from '~/types/scannerResult'
-import { Network } from '~/types/networking'
+import { Settings } from '~/types/settings'
 
 
 
@@ -21,7 +20,7 @@ const printers = [
     },
     {
         id: 'st-bbb',
-        model: 'SGE520',
+        model: 'SFE520',
         name: 'ST-BBB',
         isLocal: false,
         isFiveAxis: true,

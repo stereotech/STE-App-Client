@@ -27,11 +27,13 @@
         <v-col cols="10">
           <v-slider
             v-model="e2Target"
-            :label="$tc('E2')"
+            :label="fiber ? $tc('Fiber') : $tc('E2')"
             thumb-label
             min="0"
             max="300"
             step="5"
+            :color="fiber ? 'black': 'primary'"
+            :track-color="fiber ? 'grey' : ''"
             @change="changeE2"
           />
         </v-col>
@@ -96,6 +98,7 @@ const printers = namespace('printersState')
 export default class TemperatureFanCard extends Vue {
   @Prop({ default: false, type: Boolean }) printing!: boolean
   @Prop({ default: false, type: Boolean }) glaze!: boolean
+  @Prop({ default: false, type: Boolean }) fiber!: boolean
   @Prop({ default: false, type: Boolean }) bedHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberHeater!: boolean
   @Prop({ default: false, type: Boolean }) chamberFan!: boolean

@@ -12,7 +12,7 @@
             :color="glaze ? 'brown': e1Color"
           >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
-        <v-col v-if="lastTempDataPoint(id).tool1 && !glaze" cols="4">
+        <v-col v-if="lastTempDataPoint(id).tool1 && !glaze && !fiber" cols="4">
           <div class="body-1 text-truncate">{{$t("E2 Target")}}</div>
           <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
           <v-progress-circular
@@ -20,6 +20,16 @@
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
+          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
+        </v-col>
+        <v-col v-if="lastTempDataPoint(id).tool1 && fiber" cols="4">
+          <div class="body-1 text-truncate">{{$t("Fiber Target")}}</div>
+          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
+          <v-progress-circular
+            size="48"
+            rotate="-90"
+            :value="lastTempDataPoint(id).tool1.actual / 3.2"
+            color="gray"
           >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
         </v-col>
         <v-col v-if="lastTempDataPoint(id).bed && !glaze && !fiveAxis" cols="4">
@@ -64,6 +74,7 @@ export default class PrinterCardTemps extends Vue {
 
   @Prop({ default: false, type: Boolean }) chamber?: boolean
   @Prop({ default: false, type: Boolean }) glaze?: boolean
+  @Prop({ default: false, type: Boolean }) fiber?: boolean
   @Prop({ default: false, type: Boolean }) fiveAxis?: boolean
   @Prop({ default: 0, type: Number }) chamberTemp?: number
   @Prop({ default: 0, type: Number }) chamberTarget?: number

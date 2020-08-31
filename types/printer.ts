@@ -1,4 +1,4 @@
-import { JobInfo, ProgressInfo } from './printJob'
+import { JobInfo, ProgressInfo } from './printJob';
 
 export interface PrinterInfo {
   id: string
@@ -13,6 +13,7 @@ export interface PrinterInfo {
   address: string
   //Additional properties
   isGlaze?: boolean
+  isFiber?: boolean
 }
 
 export interface TemperatureData {

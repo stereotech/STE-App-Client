@@ -21,6 +21,7 @@
             :idle="isIdle"
             :isFiveAxis="computedPrinter.isFiveAxis"
             :isGlaze="computedPrinter.isGlaze"
+            :isFiber="computedPrinter.isFiber"
             :printing="isPrinting"
             :done="isDone"
             :failed="isFailed"
@@ -33,6 +34,7 @@
             :id="id"
             :offline="isOffline"
             :glaze="computedPrinter.isGlaze"
+            :fiber="computedPrinter.isFiber"
             :fiveAxis="computedPrinter.isFiveAxis"
           />
           <PrinterCardActions

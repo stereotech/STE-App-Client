@@ -1,8 +1,8 @@
-import { ActionTree, MutationTree, GetterTree } from 'vuex'
-import { PrinterInfo, CurrentState, TemperatureDataPoint } from '~/types/printer'
+import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { Error } from '~/types/error'
-import { RootState } from '.'
+import { CurrentState, PrinterInfo, TemperatureDataPoint } from '~/types/printer'
 import { PrinterType } from '~/types/printerType.ts'
+import { RootState } from '.'
 
 const apiEndpoint = 'printers/'
 
@@ -85,6 +85,7 @@ export const mutations: MutationTree<PrintersState> = {
   setPrinters (state: PrintersState, printers: PrinterInfo[]) {
     printers.forEach(printer => {
       printer.isGlaze = printer.model.startsWith('G', 1)
+      printer.isFiber = printer.model.startsWith('F', 1)
     })
     state.printers = printers
   },
