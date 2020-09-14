@@ -1,7 +1,7 @@
 <template>
   <v-col xl="4" lg="6" md="6" sm="12" cols="12">
     <v-card transition="slide-y-reverse-transition" min-height="550">
-      <v-toolbar flat color="secondary">
+      <v-toolbar flat>
         <v-card-title>
           <span class="headline font-weight-light">{{$t("Queue")}}</span>
         </v-card-title>

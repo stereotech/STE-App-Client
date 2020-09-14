@@ -1,7 +1,7 @@
-import { ActionTree, MutationTree, GetterTree } from 'vuex'
+import { ActionTree, GetterTree, MutationTree } from 'vuex'
+import { Network, Networking } from '~/types/networking'
 import { Settings } from '~/types/settings'
 import { RootState } from '.'
-import { Networking, Network } from '~/types/networking'
 
 const systemEndpoint = 'system'
 const networkEndpoint = 'network'
@@ -25,6 +25,7 @@ export const state = (): SettingsState => ({
     queuePass: 0,
     queueProcessAll: false,
     queueIgnoreAnalysis: false,
+    darkTheme: false
   },
   networking: {
     connectedMethod: '',
@@ -115,6 +116,16 @@ export const actions: ActionTree<SettingsState, RootState> = {
 
   async sendQueuePass ({ commit }, value: number) {
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { queuePass: value })
+    if (response.status === 200) {
+      commit('setSettings', response.data)
+    }
+  },
+
+  async sendDarkTheme ({ commit }, value: boolean) {
+    if (!value) {
+      value = false
+    }
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { darkTheme: value })
     if (response.status === 200) {
       commit('setSettings', response.data)
     }

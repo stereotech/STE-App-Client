@@ -32,7 +32,7 @@
             min="0"
             max="300"
             step="5"
-            :color="fiber ? 'black': 'primary'"
+            :color="fiber ? 'blue-grey': 'primary'"
             :track-color="fiber ? 'grey' : ''"
             @change="changeE2"
           />

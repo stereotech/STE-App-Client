@@ -1,4 +1,4 @@
-import { Middleware } from '@nuxt/types'
+import { Middleware } from '@nuxt/types';
 
 
 const firstLaunch: Middleware = async (context) => {
@@ -13,6 +13,9 @@ const firstLaunch: Middleware = async (context) => {
   if (settings && context.app.i18n && context.app.i18n.locale !== settings.language) {
     await context.app.i18n.setLocale(settings.language)
     context.app.$moment.locale(settings.language)
+  }
+  if (settings && context.$vuetify && context.$vuetify.theme.dark !== settings.darkTheme) {
+    context.$vuetify.theme.dark = settings.darkTheme
   }
   if (settings.firstLaunch) {
     if ((context.route.path as string).indexOf('firstlaunch') < 0) {

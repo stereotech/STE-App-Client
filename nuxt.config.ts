@@ -67,7 +67,9 @@ const config: Configuration = {
       dark: false,
       disable: false,
       default: false,
-      options: {},
+      options: {
+        customProperties: true
+      },
       themes: {
         light: {
           primary: '#0277bd',

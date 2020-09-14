@@ -7,7 +7,7 @@
       <v-container fluid>
         <v-row dense>
           <v-col cols="12" md="6">
-            <JogCard :id="id" :printing="printing" :isFiveAxis="isFiveAxis" />
+            <JogCard :light="false" :id="id" :printing="printing" :isFiveAxis="isFiveAxis" />
           </v-col>
           <v-col cols="12" md="6">
             <ExtruderCard :id="id" :printing="printing" :glaze="glaze" :fiber="fiber" />

@@ -10,4 +10,5 @@ export interface Settings {
   queuePass: number
   queueProcessAll: boolean
   queueIgnoreAnalysis: boolean
+  darkTheme: boolean
 }
