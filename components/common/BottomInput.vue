@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot />
-    <v-bottom-sheet light v-if="isPanel" v-model="isOpen" @click:outside="closeKeyboard">
+    <v-bottom-sheet v-if="isPanel" v-model="isOpen" @click:outside="closeKeyboard">
       <v-sheet>
         <v-container>
           <v-row dense>
@@ -9,7 +9,12 @@
               <slot />
             </v-col>
             <v-col cols="12">
-              <SimpleKeyboard :input="inputLocal" @onChange="onChange" @onKeyPress="onKeyPress" />
+              <SimpleKeyboard
+                :input="inputLocal"
+                @onChange="onChange"
+                @onKeyPress="onKeyPress"
+                :theme="$vuetify.theme.dark ? 'hg-theme-deault DarkTheme': 'hg-theme-deault LightTheme'"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -44,6 +49,7 @@ export default class BottomInput extends Vue {
   }
 
   get isPanel () {
+    return true
     return process.env.NUXT_ENV_PLATFORM === 'PANEL'
   }
 

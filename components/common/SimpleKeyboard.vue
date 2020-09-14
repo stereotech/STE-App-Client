@@ -16,12 +16,15 @@ export default {
     input: {
       default: '',
       type: String
+    },
+    theme: {
+      type: String
     }
   },
   data: () => ({
     keyboard: null
   }),
-  mounted () {
+  mounted() {
     this.keyboard = new Keyboard({
       onChange: this.onChange,
       onKeyPress: this.onKeyPress,
@@ -40,14 +43,15 @@ export default {
           '{shift} Z X C V B N M < > ?',
           '{space}'
         ]
-      }
+      },
+      theme: this.theme
     })
   },
   methods: {
-    onChange (input) {
+    onChange(input) {
       this.$emit('onChange', input)
     },
-    onKeyPress (button) {
+    onKeyPress(button) {
       this.$emit('onKeyPress', button)
 
       /**
@@ -55,7 +59,7 @@ export default {
        */
       if (button === '{shift}' || button === '{lock}') { this.handleShift() }
     },
-    handleShift () {
+    handleShift() {
       const currentLayout = this.keyboard.options.layoutName
       const shiftToggle = currentLayout === 'default' ? 'shift' : 'default'
 
@@ -65,7 +69,7 @@ export default {
     }
   },
 
-  input (input) {
+  input(input) {
     this.keyboard.setInput(input)
   }
 }

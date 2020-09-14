@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar v-if="toolbar" flat dense color="secondary">
+  <v-toolbar v-if="toolbar" flat dense>
     <v-btn
       v-if="controlPanel && $vuetify.breakpoint.smAndUp"
       text

@@ -106,7 +106,8 @@ const settings: Settings = {
     dateTime: 1550665494,
     queuePass: 2,
     queueProcessAll: false,
-    queueIgnoreAnalysis: true
+    queueIgnoreAnalysis: true,
+    darkTheme: true
 }
 
 const networks: Network[] = [

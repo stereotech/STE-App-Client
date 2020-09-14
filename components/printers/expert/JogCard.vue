@@ -1,5 +1,5 @@
 <template>
-  <v-card light>
+  <v-card :light="light">
     <v-card-title class="title" v-if="!dense">{{$t("Jog")}}</v-card-title>
     <v-container>
       <v-row dense class="text-center" align="center" justify="center">
@@ -391,6 +391,8 @@ const printers = namespace('printersState')
 
 @Component
 export default class JogCard extends Vue {
+  @Prop({ type: Boolean, default: true }) light!: boolean
+
   private selectedAmount: number = 2
   private amount: number = 10
   private feed: number = 100

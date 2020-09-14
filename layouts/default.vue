@@ -46,7 +46,7 @@
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar background-color="secondary" app clipped-left>
+    <v-app-bar app clipped-left>
       <v-btn class="hidden-sm-and-down" icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'" />
       </v-btn>
@@ -113,7 +113,7 @@
       </v-snackbar-queue>
       <v-dialog-queue />
     </v-main>
-    <v-bottom-navigation app background-color="secondary" grow class="hidden-sm-and-up">
+    <v-bottom-navigation app grow class="hidden-sm-and-up">
       <v-btn
         v-for="(menuItem, index) in mainMenu"
         :key="index"

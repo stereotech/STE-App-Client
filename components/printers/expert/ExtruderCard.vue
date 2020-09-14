@@ -9,7 +9,7 @@
             outlined
             text
             icon
-            :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
+            :color="controlColor"
             :disabled="printing"
             @click="retract"
           >
@@ -22,7 +22,7 @@
             outlined
             text
             icon
-            :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
+            :color="controlColor"
             :disabled="printing"
             @click="extrude"
           >
@@ -37,7 +37,7 @@
             min="75"
             max="125"
             @change="setFlow"
-            :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
+            :color="controlColor"
             :track-color="glaze ? 'brown lighten-4' : fiber && selectedExtruder ? 'grey' : ''"
           />
         </v-col>
@@ -55,30 +55,10 @@
 
         <v-col cols="12" sm="6" order-sm="3">
           <v-btn-toggle v-model="selectedAmount" mandatory rounded>
-            <v-btn
-              text
-              :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
-              :disabled="printing"
-              @click="amount = 0.1"
-            >0.1</v-btn>
-            <v-btn
-              text
-              :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
-              :disabled="printing"
-              @click="amount = 1"
-            >1</v-btn>
-            <v-btn
-              text
-              :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
-              :disabled="printing"
-              @click="amount = 10"
-            >10</v-btn>
-            <v-btn
-              text
-              :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
-              :disabled="printing"
-              @click="amount = 100"
-            >100</v-btn>
+            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
+            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 1">1</v-btn>
+            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 10">10</v-btn>
+            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 100">100</v-btn>
           </v-btn-toggle>
         </v-col>
         <v-col cols="6" :sm="fiber && selectedExtruder ? 2 : 3" order-sm="3">
@@ -87,7 +67,7 @@
             outlined
             text
             icon
-            :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
+            :color="controlColor"
             :disabled="printing"
             @click="servicePos"
           >
@@ -105,7 +85,7 @@
             outlined
             text
             icon
-            :color="glaze ? 'brown' : fiber && selectedExtruder ? 'black' : 'primary' "
+            :color="controlColor"
             :disabled="printing"
             @click="cutFiber"
           >
@@ -180,6 +160,10 @@ export default class ExtruderCard extends Vue {
 
   async cutFiber () {
     //TODO: fiber cut gcode
+  }
+
+  get controlColor (): string {
+    return this.glaze ? 'brown' : this.fiber && this.selectedExtruder ? this.$vuetify.theme.dark ? 'blue-grey lighten-3' : 'black' : 'primary'
   }
 
 
