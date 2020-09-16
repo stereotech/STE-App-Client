@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("Appearance Settings")}}</template>
+    <template slot="title">{{$t("Appearance")}}</template>
     <v-list>
       <v-list-item>
         <v-list-item-action>
