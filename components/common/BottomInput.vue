@@ -49,7 +49,7 @@ export default class BottomInput extends Vue {
   }
 
   get isPanel () {
-    return true
+    //return true
     return process.env.NUXT_ENV_PLATFORM === 'PANEL'
   }
 
