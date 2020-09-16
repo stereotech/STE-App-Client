@@ -15,12 +15,13 @@
       </template>
     </v-list>
     <WifiDialog v-model="settings[0].page" />
-    <DateTimeDialog v-model="settings[1].page" />
-    <LanguageDialog v-model="settings[2].page" />
-    <PrioritySettingsDialog v-model="settings[3].page" />
-    <StorageDialog v-model="settings[4].page" />
-    <ResetDialog v-model="settings[5].page" />
-    <UpdateDialog v-model="settings[6].page" />
+    <AppearanceDialog v-model="settings[1].page" />
+    <DateTimeDialog v-model="settings[2].page" />
+    <LanguageDialog v-model="settings[3].page" />
+    <PrioritySettingsDialog v-model="settings[4].page" />
+    <StorageDialog v-model="settings[5].page" />
+    <ResetDialog v-model="settings[6].page" />
+    <UpdateDialog v-model="settings[7].page" />
   </SettingsDialog>
 </template>
 
@@ -34,6 +35,7 @@ import PrioritySettingsDialog from '~/components/common/settings/PrioritySetting
 import StorageDialog from '~/components/common/settings/StorageDialog.vue'
 import ResetDialog from '~/components/common/settings/ResetDialog.vue'
 import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
+import AppearanceDialog from '~/components/common/settings/AppearanceDialog.vue'
 
 @Component({
   components: {
@@ -44,7 +46,8 @@ import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
     PrioritySettingsDialog,
     StorageDialog,
     ResetDialog,
-    UpdateDialog
+    UpdateDialog,
+    AppearanceDialog
   }
 })
 export default class extends Vue {
@@ -65,6 +68,12 @@ export default class extends Vue {
       icon: 'mdi-wifi',
       title: 'Wi-Fi',
       translatedTitle: 'Wi-Fi',
+      page: false
+    },
+    {
+      icon: 'mdi-brightness-6',
+      title: 'Appearance',
+      translatedTitle: 'Appearance',
       page: false
     },
     {
