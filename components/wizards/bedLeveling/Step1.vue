@@ -34,9 +34,10 @@ export default class extends Vue {
   private description: string = ''
 
   @printers.Action homeCommand: any
+  @printers.Action customCommand: any
 
   private async next (step: number) {
-    await this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+    await this.customCommand({ id: this.$route.params.id, command: 'G28' })
 
     this.$emit('change', step)
     this.curStep = step
