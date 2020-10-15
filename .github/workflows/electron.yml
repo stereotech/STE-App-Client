@@ -1,0 +1,44 @@
+
+name: Panel App CI
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: node:10.17.0-stretch-slim
+    env:
+      USE_HARD_LINKS: 'false'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: v1-npm-deps-
+
+      - name: Run npm preparation script
+        run: | 
+          npm ci --cache .npm --prefer-offline
+          cd cordova
+          npm install -g cordova
+          cordova platform add electron
+          cd ..
+      
+      - name: Copy resources
+        run: cp -rf cordova/res/electron/cdv-electron-main.js cordova/platforms/electron/platform_www/cdv-electron-main.js
+      
+      - name: Build Panel App
+        run: npm run build-panel
+      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: panel-build
+          path: cordova/platforms/electron/build/linux-armv7l-unpacked
