@@ -50,7 +50,7 @@ jobs:
           
       - name: Set release type
         run: echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
-        if: github.ref == 'master'
+        if: github.ref == 'refs/heads/master'
           
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
