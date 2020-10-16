@@ -56,7 +56,7 @@ jobs:
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event == 'schedule'
+    if: github.event_name == 'schedule'
     steps:
        - name: Download a Build Artifact
          uses: actions/download-artifact@v2.0.5
