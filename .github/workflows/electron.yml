@@ -67,7 +67,6 @@ jobs:
           else
             echo "RELEASE_TYPE=testing" >> $GITHUB_ENV
           fi
-          echo ${{ RELEASE_TYPE }}
           
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
