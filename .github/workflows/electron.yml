@@ -42,3 +42,37 @@ jobs:
         with:
           name: panel-build
           path: cordova/platforms/electron/build/linux-armv7l-unpacked
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    env: 
+      REF: ${{ github.ref }}
+      RELEASE_TYPE: testing
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.5
+        with:
+          name: panel-build
+        
+      - uses: TheDoctor0/zip-release@0.4.1
+        with:
+          filename: panel-build.zip
+          
+      - name: Set release type
+        run: |
+          if [$REF == 'master']
+          then
+            echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
+          else
+            echo "RELEASE_TYPE=testing" >> $GITHUB_ENV
+          fi
+          echo ${{ RELEASE_TYPE }}
+          
+      - uses: ItsKarma/aws-cli@v1.70.0
+        with:
+          args: s3 cp panel-build.zip s3://${{ secrets.BUCKET_NAME }}/steapp/panel/${{ RELEASE_TYPE }}/ --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}      
