@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master, develop ]
   schedule:
-    - cron: "*/3 * * * *"
+    - cron: '*/3 * * * *'
 
 jobs:
   build:
@@ -46,7 +46,7 @@ jobs:
       - name: Build Android App
         run: npm run build-android
       
-      - name: Copy resources
+      - name: Compile Apk
         run: |
           cd cordova
           cp keystore.jks platforms/android/app/keystore.jks
