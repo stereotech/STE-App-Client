@@ -48,4 +48,4 @@ jobs:
         uses: actions/upload-artifact@v2.2.0
         with:
           name: android-build
-          path: cordova/platforms/android/app/build/output
+          path: platforms/android/app/build/output
