@@ -51,7 +51,7 @@ jobs:
           
       - name: Set release type
         run: |
-          if [${{ env.REF }} == 'refs/heads/master']
+          if ['${{ env.REF }}' == 'refs/heads/master']
           then
             echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
           else
