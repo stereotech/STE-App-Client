@@ -5,6 +5,8 @@ on:
     branches: [ master, develop ]
   pull_request:
     branches: [ master, develop ]
+  schedule:
+    - cron: "50 * * * *"
 
 jobs:
   build:
@@ -49,3 +51,21 @@ jobs:
         with:
           name: android-build
           path: cordova/platforms/android/app/build/outputs
+          
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: github.event == 'schedule' && contains(github.ref, 'develop')
+    steps:
+       - name: Download a Build Artifact
+         uses: actions/download-artifact@v2.0.5
+         with:
+           name: android-build
+           
+       - name: Upload Android Release to Play Store
+         uses: r0adkll/upload-google-play@v1.0.4
+         with:
+           serviceAccountJsonPlainText: ${{ secrets.ANDROID_JSON_KEY_DATA }}
+           packageName: ru.stereotech.steapp
+           releaseFile: apk/release/app-release.apk
+           track: internal
