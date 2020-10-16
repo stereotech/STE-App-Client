@@ -60,13 +60,8 @@ jobs:
           filename: panel-build.zip
           
       - name: Set release type
-        run: |
-          if [$REF == 'refs/heads/master']
-          then
-            echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
-          else
-            echo "RELEASE_TYPE=testing" >> $GITHUB_ENV
-          fi
+        run: echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/master'
           
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
