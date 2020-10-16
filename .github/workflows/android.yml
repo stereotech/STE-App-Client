@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ master, develop ]
   schedule:
-    - cron: "50 * * * *"
+    - cron: "00 * * * *"
 
 jobs:
   build:
@@ -16,6 +16,12 @@ jobs:
       USE_HARD_LINKS: 'false'
     steps:
       - uses: actions/checkout@v2
+        if: github.event != 'schedule'
+      
+      - uses: actions/checkout@v2
+        if: github.event == 'schedule'
+        with:
+          ref: develop
         
       - name: Setup Node.js environment
         run: |
@@ -55,7 +61,7 @@ jobs:
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event == 'schedule' && contains(github.ref, 'develop')
+    if: github.event == 'schedule'
     steps:
        - name: Download a Build Artifact
          uses: actions/download-artifact@v2.0.5
