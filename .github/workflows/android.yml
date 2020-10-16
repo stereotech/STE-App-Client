@@ -15,15 +15,15 @@ jobs:
     env:
       USE_HARD_LINKS: 'false'
     steps:
-      - name: Checkout current branch
-        uses: actions/checkout@v2
-        if: github.event != 'schedule'
-      
       - name: Checkout develop branch
         uses: actions/checkout@v2
         if: github.event == 'schedule'
         with:
           ref: develop
+    
+      - name: Checkout current branch
+        uses: actions/checkout@v2
+        if: github.event != 'schedule'
         
       - name: Setup Node.js environment
         run: |
