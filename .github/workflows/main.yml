@@ -36,8 +36,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
-    env: 
-      REF: ${{ github.ref }}
+    env:
       RELEASE_TYPE: testing
     steps:
       - name: Download a Build Artifact
@@ -50,13 +49,8 @@ jobs:
           filename: web-build.zip
           
       - name: Set release type
-        run: |
-          if ['${{ env.REF }}' == 'refs/heads/master']
-          then
-            echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
-          else
-            echo "RELEASE_TYPE=testing" >> $GITHUB_ENV
-          fi
+        run: echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
+        if: github.ref == 'master'
           
       - uses: ItsKarma/aws-cli@v1.70.0
         with:
