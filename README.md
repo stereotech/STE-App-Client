@@ -1,3 +1,3 @@
 # STE App Client
 
-Client side application for controlling Stereotech 3D Printers
+Client side application for control Stereotech 3D/5D Printers
