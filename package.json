@@ -53,7 +53,7 @@
     "replace": "^1.2.0",
     "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
-    "ts-node": "^8.3.0",
+    "ts-node": "^9.0.0",
     "tslint-config-standard": "^8.0.1"
   }
 }
