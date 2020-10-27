@@ -7,9 +7,6 @@
       toolbar
       control-panel
     />
-    <v-col cols="12" class="text-center">
-      <AddPrinterDialog />
-    </v-col>
   </v-row>
 </template>
 
