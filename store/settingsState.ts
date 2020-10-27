@@ -25,7 +25,8 @@ export const state = (): SettingsState => ({
     queuePass: 0,
     queueProcessAll: false,
     queueIgnoreAnalysis: false,
-    darkTheme: false
+    darkTheme: false,
+    enableCloud: true
   },
   networking: {
     connectedMethod: '',
@@ -126,6 +127,16 @@ export const actions: ActionTree<SettingsState, RootState> = {
       value = false
     }
     let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { darkTheme: value })
+    if (response.status === 200) {
+      commit('setSettings', response.data)
+    }
+  },
+
+  async sendEnableCloud ({ commit }, value: boolean) {
+    if (!value) {
+      value = false
+    }
+    let response = await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { enableCloud: value })
     if (response.status === 200) {
       commit('setSettings', response.data)
     }

@@ -203,5 +203,7 @@
   "Fiber": "Fiber",
   "Appearance Settings": "Внешний вид",
   "Enable Dark Theme": "Включение Темной Темы",
-  "Appearance": "Внешний вид"
+  "Appearance": "Внешний вид",
+  "Enable Stereotech Cloud Connection": "Включить подключение к Stereotech Cloud",
+  "Cloud connection": "Подключение к облачным сервисам"
 }
