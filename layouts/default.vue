@@ -181,8 +181,8 @@ export default class extends Vue {
     },
     {
       icon: 'mdi-printer-3d',
-      title: 'Printers',
-      translatedTitle: 'Printers',
+      title: 'Printer',
+      translatedTitle: 'Printer',
       link: '/printers'
     }
   ]

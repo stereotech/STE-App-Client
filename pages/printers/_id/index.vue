@@ -1,20 +1,20 @@
 <template>
   <v-row dense>
-    <PrinterCard :id="$route.params.id" toolbar />
+    <PrinterCard :id="settings.systemId" toolbar />
     <v-col cols="12">
       <v-expansion-panels v-model="panel" multiple>
         <WizardsPanel
-          :id="$route.params.id"
+          :id="settings.systemId"
           v-if="isMaintenance || isPaused || isDone || isFailed"
           :printerType="printerType"
         />
-        <!--<WizardsPanel :id="$route.params.id" :printerType="printerType" />-->
+        <!--<WizardsPanel :id="settings.systemId" :printerType="printerType" />-->
         <ManualControlPanel
           :printing="isPrinting"
           :glaze="isGlaze"
           :fiber="isFiber"
-          :id="$route.params.id"
-          :isFiveAxis="printerType==1"
+          :id="settings.systemId"
+          :isFiveAxis="printerType == 1"
         />
       </v-expansion-panels>
     </v-col>
@@ -29,8 +29,10 @@ import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.
 import { Action, Getter, namespace } from 'vuex-class'
 import { PrinterInfo, CurrentState } from 'types/printer'
 import { PrinterType } from '~/types/printerType'
+import { Settings } from '~/types/settings'
 
 const printers = namespace('printersState')
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -43,8 +45,10 @@ export default class PrinterPage extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
+  @settings.Getter settings!: Settings
+
   get printerType (): number {
-    let printer = this.printer(this.$route.params.id)
+    let printer = this.printer(this.settings.systemId)
     if (printer != null) {
       if (printer.isFiveAxis == true) {
         return PrinterType.fiveAxis
@@ -58,7 +62,7 @@ export default class PrinterPage extends Vue {
 
   async mounted () {
     this.$store.dispatch('printersState/fetchPrinters')
-    if (this.printer(this.$route.params.id) === undefined) {
+    if (this.printer(this.settings.systemId) === undefined) {
       this.$router.push('/printers')
     }
   }
@@ -70,47 +74,47 @@ export default class PrinterPage extends Vue {
   panel: number[] = [0, 1]
 
   get isPrinting (): boolean {
-    if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.state.flags.printing
+    if (this.status(this.settings.systemId) !== undefined) {
+      return this.status(this.settings.systemId)!.state.flags.printing
     }
     return false
   }
 
   get isGlaze (): boolean {
-    if (this.printer(this.$route.params.id) !== undefined) {
-      return this.printer(this.$route.params.id)!.isGlaze!
+    if (this.printer(this.settings.systemId) !== undefined) {
+      return this.printer(this.settings.systemId)!.isGlaze!
     }
     return false
   }
 
   get isFiber (): boolean {
-    if (this.printer(this.$route.params.id) !== undefined) {
-      return this.printer(this.$route.params.id)!.isFiber!
+    if (this.printer(this.settings.systemId) !== undefined) {
+      return this.printer(this.settings.systemId)!.isFiber!
     }
     return false
   }
 
   get isMaintenance (): boolean {
-    if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.state.text === 'Maintenance'
+    if (this.status(this.settings.systemId) !== undefined) {
+      return this.status(this.settings.systemId)!.state.text === 'Maintenance'
     }
     return false
   }
   get isPaused (): boolean {
-    if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.state.text === 'Paused'
+    if (this.status(this.settings.systemId) !== undefined) {
+      return this.status(this.settings.systemId)!.state.text === 'Paused'
     }
     return false
   }
   get isDone (): boolean {
-    if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.state.text === 'Done'
+    if (this.status(this.settings.systemId) !== undefined) {
+      return this.status(this.settings.systemId)!.state.text === 'Done'
     }
     return false
   }
   get isFailed (): boolean {
-    if (this.status(this.$route.params.id) !== undefined) {
-      return this.status(this.$route.params.id)!.state.text === 'Failed'
+    if (this.status(this.settings.systemId) !== undefined) {
+      return this.status(this.settings.systemId)!.state.text === 'Failed'
     }
     return false
   }

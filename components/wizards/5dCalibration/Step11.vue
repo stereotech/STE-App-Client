@@ -3,7 +3,7 @@
     <v-container grid-list-xs>
       <v-row>
         <v-col cols="12">
-          <JogCard dense :id="$route.params.id" />
+          <JogCard dense :id="settings.systemId" />
         </v-col>
         <v-col cols="12">
           <v-btn x-large block depressed color="accent" @click="next(11)">
@@ -21,6 +21,9 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import JogCard from '~/components/printers/expert/JogCard.vue'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
 const printers = namespace('printersState')
 
 @Component({
@@ -30,6 +33,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
@@ -39,8 +43,8 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'M1005 S9' })
-    //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z0 F600' })
+    await this.customCommand({ id: this.settings.systemId, command: 'M1005 S9' })
+    //await this.customCommand({ id: this.settings.systemId, command: 'G0 Z0 F600' })
   }
   private step?: number = 10
   private curStep?: number = this.currentStep
@@ -50,7 +54,7 @@ export default class extends Vue {
 
 
   private async next (step: number) {
-    //await this.customCommand({ id: this.$route.params.id, command: 'G0 Z10 F600' })
+    //await this.customCommand({ id: this.settings.systemId, command: 'G0 Z10 F600' })
     this.$emit('change', step)
     this.curStep = step
   }

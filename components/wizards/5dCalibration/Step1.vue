@@ -36,7 +36,7 @@ export default class extends Vue {
   @printers.Action homeCommand: any
 
   private next (step: number) {
-    // this.homeCommand({ id: this.$route.params.id, head: true, bed: true, rotary: false })
+    // this.homeCommand({ id: this.settings.systemId, head: true, bed: true, rotary: false })
 
     this.$emit('change', step)
     this.curStep = step

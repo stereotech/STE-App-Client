@@ -1,14 +1,16 @@
 <template>
   <v-col cols="12">
     <v-toolbar color="primary" flat dense>
-      <v-btn v-if="closeable" x-large text icon nuxt :to="`/printers/${$route.params.id}`" exact>
+      <v-btn v-if="closeable" x-large text icon nuxt :to="`/printers`" exact>
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <span class="headline font-weight-light">
         <slot name="title" />
       </span>
       <div class="flex-grow-1" />
-      <v-progress-circular :value="progressStep" size="48">{{ currentStep + 1 }}/{{ stepCount }}</v-progress-circular>
+      <v-progress-circular :value="progressStep" size="48"
+        >{{ currentStep + 1 }}/{{ stepCount }}</v-progress-circular
+      >
     </v-toolbar>
     <v-card color="primary" dark flat>
       <v-window

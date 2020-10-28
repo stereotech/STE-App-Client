@@ -2,7 +2,7 @@
   <WizardStep :step="step" :image="image" :description="description">
     <v-col cols="12">
       <v-btn block x-large depressed color="accent" @click="next(1)">
-        {{$t("Start")}}
+        {{ $t("Start") }}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
     </v-col>
@@ -13,6 +13,9 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
 
 const printers = namespace('printersState')
 
@@ -22,6 +25,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
@@ -37,7 +41,7 @@ export default class extends Vue {
   @printers.Action customCommand: any
 
   private async next (step: number) {
-    await this.customCommand({ id: this.$route.params.id, command: 'G28' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G28' })
 
     this.$emit('change', step)
     this.curStep = step

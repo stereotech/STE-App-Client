@@ -3,13 +3,19 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">{{
+            $t("Unload")
+          }}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="load">{{$t("Load")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="load">{{
+            $t("Load")
+          }}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finish">{{$t("Finish")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">{{
+            $t("Finish")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -21,6 +27,9 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
 
 const printers = namespace('printersState')
 
@@ -30,6 +39,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
@@ -50,7 +60,7 @@ export default class extends Vue {
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
-    return this.status(this.$route.params.id)
+    return this.status(this.settings.systemId)
   }
 
   get heating () {
@@ -75,16 +85,16 @@ export default class extends Vue {
   }
 
   private async repeat () {
-    await this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 10 })
+    await this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 10 })
   }
 
   private async load () {
-    await this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+    await this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private finish () {
-    this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 0 })
-    this.$router.push('/printers/' + this.$route.params.id)
+    this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
+    this.$router.push('/printers/' + this.settings.systemId)
   }
 
   private next (step: number) {
