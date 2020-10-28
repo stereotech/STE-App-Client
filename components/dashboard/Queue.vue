@@ -3,7 +3,7 @@
     <v-card transition="slide-y-reverse-transition" min-height="550">
       <v-toolbar flat>
         <v-card-title>
-          <span class="headline font-weight-light">{{$t("Queue")}}</span>
+          <span class="headline font-weight-light">{{ $t("Queue") }}</span>
         </v-card-title>
         <v-spacer />
         <v-btn small fab depressed dark color="primary" @click="createJob">
@@ -19,9 +19,9 @@
       >
         <v-subheader class="error--text" v-if="highPriorityJobs.length > 0">
           <v-icon color="error" left>mdi-chevron-double-up</v-icon>
-          {{$t("High Priority")}}
+          {{ $t("High Priority") }}
         </v-subheader>
-        <v-list-item v-for="(job) in highPriorityJobs" :key="job.id">
+        <v-list-item v-for="job in highPriorityJobs" :key="job.id">
           <template v-if="settings.queueIgnoreAnalysis"></template>
           <v-btn
             icon
@@ -30,22 +30,33 @@
             :ripple="false"
             class="mr-2"
             v-else-if="job.isFiveAxis"
-          >5D</v-btn>
+            >5D</v-btn
+          >
 
-          <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
+          <v-btn
+            icon
+            outlined
+            color="primary"
+            :ripple="false"
+            class="mr-2"
+            v-else
+            >3D</v-btn
+          >
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
 
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
-            <v-list-item-subtitle
-              v-else
-              class="body-1"
-            >{{ $t("Printers: {0}",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-list-item-action>
-            <v-list-item-action-text>{{ $moment.unix(job.creationTime).fromNow() }}</v-list-item-action-text>
+            <v-list-item-action-text>{{
+              $moment.unix(job.creationTime).fromNow()
+            }}</v-list-item-action-text>
 
             <v-menu v-if="job.state === 'Queued'">
               <template v-slot:activator="{ on }">
@@ -56,45 +67,45 @@
               <v-list>
                 <v-list-item
                   color="error"
-                  v-if="job.priority!=2"
-                  @click="changePriority({job: job, priority: 2})"
+                  v-if="job.priority != 2"
+                  @click="changePriority({ job: job, priority: 2 })"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-up</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("High")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("High") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   color="primary"
-                  v-if="job.priority!=1"
-                  @click="changePriority({job: job, priority: 1})"
+                  v-if="job.priority != 1"
+                  @click="changePriority({ job: job, priority: 1 })"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-circle-double</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Normal")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Normal") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   color="gray"
-                  v-if="job.priority!=0"
-                  @click="changePriority({job: job, priority: 0})"
+                  v-if="job.priority != 0"
+                  @click="changePriority({ job: job, priority: 0 })"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-down</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Low")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Low") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startEditJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Edit")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Edit") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startRemoveJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -102,9 +113,9 @@
         </v-list-item>
         <v-subheader class="primary--text" v-if="normalPriorityJobs.length > 0">
           <v-icon color="primary" left>mdi-circle-double</v-icon>
-          {{$t("Normal Priority")}}
+          {{ $t("Normal Priority") }}
         </v-subheader>
-        <v-list-item v-for="(job) in normalPriorityJobs" :key="job.id">
+        <v-list-item v-for="job in normalPriorityJobs" :key="job.id">
           <template v-if="settings.queueIgnoreAnalysis"></template>
           <v-btn
             icon
@@ -113,21 +124,32 @@
             :ripple="false"
             class="mr-2"
             v-else-if="job.isFiveAxis"
-          >5D</v-btn>
-          <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
+            >5D</v-btn
+          >
+          <v-btn
+            icon
+            outlined
+            color="primary"
+            :ripple="false"
+            class="mr-2"
+            v-else
+            >3D</v-btn
+          >
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
 
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
-            <v-list-item-subtitle
-              v-else
-              class="body-1"
-            >{{ $t("Printers: {0}",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-list-item-action>
-            <v-list-item-action-text>{{ $moment.unix(job.creationTime).fromNow() }}</v-list-item-action-text>
+            <v-list-item-action-text>{{
+              $moment.unix(job.creationTime).fromNow()
+            }}</v-list-item-action-text>
 
             <v-menu v-if="job.state === 'Queued'">
               <template v-slot:activator="{ on }">
@@ -138,45 +160,45 @@
               <v-list>
                 <v-list-item
                   color="error"
-                  v-if="job.priority!=2"
-                  @click="changePriority({job: job, priority: 2})"
+                  v-if="job.priority != 2"
+                  @click="changePriority({ job: job, priority: 2 })"
                 >
                   <v-list-item-action>
                     <v-icon color="error">mdi-chevron-double-up</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("High")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("High") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   color="primary"
-                  v-if="job.priority!=1"
-                  @click="changePriority({job: job, priority: 1})"
+                  v-if="job.priority != 1"
+                  @click="changePriority({ job: job, priority: 1 })"
                 >
                   <v-list-item-action>
                     <v-icon color="primary">mdi-circle-double</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Normal")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Normal") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   color="gray"
-                  v-if="job.priority!=0"
-                  @click="changePriority({job: job, priority: 0})"
+                  v-if="job.priority != 0"
+                  @click="changePriority({ job: job, priority: 0 })"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-down</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Low")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Low") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startEditJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Edit")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Edit") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startRemoveJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -184,9 +206,9 @@
         </v-list-item>
         <v-subheader class="gray--text" v-if="lowPriorityJobs.length > 0">
           <v-icon color="gray" left>mdi-chevron-double-down</v-icon>
-          {{$t("Low Priority")}}
+          {{ $t("Low Priority") }}
         </v-subheader>
-        <v-list-item v-for="(job) in lowPriorityJobs" :key="job.id">
+        <v-list-item v-for="job in lowPriorityJobs" :key="job.id">
           <template v-if="settings.queueIgnoreAnalysis"></template>
           <v-btn
             icon
@@ -195,21 +217,32 @@
             :ripple="false"
             class="mr-2"
             v-else-if="job.isFiveAxis"
-          >5D</v-btn>
-          <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
+            >5D</v-btn
+          >
+          <v-btn
+            icon
+            outlined
+            color="primary"
+            :ripple="false"
+            class="mr-2"
+            v-else
+            >3D</v-btn
+          >
           <v-list-item-content>
             <v-list-item-title>{{ job.name }}</v-list-item-title>
 
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
-            <v-list-item-subtitle
-              v-else
-              class="body-1"
-            >{{ $t("Printers: {0}",[job.printers.length > 0 ? job.printers.toString() : '-']) }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-list-item-action>
-            <v-list-item-action-text>{{ $moment.unix(job.creationTime).fromNow() }}</v-list-item-action-text>
+            <v-list-item-action-text>{{
+              $moment.unix(job.creationTime).fromNow()
+            }}</v-list-item-action-text>
 
             <v-menu v-if="job.state === 'Queued'">
               <template v-slot:activator="{ on }">
@@ -220,45 +253,45 @@
               <v-list>
                 <v-list-item
                   color="error"
-                  v-if="job.priority!=2"
-                  @click="changePriority({job: job, priority: 2})"
+                  v-if="job.priority != 2"
+                  @click="changePriority({ job: job, priority: 2 })"
                 >
                   <v-list-item-action>
                     <v-icon color="error">mdi-chevron-double-up</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("High")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("High") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   color="primary"
-                  v-if="job.priority!=1"
-                  @click="changePriority({job: job, priority: 1})"
+                  v-if="job.priority != 1"
+                  @click="changePriority({ job: job, priority: 1 })"
                 >
                   <v-list-item-action>
                     <v-icon color="primary">mdi-circle-double</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Normal")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Normal") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   color="gray"
-                  v-if="job.priority!=0"
-                  @click="changePriority({job: job, priority: 0})"
+                  v-if="job.priority != 0"
+                  @click="changePriority({ job: job, priority: 0 })"
                 >
                   <v-list-item-action>
                     <v-icon>mdi-chevron-double-down</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Low")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Low") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startEditJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-pencil</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Edit")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Edit") }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="startRemoveJob(job)">
                   <v-list-item-action>
                     <v-icon>mdi-delete</v-icon>
                   </v-list-item-action>
-                  <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                  <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -268,11 +301,20 @@
       <v-container v-else>
         <v-row dense align="center" justify="center">
           <v-col cols="auto">
-            <v-img src="/empty-state/queue.svg" height="192px" width="192px" aspect-ratio="1" />
+            <v-img
+              src="/empty-state/queue.svg"
+              height="192px"
+              width="192px"
+              aspect-ratio="1"
+            />
           </v-col>
           <v-col cols="12">
             <h6 class="title text-center">
-              {{$t("There are no queued print jobs yet. Add new one by clicking")}}
+              {{
+                $t(
+                  "There are no queued print jobs yet. Add new one by clicking"
+                )
+              }}
               <v-icon color="primary">mdi-plus-circle</v-icon>
             </h6>
           </v-col>
@@ -293,16 +335,23 @@
           <v-btn icon dark @click="closeDialog(undefined)">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title v-if="editMode">{{ $t("Edit job") }}</v-toolbar-title>
+          <v-toolbar-title v-if="editMode">{{
+            $t("Edit job")
+          }}</v-toolbar-title>
           <v-toolbar-title v-else>{{ $t("Create job") }}</v-toolbar-title>
           <v-spacer />
-          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">{{$t("Save")}}</v-btn>
+          <v-btn :disabled="!valid" dark text @click="closeDialog(!editMode)">{{
+            $t("Save")
+          }}</v-btn>
         </v-toolbar>
         <v-form v-model="valid">
           <v-container fluid>
             <v-row dense justify="center" align="center">
               <v-col cols="12">
-                <BottomInput v-model="nameKeyboard" :input.sync="editedJob.name">
+                <BottomInput
+                  v-model="nameKeyboard"
+                  :input.sync="editedJob.name"
+                >
                   <v-text-field
                     v-model="editedJob.name"
                     :label="$tc('Job name')"
@@ -326,7 +375,7 @@
                   :menu-props="menuProps"
                   @input="changeNameFromFile"
                 >
-                  <template v-slot:item="{item}">
+                  <template v-slot:item="{ item }">
                     <template v-if="settings.queueIgnoreAnalysis"></template>
                     <v-btn
                       icon
@@ -335,48 +384,51 @@
                       :ripple="false"
                       class="mr-2"
                       v-else-if="item.isFiveAxis"
-                    >5D</v-btn>
-                    <v-btn icon outlined color="primary" :ripple="false" class="mr-2" v-else>3D</v-btn>
+                      >5D</v-btn
+                    >
+                    <v-btn
+                      icon
+                      outlined
+                      color="primary"
+                      :ripple="false"
+                      class="mr-2"
+                      v-else
+                      >3D</v-btn
+                    >
                     <v-list-item-content>
-                      <v-list-item-title class="subheading">{{ item.name }}</v-list-item-title>
+                      <v-list-item-title class="subheading">{{
+                        item.name
+                      }}</v-list-item-title>
                     </v-list-item-content>
                   </template>
-                  <template v-slot:selection="{item}">
+                  <template v-slot:selection="{ item }">
                     <template v-if="settings.queueIgnoreAnalysis"></template>
-                    <v-chip v-else-if="item.isFiveAxis" small outlined color="info">5D</v-chip>
+                    <v-chip
+                      v-else-if="item.isFiveAxis"
+                      small
+                      outlined
+                      color="info"
+                      >5D</v-chip
+                    >
                     <v-chip v-else small outlined color="primary">3D</v-chip>
-                    <div class="text-truncate">{{ item.name}}</div>
+                    <div class="text-truncate">{{ item.name }}</div>
                   </template>
                 </v-autocomplete>
               </v-col>
-              <v-col cols="12">
-                <v-autocomplete
-                  :label="$tc('Printer assignment')"
-                  v-model="editedJob.printers"
-                  filled
-                  chips
-                  multiple
-                  dense
-                  :items="settings.queueIgnoreAnalysis ? printers : certainTypePrinters(editedJob.isFiveAxis)"
-                  item-text="name"
-                  item-value="id"
-                  :menu-props="menuProps"
-                />
-              </v-col>
               <v-col cols="12" class="text-center">
-                <v-subheader>{{$t("Priority")}}</v-subheader>
+                <v-subheader>{{ $t("Priority") }}</v-subheader>
                 <v-btn-toggle v-model="editedJob.priority">
                   <v-btn text color="gray">
                     <v-icon color="gray" left>mdi-chevron-double-down</v-icon>
-                    {{$t('Low')}}
+                    {{ $t("Low") }}
                   </v-btn>
                   <v-btn text color="primary">
                     <v-icon color="primary" left>mdi-circle-double</v-icon>
-                    {{$t('Normal')}}
+                    {{ $t("Normal") }}
                   </v-btn>
                   <v-btn text color="error">
                     <v-icon color="error" left>mdi-chevron-double-up</v-icon>
-                    {{$t('High')}}
+                    {{ $t("High") }}
                   </v-btn>
                 </v-btn-toggle>
               </v-col>
@@ -386,12 +438,15 @@
                   v-model="copiesCount"
                   :label="$tc('Copies')"
                   filled
-                  :items="Array.from(new Array(100),(val,index)=>index+1)"
+                  :items="Array.from(new Array(100), (val, index) => index + 1)"
                   :menu-props="menuProps"
                 />
               </v-col>
               <v-col cols="12">
-                <BottomInput v-model="descriptionKeyboard" :input.sync="editedJob.description">
+                <BottomInput
+                  v-model="descriptionKeyboard"
+                  :input.sync="editedJob.description"
+                >
                   <v-textarea
                     v-model="editedJob.description"
                     filled
@@ -408,10 +463,16 @@
     </v-dialog>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title class="headline">{{$t("Do you want to remove the job?")}}</v-card-title>
+        <v-card-title class="headline">{{
+          $t("Do you want to remove the job?")
+        }}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
-          <v-btn color="primary" text @click="endRemoveJob">{{$t("Yes")}}</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{
+            $t("No")
+          }}</v-btn>
+          <v-btn color="primary" text @click="endRemoveJob">{{
+            $t("Yes")
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -459,6 +520,11 @@ export default class extends Vue {
   private confirmation: boolean = false
 
   private nameWasChanged: boolean = false
+
+  fileName (fileUri: string): string {
+    let array = fileUri.split("/")
+    return array[array.length - 1]
+  }
 
   get numberValueOfFiveAxis (): number {
     let isFiveAx = this.editedJob.isFiveAxis

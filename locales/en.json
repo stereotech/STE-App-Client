@@ -148,6 +148,7 @@
   "Retry": "Retry",
   "Dashboard": "Dashboard",
   "Printers": "Printers",
+  "Printer": "Printer",
   "{0} printers": "{0} printers",
   "{0} has been succesfully printed on {1} for {2}": "{0} has been succesfully printed on {1} for {2}",
   "{0} has been failed on {1} for {2} cause of {3}": "{0} has been failed on {1} for {2} cause of {3}",
@@ -205,5 +206,6 @@
   "Enable Dark Theme": "Enable Dark Theme",
   "Appearance": "Appearance",
   "Enable Stereotech Cloud Connection": "Enable Stereotech Cloud Connection",
-  "Cloud connection": "Cloud connection"
+  "Cloud connection": "Cloud connection",
+  "File: ": "File: "
 }

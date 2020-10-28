@@ -3,7 +3,9 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="finish">{{$t("Finish")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="finish">{{
+            $t("Finish")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -15,7 +17,9 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { PrintingMode } from '~/types/printingMode'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
+import { Settings } from '~/types/settings'
 
+const settings = namespace('settingsState')
 
 const printers = namespace('printersState')
 
@@ -25,6 +29,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
@@ -39,19 +44,19 @@ export default class extends Vue {
   }
 
   private async finish () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 Z100' })
-    await this.customCommand({ id: this.$route.params.id, command: 'G28 X0 Y0' })
-    this.$router.push('/printers/' + this.$route.params.id)
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z100' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
+    this.$router.push('/printers/' + this.settings.systemId)
   }
 
   async performStep () {
     if (this.additionalData.printingMode == PrintingMode.Classic) {
-      await this.customCommand({ id: this.$route.params.id, command: 'G10 L20 P2 X0 Y0 Z0' })
+      await this.customCommand({ id: this.settings.systemId, command: 'G10 L20 P2 X0 Y0 Z0' })
     } else if (this.additionalData.printingMode == PrintingMode.Coil5D) {
 
-      await this.customCommand({ id: this.$route.params.id, command: `G10 L20 P3 X0 Y0 Z${this.additionalData.offsetZ}` })
+      await this.customCommand({ id: this.settings.systemId, command: `G10 L20 P3 X0 Y0 Z${this.additionalData.offsetZ}` })
     }
-    await this.customCommand({ id: this.$route.params.id, command: 'M500' })
+    await this.customCommand({ id: this.settings.systemId, command: 'M500' })
   }
 
   private step?: number = 4

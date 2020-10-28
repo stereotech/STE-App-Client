@@ -3,10 +3,12 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <JogCard dense isFiveAxis :id="$route.params.id" />
+          <JogCard dense isFiveAxis :id="settings.systemId" />
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -21,6 +23,9 @@ import { Action, Getter, State, namespace } from 'vuex-class'
 import { PrintingMode } from '~/types/printingMode'
 
 const printers = namespace('printersState')
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
 
 @Component({
   components: {
@@ -29,6 +34,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
@@ -43,7 +49,7 @@ export default class extends Vue {
   }
 
   async performStep () {
-    await this.customCommand({ id: this.$route.params.id, command: 'G0 X100 Y100 F3000' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 X100 Y100 F3000' })
   }
 
   @printers.Action customCommand: any

@@ -148,6 +148,7 @@
   "Retry": "Повторить",
   "Dashboard": "Печать",
   "Printers": "Принтеры",
+  "Printer": "Принтер",
   "{0} printers": "{0} принтеров",
   "{0} has been succesfully printed on {1} for {2}": "{0} было успешно напечатано на {1} за {2}",
   "{0} has been failed on {1} for {2} cause of {3}": "{0} потерпело неудачу на {1} за {2} по причине {3}",
@@ -205,5 +206,6 @@
   "Enable Dark Theme": "Включение Темной Темы",
   "Appearance": "Внешний вид",
   "Enable Stereotech Cloud Connection": "Включить подключение к Stereotech Cloud",
-  "Cloud connection": "Подключение к облачным сервисам"
+  "Cloud connection": "Подключение к облачным сервисам",
+  "File: ": "Файл: "
 }
