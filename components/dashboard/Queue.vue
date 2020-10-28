@@ -48,11 +48,10 @@
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
-            <v-list-item-subtitle v-else class="body-1">{{
-              $t("Printers: {0}", [
-                job.printers.length > 0 ? job.printers.toString() : "-",
-              ])
-            }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{
@@ -142,11 +141,10 @@
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
-            <v-list-item-subtitle v-else class="body-1">{{
-              $t("Printers: {0}", [
-                job.printers.length > 0 ? job.printers.toString() : "-",
-              ])
-            }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{
@@ -236,11 +234,10 @@
             <v-list-item-subtitle v-if="job.state === 'Dequeued'">
               <v-progress-linear :indeterminate="true" />
             </v-list-item-subtitle>
-            <v-list-item-subtitle v-else class="body-1">{{
-              $t("Printers: {0}", [
-                job.printers.length > 0 ? job.printers.toString() : "-",
-              ])
-            }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{
@@ -523,6 +520,11 @@ export default class extends Vue {
   private confirmation: boolean = false
 
   private nameWasChanged: boolean = false
+
+  fileName (fileUri: string): string {
+    let array = fileUri.split("/")
+    return array[array.length - 1]
+  }
 
   get numberValueOfFiveAxis (): number {
     let isFiveAx = this.editedJob.isFiveAxis
