@@ -110,6 +110,7 @@
       </v-menu>
     </v-app-bar>
     <MainSettingsDialog v-model="settingsDialog" />
+    <ActivationDialog />
     <v-main>
       <v-container fluid class="pb-xs-4">
         <nuxt />
@@ -149,13 +150,15 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
+import ActivationDialog from '~/components/cloud/ActivationDialog.vue'
 import { Settings } from '~/types/settings'
 
 const settings = namespace('settingsState')
 
 @Component({
   components: {
-    MainSettingsDialog
+    MainSettingsDialog,
+    ActivationDialog
   }
 })
 export default class extends Vue {

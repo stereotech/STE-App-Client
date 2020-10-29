@@ -207,5 +207,14 @@
   "Appearance": "Appearance",
   "Enable Stereotech Cloud Connection": "Enable Stereotech Cloud Connection",
   "Cloud connection": "Cloud connection",
-  "File: ": "File: "
+  "File: ": "File: ",
+  "Close": "Close",
+  "Agree": "Agree",
+  "Disagree": "Disagree",
+  "Stereotech Cloud": "Stereotech Cloud",
+  "Activation": "Activation",
+  "This dialog means that somebody requested access from Steroetech Cloud to this device": {
+    " You can accept or reject this request": "This dialog means that somebody requested access from Steroetech Cloud to this device. You can accept or reject this request"
+  },
+  "Enter this pin code in order to give access to this device": "Enter this pin code in order to give access to this device"
 }

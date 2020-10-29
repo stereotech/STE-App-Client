@@ -120,6 +120,11 @@ const hubManagement: Plugin = ({ app, store }, inject) => {
             store.commit('printersState/setError')
         })
 
+        hub.on('ActivationRequested', (code: number) => {
+            store.commit('cloudState/setPin', code)
+            store.commit('cloudState/setActivating', true)
+        })
+
 
         hub.onclose(async (error) => {
             console.error(error)
