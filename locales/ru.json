@@ -210,5 +210,11 @@
   "File: ": "Файл: ",
   "Close": "Закрыть",
   "Agree": "Принять",
-  "Disagree": "Отклонить"
+  "Disagree": "Отклонить",
+  "Stereotech Cloud": "Stereotech Cloud",
+  "Activation": "Активация",
+  "This dialog means that somebody requested access from Steroetech Cloud to this device": {
+    " You can accept or reject this request": "Этот диалог обозначает, что был отправлен запрос на подключение данного устройства к Stereotech Cloud. Вы можете подтвердить или отклонить данный запрос"
+  },
+  "Enter this pin code in order to give access to this device": "Введите данный пин-код для разрешения доступа к данному устройству"
 }

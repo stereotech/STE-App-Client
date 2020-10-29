@@ -1,14 +1,15 @@
 <template>
   <v-dialog v-model="activating" persistent max-width="320">
     <v-card>
-      <v-card-title class="headline">Stereotech Cloud</v-card-title>
-      <v-card-subtitle class="headline">Activation</v-card-subtitle>
-      <v-card-text v-if="!showPin" class="text-center"
-        >This dialog means that somebody requested access from Steroetech Cloud
-        to this device. You can accept or reject this request</v-card-text
-      >
+      <v-card-title class="headline">{{ $t("Stereotech Cloud") }}</v-card-title>
+      <v-card-subtitle class="headline">{{ $t("Activation") }}</v-card-subtitle>
+      <v-card-text v-if="!showPin" class="text-center">{{
+        $t(
+          "This dialog means that somebody requested access from Steroetech Cloud to this device. You can accept or reject this request"
+        )
+      }}</v-card-text>
       <v-card-text v-else class="text-center">
-        Enter this pin code in order to give access to this device
+        {{ $t("Enter this pin code in order to give access to this device") }}
         <p class="text-h1">{{ pin }}</p>
       </v-card-text>
       <v-card-actions v-if="!showPin">
