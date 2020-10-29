@@ -207,5 +207,8 @@
   "Appearance": "Внешний вид",
   "Enable Stereotech Cloud Connection": "Включить подключение к Stereotech Cloud",
   "Cloud connection": "Подключение к облачным сервисам",
-  "File: ": "Файл: "
+  "File: ": "Файл: ",
+  "Close": "Закрыть",
+  "Agree": "Принять",
+  "Disagree": "Отклонить"
 }

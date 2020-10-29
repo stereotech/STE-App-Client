@@ -207,5 +207,8 @@
   "Appearance": "Appearance",
   "Enable Stereotech Cloud Connection": "Enable Stereotech Cloud Connection",
   "Cloud connection": "Cloud connection",
-  "File: ": "File: "
+  "File: ": "File: ",
+  "Close": "Close",
+  "Agree": "Agree",
+  "Disagree": "Disagree"
 }
