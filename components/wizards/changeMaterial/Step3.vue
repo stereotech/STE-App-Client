@@ -3,10 +3,15 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="4">
-          <v-progress-circular :size="70" :width="7" color="secondary" :value="heatingValue / 2.4" />
+          <v-progress-circular
+            :size="70"
+            :width="7"
+            color="secondary"
+            :value="heatingValue / 2.4"
+          />
         </v-col>
         <v-col cols="4">
-          <p>{{$t("Heating...")}}</p>
+          <p>{{ $t("Heating...") }}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -15,10 +20,14 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="loadMaterial">{{$t("Load")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="loadMaterial">{{
+            $t("Load")
+          }}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">{{$t("Unload")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="repeat">{{
+            $t("Unload")
+          }}</v-btn>
         </v-col>
         <v-col v-if="additionalData.action === 0" cols="12">
           <v-btn
@@ -27,11 +36,14 @@
             depressed
             color="accent"
             nuxt
-            :to="'/printers/' + $route.params.id"
-          >{{$t("Finish")}}</v-btn>
+            :to="'/printers/' + settings.systemId"
+            >{{ $t("Finish") }}</v-btn
+          >
         </v-col>
         <v-col v-else cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(3)">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -43,6 +55,9 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { CurrentState } from 'types/printer'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
 
 const printers = namespace('printersState')
 
@@ -52,6 +67,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
@@ -71,7 +87,7 @@ export default class extends Vue {
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
-    return this.status(this.$route.params.id)
+    return this.status(this.settings.systemId)
   }
 
   get heating () {
@@ -113,11 +129,11 @@ export default class extends Vue {
   }
 
   private async repeat () {
-    await this.retractCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 120 })
+    await this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
   }
 
   private async loadMaterial () {
-    await this.extrudeCommand({ id: this.$route.params.id, toolId: this.additionalData.tool, amount: 20 })
+    await this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 20 })
   }
 
   private next (step: number) {

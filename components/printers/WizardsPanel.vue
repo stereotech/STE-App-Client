@@ -1,18 +1,24 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header>
-      <span class="headline font-weight-light">{{$t("Wizards")}}</span>
+      <span class="headline font-weight-light">{{ $t("Wizards") }}</span>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
       <v-container fluid>
         <v-row dense>
           <template v-for="wizard in data">
-            <v-col :key="wizard.id" cols="6" sm="4" lg="2" v-if="validWizard(wizard)">
+            <v-col
+              :key="wizard.id"
+              cols="6"
+              sm="4"
+              lg="2"
+              v-if="validWizard(wizard)"
+            >
               <WizardCard
                 :name="wizard.translatedName"
                 :image="wizard.image"
                 :description="wizard.description"
-                :to="'/printers/' + $route.params.id + '/' + wizard.link"
+                :to="'/printers/' + wizard.link"
               />
             </v-col>
           </template>

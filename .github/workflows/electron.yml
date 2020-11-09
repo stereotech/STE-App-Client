@@ -44,6 +44,7 @@ jobs:
           path: cordova/platforms/electron/build/linux-armv7l-unpacked
           
   deploy:
+    if: github.event_name	== 'push'
     runs-on: ubuntu-latest
     needs: [build]
     env: 

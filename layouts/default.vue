@@ -27,7 +27,9 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>{{ menuItem.translatedTitle }}</v-list-item-title>
+            <v-list-item-title>{{
+              menuItem.translatedTitle
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -39,7 +41,7 @@
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>{{$t("Select cluster")}}</v-list-item-title>
+              <v-list-item-title>{{ $t("Select cluster") }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -47,8 +49,14 @@
     </v-navigation-drawer>
 
     <v-app-bar app clipped-left>
-      <v-btn class="hidden-sm-and-down" icon @click.stop="miniVariant = !miniVariant">
-        <v-icon v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'" />
+      <v-btn
+        class="hidden-sm-and-down"
+        icon
+        @click.stop="miniVariant = !miniVariant"
+      >
+        <v-icon
+          v-html="miniVariant ? 'mdi-chevron-right' : 'mdi-chevron-left'"
+        />
       </v-btn>
       <v-avatar size="36px" class="mx-2">
         <img src="/icon.png" alt="Logo" />
@@ -67,22 +75,22 @@
         <v-list>
           <v-list-item ripple @click="settingsDialog = true">
             <v-list-item-action>
-              <v-icon>mdi-settings</v-icon>
+              <v-icon>mdi-cog</v-icon>
             </v-list-item-action>
-            <v-list-item-title>{{$t("Settings")}}</v-list-item-title>
+            <v-list-item-title>{{ $t("Settings") }}</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="rebootSystem">
             <v-list-item-action>
               <v-icon>mdi-refresh</v-icon>
             </v-list-item-action>
-            <v-list-item-title>{{$t("Reboot")}}</v-list-item-title>
+            <v-list-item-title>{{ $t("Reboot") }}</v-list-item-title>
           </v-list-item>
           <v-list-item @click="poweroffSystem">
             <v-list-item-action>
               <v-icon>mdi-power</v-icon>
             </v-list-item-action>
-            <v-list-item-title>{{$t("Power Off")}}</v-list-item-title>
+            <v-list-item-title>{{ $t("Power Off") }}</v-list-item-title>
           </v-list-item>
           <template v-if="isMobile">
             <v-divider inset />
@@ -92,7 +100,9 @@
               </v-list-item-action>
 
               <v-list-item-content>
-                <v-list-item-title>{{$t("Select Cluster")}}</v-list-item-title>
+                <v-list-item-title>{{
+                  $t("Select Cluster")
+                }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -100,15 +110,21 @@
       </v-menu>
     </v-app-bar>
     <MainSettingsDialog v-model="settingsDialog" />
+    <ActivationDialog />
     <v-main>
       <v-container fluid class="pb-xs-4">
         <nuxt />
       </v-container>
-      <v-snackbar-queue :top="bottomNav" :bottom="!bottomNav" :right="!bottomNav" :timeout="3000">
+      <v-snackbar-queue
+        :top="bottomNav"
+        :bottom="!bottomNav"
+        :right="!bottomNav"
+        :timeout="3000"
+      >
         <template slot="default" slot-scope="props">
-          <v-alert
-            :type="props.snackbar && props.snackbar.color"
-          >{{ props.snackbar && props.snackbar.message }}</v-alert>
+          <v-alert :type="props.snackbar && props.snackbar.color">{{
+            props.snackbar && props.snackbar.message
+          }}</v-alert>
         </template>
       </v-snackbar-queue>
       <v-dialog-queue />
@@ -134,13 +150,15 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import MainSettingsDialog from '~/components/common/settings/MainSettingsDialog.vue'
+import ActivationDialog from '~/components/cloud/ActivationDialog.vue'
 import { Settings } from '~/types/settings'
 
 const settings = namespace('settingsState')
 
 @Component({
   components: {
-    MainSettingsDialog
+    MainSettingsDialog,
+    ActivationDialog
   }
 })
 export default class extends Vue {
@@ -166,8 +184,8 @@ export default class extends Vue {
     },
     {
       icon: 'mdi-printer-3d',
-      title: 'Printers',
-      translatedTitle: 'Printers',
+      title: 'Printer',
+      translatedTitle: 'Printer',
       link: '/printers'
     }
   ]

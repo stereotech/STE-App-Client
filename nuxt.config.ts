@@ -1,7 +1,7 @@
 import { Configuration } from '@nuxt/types'
 
 const config: Configuration = {
-  mode: 'spa',
+  ssr: false,
   head: {
     titleTemplate: 'STE App - %s',
     meta: [

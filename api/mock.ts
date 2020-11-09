@@ -107,7 +107,8 @@ const settings: Settings = {
     queuePass: 2,
     queueProcessAll: false,
     queueIgnoreAnalysis: true,
-    darkTheme: true
+    darkTheme: true,
+    enableCloud: true
 }
 
 const networks: Network[] = [

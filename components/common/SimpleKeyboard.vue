@@ -58,6 +58,9 @@ export default {
        * If you want to handle the shift and caps lock buttons
        */
       if (button === '{shift}' || button === '{lock}') { this.handleShift() }
+      if (button === '{enter}') {
+        this.$emit('enterPressed')
+      }
     },
     handleShift() {
       const currentLayout = this.keyboard.options.layoutName

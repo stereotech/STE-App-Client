@@ -18,10 +18,6 @@ export default class Solid extends Vue {
   mounted () {
     this.$vuetify.theme.dark = true
   }
-
-  beforeDestroy () {
-    this.$vuetify.theme.dark = false
-  }
 }
 </script>
 

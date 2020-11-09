@@ -148,6 +148,7 @@
   "Retry": "Retry",
   "Dashboard": "Dashboard",
   "Printers": "Printers",
+  "Printer": "Printer",
   "{0} printers": "{0} printers",
   "{0} has been succesfully printed on {1} for {2}": "{0} has been succesfully printed on {1} for {2}",
   "{0} has been failed on {1} for {2} cause of {3}": "{0} has been failed on {1} for {2} cause of {3}",
@@ -203,5 +204,17 @@
   "Fiber": "Fiber",
   "Appearance Settings": "Appearance Settings",
   "Enable Dark Theme": "Enable Dark Theme",
-  "Appearance": "Appearance"
+  "Appearance": "Appearance",
+  "Enable Stereotech Cloud Connection": "Enable Stereotech Cloud Connection",
+  "Cloud connection": "Cloud connection",
+  "File: ": "File: ",
+  "Close": "Close",
+  "Agree": "Agree",
+  "Disagree": "Disagree",
+  "Stereotech Cloud": "Stereotech Cloud",
+  "Activation": "Activation",
+  "This dialog means that somebody requested access from Steroetech Cloud to this device": {
+    " You can accept or reject this request": "This dialog means that somebody requested access from Steroetech Cloud to this device. You can accept or reject this request"
+  },
+  "Enter this pin code in order to give access to this device": "Enter this pin code in order to give access to this device"
 }

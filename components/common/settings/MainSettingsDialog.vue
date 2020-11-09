@@ -1,6 +1,6 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("Settings")}}</template>
+    <template slot="title">{{ $t("Settings") }}</template>
     <v-list>
       <template v-for="(setting, index) in settings">
         <v-list-item :key="setting.title" @click="setting.page = true">
@@ -16,12 +16,13 @@
     </v-list>
     <WifiDialog v-model="settings[0].page" />
     <AppearanceDialog v-model="settings[1].page" />
-    <DateTimeDialog v-model="settings[2].page" />
-    <LanguageDialog v-model="settings[3].page" />
-    <PrioritySettingsDialog v-model="settings[4].page" />
-    <StorageDialog v-model="settings[5].page" />
-    <ResetDialog v-model="settings[6].page" />
-    <UpdateDialog v-model="settings[7].page" />
+    <CloudDialog v-model="settings[2].page" />
+    <DateTimeDialog v-model="settings[3].page" />
+    <LanguageDialog v-model="settings[4].page" />
+    <PrioritySettingsDialog v-model="settings[5].page" />
+    <StorageDialog v-model="settings[6].page" />
+    <ResetDialog v-model="settings[7].page" />
+    <UpdateDialog v-model="settings[8].page" />
   </SettingsDialog>
 </template>
 
@@ -36,6 +37,7 @@ import StorageDialog from '~/components/common/settings/StorageDialog.vue'
 import ResetDialog from '~/components/common/settings/ResetDialog.vue'
 import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
 import AppearanceDialog from '~/components/common/settings/AppearanceDialog.vue'
+import CloudDialog from '~/components/common/settings/CloudDialog.vue'
 
 @Component({
   components: {
@@ -47,7 +49,8 @@ import AppearanceDialog from '~/components/common/settings/AppearanceDialog.vue'
     StorageDialog,
     ResetDialog,
     UpdateDialog,
-    AppearanceDialog
+    AppearanceDialog,
+    CloudDialog
   }
 })
 export default class extends Vue {
@@ -74,6 +77,12 @@ export default class extends Vue {
       icon: 'mdi-brightness-6',
       title: 'Appearance',
       translatedTitle: 'Appearance',
+      page: false
+    },
+    {
+      icon: 'mdi-cloud-sync-outline',
+      title: 'Cloud connection',
+      translatedTitle: 'Cloud connection',
       page: false
     },
     {

@@ -11,4 +11,5 @@ export interface Settings {
   queueProcessAll: boolean
   queueIgnoreAnalysis: boolean
   darkTheme: boolean
+  enableCloud: boolean
 }

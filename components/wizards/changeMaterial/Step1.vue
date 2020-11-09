@@ -9,7 +9,9 @@
           </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -20,6 +22,9 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
 
 const printers = namespace('printersState')
 
@@ -29,6 +34,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
+  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
@@ -47,9 +53,9 @@ export default class extends Vue {
 
   private nextStep () {
     if (this.additionalData.tool === 0) {
-      this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 240, tool1Temp: 0 })
+      this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 240, tool1Temp: 0 })
     } else {
-      this.toolTempCommand({ id: this.$route.params.id, tool0Temp: 0, tool1Temp: 240 })
+      this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 240 })
     }
     this.next(1)
   }
