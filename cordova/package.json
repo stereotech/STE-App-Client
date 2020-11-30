@@ -13,7 +13,6 @@
     "author": "Stereotech Dev",
     "license": "Apache-2.0",
     "dependencies": {
-        "cordova-android": "^8.0.0",
         "cordova-electron": "^1.1.0",
         "cordova-plugin-add-swift-support": "^2.0.1",
         "cordova-plugin-badge": "^0.8.8",
@@ -38,6 +37,7 @@
         ]
     },
     "devDependencies": {
+        "cordova-android": "^9.0.0",
         "replace": "^1.1.0"
     }
 }
