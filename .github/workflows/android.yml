@@ -64,7 +64,7 @@ jobs:
            name: android-build
            
        - name: Upload Android Release to Play Store
-         uses: r0adkll/upload-google-play@v1.0.4
+         uses: r0adkll/upload-google-play@v1.0.7
          with:
            serviceAccountJsonPlainText: ${{ secrets.ANDROID_JSON_KEY_DATA }}
            packageName: ru.stereotech.steapp
