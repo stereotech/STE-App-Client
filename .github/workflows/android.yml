@@ -69,4 +69,4 @@ jobs:
            serviceAccountJsonPlainText: ${{ secrets.ANDROID_JSON_KEY_DATA }}
            packageName: ru.stereotech.steapp
            releaseFile: apk/release/app-release.apk
-           track: internal
+           track: beta
