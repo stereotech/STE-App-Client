@@ -56,17 +56,25 @@ jobs:
   deploy:
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
     steps:
        - name: Download a Build Artifact
          uses: actions/download-artifact@v2.0.5
          with:
            name: android-build
            
-       - name: Upload Android Release to Play Store
+       - name: Upload Android Beta Release to Play Store
          uses: r0adkll/upload-google-play@v1.0.7
+         if: github.event_name == 'schedule' && contains(github.ref, 'develop')
          with:
            serviceAccountJsonPlainText: ${{ secrets.ANDROID_JSON_KEY_DATA }}
            packageName: ru.stereotech.steapp
            releaseFile: apk/release/app-release.apk
            track: beta
+           
+       - name: Upload Android Release to Play Store
+         uses: r0adkll/upload-google-play@v1.0.7
+         if: contains(github.ref, 'master')
+         with:
+           serviceAccountJsonPlainText: ${{ secrets.ANDROID_JSON_KEY_DATA }}
+           packageName: ru.stereotech.steapp
+           releaseFile: apk/release/app-release.apk
