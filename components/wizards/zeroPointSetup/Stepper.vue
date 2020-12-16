@@ -1,6 +1,6 @@
 <template>
   <WizardStepper v-model="currentStep" :step-count="5">
-    <template slot="title">{{$t("Zero point setup") }}</template>
+    <template slot="title">{{ $t("Zero point setup") }}</template>
     <Step1 v-model="currentStep" :additional-data="additionalData" />
     <Step2 v-model="currentStep" :additional-data="additionalData" />
     <Step3 v-model="currentStep" :additional-data="additionalData" />
@@ -18,6 +18,7 @@ import Step2 from '~/components/wizards/zeroPointSetup/Step2.vue'
 import Step3 from '~/components/wizards/zeroPointSetup/Step3.vue'
 import Step4 from '~/components/wizards/zeroPointSetup/Step4.vue'
 import Step5 from '~/components/wizards/zeroPointSetup/Step5.vue'
+import { PrinterSize } from '~/types/printer'
 
 @Component({
   components: {
@@ -32,11 +33,12 @@ import Step5 from '~/components/wizards/zeroPointSetup/Step5.vue'
 export default class ZeroPointSetupStepper extends Vue {
   private currentStep: number = 0
 
-  private additionalData: { printingMode: PrintingMode, offsetX: number, offsetY: number, offsetZ: number } = {
+  private additionalData: { printingMode: PrintingMode, offsetX: number, offsetY: number, offsetZ: number, size: PrinterSize } = {
     printingMode: PrintingMode.Classic,
     offsetX: 0,
     offsetY: 0,
-    offsetZ: 0
+    offsetZ: 0,
+    size: PrinterSize.Stadard
   }
 }
 

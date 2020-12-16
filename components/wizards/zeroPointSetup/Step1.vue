@@ -23,8 +23,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Model, Watch, namespace } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { PrinterInfo, PrinterSize } from '~/types/printer'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
+
+const printers = namespace('printersState')
 
 @Component({
   components: {
@@ -40,13 +46,22 @@ export default class extends Vue {
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
+
+  @settings.Getter settings!: Settings
+
+  @printers.Action customCommand: any
+  @printers.Getter printer!: (id: string) => PrinterInfo | undefined
+
   private step?: number = 0
   private curStep?: number = this.currentStep
 
   private image: string = 'wizards/zero_point_setup/zero_point_setup.jpg'
   private description: string = ''
 
-  private nextStep () {
+  private async nextStep () {
+    if (this.additionalData) {
+      this.additionalData.size = this.printer(this.settings.systemId)?.size || PrinterSize.Stadard
+    }
     this.next(1)
   }
 

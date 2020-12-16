@@ -18,6 +18,7 @@ import { PrintingMode } from '~/types/printingMode'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { Settings } from '~/types/settings'
+import { PrinterSize } from '~/types/printer'
 
 const settings = namespace('settingsState')
 
@@ -45,15 +46,16 @@ export default class extends Vue {
   }
 
   async performStep () {
+    const large = this.additionalData.size === PrinterSize.Large
     await this.customCommand({ id: this.settings.systemId, command: 'G28' })
     if (this.additionalData.printingMode == PrintingMode.Classic) {
       await this.customCommand({ id: this.settings.systemId, command: 'G10 L2 P2 X0 Y0 Z0' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G0 X100 Y100' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G0 Z100 A0' })
+      await this.customCommand({ id: this.settings.systemId, command: `G0 X${large ? '150' : '100'} Y${large ? '150' : '100'}` })
+      await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'} A0` })
     } else if (this.additionalData.printingMode == PrintingMode.Coil5D) {
       await this.customCommand({ id: this.settings.systemId, command: 'G10 L2 P3 X0 Y0 Z0' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G0 X100 Y100' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G0 Z100 A60' })
+      await this.customCommand({ id: this.settings.systemId, command: `G0 X${large ? '150' : '100'} Y${large ? '150' : '100'}` })
+      await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'} A60` })
     }
   }
 
