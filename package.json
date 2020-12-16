@@ -22,6 +22,7 @@
     "@nuxt/typescript-runtime": "^0.4.10",
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "cordova-set-version": "^11.0.1",
     "moment": "^2.27.0",
     "nuxt": "^2.14.6",
     "nuxt-class-component": "^1.2.1",

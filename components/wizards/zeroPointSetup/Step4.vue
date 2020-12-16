@@ -25,7 +25,9 @@
           </v-slider>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -47,7 +49,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)

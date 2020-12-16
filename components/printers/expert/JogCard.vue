@@ -1,11 +1,19 @@
 <template>
   <v-card :light="light">
-    <v-card-title class="title" v-if="!dense">{{$t("Jog")}}</v-card-title>
+    <v-card-title class="title" v-if="!dense">{{ $t("Jog") }}</v-card-title>
     <v-container>
       <v-row dense class="text-center" align="center" justify="center">
         <template v-if="isFiveAxis">
           <v-col cols="12" md="6" order-md="1">
-            <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
+            <v-btn
+              text
+              icon
+              color="primary"
+              :ripple="false"
+              depressed
+              :disabled="printing"
+              >xy</v-btn
+            >
           </v-col>
           <v-col cols="12" md="6" order-md="2">
             <v-btn
@@ -73,7 +81,15 @@
             </v-btn>
           </v-col>
           <v-col cols="12" md="2" order-md="1">
-            <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
+            <v-btn
+              text
+              icon
+              color="primary"
+              :ripple="false"
+              depressed
+              :disabled="printing"
+              >z</v-btn
+            >
           </v-col>
           <v-col cols="4" md="2" order-md="4">
             <v-btn
@@ -117,7 +133,15 @@
 
           <!-- A-axis просмотреть order-->
           <v-col cols="12" md="2" order-md="1">
-            <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">a</v-btn>
+            <v-btn
+              text
+              icon
+              color="primary"
+              :ripple="false"
+              depressed
+              :disabled="printing"
+              >a</v-btn
+            >
           </v-col>
           <v-col cols="4" md="2" order-md="4">
             <v-btn
@@ -126,7 +150,7 @@
               icon
               x-large
               color="primary"
-              :disabled="printing"
+              :disabled="printing || bedEnabled"
               @click="jogAPlus"
             >
               <v-icon>mdi-chevron-down</v-icon>
@@ -139,7 +163,7 @@
               icon
               x-large
               color="primary"
-              :disabled="printing || dense"
+              :disabled="printing || dense || bedEnabled"
               @click="homeA"
             >
               <v-icon>mdi-home</v-icon>
@@ -152,7 +176,7 @@
               icon
               x-large
               color="primary"
-              :disabled="printing"
+              :disabled="printing || bedEnabled"
               @click="jogAMinus"
             >
               <v-icon>mdi-chevron-up</v-icon>
@@ -160,7 +184,15 @@
           </v-col>
           <!-- C-axis просмотреть order-->
           <v-col cols="12" md="2" order-md="1">
-            <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">c</v-btn>
+            <v-btn
+              text
+              icon
+              color="primary"
+              :ripple="false"
+              depressed
+              :disabled="printing"
+              >c</v-btn
+            >
           </v-col>
           <v-col cols="4" md="2" order-md="4">
             <v-btn
@@ -169,7 +201,7 @@
               icon
               x-large
               color="primary"
-              :disabled="printing"
+              :disabled="printing || bedEnabled"
               @click="jogCPlus"
             >
               <v-icon>mdi-chevron-down</v-icon>
@@ -182,7 +214,7 @@
               icon
               x-large
               color="primary"
-              :disabled="printing || dense"
+              :disabled="printing || dense || bedEnabled"
               @click="homeC"
             >
               <v-icon>mdi-home</v-icon>
@@ -195,7 +227,7 @@
               icon
               x-large
               color="primary"
-              :disabled="printing"
+              :disabled="printing || bedEnabled"
               @click="jogCMinus"
             >
               <v-icon>mdi-chevron-up</v-icon>
@@ -204,10 +236,34 @@
 
           <v-col cols="8" md="10" order-md="5" pt-2>
             <v-btn-toggle mandatory v-model="selectedAmount" rounded>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 0.1"
+                >0.1</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 1"
+                >1</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 10"
+                >10</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 100"
+                >100</v-btn
+              >
             </v-btn-toggle>
           </v-col>
           <v-col cols="4" md="2" order-md="5" v-if="!dense">
@@ -236,7 +292,15 @@
         </template>
         <template v-else>
           <v-col cols="12" md="9" order-md="1">
-            <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">xy</v-btn>
+            <v-btn
+              text
+              icon
+              color="primary"
+              :ripple="false"
+              depressed
+              :disabled="printing"
+              >xy</v-btn
+            >
           </v-col>
 
           <v-col cols="12" md="9" order-md="2">
@@ -305,7 +369,15 @@
             </v-btn>
           </v-col>
           <v-col cols="12" md="3" order-md="1">
-            <v-btn text icon color="primary" :ripple="false" depressed :disabled="printing">z</v-btn>
+            <v-btn
+              text
+              icon
+              color="primary"
+              :ripple="false"
+              depressed
+              :disabled="printing"
+              >z</v-btn
+            >
           </v-col>
           <v-col cols="4" md="3" order-md="4">
             <v-btn
@@ -348,10 +420,34 @@
           </v-col>
           <v-col class="pt-2" cols="8" md="9" order-md="5">
             <v-btn-toggle v-model="selectedAmount" mandatory rounded>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 1">1</v-btn>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 10">10</v-btn>
-              <v-btn text color="primary" :disabled="printing" @click="amount = 100">100</v-btn>
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 0.1"
+                >0.1</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 1"
+                >1</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 10"
+                >10</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 100"
+                >100</v-btn
+              >
             </v-btn-toggle>
           </v-col>
           <v-col cols="4" md="3" order-md="5" v-if="!dense">
@@ -386,6 +482,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { Action, Getter, namespace } from 'vuex-class'
+import { TemperatureDataPoint } from '~/types/printer'
 
 const printers = namespace('printersState')
 
@@ -459,7 +556,13 @@ export default class JogCard extends Vue {
   @Prop({ default: false, type: Boolean }) isFiveAxis?: boolean
   @Prop({ default: false, type: Boolean }) dense?: boolean
   @Prop({ default: false, type: Boolean }) printing?: boolean
-  @Prop({ default: '', type: String }) id?: string
+  @Prop({ default: '', type: String }) id!: string
+
+  @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
+
+  get bedEnabled (): boolean {
+    return this.lastTempDataPoint(this.id).bed != null && this.lastTempDataPoint(this.id).bed.actual > 0
+  }
 
   @printers.Action jogCommand: any
   @printers.Action homeCommand: any

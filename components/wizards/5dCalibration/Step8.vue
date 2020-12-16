@@ -35,7 +35,7 @@ const settings = namespace('settingsState')
 export default class extends Vue {
   @settings.Getter settings!: Settings
 
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
 

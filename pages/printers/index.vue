@@ -27,7 +27,7 @@ import PrinterCard from '~/components/common/printerCard/PrinterCard.vue'
 import WizardsPanel from '~/components/printers/WizardsPanel.vue'
 import ManualControlPanel from '~/components/printers/expert/ManualControlPanel.vue'
 import { Action, Getter, namespace } from 'vuex-class'
-import { PrinterInfo, CurrentState } from 'types/printer'
+import { PrinterInfo, CurrentState, TemperatureDataPoint } from 'types/printer'
 import { PrinterType } from '~/types/printerType'
 import { Settings } from '~/types/settings'
 
@@ -45,16 +45,26 @@ export default class PrinterPage extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
+  @printers.Getter lastTempDataPoint!: (id: string) => TemperatureDataPoint
+
   @settings.Getter settings!: Settings
+
+  get bedEnabled (): boolean {
+    return this.lastTempDataPoint(this.settings.systemId).bed != null && this.lastTempDataPoint(this.settings.systemId).bed.actual > 0
+  }
 
   get printerType (): number {
     let printer = this.printer(this.settings.systemId)
     if (printer != null) {
-      if (printer.isFiveAxis == true) {
-        return PrinterType.fiveAxis
-      }
-      else {
-        return PrinterType.threeAxis
+      if (printer.isHybrid) {
+        return this.bedEnabled ? PrinterType.threeAxis : PrinterType.fiveAxis
+      } else {
+        if (printer.isFiveAxis == true) {
+          return PrinterType.fiveAxis
+        }
+        else {
+          return PrinterType.threeAxis
+        }
       }
     }
     else return PrinterType.threeAxis

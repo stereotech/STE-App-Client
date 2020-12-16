@@ -3,47 +3,71 @@
     <v-container>
       <v-row dense>
         <v-col v-if="lastTempDataPoint(id).tool0" :cols="glaze ? 12 : 4">
-          <div class="body-1 text-truncate">{{$t("E1 Target")}}</div>
-          <div class="body-1">{{ lastTempDataPoint(id).tool0.target }}&deg;C</div>
+          <div class="body-1 text-truncate">{{ $t("E1 Target") }}</div>
+          <div class="body-1">
+            {{ lastTempDataPoint(id).tool0.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
-            :value="glaze ? lastTempDataPoint(id).tool0.actual * 1.6 : lastTempDataPoint(id).tool0.actual / 3.2"
-            :color="glaze ? 'brown': e1Color"
-          >{{ lastTempDataPoint(id).tool0.actual | currency('', 0) }}</v-progress-circular>
+            :value="
+              glaze
+                ? lastTempDataPoint(id).tool0.actual * 1.6
+                : lastTempDataPoint(id).tool0.actual / 3.2
+            "
+            :color="glaze ? 'brown' : e1Color"
+            >{{
+              lastTempDataPoint(id).tool0.actual | currency("", 0)
+            }}</v-progress-circular
+          >
         </v-col>
         <v-col v-if="lastTempDataPoint(id).tool1 && !glaze && !fiber" cols="4">
-          <div class="body-1 text-truncate">{{$t("E2 Target")}}</div>
-          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
+          <div class="body-1 text-truncate">{{ $t("E2 Target") }}</div>
+          <div class="body-1">
+            {{ lastTempDataPoint(id).tool1.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             :color="e2Color"
-          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
+            >{{
+              lastTempDataPoint(id).tool1.actual | currency("", 0)
+            }}</v-progress-circular
+          >
         </v-col>
         <v-col v-if="lastTempDataPoint(id).tool1 && fiber" cols="4">
-          <div class="body-1 text-truncate">{{$t("Fiber Target")}}</div>
-          <div class="body-1">{{ lastTempDataPoint(id).tool1.target }}&deg;C</div>
+          <div class="body-1 text-truncate">{{ $t("Fiber Target") }}</div>
+          <div class="body-1">
+            {{ lastTempDataPoint(id).tool1.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).tool1.actual / 3.2"
             color="gray"
-          >{{ lastTempDataPoint(id).tool1.actual | currency('', 0) }}</v-progress-circular>
+            >{{
+              lastTempDataPoint(id).tool1.actual | currency("", 0)
+            }}</v-progress-circular
+          >
         </v-col>
-        <v-col v-if="lastTempDataPoint(id).bed && !glaze && !fiveAxis" cols="4">
-          <div class="body-1 text-truncate">{{$t("Bed Target")}}</div>
-          <div
-            v-if="lastTempDataPoint(id).bed"
-            class="body-1"
-          >{{ lastTempDataPoint(id).bed.target }}&deg;C</div>
+        <v-col
+          v-if="lastTempDataPoint(id).bed && !glaze && bedEnabled"
+          cols="4"
+        >
+          <div class="body-1 text-truncate">{{ $t("Bed Target") }}</div>
+          <div v-if="lastTempDataPoint(id).bed" class="body-1">
+            {{ lastTempDataPoint(id).bed.target }}&deg;C
+          </div>
           <v-progress-circular
             size="48"
             rotate="-90"
             :value="lastTempDataPoint(id).bed.actual / 1.5"
             :color="bedColor"
-          >{{ lastTempDataPoint(id).bed.actual | currency('', 0) }}</v-progress-circular>
+            >{{
+              lastTempDataPoint(id).bed.actual | currency("", 0)
+            }}</v-progress-circular
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -81,6 +105,10 @@ export default class PrinterCardTemps extends Vue {
 
   get computedStatus () {
     return this.status(this.id)
+  }
+
+  get bedEnabled (): boolean {
+    return this.lastTempDataPoint(this.id).bed != null && this.lastTempDataPoint(this.id).bed.actual > 0
   }
 
   get e1Color (): string {

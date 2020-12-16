@@ -40,7 +40,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }
@@ -94,7 +94,7 @@ export default class extends Vue {
 
   private finish () {
     this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
-    this.$router.push('/printers/' + this.settings.systemId)
+    this.$router.push('/printers')
   }
 
   private next (step: number) {

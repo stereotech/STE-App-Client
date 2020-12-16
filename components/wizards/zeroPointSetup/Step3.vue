@@ -24,6 +24,7 @@ import { PrintingMode } from '~/types/printingMode'
 
 const printers = namespace('printersState')
 import { Settings } from '~/types/settings'
+import { PrinterSize } from '~/types/printer'
 
 const settings = namespace('settingsState')
 
@@ -35,7 +36,7 @@ const settings = namespace('settingsState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
@@ -49,7 +50,8 @@ export default class extends Vue {
   }
 
   async performStep () {
-    await this.customCommand({ id: this.settings.systemId, command: 'G0 X100 Y100 F3000' })
+    const large = this.additionalData.size === PrinterSize.Large
+    await this.customCommand({ id: this.settings.systemId, command: `G0 X${large ? '150' : '100'} Y${large ? '150' : '100'} F3000` })
   }
 
   @printers.Action customCommand: any

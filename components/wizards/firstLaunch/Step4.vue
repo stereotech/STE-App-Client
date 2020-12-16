@@ -15,10 +15,12 @@
                   ></v-switch>
                 </v-list-item-action>
                 <v-list-item-content>
-                  <v-list-item-title
-                    v-if="currentMethod === 'HOTSPOT'"
-                  >{{ $t("Disable Wi-Fi hotspot") }}</v-list-item-title>
-                  <v-list-item-title v-else>{{ $t("Enable Wi-Fi hotspot") }}</v-list-item-title>
+                  <v-list-item-title v-if="currentMethod === 'HOTSPOT'">{{
+                    $t("Disable Wi-Fi hotspot")
+                  }}</v-list-item-title>
+                  <v-list-item-title v-else>{{
+                    $t("Enable Wi-Fi hotspot")
+                  }}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click="refreshNetworks">
@@ -26,12 +28,17 @@
                   <v-icon>mdi-cached</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                  <v-list-item-title>{{ $t("Refresh networks") }}</v-list-item-title>
+                  <v-list-item-title>{{
+                    $t("Refresh networks")
+                  }}</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-subheader>{{$t("Available networks")}}</v-subheader>
+              <v-subheader>{{ $t("Available networks") }}</v-subheader>
               <template v-for="(network, index) in avaliableNetworks">
-                <v-list-item :key="network.id" @click="startConnection(network)">
+                <v-list-item
+                  :key="network.id"
+                  @click="startConnection(network)"
+                >
                   <v-list-item-action v-if="network.strength > 81">
                     <v-icon>mdi-wifi-strength-4</v-icon>
                   </v-list-item-action>
@@ -58,18 +65,19 @@
               </template>
               <v-dialog v-model="confirmation" max-width="425" light>
                 <v-card>
-                  <v-card-title
-                    v-if="setupNetwork.security"
-                    class="headline"
-                  >{{$t("Enter Wi-Fi password for {0}", [setupNetwork.name])}}</v-card-title>
-                  <v-card-title v-else class="headline">{{$t("Connect to network?")}}</v-card-title>
+                  <v-card-title v-if="setupNetwork.security" class="headline">{{
+                    $t("Enter Wi-Fi password for {0}", [setupNetwork.name])
+                  }}</v-card-title>
+                  <v-card-title v-else class="headline">{{
+                    $t("Connect to network?")
+                  }}</v-card-title>
                   <v-container v-if="setupNetwork.security">
                     <BottomInput v-model="keyboard" :input.sync="password">
                       <v-text-field
                         v-model="password"
                         filled
                         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="[ rules.required, rules.min ]"
+                        :rules="[rules.required, rules.min]"
                         :type="showPassword ? 'text' : 'password'"
                         name="input-10-2"
                         :label="$tc('Wi-Fi password')"
@@ -86,14 +94,16 @@
                       color="primary"
                       depressed
                       @click="confirmation = false"
-                    >{{$t("Cancel")}}</v-btn>
+                      >{{ $t("Cancel") }}</v-btn
+                    >
                     <v-btn
                       x-large
                       color="primary"
                       depressed
                       :disabled="isMin"
                       @click="startConnecting"
-                    >{{$t("Connect")}}</v-btn>
+                      >{{ $t("Connect") }}</v-btn
+                    >
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -101,7 +111,9 @@
           </v-card>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(4)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(4)">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -124,7 +136,7 @@ const settings = namespace('settingsState')
   }
 })
 export default class extends Vue {
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }

@@ -30,15 +30,9 @@
           }}</v-btn>
         </v-col>
         <v-col v-if="additionalData.action === 0" cols="12">
-          <v-btn
-            block
-            x-large
-            depressed
-            color="accent"
-            nuxt
-            :to="'/printers/' + settings.systemId"
-            >{{ $t("Finish") }}</v-btn
-          >
+          <v-btn block x-large depressed color="accent" nuxt to="/printers">{{
+            $t("Finish")
+          }}</v-btn>
         </v-col>
         <v-col v-else cols="12">
           <v-btn block x-large depressed color="accent" @click="next(3)">{{
@@ -68,7 +62,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }

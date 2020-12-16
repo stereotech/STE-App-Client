@@ -48,7 +48,7 @@
         </v-col>
 
         <v-col cols="12">
-          <v-btn x-large block depressed color="accent" @click="next(3)">
+          <v-btn x-large block depressed color="accent" @click="next(2)">
             {{ $t("Next") }}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
@@ -62,6 +62,7 @@
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import WizardStep from '~/components/wizards/WizardStep.vue'
+import { PrinterSize } from '~/types/printer'
 import { Settings } from '~/types/settings'
 
 const settings = namespace('settingsState')
@@ -75,7 +76,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
 
@@ -84,12 +85,22 @@ export default class extends Vue {
     }
   }
 
+  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Watch('additionalData') onAdditionalDataChanged () {
+    this.$emit('dataChanged', this.additionalData)
+  }
+
   private selectedAmount: number = 1
   private amount: number = 0.1
 
   async performStep () {
-    await this.customCommand({ id: this.settings.systemId, command: 'G0 X100 Y190 F3600' })
-    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z5 F600' })
+    if (this.additionalData.size === PrinterSize.Large) {
+      await this.customCommand({ id: this.settings.systemId, command: 'G0 X10 Y290 F3600' })
+    }
+    else {
+      await this.customCommand({ id: this.settings.systemId, command: 'G0 X100 Y190 F3600' })
+    }
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z15 F600' })
   }
   private step?: number = 1
   private curStep?: number = this.currentStep

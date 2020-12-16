@@ -1,5 +1,10 @@
 import { JobInfo, ProgressInfo } from './printJob';
 
+export enum PrinterSize {
+  Stadard,
+  Large
+}
+
 export interface PrinterInfo {
   id: string
   model: string
@@ -14,6 +19,8 @@ export interface PrinterInfo {
   //Additional properties
   isGlaze?: boolean
   isFiber?: boolean
+  isHybrid?: boolean
+  size?: PrinterSize
 }
 
 export interface TemperatureData {

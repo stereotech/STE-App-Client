@@ -3,7 +3,9 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(2)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(2)">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -21,7 +23,7 @@ import WizardStep from '~/components/wizards/WizardStep.vue'
 })
 export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true })
-  currentStep?: number
+  currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }

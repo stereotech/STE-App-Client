@@ -18,6 +18,7 @@ import { PrintingMode } from '~/types/printingMode'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { Settings } from '~/types/settings'
+import { PrinterSize } from '~/types/printer'
 
 const settings = namespace('settingsState')
 
@@ -30,7 +31,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
@@ -44,9 +45,10 @@ export default class extends Vue {
   }
 
   private async finish () {
-    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z100' })
+    const large = this.additionalData.size === PrinterSize.Large
+    await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'}` })
     await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
-    this.$router.push('/printers/' + this.settings.systemId)
+    this.$router.push('/printers')
   }
 
   async performStep () {

@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("Extruder")}}</v-card-title>
+    <v-card-title class="title">{{ $t("Extruder") }}</v-card-title>
     <v-container fluid>
       <v-row dense class="text-center">
         <v-col cols="6" :sm="fiber && selectedExtruder ? 2 : 3" order-sm="1">
@@ -38,7 +38,13 @@
             max="125"
             @change="setFlow"
             :color="controlColor"
-            :track-color="glaze ? 'brown lighten-4' : fiber && selectedExtruder ? 'grey' : ''"
+            :track-color="
+              glaze
+                ? 'brown lighten-4'
+                : fiber && selectedExtruder
+                ? 'grey'
+                : ''
+            "
           />
         </v-col>
         <v-col class="order-sm-2" cols="12" sm="9" offset-sm="3" v-if="!glaze">
@@ -55,10 +61,34 @@
 
         <v-col cols="12" sm="6" order-sm="3">
           <v-btn-toggle v-model="selectedAmount" mandatory rounded>
-            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 0.1">0.1</v-btn>
-            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 1">1</v-btn>
-            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 10">10</v-btn>
-            <v-btn text :color="controlColor" :disabled="printing" @click="amount = 100">100</v-btn>
+            <v-btn
+              text
+              :color="controlColor"
+              :disabled="printing"
+              @click="amount = 0.1"
+              >0.1</v-btn
+            >
+            <v-btn
+              text
+              :color="controlColor"
+              :disabled="printing"
+              @click="amount = 1"
+              >1</v-btn
+            >
+            <v-btn
+              text
+              :color="controlColor"
+              :disabled="printing"
+              @click="amount = 10"
+              >10</v-btn
+            >
+            <v-btn
+              text
+              :color="controlColor"
+              :disabled="printing"
+              @click="amount = 100"
+              >100</v-btn
+            >
           </v-btn-toggle>
         </v-col>
         <v-col cols="6" :sm="fiber && selectedExtruder ? 2 : 3" order-sm="3">
@@ -159,7 +189,9 @@ export default class ExtruderCard extends Vue {
   }
 
   async cutFiber () {
-    //TODO: fiber cut gcode
+    await this.customCommand({ id: this.id, command: 'G92 B0' })
+    await this.customCommand({ id: this.id, command: 'G0 B1' })
+    await this.customCommand({ id: this.id, command: 'G92 B0' })
   }
 
   get controlColor (): string {
