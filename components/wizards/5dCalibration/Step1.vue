@@ -22,7 +22,7 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }

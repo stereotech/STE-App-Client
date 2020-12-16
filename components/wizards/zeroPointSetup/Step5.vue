@@ -30,7 +30,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
@@ -46,7 +46,7 @@ export default class extends Vue {
   private async finish () {
     await this.customCommand({ id: this.settings.systemId, command: 'G0 Z100' })
     await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
-    this.$router.push('/printers/' + this.settings.systemId)
+    this.$router.push('/printers')
   }
 
   async performStep () {

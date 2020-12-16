@@ -3,7 +3,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <p class="headline">{{$t("Set Date and Time")}}</p>
+          <p class="headline">{{ $t("Set Date and Time") }}</p>
         </v-col>
         <v-col cols="12">
           <v-dialog
@@ -27,8 +27,16 @@
             </template>
             <v-date-picker v-model="dateModel" scrollable>
               <v-spacer />
-              <v-btn x-large depressed color="primary" @click="modal = false">{{$t("Cancel")}}</v-btn>
-              <v-btn x-large depressed color="primary" @click="setDate(dateModel)">{{$t("OK")}}</v-btn>
+              <v-btn x-large depressed color="primary" @click="modal = false">{{
+                $t("Cancel")
+              }}</v-btn>
+              <v-btn
+                x-large
+                depressed
+                color="primary"
+                @click="setDate(dateModel)"
+                >{{ $t("OK") }}</v-btn
+              >
             </v-date-picker>
           </v-dialog>
         </v-col>
@@ -51,15 +59,34 @@
                 v-on="on"
               />
             </template>
-            <v-time-picker v-if="modal2" v-model="timeModel" full-width format="24hr">
+            <v-time-picker
+              v-if="modal2"
+              v-model="timeModel"
+              full-width
+              format="24hr"
+            >
               <v-spacer />
-              <v-btn x-large depressed color="primary" @click="modal2 = false">{{$t("Cancel")}}</v-btn>
-              <v-btn x-large depressed color="primary" @click="setTime(timeModel)">{{$t("OK")}}</v-btn>
+              <v-btn
+                x-large
+                depressed
+                color="primary"
+                @click="modal2 = false"
+                >{{ $t("Cancel") }}</v-btn
+              >
+              <v-btn
+                x-large
+                depressed
+                color="primary"
+                @click="setTime(timeModel)"
+                >{{ $t("OK") }}</v-btn
+              >
             </v-time-picker>
           </v-dialog>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(3)">{{$t("Next")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(3)">{{
+            $t("Next")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -81,7 +108,7 @@ const settings = namespace('settingsState')
 })
 export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true })
-  currentStep?: number
+  currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }

@@ -3,7 +3,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="auto">
-          <h1 class="display-4">{{$t("Hello!")}}</h1>
+          <h1 class="display-4">{{ $t("Hello!") }}</h1>
         </v-col>
         <v-col cols="12">
           <v-select
@@ -17,7 +17,9 @@
           ></v-select>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(1)">{{$t("Let's Start")}}</v-btn>
+          <v-btn block x-large depressed color="accent" @click="next(1)">{{
+            $t("Let's Start")
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -39,7 +41,7 @@ const settings = namespace('settingsState')
 })
 export default class extends Vue {
   @Model('change', { type: Number, default: 1, required: true })
-  currentStep?: number
+  currentStep!: number
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
   }

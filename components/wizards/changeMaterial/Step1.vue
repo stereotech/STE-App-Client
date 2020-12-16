@@ -35,7 +35,7 @@ const printers = namespace('printersState')
 })
 export default class extends Vue {
   @settings.Getter settings!: Settings
-  @Model('change', { type: Number, default: 1, required: true }) currentStep?: number
+  @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)

@@ -1,10 +1,15 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("Temperature And Fan")}}</v-card-title>
+    <v-card-title class="title">{{ $t("Temperature And Fan") }}</v-card-title>
     <v-container fluid>
       <v-row dense v-if="e1Enabled">
         <v-col cols="2">
-          <v-switch v-model="e1TargetSet" color="error" hide-details @change="setE1" />
+          <v-switch
+            v-model="e1TargetSet"
+            color="error"
+            hide-details
+            @change="setE1"
+          />
         </v-col>
         <v-col cols="10">
           <v-slider
@@ -22,7 +27,12 @@
       </v-row>
       <v-row dense v-if="!glaze && e2Enabled">
         <v-col cols="2">
-          <v-switch v-model="e2TargetSet" color="error" hide-details @change="setE2" />
+          <v-switch
+            v-model="e2TargetSet"
+            color="error"
+            hide-details
+            @change="setE2"
+          />
         </v-col>
         <v-col cols="10">
           <v-slider
@@ -32,7 +42,7 @@
             min="0"
             max="300"
             step="5"
-            :color="fiber ? 'blue-grey': 'primary'"
+            :color="fiber ? 'blue-grey' : 'primary'"
             :track-color="fiber ? 'grey' : ''"
             @change="changeE2"
           />
@@ -40,7 +50,12 @@
       </v-row>
       <v-row dense v-if="chamberHeater && !glaze">
         <v-col cols="2">
-          <v-switch v-model="chamberTargetSet" color="error" hide-details @change="setChamber" />
+          <v-switch
+            v-model="chamberTargetSet"
+            color="error"
+            hide-details
+            @change="setChamber"
+          />
         </v-col>
         <v-col cols="10">
           <v-slider
@@ -54,9 +69,14 @@
           />
         </v-col>
       </v-row>
-      <v-row dense v-if="bedHeater && !glaze">
+      <v-row dense v-if="bedEnabled && !glaze">
         <v-col cols="2">
-          <v-switch v-model="bedTargetSet" color="error" hide-details @change="setBed" />
+          <v-switch
+            v-model="bedTargetSet"
+            color="error"
+            hide-details
+            @change="setBed"
+          />
         </v-col>
         <v-col cols="10">
           <v-slider
@@ -133,15 +153,15 @@ export default class TemperatureFanCard extends Vue {
   }
 
   get e1Enabled (): boolean {
-    return this.lastTempDataPoint(this.id).tool0 != null
+    return this.lastTempDataPoint(this.id).tool0 != null && this.lastTempDataPoint(this.id).tool0.actual > 0
   }
 
   get e2Enabled (): boolean {
-    return this.lastTempDataPoint(this.id).tool1 != null
+    return this.lastTempDataPoint(this.id).tool1 != null && this.lastTempDataPoint(this.id).tool1.actual > 0
   }
 
   get bedEnabled (): boolean {
-    return this.lastTempDataPoint(this.id).bed != null
+    return this.lastTempDataPoint(this.id).bed != null && this.lastTempDataPoint(this.id).bed.actual > 0
   }
 
   private setCoolingFan (value: number) {
