@@ -59,7 +59,9 @@ export default class extends Vue {
   private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/zero_point_setup/zero_point_setup.jpg'
+  private get image (): string {
+    return this.additionalData.printingMode == PrintingMode.Coil5D ? 'wizards/zero_point_setup/zero_point_setup02.jpg' : 'wizards/zero_point_setup/zero_point_setup01.jpg'
+  }
   private description: string = ''
 
   private nextStep () {
