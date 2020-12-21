@@ -6,6 +6,7 @@
         :toolbar="toolbar"
         :control-panel="controlPanel"
         :removable="!computedPrinter.isLocal && !isPrinting && controlPanel"
+        :printing="isPrinting"
       />
       <v-container fluid>
         <v-row dense>
@@ -14,7 +15,9 @@
             :model="computedPrinter.model"
             :progress="computedStatus ? computedStatus.progress.completion : 0"
             :print-time="computedStatus ? computedStatus.progress.printTime : 0"
-            :print-time-left="computedStatus ? computedStatus.progress.printTimeLeft : 0"
+            :print-time-left="
+              computedStatus ? computedStatus.progress.printTimeLeft : 0
+            "
             :local="computedPrinter.isLocal"
             :paused="isPaused"
             :maintenance="isMaintenance"

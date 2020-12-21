@@ -7,7 +7,7 @@
       :to="'/printers/' + id"
       ripple
     >
-      {{$t("Control Panel")}}
+      {{ $t("Control Panel") }}
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
     <v-btn
@@ -21,13 +21,13 @@
       <v-icon>mdi-camera-control</v-icon>
     </v-btn>
     <v-spacer />
-    <v-btn text icon @click="ledCommand({id: id, r: 255, g: 255, b: 255})">
+    <v-btn text icon @click="ledCommand({ id: id, r: 255, g: 255, b: 255 })">
       <v-icon>mdi-lightbulb-on-outline</v-icon>
     </v-btn>
-    <v-btn text icon @click="ledCommand({id: id, r: 0, g: 0, b: 0})">
+    <v-btn text icon @click="ledCommand({ id: id, r: 0, g: 0, b: 0 })">
       <v-icon>mdi-lightbulb-off-outline</v-icon>
     </v-btn>
-    <v-btn text icon @click="findPrinter(id)">
+    <v-btn v-if="printing" text icon @click="findPrinter(id)">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
     <v-btn v-if="removable" text icon @click="confirmation = true">
@@ -35,12 +35,18 @@
     </v-btn>
     <v-dialog v-model="confirmation" max-width="425">
       <v-card>
-        <v-card-title
-          class="headline"
-        >{{$t("Do you want to remove {0} from cluster?",[printer(id) ? printer(id).name : ''])}}</v-card-title>
+        <v-card-title class="headline">{{
+          $t("Do you want to remove {0} from cluster?", [
+            printer(id) ? printer(id).name : "",
+          ])
+        }}</v-card-title>
         <v-card-actions>
-          <v-btn color="primary" text @click="confirmation = false">{{$t("No")}}</v-btn>
-          <v-btn color="primary" text @click="removeFromCluster">{{$t("Yes")}}</v-btn>
+          <v-btn color="primary" text @click="confirmation = false">{{
+            $t("No")
+          }}</v-btn>
+          <v-btn color="primary" text @click="removeFromCluster">{{
+            $t("Yes")
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -59,6 +65,7 @@ export default class PrinterCardToolbar extends Vue {
   @Prop({ default: false, type: Boolean }) toolbar!: boolean
   @Prop({ default: false, type: Boolean }) controlPanel!: boolean
   @Prop({ default: false, type: Boolean }) removable!: boolean
+  @Prop({ default: false, type: Boolean }) printing!: boolean
 
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
   @printers.Action findPrinter: any
