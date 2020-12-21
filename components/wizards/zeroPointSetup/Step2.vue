@@ -62,7 +62,7 @@ export default class extends Vue {
   private step?: number = 1
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/zero_point_setup/zero_point_setup.jpg'
+  private image: string = 'wizards/zero_point_setup/zero_point_setup04.jpg'
   private description: string = ''
 
   private nextStep () {
