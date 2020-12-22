@@ -216,5 +216,6 @@
   "This dialog means that somebody requested access from Steroetech Cloud to this device": {
     " You can accept or reject this request": "This dialog means that somebody requested access from Steroetech Cloud to this device. You can accept or reject this request"
   },
-  "Enter this pin code in order to give access to this device": "Enter this pin code in order to give access to this device"
+  "Enter this pin code in order to give access to this device": "Enter this pin code in order to give access to this device",
+  "Target": "Target"
 }

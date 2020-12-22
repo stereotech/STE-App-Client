@@ -6,9 +6,11 @@
           <v-progress-circular
             :size="70"
             :width="7"
+            rotate="-90"
             color="secondary"
             :value="heatingValue / 2.4"
-          />
+            >{{ heatingValue | currency("", 0) }}</v-progress-circular
+          >
         </v-col>
         <v-col cols="4">
           <p>{{ $t("Heating...") }}</p>
@@ -99,7 +101,7 @@ export default class extends Vue {
           const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
           deviation = Math.abs(target - actual)
         }
-        return deviation > 10
+        return deviation > 20
       }
     }
     return true
