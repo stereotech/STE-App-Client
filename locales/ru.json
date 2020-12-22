@@ -160,7 +160,7 @@
   "Enable Wi-Fi hotspot": "Включить точку доступа Wi-Fi",
   "This wizard will help you calibrate five axis module": "Этот мастер поможет вам откалибровать пятиосевой модуль",
   "Place the calibration tool into the five axis module and press Next": "Поместите калибровочный инструмент в пятиосевой модуль и нажмите кнопку Далее",
-  "Move nozzle to the nearest tip of the calibration tool and press Next": "Переместите сопло к ближайшему наконечнику калибровочного инструмента и нажмите кнопку Далее",
+  "Move nozzle to the nearest tip of the calibration tool and press Next": "Переместите сопло к выделенному наконечнику калибровочного инструмента и нажмите кнопку Далее",
   "Calibration complete! Please remove calibration tool": "Калибровка завершена! Пожалуйста, снимите калибровочный инструмент",
   "This wizard helps you to setup zero point for proper 5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 5D печати",
   "Zero point setup": "Установка нулевой точки",
