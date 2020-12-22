@@ -47,7 +47,7 @@ export default class extends Vue {
   @printers.Getter printer!: (id: string) => PrinterInfo | undefined
 
   private async next (step: number) {
-    await this.customCommand({ id: this.settings.systemId, command: 'G28' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
     if (this.additionalData) {
       this.additionalData.size = this.printer(this.settings.systemId)?.size || PrinterSize.Stadard
       if (this.additionalData.size == PrinterSize.Large) {

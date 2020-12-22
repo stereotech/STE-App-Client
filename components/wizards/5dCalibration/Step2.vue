@@ -35,7 +35,7 @@ export default class extends Vue {
     }
   }
   async performStep () {
-    await this.customCommand({ id: this.settings.systemId, command: 'G28' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
     await this.customCommand({ id: this.settings.systemId, command: 'M1005 S0' })
   }
   private step?: number = 1
