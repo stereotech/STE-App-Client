@@ -10,6 +10,7 @@
             color="accent"
             thumb-size="64"
             min="3"
+            max="200"
           >
             <template v-slot:prepend>
               <v-btn x-large outlined text icon @click="diameter -= 0.1">
