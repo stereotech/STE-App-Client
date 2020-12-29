@@ -66,7 +66,7 @@ export default class extends Vue {
   @printers.Action customCommand: any
 
   private nextStep () {
-    this.customCommand({ id: this.settings.systemId, command: 'G54\n28\nG0 X100 Y100 F6000' })
+    this.customCommand({ id: this.settings.systemId, command: 'G54\nG28\nG0 X100 Y100 F6000' })
 
     if (this.additionalData.action > 1) {
       this.next(3)
