@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title">{{$t("Terminal")}}</v-card-title>
+    <v-card-title class="title">{{ $t("Terminal") }}</v-card-title>
     <v-container fluid>
       <v-row dense>
         <v-col cols="12">
@@ -13,26 +13,31 @@
               :item-height="50"
             >
               <template v-slot="{ item, index }">
-                <TerminalString :key="index" @mounted="scrollToBottom">{{ item }}</TerminalString>
+                <TerminalString :key="index" @mounted="scrollToBottom">{{
+                  item
+                }}</TerminalString>
               </template>
             </v-virtual-scroll>
           </v-card>
         </v-col>
         <v-col cols="12">
           <v-checkbox v-model="autoscroll" :label="$tc('Autoscroll')" />
-          <v-checkbox v-model="hideTemperature" :label="$tc('Hide temperature messages')" />
+          <v-checkbox
+            v-model="hideTemperature"
+            :label="$tc('Hide temperature messages')"
+          />
         </v-col>
         <v-col cols="12">
           <BottomInput v-model="keyboard" :input.sync="gcodeString">
             <v-text-field
               v-model="gcodeString"
-              append-icon="mdi-send"
+              append-outer-icon="mdi-send"
               filled
-              clear-icon="mdi-close-circle"
-              clearable
+              prepend-icon="mdi-close-circle"
               :label="$tc('G-Code Command')"
               type="text"
-              @click:append="misc"
+              @click:prepend="gcodeString = ''"
+              @click:append-outer="misc"
               @click="keyboard = true"
               @keydown.enter="misc"
               @keydown.up="prevGCode"
