@@ -7,6 +7,17 @@
             $t("Finish")
           }}</v-btn>
         </v-col>
+        <v-col cols="12">
+          <v-btn
+            class="accent--text"
+            block
+            x-large
+            depressed
+            color="secondary"
+            @click="restart"
+            >{{ $t("Revert") }}</v-btn
+          >
+        </v-col>
       </v-row>
     </v-container>
   </WizardStep>
@@ -49,6 +60,13 @@ export default class extends Vue {
     await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'}` })
     await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
     this.$router.push('/printers')
+  }
+
+  async restart () {
+    const large = this.additionalData.size === PrinterSize.Large
+    await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'}` })
+    await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
+    this.next(0)
   }
 
   async performStep () {
