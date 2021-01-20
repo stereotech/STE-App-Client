@@ -418,8 +418,15 @@
               <v-icon>mdi-chevron-up</v-icon>
             </v-btn>
           </v-col>
-          <v-col class="pt-2" cols="8" md="9" order-md="5">
+          <v-col class="pt-2" cols="12" md="9" order-md="5">
             <v-btn-toggle v-model="selectedAmount" mandatory rounded>
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
+                @click="amount = 0.05"
+                >0.05</v-btn
+              >
               <v-btn
                 text
                 color="primary"
