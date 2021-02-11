@@ -10,6 +10,12 @@
               color="secondary"
             />
             <v-radio :label="$tc('Spiral 5D')" :value="1" color="secondary" />
+            <v-radio
+              :label="$tc('5D Spiral full')"
+              :value="2"
+              color="secondary"
+            />
+            <v-radio :label="$tc('5D Discrete')" :value="3" color="secondary" />
           </v-radio-group>
         </v-col>
         <v-col cols="12">

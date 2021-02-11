@@ -1,5 +1,7 @@
 
 export enum PrintingMode {
     Classic,
-    Coil5D
+    Spiral5D,
+    Spiral5DFull,
+    Discrete5D
 }

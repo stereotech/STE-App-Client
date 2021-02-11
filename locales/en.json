@@ -165,8 +165,10 @@
   "This wizard helps you to setup zero point for proper 5D printing": "This wizard helps you to setup zero point for proper 5D printing",
   "Zero point setup": "Zero point setup",
   "Zero point calibration (advanced)": "Zero point calibration (advanced)",
-  "Classic mode (3D)": "Classic mode (3D) / 1 step 5D Spiral full",
-  "Spiral 5D": "Spiral 5D / 2 step 5D Spiral full",
+  "Classic mode (3D)": "Classic",
+  "5D Spiral full": "5D Spiral full",
+  "5D Discrete": "5D Discrete",
+  "Spiral 5D": "5D Spiral",
   "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use",
   "This wizard helps you to setup zero point for proper 3D/5D printing": "This wizard helps you to setup zero point for proper 3D/5D printing",
   "Please place needed base in the 5D Module and press Next": "Please place needed base in the 5D Module and press Next",
@@ -219,5 +221,6 @@
     " You can accept or reject this request": "This dialog means that somebody requested access from Steroetech Cloud to this device. You can accept or reject this request"
   },
   "Enter this pin code in order to give access to this device": "Enter this pin code in order to give access to this device",
-  "Target": "Target"
+  "Target": "Target",
+  "Check the diameter of the base and press Next": "Check the diameter of the base and press Next"
 }

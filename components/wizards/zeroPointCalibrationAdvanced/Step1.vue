@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-col cols="12">
-      <v-btn block x-large depressed color="accent" @click="next(1)">
+      <v-btn block x-large depressed color="accent" @click="nextStep">
         {{ $t("Start") }}
         <v-icon right dark>mdi-chevron-right</v-icon>
       </v-btn>
@@ -44,6 +44,13 @@ export default class extends Vue {
 
   private image: string = 'wizards/zero_point_setup/zero_point_setup05.jpg'
   private description: string = ''
+
+  private async nextStep () {
+    if (this.additionalData) {
+      this.additionalData.size = this.printer(this.settings.systemId)?.size || PrinterSize.Stadard
+    }
+    this.next(1)
+  }
 
   private next (step: number) {
     this.$emit('change', step)

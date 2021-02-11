@@ -50,31 +50,23 @@ export default class extends Vue {
   }
 
   async performStep () {
-    if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      await this.customCommand({ id: this.settings.systemId, command: 'G56 G0 X0 Y0' })
-    } else {
-      await this.customCommand({ id: this.settings.systemId, command: 'G0 A0' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G55 G0 X0 Y0' })
-    }
+    const large = this.additionalData.size === PrinterSize.Large
+    await this.customCommand({ id: this.settings.systemId, command: 'G10 L20 P2 X0 Y0 Z0' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G54 G0 Z150 A60' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G56 G0 X0 Y0 F3000' })
   }
 
   @printers.Action customCommand: any
 
-  private step?: number = 2
+  private step?: number = 3
   private curStep?: number = this.currentStep
 
-  private get image (): string {
-    return this.additionalData.printingMode == PrintingMode.Spiral5D ? 'wizards/zero_point_setup/zero_point_setup02.jpg' : 'wizards/zero_point_setup/zero_point_setup01.jpg'
-  }
+  private image: string = 'wizards/5d_calibration/5d_calibration2.jpg'
+
   private description: string = ''
 
   private nextStep () {
-    if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      this.next(3)
-    }
-    else {
-      this.next(4)
-    }
+    this.next(4)
   }
 
   private next (step: number) {
@@ -82,11 +74,11 @@ export default class extends Vue {
     this.curStep = step
   }
   mounted () {
-    this.description = this.$tc('Move nozzle to the center of the base and press Next')
+    this.description = this.$i18n.tc("Move nozzle to the nearest tip of the calibration tool and press Next")
   }
 
   updated () {
-    this.description = this.$tc('Move nozzle to the center of the base and press Next')
+    this.description = this.$i18n.tc("Move nozzle to the nearest tip of the calibration tool and press Next")
   }
 }
 </script>

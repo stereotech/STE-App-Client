@@ -3,12 +3,20 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <JogCard dense isFiveAxis :id="settings.systemId" />
+          <v-btn block x-large depressed color="accent" @click="finish">{{
+            $t("Finish")
+          }}</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{
-            $t("Next")
-          }}</v-btn>
+          <v-btn
+            class="accent--text"
+            block
+            x-large
+            depressed
+            color="secondary"
+            @click="restart"
+            >{{ $t("Revert") }}</v-btn
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -17,21 +25,19 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
-import WizardStep from '~/components/wizards/WizardStep.vue'
-import JogCard from '~/components/printers/expert/JogCard.vue'
-import { Action, Getter, State, namespace } from 'vuex-class'
 import { PrintingMode } from '~/types/printingMode'
-
-const printers = namespace('printersState')
+import WizardStep from '~/components/wizards/WizardStep.vue'
+import { Action, Getter, State, namespace } from 'vuex-class'
 import { Settings } from '~/types/settings'
 import { PrinterSize } from '~/types/printer'
 
 const settings = namespace('settingsState')
 
+const printers = namespace('printersState')
+
 @Component({
   components: {
-    WizardStep,
-    JogCard
+    WizardStep
   }
 })
 export default class extends Vue {
@@ -49,44 +55,41 @@ export default class extends Vue {
     }
   }
 
-  async performStep () {
-    if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      await this.customCommand({ id: this.settings.systemId, command: 'G56 G0 X0 Y0' })
-    } else {
-      await this.customCommand({ id: this.settings.systemId, command: 'G0 A0' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G55 G0 X0 Y0' })
-    }
+  private async finish () {
+    this.$router.push('/printers')
   }
 
-  @printers.Action customCommand: any
+  async restart () {
+    this.next(0)
+  }
 
-  private step?: number = 2
+  async performStep () {
+    await this.customCommand({ id: this.settings.systemId, command: `G10 L20 P3 X0 Y0 Z${this.additionalData.offsetZ}` })
+    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
+    await this.customCommand({ id: this.settings.systemId, command: 'M500' })
+  }
+
+  private step?: number = 5
   private curStep?: number = this.currentStep
 
-  private get image (): string {
-    return this.additionalData.printingMode == PrintingMode.Spiral5D ? 'wizards/zero_point_setup/zero_point_setup02.jpg' : 'wizards/zero_point_setup/zero_point_setup01.jpg'
-  }
+  private image: string = 'wizards/zero_point_setup/zero_point_setup.jpg'
   private description: string = ''
 
-  private nextStep () {
-    if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      this.next(3)
-    }
-    else {
-      this.next(4)
-    }
-  }
+
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
+
+  @printers.Action customCommand: any
+
   mounted () {
-    this.description = this.$tc('Move nozzle to the center of the base and press Next')
+    this.description = this.$tc('Setup Complete!')
   }
 
   updated () {
-    this.description = this.$tc('Move nozzle to the center of the base and press Next')
+    this.description = this.$tc('Setup Complete!')
   }
 }
 </script>
