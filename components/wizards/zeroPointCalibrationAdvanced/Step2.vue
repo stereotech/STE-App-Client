@@ -14,6 +14,7 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
 import { Settings } from '~/types/settings'
+import { PrinterSize } from '~/types/printer'
 
 const settings = namespace('settingsState')
 
@@ -27,6 +28,10 @@ const printers = namespace('printersState')
 export default class extends Vue {
   @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
+  @Prop({ type: Object, default: {} }) additionalData!: any
+  @Watch('additionalData') onAdditionalDataChanged () {
+    this.$emit('dataChanged', this.additionalData)
+  }
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
 
@@ -36,7 +41,7 @@ export default class extends Vue {
   }
   async performStep () {
     await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
-    await this.customCommand({ id: this.settings.systemId, command: 'M1005 S0' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G0 Z150' })
   }
   private step?: number = 1
   private curStep?: number = this.currentStep

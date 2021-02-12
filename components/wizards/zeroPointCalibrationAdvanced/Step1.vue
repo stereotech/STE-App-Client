@@ -1,30 +1,11 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container>
-      <v-row dense align="center" justify="space-around">
-        <v-col cols="12">
-          <v-radio-group v-model="additionalData.printingMode" mandatory>
-            <v-radio
-              :label="$tc('Classic mode (3D)')"
-              :value="0"
-              color="secondary"
-            />
-            <v-radio :label="$tc('Spiral 5D')" :value="1" color="secondary" />
-            <v-radio
-              :label="$tc('5D Spiral full')"
-              :value="2"
-              color="secondary"
-            />
-            <v-radio :label="$tc('5D Discrete')" :value="3" color="secondary" />
-          </v-radio-group>
-        </v-col>
-        <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="nextStep">{{
-            $t("Next")
-          }}</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-col cols="12">
+      <v-btn block x-large depressed color="accent" @click="nextStep">
+        {{ $t("Start") }}
+        <v-icon right dark>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-col>
   </WizardStep>
 </template>
 
@@ -61,7 +42,7 @@ export default class extends Vue {
   private step?: number = 0
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/zero_point_setup/zero_point_setup.jpg'
+  private image: string = 'wizards/zero_point_setup/zero_point_setup05.jpg'
   private description: string = ''
 
   private async nextStep () {
@@ -76,11 +57,11 @@ export default class extends Vue {
     this.curStep = step
   }
   mounted () {
-    this.description = this.$tc('This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use')
+    this.description = this.$tc('This wizard helps you to setup zero point for proper 3D/5D printing')
   }
 
   updated () {
-    this.description = this.$tc('This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use')
+    this.description = this.$tc('This wizard helps you to setup zero point for proper 3D/5D printing')
   }
 }
 </script>

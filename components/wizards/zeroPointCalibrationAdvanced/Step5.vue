@@ -3,6 +3,29 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
+          <v-slider
+            v-model="diameter"
+            :step="0.1"
+            thumb-label="always"
+            color="accent"
+            thumb-size="64"
+            min="0"
+            max="10"
+          >
+            <template v-slot:prepend>
+              <v-btn x-large outlined text icon @click="diameter -= 0.1">
+                <v-icon>mdi-minus</v-icon>
+              </v-btn>
+            </template>
+
+            <template v-slot:append>
+              <v-btn x-large outlined text icon @click="diameter += 0.1">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+          </v-slider>
+        </v-col>
+        <v-col cols="12">
           <v-btn block x-large depressed color="accent" @click="nextStep">{{
             $t("Next")
           }}</v-btn>
@@ -17,10 +40,6 @@ import { Vue, Component, Prop, Model, Watch } from 'nuxt-property-decorator'
 import { PrintingMode } from '~/types/printingMode'
 import WizardStep from '~/components/wizards/WizardStep.vue'
 import { Action, Getter, State, namespace } from 'vuex-class'
-import { Settings } from '~/types/settings'
-import { PrinterSize } from '~/types/printer'
-
-const settings = namespace('settingsState')
 
 
 const printers = namespace('printersState')
@@ -31,7 +50,6 @@ const printers = namespace('printersState')
   }
 })
 export default class extends Vue {
-  @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
@@ -39,30 +57,21 @@ export default class extends Vue {
   }
   @Watch('currentStep') onCurrentStepChanged (val: number) {
     this.curStep = val
-
-    if (this.curStep === this.step) {
-      this.performStep()
-    }
+  }
+  @Watch('diameter') onDiameterChanged (val: number) {
+    this.additionalData.offsetZ = val / 2
   }
 
-  async performStep () {
-    const large = this.additionalData.size === PrinterSize.Large
-    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
-    if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'} A60` })
-    } else {
-      await this.customCommand({ id: this.settings.systemId, command: `G0 Z150 A60` })
-    }
-  }
+  private diameter: number = 0.4
 
-  private step?: number = 1
+  private step?: number = 4
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/zero_point_setup/zero_point_setup04.jpg'
+  private image: string = 'wizards/zero_point_setup/zero_point_setup03.jpg'
   private description: string = ''
 
   private nextStep () {
-    this.next(2)
+    this.next(5)
   }
 
   private next (step: number) {
@@ -70,17 +79,23 @@ export default class extends Vue {
     this.curStep = step
   }
 
+
   @printers.Action customCommand: any
 
   mounted () {
-    this.description = this.$tc('Please place needed base in the 5D Module and press Next')
+    this.description = this.$tc('Check the diameter of the base and press Next')
+    this.additionalData.offsetZ = this.diameter / 2
   }
 
   updated () {
-    this.description = this.$tc('Please place needed base in the 5D Module and press Next')
+    this.description = this.$tc('Check the diameter of the base and press Next')
+    this.additionalData.offsetZ = this.diameter / 2
   }
 }
 </script>
 
-<style>
+<style scoped>
+.v-slider__thumb-label {
+  font-size: 18px;
+}
 </style>

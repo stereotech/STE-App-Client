@@ -7,6 +7,17 @@
             $t("Finish")
           }}</v-btn>
         </v-col>
+        <v-col cols="12">
+          <v-btn
+            class="accent--text"
+            block
+            x-large
+            depressed
+            color="secondary"
+            @click="restart"
+            >{{ $t("Revert") }}</v-btn
+          >
+        </v-col>
       </v-row>
     </v-container>
   </WizardStep>
@@ -46,17 +57,21 @@ export default class extends Vue {
 
   private async finish () {
     const large = this.additionalData.size === PrinterSize.Large
-    await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'}` })
+    await this.customCommand({ id: this.settings.systemId, command: `G54 G0 Z${large ? '150' : '100'}` })
     await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
     this.$router.push('/printers')
   }
 
-  async performStep () {
-    if (this.additionalData.printingMode == PrintingMode.Classic) {
-      await this.customCommand({ id: this.settings.systemId, command: 'G10 L20 P2 X0 Y0 Z0' })
-    } else if (this.additionalData.printingMode == PrintingMode.Coil5D) {
+  async restart () {
+    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
+    this.next(0)
+  }
 
-      await this.customCommand({ id: this.settings.systemId, command: `G10 L20 P3 X0 Y0 Z${this.additionalData.offsetZ}` })
+  async performStep () {
+    if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
+      await this.customCommand({ id: this.settings.systemId, command: `G10 L20 P3 X0 Y0 Z${this.additionalData.offsetZ} S2 U0 V2 W4` })
+    } else {
+      await this.customCommand({ id: this.settings.systemId, command: 'G10 L20 P2 X0 Y0 Z0 S3 U0 V3 W1' })
     }
     await this.customCommand({ id: this.settings.systemId, command: 'M500' })
   }

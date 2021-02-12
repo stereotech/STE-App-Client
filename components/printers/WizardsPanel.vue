@@ -66,19 +66,10 @@ export default class WizardsPanel extends Vue {
         description: 'This wizard will help you to calibrate the build plate for good adhesion of the print to the build plate.'
       },
       {
-        id: 2,
-        name: '5D calibration',
-        translatedName: '5D calibration',
-        image: '5d_calibration/5d_calibration',
-        link: '5d-calibration',
-        type: PrinterType.fiveAxis,
-        description: 'This wizard will help you to tune 5-axis printers'
-      },
-      {
         id: 3,
         name: 'Zero point setup',
         translatedName: 'Zero point setup',
-        image: 'zero_point_setup/zero_point_setup',
+        image: 'zero_point_setup/zero_point_setup01',
         link: 'zero-point-setup',
         type: PrinterType.fiveAxis,
         description: 'This wizard helps you to setup zero point for proper 5D printing'
@@ -91,7 +82,27 @@ export default class WizardsPanel extends Vue {
         link: 'change-material',
         type: PrinterType.both,
         description: 'This wizard will help you to change, insert or remove the material'
-      }
+      },
+      {
+        id: 5,
+        name: 'Zero point calibration (advanced)',
+        translatedName: 'Zero point calibration (advanced)',
+        image: 'zero_point_setup/zero_point_setup05',
+        link: 'zero-point-calibration-advanced',
+        type: PrinterType.fiveAxis,
+        description: 'This wizard helps you to setup zero point for proper 5D printing'
+      },
+      {
+        id: 2,
+        name: '5D calibration',
+        translatedName: '5D calibration',
+        image: '5d_calibration/5d_calibration',
+        link: '5d-calibration',
+        type: PrinterType.fiveAxis,
+        description: 'This wizard will help you to tune 5-axis printers'
+      },
+
+
     ]
 
   mounted () {

@@ -6,9 +6,11 @@
           <v-progress-circular
             :size="70"
             :width="7"
+            rotate="-90"
             color="secondary"
             :value="heatingValue / 2.4"
-          />
+            >{{ heatingValue | currency("", 0) }}</v-progress-circular
+          >
         </v-col>
         <v-col cols="4">
           <p>{{ $t("Heating...") }}</p>

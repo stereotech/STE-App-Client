@@ -160,13 +160,17 @@
   "Enable Wi-Fi hotspot": "Включить точку доступа Wi-Fi",
   "This wizard will help you calibrate five axis module": "Этот мастер поможет вам откалибровать пятиосевой модуль",
   "Place the calibration tool into the five axis module and press Next": "Поместите калибровочный инструмент в пятиосевой модуль и нажмите кнопку Далее",
-  "Move nozzle to the nearest tip of the calibration tool and press Next": "Переместите сопло к ближайшему наконечнику калибровочного инструмента и нажмите кнопку Далее",
+  "Move nozzle to the nearest tip of the calibration tool and press Next": "Переместите сопло к выделенному наконечнику калибровочного инструмента и нажмите кнопку Далее",
   "Calibration complete! Please remove calibration tool": "Калибровка завершена! Пожалуйста, снимите калибровочный инструмент",
   "This wizard helps you to setup zero point for proper 5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 5D печати",
   "Zero point setup": "Установка нулевой точки",
-  "Classic mode (3D)": "Классический режим (3D)",
-  "Spiral 5D": "Spiral 5D",
+  "Zero point calibration (advanced)": "Калибровка нулевого положения",
+  "Classic mode (3D)": "Classic",
+  "5D Spiral full": "5D Spiral full",
+  "5D Discrete": "5D Discrete",
+  "Spiral 5D": "5D Spiral",
   "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "Этот мастер поможет вам настроить нулевую точку для правильной 3D/5D печати Пожалуйста, выберите режим печати, который вы хотите использовать",
+  "This wizard helps you to setup zero point for proper 3D/5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 3D/5D печати",
   "Please place needed base in the 5D Module and press Next": "Пожалуйста, поместите необходимое основание в модуль 5D и нажмите Далее",
   "Move nozzle to the center of the base and press Next": "Переместите сопло к центру основания и нажмите кнопку Далее",
   "Name is required": "Имя обязательно",
@@ -216,5 +220,7 @@
   "This dialog means that somebody requested access from Steroetech Cloud to this device": {
     " You can accept or reject this request": "Этот диалог обозначает, что был отправлен запрос на подключение данного устройства к Stereotech Cloud. Вы можете подтвердить или отклонить данный запрос"
   },
-  "Enter this pin code in order to give access to this device": "Введите данный пин-код для разрешения доступа к данному устройству"
+  "Enter this pin code in order to give access to this device": "Введите данный пин-код для разрешения доступа к данному устройству",
+  "Target": "Цель",
+  "Check the diameter of the base and press Next": "Проверьте диаметр шаблона и нажмите Далее"
 }
