@@ -1,5 +1,5 @@
 <template>
-  <WizardStepper :stepCount="7" v-model="currentStep">
+  <WizardStepper :stepCount="7" v-model="currentStep" @close="closeWizard">
     <template slot="title">{{ $t("Bed leveling") }}</template>
     <Step1 v-model="currentStep" :additional-data="additionalData" />
     <Step2 v-model="currentStep" :additional-data="additionalData" />
@@ -42,6 +42,10 @@ export default class extends Vue {
   additionalData: { size: PrinterSize, points: number } = {
     size: PrinterSize.Stadard,
     points: 3
+  }
+
+  closeWizard () {
+    this.$router.push('/printers')
   }
 }
 </script>

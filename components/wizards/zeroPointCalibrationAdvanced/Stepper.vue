@@ -1,5 +1,5 @@
 <template>
-  <WizardStepper v-model="currentStep" :step-count="6">
+  <WizardStepper v-model="currentStep" :step-count="6" @close="closeWizard">
     <template slot="title">{{
       $t("Zero point calibration (advanced)")
     }}</template>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, namespace } from 'nuxt-property-decorator'
 import WizardStepper from '~/components/wizards/WizardStepper.vue'
 import Step1 from '~/components/wizards/zeroPointCalibrationAdvanced/Step1.vue'
 import Step2 from '~/components/wizards/zeroPointCalibrationAdvanced/Step2.vue'
@@ -22,6 +22,11 @@ import Step4 from '~/components/wizards/zeroPointCalibrationAdvanced/Step4.vue'
 import Step5 from '~/components/wizards/zeroPointCalibrationAdvanced/Step5.vue'
 import Step6 from '~/components/wizards/zeroPointCalibrationAdvanced/Step6.vue'
 import { PrinterSize } from '~/types/printer'
+import { Settings } from '~/types/settings'
+
+const settings = namespace('settingsState')
+
+const printers = namespace('printersState')
 
 @Component({
   components: {
@@ -42,6 +47,13 @@ export default class ZeroPointCalibrationAdvancedStepper extends Vue {
     offsetY: 0,
     offsetZ: 0,
     size: PrinterSize.Stadard
+  }
+
+  @settings.Getter settings!: Settings
+  @printers.Action customCommand: any
+  closeWizard () {
+    this.customCommand('G54\nG28')
+    this.$router.push('/printers')
   }
 }
 
