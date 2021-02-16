@@ -8,17 +8,6 @@ import { Settings } from '~/types/settings'
 
 const printers = [
     {
-        id: 'st-aaa',
-        model: 'STE320',
-        name: 'ST-AAA',
-        isLocal: true,
-        isFiveAxis: false,
-        address: '192.168.0.100',
-        apiKey: '',
-        octoApiKey: '',
-        role: 'host'
-    },
-    {
         id: 'st-bbb',
         model: 'SFE520',
         name: 'ST-BBB',
@@ -96,7 +85,7 @@ const scannerResults: ScannerResult[] = [
 ]
 
 const settings: Settings = {
-    systemId: 'st-aaa',
+    systemId: 'st-bbb',
     role: 'host',
     firstLaunch: false,
     avaliableLanguages: ['en', 'ru'],
