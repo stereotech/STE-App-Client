@@ -28,7 +28,11 @@
           />
         </v-col>
         <v-col cols="12">
-          <BottomInput v-model="keyboard" :input.sync="gcodeString">
+          <BottomInput
+            v-model="keyboard"
+            :input.sync="gcodeString"
+            @enter="sendAndClose"
+          >
             <v-text-field
               v-model="gcodeString"
               append-outer-icon="mdi-send"
@@ -100,8 +104,9 @@ export default class TerminalCard extends Vue {
   }
 
   private misc () {
-    this.customCommand({ id: this.id, command: this.gcodeString })
-    this.previousGCode.push(this.gcodeString)
+    const gcode = this.gcodeString.toUpperCase()
+    this.customCommand({ id: this.id, command: gcode })
+    this.previousGCode.push(gcode)
     this.previousIndex = this.previousGCode.length
     this.gcodeString = ''
   }
@@ -116,6 +121,11 @@ export default class TerminalCard extends Vue {
     this.previousIndex++
     if (this.previousIndex > this.previousGCode.length) { this.previousIndex = this.previousGCode.length }
     this.gcodeString = this.previousGCode[this.previousIndex]
+  }
+
+  sendAndClose () {
+    this.misc()
+    this.keyboard = false
   }
 }
 </script>
