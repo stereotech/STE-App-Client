@@ -222,5 +222,9 @@
   },
   "Enter this pin code in order to give access to this device": "Введите данный пин-код для разрешения доступа к данному устройству",
   "Target": "Цель",
-  "Check the diameter of the base and press Next": "Проверьте диаметр шаблона и нажмите Далее"
+  "Check the diameter of the base and press Next": "Проверьте диаметр шаблона и нажмите Далее",
+  "Scheduled": "Запланированный",
+  "Run in": "Запустить через",
+  "Scheduled Jobs": "Запланированные задачи",
+  "Run in ": "Запуск "
 }

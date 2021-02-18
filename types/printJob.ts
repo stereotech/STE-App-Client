@@ -6,6 +6,7 @@ export interface PrintJob {
   description: string
   target?: string
   creationTime: number
+  printAt: number
   isFiveAxis?: boolean
   fileUri: string
   printers: string[]
@@ -35,6 +36,7 @@ export interface ProgressInfo {
 export enum PrintJobPriority {
   Low,
   Normal,
-  High
+  High,
+  Scheduled
 }
 
