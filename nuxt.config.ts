@@ -81,7 +81,7 @@ const config: Configuration = {
           warning: '#FFC107'
         },
         dark: {
-          primary: '#58a5f0',
+          primary: '#0277bd',
           secondary: '#ffffff',
           accent: '#827eab',
           error: '#ff867f',

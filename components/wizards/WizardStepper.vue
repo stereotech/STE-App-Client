@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12">
-    <v-toolbar color="primary" flat dense>
+    <v-toolbar color="primary" flat dense dark>
       <v-btn v-if="closeable" x-large text icon @click="$emit('close')">
         <v-icon>mdi-close</v-icon>
       </v-btn>
