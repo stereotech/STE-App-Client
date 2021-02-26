@@ -80,13 +80,13 @@
             <v-list-item-title>{{ $t("Settings") }}</v-list-item-title>
           </v-list-item>
 
-          <v-list-item @click="rebootSystem">
+          <v-list-item @click="confirmPoweroffOrReboot('Reboot')">
             <v-list-item-action>
               <v-icon>mdi-refresh</v-icon>
             </v-list-item-action>
             <v-list-item-title>{{ $t("Reboot") }}</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="poweroffSystem">
+          <v-list-item @click="confirmPoweroffOrReboot('Power Off')">
             <v-list-item-action>
               <v-icon>mdi-power</v-icon>
             </v-list-item-action>
@@ -111,6 +111,23 @@
     </v-app-bar>
     <MainSettingsDialog v-model="settingsDialog" />
     <ActivationDialog />
+    <v-dialog v-model="poweroffORRebootDialog" max-width="360">
+      <v-card>
+        <v-card-title class="headline">{{
+          $t("Are you sure you want to {0} printer?", [
+            confirmationTextTranslated,
+          ])
+        }}</v-card-title>
+        <v-card-actions>
+          <v-btn color="primary" text @click="poweroffOrRebootCancelled">{{
+            $t("No")
+          }}</v-btn>
+          <v-btn color="primary" text @click="poweroffOrRebootConfirmed">{{
+            $t("Yes")
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-main>
       <v-container fluid class="pb-xs-4">
         <nuxt />
@@ -166,6 +183,31 @@ export default class extends Vue {
 
   @settings.Action rebootSystem: any
   @settings.Action poweroffSystem: any
+
+  poweroffORRebootDialog: boolean = false
+  confirmationText: string = ''
+  get confirmationTextTranslated () {
+    return this.$tc(this.confirmationText)
+  }
+
+  confirmPoweroffOrReboot (text: string) {
+    this.confirmationText = text
+    this.poweroffORRebootDialog = true
+  }
+
+  poweroffOrRebootConfirmed () {
+    if (this.confirmationText === 'Reboot') {
+      this.rebootSystem()
+    } else {
+      this.poweroffSystem()
+    }
+    this.poweroffOrRebootCancelled()
+  }
+
+  poweroffOrRebootCancelled () {
+    this.poweroffORRebootDialog = false
+    this.confirmationText = ''
+  }
 
   head () {
     return { titleTemplate: `STE App - %s - ${this.settings.systemId.toUpperCase()}` }

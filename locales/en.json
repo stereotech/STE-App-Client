@@ -226,5 +226,6 @@
   "Scheduled": "Scheduled",
   "Run in": "Run in",
   "Scheduled Jobs": "Scheduled Jobs",
-  "Run in ": "Run in "
+  "Run in ": "Run in ",
+  "Are you sure you want to {0} printer?": "Are you sure you want to {0} printer?"
 }
