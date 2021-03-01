@@ -83,11 +83,11 @@ const config: Configuration = {
         dark: {
           primary: '#0277bd',
           secondary: '#ffffff',
-          accent: '#191b38',
-          error: '#FF5252',
-          info: '#9C27B0',
-          success: '#4CAF50',
-          warning: '#FFC107'
+          accent: '#827eab',
+          error: '#ff867f',
+          info: '#d05ce3',
+          success: '#80e27e',
+          warning: '#fff350'
         }
       }
     },

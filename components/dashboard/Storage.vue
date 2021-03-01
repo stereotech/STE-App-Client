@@ -7,7 +7,13 @@
     >
       <v-toolbar flat>
         <v-fab-transition>
-          <v-btn small fab outlined color="primary" @click="collapsed = !collapsed">
+          <v-btn
+            small
+            fab
+            outlined
+            color="primary"
+            @click="collapsed = !collapsed"
+          >
             <v-icon v-if="!collapsed">mdi-chevron-up</v-icon>
             <v-icon v-else>mdi-chevron-down</v-icon>
           </v-btn>
@@ -15,12 +21,21 @@
         <v-card-title
           @click="collapsed = !collapsed"
           class="headline font-weight-light d-inline-block text-truncate"
-        >{{cardTitle}}</v-card-title>
+          >{{ cardTitle }}</v-card-title
+        >
         <v-spacer />
         <v-btn small fab outlined color="primary" @click="refreshStorage">
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
-        <v-btn class="ml-2" small fab outlined color="primary" v-if="local" @click="isOpen=true">
+        <v-btn
+          class="ml-2"
+          small
+          fab
+          outlined
+          color="primary"
+          v-if="local"
+          @click="isOpen = true"
+        >
           <v-icon>mdi-folder-plus</v-icon>
         </v-btn>
         <v-btn
@@ -56,7 +71,7 @@
               <v-btn icon dark @click="closeDialog(undefined)">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>{{ $t('Input folder name')}}</v-toolbar-title>
+              <v-toolbar-title>{{ $t("Input folder name") }}</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-form v-model="valid">
@@ -76,7 +91,8 @@
                   color="primary"
                   :disabled="!valid"
                   @click="createFolder()"
-                >{{ $t('Create')}}</v-btn>
+                  >{{ $t("Create") }}</v-btn
+                >
               </v-form>
             </v-card-text>
           </v-card>
@@ -88,14 +104,20 @@
           bench="1"
           :items="filteredDataStorage.children"
         >
-          <template v-slot="{item, index}">
+          <template v-slot="{ item, index }">
             <v-list-item :key="index" v-if="item.type == 'folder'">
               <v-list-item-icon>
                 <v-icon>mdi-folder</v-icon>
               </v-list-item-icon>
-              <v-list-item-content @click="addFolderToPath(item.name), btnUpVisibility()">
-                <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
-                <v-list-item-subtitle class="body-1">{{ item.size | prettyBytes(1) }}</v-list-item-subtitle>
+              <v-list-item-content
+                @click="addFolderToPath(item.name), btnUpVisibility()"
+              >
+                <v-list-item-title class="subheading">{{
+                  item.display
+                }}</v-list-item-title>
+                <v-list-item-subtitle class="body-1">{{
+                  item.size | prettyBytes(1)
+                }}</v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
                 <v-menu>
@@ -105,11 +127,11 @@
                     </v-btn>
                   </template>
                   <v-list>
-                    <v-list-item @click="deleteFile(item);">
+                    <v-list-item @click="deleteFile(item)">
                       <v-list-item-action>
                         <v-icon>mdi-delete</v-icon>
                       </v-list-item-action>
-                      <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                      <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -131,7 +153,8 @@
                 :ripple="false"
                 class="mr-2"
                 v-else-if="item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis"
-              >5D</v-btn>
+                >5D</v-btn
+              >
               <v-btn
                 icon
                 outlined
@@ -139,15 +162,29 @@
                 :ripple="false"
                 class="mr-2"
                 v-else-if="item.gcodeAnalysis && !item.gcodeAnalysis.isFiveAxis"
-              >3D</v-btn>
+                >3D</v-btn
+              >
 
-              <v-btn icon outlined loading color="primary" :ripple="false" class="mr-2" v-else></v-btn>
+              <v-btn
+                icon
+                outlined
+                loading
+                color="primary"
+                :ripple="false"
+                class="mr-2"
+                v-else
+              ></v-btn>
               <v-list-item-content>
-                <v-list-item-title class="subheading">{{ item.display }}</v-list-item-title>
+                <v-list-item-title class="subheading">{{
+                  item.display
+                }}</v-list-item-title>
 
-                <v-list-item-subtitle
-                  class="body-1"
-                >{{$t("Uploaded ")}}{{ $moment.unix(item.date).fromNow()}}</v-list-item-subtitle>
+                <v-list-item-subtitle class="body-1"
+                  >{{ $t("Uploaded ")
+                  }}{{
+                    $moment.unix(item.date).fromNow()
+                  }}</v-list-item-subtitle
+                >
               </v-list-item-content>
               <v-list-item-action>
                 <v-menu>
@@ -161,13 +198,15 @@
                       <v-list-item-action>
                         <v-icon color="primary">mdi-plus-circle</v-icon>
                       </v-list-item-action>
-                      <v-list-item-title>{{$t("Create printjob")}}</v-list-item-title>
+                      <v-list-item-title>{{
+                        $t("Create printjob")
+                      }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="deleteFile(item)">
                       <v-list-item-action>
                         <v-icon>mdi-delete</v-icon>
                       </v-list-item-action>
-                      <v-list-item-title>{{$t("Remove")}}</v-list-item-title>
+                      <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -187,9 +226,13 @@
               />
             </v-col>
             <v-col cols="12">
-              <h6
-                class="title text-center"
-              >{{$t("You don't have any uploaded files yet. You could add new files using field below")}}</h6>
+              <h6 class="title text-center">
+                {{
+                  $t(
+                    "You don't have any uploaded files yet. You could add new files using field below"
+                  )
+                }}
+              </h6>
             </v-col>
           </v-row>
         </v-container>
@@ -215,7 +258,8 @@
                 color="primary"
                 :disabled="files.length < 1"
                 @click="upload"
-              >{{$t("Upload")}}</v-btn>
+                >{{ $t("Upload") }}</v-btn
+              >
             </v-col>
           </v-row>
           <v-overlay :value="overlay" absolute z-index="3">
@@ -223,7 +267,8 @@
               :indeterminate="uploadProgress < 1"
               size="64"
               :value="uploadProgress"
-            >{{ uploadProgress }}</v-progress-circular>
+              >{{ uploadProgress }}</v-progress-circular
+            >
           </v-overlay>
         </v-container>
       </v-card-text>
@@ -415,6 +460,7 @@ export default class Storage extends Vue {
       name: `Print ${file.name}`,
       description: this.$t('This job created automatically from file {0}', [file.display]).toString(),
       creationTime: Date.now(),
+      printAt: 0,
       fileUri: file.refs ? file.refs.download : '',
       printers: [],
       lastPrintTime: 0,

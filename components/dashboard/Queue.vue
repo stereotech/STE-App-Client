@@ -297,7 +297,74 @@
             </v-menu>
           </v-list-item-action>
         </v-list-item>
+        <v-subheader class="accent--text" v-if="scheduledJobs.length > 0">
+          <v-icon color="accent" left>mdi-clock</v-icon>
+          {{ $t("Scheduled Jobs") }}
+        </v-subheader>
+        <v-list-item v-for="job in scheduledJobs" :key="job.id">
+          <template v-if="settings.queueIgnoreAnalysis"></template>
+          <v-btn
+            icon
+            outlined
+            color="info"
+            :ripple="false"
+            class="mr-2"
+            v-else-if="job.isFiveAxis"
+            >5D</v-btn
+          >
+          <v-btn
+            icon
+            outlined
+            color="primary"
+            :ripple="false"
+            class="mr-2"
+            v-else
+            >3D</v-btn
+          >
+          <v-list-item-content>
+            <v-list-item-title>{{ job.name }}</v-list-item-title>
+
+            <v-list-item-subtitle v-if="job.state === 'Dequeued'">
+              <v-progress-linear :indeterminate="true" />
+            </v-list-item-subtitle>
+            <v-list-item-subtitle v-else class="body-1"
+              >{{ $t("File: ")
+              }}{{ fileName(job.fileUri) }}</v-list-item-subtitle
+            >
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-list-item-action-text
+              >{{ $t("Run in ")
+              }}{{
+                $moment.unix(job.creationTime + job.printAt).fromNow()
+              }}</v-list-item-action-text
+            >
+
+            <v-menu v-if="job.state === 'Queued'">
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item @click="startEditJob(job)">
+                  <v-list-item-action>
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-title>{{ $t("Edit") }}</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="startRemoveJob(job)">
+                  <v-list-item-action>
+                    <v-icon>mdi-delete</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-list-item-action>
+        </v-list-item>
       </v-list>
+
       <v-container v-else>
         <v-row dense align="center" justify="center">
           <v-col cols="auto">
@@ -416,21 +483,66 @@
                 </v-autocomplete>
               </v-col>
               <v-col cols="12" class="text-center">
-                <v-subheader>{{ $t("Priority") }}</v-subheader>
-                <v-btn-toggle v-model="editedJob.priority">
-                  <v-btn text color="gray">
-                    <v-icon color="gray" left>mdi-chevron-double-down</v-icon>
-                    {{ $t("Low") }}
-                  </v-btn>
-                  <v-btn text color="primary">
-                    <v-icon color="primary" left>mdi-circle-double</v-icon>
-                    {{ $t("Normal") }}
-                  </v-btn>
-                  <v-btn text color="error">
-                    <v-icon color="error" left>mdi-chevron-double-up</v-icon>
-                    {{ $t("High") }}
-                  </v-btn>
-                </v-btn-toggle>
+                <v-select
+                  :items="priorityItems"
+                  filled
+                  :label="$t('Priority')"
+                  v-model="editedJob.priority"
+                >
+                  <template v-slot:item="{ item, on, attrs }">
+                    <v-list-item v-on="on" v-bind="attrs">
+                      <v-list-item-action>
+                        <v-icon :color="item.color">{{ item.icon }}</v-icon>
+                      </v-list-item-action>
+                      <v-list-item-title :class="`${item.color}--text`">{{
+                        item.text
+                      }}</v-list-item-title>
+                    </v-list-item>
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col cols="12" v-if="editedJob.priority === 3">
+                <v-dialog
+                  ref="dialog"
+                  v-model="timePickerDialog"
+                  :return-value.sync="time"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="time"
+                      :label="$tc('Run in')"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      filled
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="timePickerDialog"
+                    format="24hr"
+                    v-model="time"
+                    full-width
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="timePickerDialog = false"
+                    >
+                      {{ $t("Cancel") }}
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.dialog.save(time)"
+                    >
+                      {{ $t("OK") }}
+                    </v-btn>
+                  </v-time-picker>
+                </v-dialog>
               </v-col>
               <v-col cols="12">
                 <v-autocomplete
@@ -553,6 +665,10 @@ export default class extends Vue {
     return this.printJobsByPriority(PrintJobPriority.Low)
   }
 
+  get scheduledJobs () {
+    return this.printJobsByPriority(PrintJobPriority.Scheduled)
+  }
+
   private changeNameFromFile (value: string) {
     if (!this.nameWasChanged) {
       const filenameWithExt = value.split('/').pop()
@@ -600,6 +716,7 @@ export default class extends Vue {
     name: '',
     description: '',
     creationTime: 0,
+    printAt: 0,
     fileUri: '',
     printers: [],
     lastPrintTime: 0,
@@ -621,6 +738,7 @@ export default class extends Vue {
       fileUri: '',
       isFiveAxis: undefined,
       creationTime: Date.now(),
+      printAt: 0,
       printingTime: 0,
       lastPrintTime: 0,
       successful: false,
@@ -634,6 +752,9 @@ export default class extends Vue {
     this.dialog = true
     this.editMode = true
     Object.assign(this.editedJob, job)
+    const hours = Math.floor(this.editedJob.printAt / 3600)
+    const minutes = Math.floor((this.editedJob.printAt - (hours * 3600)) / 60)
+    this.time = `${hours}:${minutes}`
   }
 
   private startRemoveJob (job) {
@@ -657,6 +778,10 @@ export default class extends Vue {
     this.dialog = false
     this.nameWasChanged = false
     if (add !== undefined) {
+      if (this.editedJob.priority === PrintJobPriority.Scheduled) {
+        const hoursAndMinutes = this.time?.split(':') || ['0', '0']
+        this.editedJob.printAt = parseInt(hoursAndMinutes[0]) * 3600 + parseInt(hoursAndMinutes[1]) * 60
+      }
       if (add) {
         const jobsArray: PrintJob[] = [this.editedJob]
         for (let index = 1; index < this.copiesCount; index++) {
@@ -683,6 +808,7 @@ export default class extends Vue {
       name: '',
       description: '',
       creationTime: 0,
+      printAt: 0,
       fileUri: '',
       isFiveAxis: false,
       printers: [],
@@ -693,7 +819,40 @@ export default class extends Vue {
       priority: 1
     }
     this.copiesCount = 1
+    this.time = null
   }
+
+  get priorityItems () {
+    return [
+      {
+        text: this.$t("Low"),
+        value: PrintJobPriority.Low,
+        icon: 'mdi-chevron-double-down',
+        color: 'gray'
+      },
+      {
+        text: this.$t("Normal"),
+        value: PrintJobPriority.Normal,
+        icon: 'mdi-circle-double',
+        color: 'primary'
+      },
+      {
+        text: this.$t("High"),
+        value: PrintJobPriority.High,
+        icon: 'mdi-chevron-double-up',
+        color: 'error'
+      },
+      {
+        text: this.$t("Scheduled"),
+        value: PrintJobPriority.Scheduled,
+        icon: 'mdi-clock',
+        color: 'accent'
+      },
+    ]
+  }
+
+  timePickerDialog: boolean = false
+  time: string | null = null
 
 }
 </script>

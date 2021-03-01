@@ -3,29 +3,30 @@
     <v-card class="primary" flat>
       <v-container>
         <v-row dense v-if="landscapeMode" align="center">
-          <v-col v-if="image != null" cols="6" order="1">
+          <v-col v-if="description" cols="12" order="1">
+            <p class="text-h6 font-weight-light">{{ description }}</p>
+          </v-col>
+          <v-col v-if="image != null" cols="6" order="2">
             <v-card flat color="primary">
               <v-img height="320" width="260" :src="imageSource" />
             </v-card>
           </v-col>
-          <v-col v-if="description" cols="12" order="3">
-            <p>{{ description }}</p>
-          </v-col>
-          <v-col v-if="description" cols="6" order="2">
+
+          <v-col v-if="description" cols="6" order="3">
             <slot />
           </v-col>
-          <v-col v-else cols="12" order="2">
+          <v-col v-else cols="12" order="3">
             <slot />
           </v-col>
         </v-row>
         <v-row dense v-else align="center" justify="space-around">
+          <v-col v-if="description" cols="12">
+            <p class="text-h6 font-weight-light">{{ description }}</p>
+          </v-col>
           <v-col v-if="image != null" cols="auto">
             <v-card>
               <v-img height="320" width="260" :src="image" />
             </v-card>
-          </v-col>
-          <v-col v-if="description" cols="12">
-            <p>{{ description }}</p>
           </v-col>
           <slot />
         </v-row>

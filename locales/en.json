@@ -222,5 +222,10 @@
   },
   "Enter this pin code in order to give access to this device": "Enter this pin code in order to give access to this device",
   "Target": "Target",
-  "Check the diameter of the base and press Next": "Check the diameter of the base and press Next"
+  "Check the diameter of the base and press Next": "Check the diameter of the base and press Next",
+  "Scheduled": "Scheduled",
+  "Run in": "Run in",
+  "Scheduled Jobs": "Scheduled Jobs",
+  "Run in ": "Run in ",
+  "Are you sure you want to {0} printer?": "Are you sure you want to {0} printer?"
 }

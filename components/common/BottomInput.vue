@@ -1,7 +1,11 @@
 <template>
   <div>
     <slot />
-    <v-bottom-sheet v-if="isPanel" v-model="isOpen" @click:outside="closeKeyboard">
+    <v-bottom-sheet
+      v-if="isPanel"
+      v-model="isOpen"
+      @click:outside="closeKeyboard"
+    >
       <v-sheet>
         <v-container>
           <v-row dense>
@@ -13,7 +17,11 @@
                 :input="inputLocal"
                 @onChange="onChange"
                 @onKeyPress="onKeyPress"
-                :theme="$vuetify.theme.dark ? 'hg-theme-deault DarkTheme': 'hg-theme-deault LightTheme'"
+                :theme="
+                  $vuetify.theme.dark
+                    ? 'hg-theme-deault DarkTheme'
+                    : 'hg-theme-deault LightTheme'
+                "
               />
             </v-col>
           </v-row>
@@ -67,8 +75,9 @@ export default class BottomInput extends Vue {
       return
     }
     if (button === '{enter}') {
-      this.inputLocal += '\n'
-      this.$emit('update:input', this.inputLocal)
+      //this.inputLocal += '\n'
+      //this.$emit('update:input', this.inputLocal)
+      this.$emit('enter')
       return
     }
     if (button === '{space}') {

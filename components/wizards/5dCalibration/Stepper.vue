@@ -1,6 +1,6 @@
 <template>
-  <WizardStepper :stepCount="12" v-model="currentStep">
-    <template slot="title">{{$t("5D calibration") }}</template>
+  <WizardStepper :stepCount="12" v-model="currentStep" @close="closeWizard">
+    <template slot="title">{{ $t("5D calibration") }}</template>
     <Step1 v-model="currentStep" />
     <Step2 v-model="currentStep" />
     <Step3 v-model="currentStep" />
@@ -52,6 +52,9 @@ import Step12 from '~/components/wizards/5dCalibration/Step12.vue'
 export default class fiveCallibrationStepper extends Vue {
   private currentStep: number = 0
 
+  closeWizard () {
+    this.$router.push('/printers')
+  }
 
 }
 </script>

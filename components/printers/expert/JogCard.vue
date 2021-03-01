@@ -240,6 +240,13 @@
                 text
                 color="primary"
                 :disabled="printing"
+                @click="amount = 0.05"
+                >0.05</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                :disabled="printing"
                 @click="amount = 0.1"
                 >0.1</v-btn
               >
@@ -497,7 +504,7 @@ const printers = namespace('printersState')
 export default class JogCard extends Vue {
   @Prop({ type: Boolean, default: true }) light!: boolean
 
-  private selectedAmount: number = 2
+  private selectedAmount: number = 3
   private amount: number = 10
   private feed: number = 100
 
