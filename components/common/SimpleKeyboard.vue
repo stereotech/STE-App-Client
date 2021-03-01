@@ -25,6 +25,7 @@ export default {
     keyboard: null
   }),
   mounted() {
+    console.log('Keyboard mounted')
     this.keyboard = new Keyboard({
       onChange: this.onChange,
       onKeyPress: this.onKeyPress,
@@ -80,4 +81,59 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/*
+  Theme: DarkTheme
+*/
+.simple-keyboard.DarkTheme {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.simple-keyboard.DarkTheme .hg-button {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.simple-keyboard.DarkTheme .hg-button:active {
+  background: #0277bd;
+  color: white;
+}
+
+#root .simple-keyboard.DarkTheme + .simple-keyboard-preview {
+  background: #0277bd;
+}
+
+/*
+  Theme: LightTheme
+*/
+.simple-keyboard.LightTheme {
+  background-color: rgba(240, 240, 240, 1);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.simple-keyboard.LightTheme .hg-button {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 1);
+  color: black;
+}
+
+.simple-keyboard.LightTheme .hg-button:active {
+  background: #0277bd;
+  color: black;
+}
+
+#root .simple-keyboard.LightTheme + .simple-keyboard-preview {
+  background: #0277bd;
+}
 </style>
