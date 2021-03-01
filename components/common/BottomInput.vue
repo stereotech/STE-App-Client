@@ -19,8 +19,8 @@
                 @onKeyPress="onKeyPress"
                 :theme="
                   $vuetify.theme.dark
-                    ? 'hg-theme-deault DarkTheme'
-                    : 'hg-theme-deault LightTheme'
+                    ? 'hg-theme-default DarkTheme'
+                    : 'hg-theme-default LightTheme'
                 "
               />
             </v-col>
