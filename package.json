@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NUXT_ENV_PLATFORM=WEB nuxt-ts",
+    "dev": "cross-env NUXT_ENV_PLATFORM=PANEL nuxt-ts",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
     "build-for-mobile": "cross-env NUXT_ENV_PLATFORM=MOBILE nuxt-ts build --spa",

@@ -22,7 +22,7 @@ const config: Configuration = {
   /*
    ** Global CSS
    */
-  css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css'],
+  css: ['@mdi/font/css/materialdesignicons.css', '~/assets/main.css', 'typeface-roboto/index.css', 'simple-keyboard/build/css/index.css'],
 
   /*
  ** Nuxt.js modules
