@@ -129,9 +129,9 @@ export default class TemperatureFanCard extends Vue {
   @printers.Action toolTempCommand: any
   @printers.Action bedTempCommand: any
 
-  private e1Target: number = 0
-  private e2Target: number = 0
-  private chamberTarget: number = 0
+  private e1Target: number = 40
+  private e2Target: number = 40
+  private chamberTarget: number = 35
   private bedTarget: number = 0
   private coolingFanTarget: number = 0
 
