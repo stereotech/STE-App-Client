@@ -44,8 +44,8 @@ export default class ChangeMaterialStepper extends Vue {
 
   @printers.Action toolTempCommand: any
 
-  closeWizard () {
-    this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
+  async closeWizard () {
+    await this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
     this.$router.push('/printers')
   }
 }
