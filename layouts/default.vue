@@ -210,7 +210,7 @@ export default class extends Vue {
   }
 
   head () {
-    return { titleTemplate: `STE App - %s - ${this.settings.systemId.toUpperCase()}` }
+    return { titleTemplate: `${this.settings.systemId.toUpperCase()} - STE App - %s` }
   }
 
   get isMobile (): boolean {
