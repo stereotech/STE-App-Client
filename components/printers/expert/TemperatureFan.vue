@@ -2,9 +2,10 @@
   <v-card>
     <v-card-title class="title">{{ $t("Temperature And Fan") }}</v-card-title>
     <v-container fluid>
-      <v-row dense v-if="e1Enabled">
-        <v-col cols="2">
+      <v-row v-if="e1Enabled" align="start">
+        <v-col cols="2" class="mt-n4">
           <v-switch
+            inset
             v-model="e1TargetSet"
             color="error"
             hide-details
@@ -13,21 +14,26 @@
         </v-col>
         <v-col cols="10">
           <v-slider
+            prepend-icon="mdi-printer-3d-nozzle"
             v-model="e1Target"
-            :label="$tc('E1')"
-            thumb-label
-            min="0"
-            :max="glaze ? 60 : 300"
+            label="1"
+            thumb-label="always"
+            :min="glaze ? 30 : 40"
+            :max="glaze ? 60 : 320"
             :step="glaze ? 1 : 5"
             :color="glaze ? 'brown' : 'primary'"
             :track-color="glaze ? 'brown lighten-4' : ''"
             @change="changeE1"
-          />
+            ><template v-slot:append>
+              {{ e1Actual | currency("", 0) }}&deg;C</template
+            ></v-slider
+          >
         </v-col>
       </v-row>
-      <v-row dense v-if="!glaze && e2Enabled">
-        <v-col cols="2">
+      <v-row v-if="!glaze && e2Enabled" align="start">
+        <v-col cols="2" class="mt-n4">
           <v-switch
+            inset
             v-model="e2TargetSet"
             color="error"
             hide-details
@@ -37,41 +43,25 @@
         <v-col cols="10">
           <v-slider
             v-model="e2Target"
-            :label="fiber ? $tc('Fiber') : $tc('E2')"
-            thumb-label
-            min="0"
-            max="300"
+            prepend-icon="mdi-printer-3d-nozzle"
+            :label="fiber ? 'F' : '2'"
+            thumb-label="always"
+            min="40"
+            max="320"
             step="5"
             :color="fiber ? 'blue-grey' : 'primary'"
             :track-color="fiber ? 'grey' : ''"
             @change="changeE2"
-          />
+            ><template v-slot:append>
+              {{ e2Actual | currency("", 0) }}&deg;C</template
+            ></v-slider
+          >
         </v-col>
       </v-row>
-      <v-row dense v-if="chamberHeater && !glaze">
-        <v-col cols="2">
+      <v-row v-if="bedEnabled && !glaze" align="start">
+        <v-col cols="2" class="mt-n4">
           <v-switch
-            v-model="chamberTargetSet"
-            color="error"
-            hide-details
-            @change="setChamber"
-          />
-        </v-col>
-        <v-col cols="10">
-          <v-slider
-            v-model="chamberTarget"
-            :label="$tc('Chamber')"
-            thumb-label
-            min="0"
-            max="100"
-            step="5"
-            @change="setBed"
-          />
-        </v-col>
-      </v-row>
-      <v-row dense v-if="bedEnabled && !glaze">
-        <v-col cols="2">
-          <v-switch
+            inset
             v-model="bedTargetSet"
             color="error"
             hide-details
@@ -81,26 +71,36 @@
         <v-col cols="10">
           <v-slider
             v-model="bedTarget"
-            :label="$tc('Bed')"
-            thumb-label
-            min="0"
+            prepend-icon="mdi-radiator"
+            thumb-label="always"
+            min="35"
             max="120"
             step="5"
             @change="changeBed"
-          />
+            ><template v-slot:append>
+              {{ bedActual | currency("", 0) }}&deg;C</template
+            ></v-slider
+          >
         </v-col>
       </v-row>
-      <v-row dense>
-        <v-col cols="12">
+      <v-row align="start">
+        <v-col cols="2">
+          <v-btn outlined icon large color="primary" @click="offCoolingFan"
+            ><v-icon>mdi-fan-off</v-icon></v-btn
+          >
+        </v-col>
+        <v-col cols="10">
           <v-slider
             v-model="coolingFanTarget"
-            :label="$tc('Cooling')"
-            thumb-label
+            prepend-icon="mdi-fan"
+            thumb-label="always"
             min="0"
             max="100"
             step="5"
             @change="setCoolingFan"
-          />
+          >
+            <template v-slot:thumb-label="{ value }">{{ value }}%</template>
+          </v-slider>
         </v-col>
       </v-row>
     </v-container>
@@ -156,19 +156,35 @@ export default class TemperatureFanCard extends Vue {
     return this.lastTempDataPoint(this.id).tool0 != null && this.lastTempDataPoint(this.id).tool0.actual > 0
   }
 
+  get e1Actual (): number {
+    return this.e1Enabled ? this.lastTempDataPoint(this.id).tool0.actual : 0
+  }
+
   get e2Enabled (): boolean {
     return this.lastTempDataPoint(this.id).tool1 != null && this.lastTempDataPoint(this.id).tool1.actual > 0
+  }
+
+  get e2Actual (): number {
+    return this.e2Enabled ? this.lastTempDataPoint(this.id).tool1.actual : 0
   }
 
   get bedEnabled (): boolean {
     return this.lastTempDataPoint(this.id).bed != null && this.lastTempDataPoint(this.id).bed.actual > 0
   }
 
-  private setCoolingFan (value: number) {
+  get bedActual (): number {
+    return this.bedEnabled ? this.lastTempDataPoint(this.id).bed.actual : 0
+  }
+
+  setCoolingFan (value: number) {
     this.fanCommand({ id: this.id, fanId: 0, fanValue: Math.round(value * 255 / 100) })
   }
 
-  private setE1 (value: boolean) {
+  offCoolingFan () {
+    this.fanCommand({ id: this.id, fanId: 0, fanValue: 0 })
+  }
+
+  setE1 (value: boolean) {
     if (value) {
       this.toolTempCommand({ id: this.id, tool0Temp: this.e1Target })
     } else {
@@ -176,13 +192,13 @@ export default class TemperatureFanCard extends Vue {
     }
   }
 
-  private changeE1 (value: number) {
+  changeE1 (value: number) {
     if (this.e1TargetSet) {
       this.toolTempCommand({ id: this.id, tool0Temp: this.e1Target })
     }
   }
 
-  private setE2 (value: boolean) {
+  setE2 (value: boolean) {
     if (value) {
       this.toolTempCommand({ id: this.id, tool1Temp: this.e2Target })
     } else {
@@ -190,13 +206,13 @@ export default class TemperatureFanCard extends Vue {
     }
   }
 
-  private changeE2 (value: number) {
+  changeE2 (value: number) {
     if (this.e2TargetSet) {
       this.toolTempCommand({ id: this.id, tool1Temp: this.e2Target })
     }
   }
 
-  private setChamber (value: boolean) {
+  setChamber (value: boolean) {
     if (value) {
       this.bedTempCommand({ id: this.id, bedTemp: this.chamberTarget })
     } else {
@@ -204,13 +220,13 @@ export default class TemperatureFanCard extends Vue {
     }
   }
 
-  private changeChamber (value: number) {
+  changeChamber (value: number) {
     if (this.chamberTargetSet) {
       this.bedTempCommand({ id: this.id, bedTemp: this.chamberTarget })
     }
   }
 
-  private setBed (value: boolean) {
+  setBed (value: boolean) {
     if (value) {
       this.bedTempCommand({ id: this.id, bedTemp: this.bedTarget })
     } else {
@@ -218,7 +234,7 @@ export default class TemperatureFanCard extends Vue {
     }
   }
 
-  private changeBed (value: number) {
+  changeBed (value: number) {
     if (this.bedTargetSet) {
       this.bedTempCommand({ id: this.id, bedTemp: this.bedTarget })
     }
