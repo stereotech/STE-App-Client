@@ -18,7 +18,6 @@
           <v-col cols="12" md="6" order-md="2">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -31,7 +30,6 @@
           <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -44,7 +42,6 @@
           <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -57,7 +54,6 @@
           <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -70,7 +66,6 @@
           <v-col cols="12" md="6" order-md="4">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -82,7 +77,6 @@
           </v-col>
           <v-col cols="12" md="2" order-md="1">
             <v-btn
-              text
               icon
               color="primary"
               :ripple="false"
@@ -94,7 +88,6 @@
           <v-col cols="4" md="2" order-md="4">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -107,7 +100,6 @@
           <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -120,7 +112,6 @@
           <v-col cols="4" md="2" order-md="2">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -134,7 +125,6 @@
           <!-- A-axis просмотреть order-->
           <v-col cols="12" md="2" order-md="1">
             <v-btn
-              text
               icon
               color="primary"
               :ripple="false"
@@ -146,7 +136,6 @@
           <v-col cols="4" md="2" order-md="4">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -159,7 +148,6 @@
           <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -172,7 +160,6 @@
           <v-col cols="4" md="2" order-md="2">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -185,7 +172,6 @@
           <!-- C-axis просмотреть order-->
           <v-col cols="12" md="2" order-md="1">
             <v-btn
-              text
               icon
               color="primary"
               :ripple="false"
@@ -197,7 +183,6 @@
           <v-col cols="4" md="2" order-md="4">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -210,7 +195,6 @@
           <v-col cols="4" md="2" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -223,7 +207,6 @@
           <v-col cols="4" md="2" order-md="2">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -234,7 +217,7 @@
             </v-btn>
           </v-col>
 
-          <v-col cols="8" md="10" order-md="5" pt-2>
+          <v-col cols="12" md="10" order-md="5" class="pt-2">
             <v-btn-toggle mandatory v-model="selectedAmount" rounded>
               <v-btn
                 text
@@ -276,7 +259,6 @@
           <v-col cols="4" md="2" order-md="5" v-if="!dense">
             <v-btn
               x-large
-              text
               color="primary"
               :disabled="printing"
               outlined
@@ -313,7 +295,6 @@
           <v-col cols="12" md="9" order-md="2">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -326,7 +307,6 @@
           <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -339,7 +319,6 @@
           <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -352,7 +331,6 @@
           <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -365,7 +343,6 @@
           <v-col cols="12" md="9" order-md="4">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -389,7 +366,6 @@
           <v-col cols="4" md="3" order-md="4">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -402,7 +378,6 @@
           <v-col cols="4" md="3" order-md="3">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -415,7 +390,6 @@
           <v-col cols="4" md="3" order-md="2">
             <v-btn
               outlined
-              text
               icon
               x-large
               color="primary"
@@ -467,7 +441,6 @@
           <v-col cols="4" md="3" order-md="5" v-if="!dense">
             <v-btn
               x-large
-              text
               color="primary"
               :disabled="printing"
               outlined
