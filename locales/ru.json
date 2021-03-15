@@ -227,5 +227,7 @@
   "Run in": "Запустить через",
   "Scheduled Jobs": "Запланированные задачи",
   "Run in ": "Запуск ",
-  "Are you sure you want to {0} printer?": "Вы уверены, что хотите {0} принтер?"
+  "Are you sure you want to {0} printer?": "Вы уверены, что хотите {0} принтер?",
+  "Clean Storage": "Очистить Внутреннюю память",
+  "Are you sure want clean internal storage?": "Вы уверены, что хотите очистить внутреннюю память?"
 }

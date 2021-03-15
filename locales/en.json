@@ -227,5 +227,7 @@
   "Run in": "Run in",
   "Scheduled Jobs": "Scheduled Jobs",
   "Run in ": "Run in ",
-  "Are you sure you want to {0} printer?": "Are you sure you want to {0} printer?"
+  "Are you sure you want to {0} printer?": "Are you sure you want to {0} printer?",
+  "Clean Storage": "Clean Storage",
+  "Are you sure want clean internal storage?": "Are you sure want clean internal storage?"
 }

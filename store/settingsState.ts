@@ -161,6 +161,10 @@ export const actions: ActionTree<SettingsState, RootState> = {
     await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'reset', removeStorageFiles: force })
   },
 
+  async sendCleanStorage ({ commit }) {
+    await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'cleanup' })
+  },
+
   async sendFinishSetup ({ commit }) {
     await this.$axios.put<Settings>(this.state.apiUrl + systemEndpoint, { firstLaunch: false })
   },
