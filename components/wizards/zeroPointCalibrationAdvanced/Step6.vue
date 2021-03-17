@@ -60,6 +60,7 @@ export default class extends Vue {
   }
 
   async restart () {
+    await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0 Z0' })
     this.next(0)
   }
 
