@@ -229,5 +229,8 @@
   "Run in ": "Запуск ",
   "Are you sure you want to {0} printer?": "Вы уверены, что хотите {0} принтер?",
   "Clean Storage": "Очистить Внутреннюю память",
-  "Are you sure want clean internal storage?": "Вы уверены, что хотите очистить внутреннюю память?"
+  "Are you sure want clean internal storage?": "Вы уверены, что хотите очистить внутреннюю память?",
+  "Feedback": "Обратная связь",
+  "Download STE App log": "Скачать лог STE App",
+  "Download Octoprint log": "Скачать лог Octoprint"
 }

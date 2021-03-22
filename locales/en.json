@@ -229,5 +229,8 @@
   "Run in ": "Run in ",
   "Are you sure you want to {0} printer?": "Are you sure you want to {0} printer?",
   "Clean Storage": "Clean Storage",
-  "Are you sure want clean internal storage?": "Are you sure want clean internal storage?"
+  "Are you sure want clean internal storage?": "Are you sure want clean internal storage?",
+  "Feedback": "Feedback",
+  "Download STE App log": "Download STE App log",
+  "Download Octoprint log": "Download Octoprint log"
 }
