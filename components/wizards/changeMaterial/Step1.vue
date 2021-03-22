@@ -52,11 +52,7 @@ export default class extends Vue {
   @printers.Action toolTempCommand: any
 
   private nextStep () {
-    if (this.additionalData.tool === 0) {
-      this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 240, tool1Temp: 0 })
-    } else {
-      this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 240 })
-    }
+
     this.next(1)
   }
 

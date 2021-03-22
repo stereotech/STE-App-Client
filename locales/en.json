@@ -232,5 +232,6 @@
   "Are you sure want clean internal storage?": "Are you sure want clean internal storage?",
   "Feedback": "Feedback",
   "Download STE App log": "Download STE App log",
-  "Download Octoprint log": "Download Octoprint log"
+  "Download Octoprint log": "Download Octoprint log",
+  "Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website": "Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website"
 }

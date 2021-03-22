@@ -69,11 +69,8 @@ export default class extends Vue {
     await this.customCommand({ id: this.settings.systemId, command: 'G28' })
     await this.customCommand({ id: this.settings.systemId, command: 'G54\nG0 X100 Y100 F6000' })
 
-    if (this.additionalData.action > 1) {
-      this.next(3)
-    } else {
-      this.next(2)
-    }
+    this.next(2)
+
   }
 
   private next (step: number) {

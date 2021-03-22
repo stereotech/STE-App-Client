@@ -1,43 +1,28 @@
 <template>
-  <WizardStep v-if="heating" :step="step">
-    <v-container>
-      <v-row dense align="center" justify="space-around">
-        <v-col cols="4">
-          <v-progress-circular
-            :size="70"
-            :width="7"
-            rotate="-90"
-            color="secondary"
-            :value="heatingValue / 2.4"
-            >{{ heatingValue | currency("", 0) }}</v-progress-circular
-          >
-        </v-col>
-        <v-col cols="4">
-          <p>{{ $t("Heating...") }}</p>
-        </v-col>
-      </v-row>
-    </v-container>
-  </WizardStep>
-  <WizardStep v-else :step="step" :image="image" :description="description">
+  <WizardStep :step="step" :image="image" :description="description">
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="loadMaterial">{{
-            $t("Load")
-          }}</v-btn>
+          <v-radio-group v-model="additionalData.target" mandatory>
+            <v-radio
+              :label="$tc('180 - 220 C')"
+              :value="200"
+              color="secondary"
+            ></v-radio>
+            <v-radio
+              :label="$tc('220 - 260 C')"
+              :value="240"
+              color="secondary"
+            ></v-radio>
+            <v-radio
+              :label="$tc('260 - 300 C')"
+              :value="280"
+              color="secondary"
+            ></v-radio>
+          </v-radio-group>
         </v-col>
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="repeat">{{
-            $t("Unload")
-          }}</v-btn>
-        </v-col>
-        <v-col v-if="additionalData.action === 0" cols="12">
-          <v-btn block x-large depressed color="accent" nuxt to="/printers">{{
-            $t("Finish")
-          }}</v-btn>
-        </v-col>
-        <v-col v-else cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(3)">{{
+          <v-btn block x-large depressed color="accent" @click="nextStep">{{
             $t("Next")
           }}</v-btn>
         </v-col>
@@ -65,71 +50,34 @@ const printers = namespace('printersState')
 export default class extends Vue {
   @settings.Getter settings!: Settings
   @Model('change', { type: Number, default: 1, required: true }) currentStep!: number
-  @Watch('currentStep') onCurrentStepChanged (val: number) {
-    this.curStep = val
-  }
   @Prop({ type: Object, default: {} }) additionalData!: any
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
+  @Watch('currentStep') onCurrentStepChanged (val: number) {
+    this.curStep = val
+  }
   private step?: number = 2
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/change_material/change_material03.jpg'
+  private image: string = 'wizards/change_material/change_material02.jpg'
   private description: string = ''
 
-  @printers.Action retractCommand: any
-  @printers.Action extrudeCommand: any
-  @printers.Getter status!: (id: string) => CurrentState | undefined
+  @printers.Action customCommand: any
+  @printers.Action toolTempCommand: any
 
-  get computedStatus () {
-    return this.status(this.settings.systemId)
-  }
-
-  get heating () {
-    if (this.computedStatus) {
-      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
-        let deviation = 0
-        if (this.additionalData.tool === 0) {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
-            const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-            deviation = Math.abs(target - actual)
-          }
-        } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-          const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
-          const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-          deviation = Math.abs(target - actual)
-        }
-        return deviation > 20
-      }
+  private async nextStep () {
+    if (this.additionalData.tool === 0) {
+      await this.toolTempCommand({ id: this.settings.systemId, tool0Temp: this.additionalData.target, tool1Temp: 0 })
+    } else {
+      await this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: this.additionalData.target })
     }
-    return true
-  }
 
-  get heatingValue (): number {
-    if (this.computedStatus) {
-      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
-        let actual = 0
-        if (this.additionalData.tool === 0) {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-          }
-        } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-          actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-        }
-        return actual
-      }
+    if (this.additionalData.action > 1) {
+      this.next(4)
+    } else {
+      this.next(3)
     }
-    return 0
-  }
-
-  private async repeat () {
-    await this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
-  }
-
-  private async loadMaterial () {
-    await this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 20 })
   }
 
   private next (step: number) {
@@ -137,11 +85,11 @@ export default class extends Vue {
     this.curStep = step
   }
   mounted () {
-    this.description = this.$tc('Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading')
+    this.description = this.$tc("Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website")
   }
 
   updated () {
-    this.description = this.$tc('Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading')
+    this.description = this.$tc("Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website")
   }
 }
 </script>
