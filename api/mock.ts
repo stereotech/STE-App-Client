@@ -3,6 +3,7 @@ import { Network } from '~/types/networking'
 import { PrintJob } from '~/types/printJob'
 import { ScannerResult } from '~/types/scannerResult'
 import { Settings } from '~/types/settings'
+import { StatisticsResponse } from '~/types/stats'
 
 
 
@@ -119,6 +120,43 @@ const networks: Network[] = [
         strength: 50
     }
 ]
+
+const stats: StatisticsResponse = {
+    datasets: {
+        FullDataset: [
+            {
+                date: '2021-3',
+                eventName: 'MAINTENANCE',
+                count: 1,
+                timeSum: 0
+            }
+        ],
+        HourDataset: [
+            {
+                date: '15',
+                eventName: 'MAINTENANCE',
+                count: 1,
+                timeSum: 0
+            }
+        ],
+        DayDataset: [
+            {
+                date: '30',
+                eventName: 'MAINTENANCE',
+                count: 1,
+                timeSum: 0
+            }
+        ],
+        TimeDataset: [
+            {
+                eventName: 'MAINTENANCE',
+                count: 0,
+                timeSum: 30
+            }
+
+        ]
+    }
+}
 
 const updateVersion = '1.0.0'
 
@@ -321,6 +359,8 @@ const apiMock: ServerMiddleware = function (req, res, next) {
     }
     else if (req.url === '/update/') {
         res.end('1.0.0')
+    } else if (req.url === '/statistics') {
+        res.end(JSON.stringify(stats))
     } else {
         next()
     }

@@ -229,6 +229,12 @@ export default class extends Vue {
       title: 'Printer',
       translatedTitle: 'Printer',
       link: '/printers'
+    },
+    {
+      icon: 'mdi-finance',
+      title: 'Statistics',
+      translatedTitle: 'Statistics',
+      link: '/stats'
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly
