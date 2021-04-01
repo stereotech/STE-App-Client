@@ -82,7 +82,10 @@ export const mutations: MutationTree<SettingsState> = {
   },
 
   setNetworks (state: SettingsState, networks: Network[]) {
-    state.networking.networks = networks
+    if (networks) {
+      state.networking.networks = networks.filter(n => n !== null || n !== undefined)
+    }
+
   }
 }
 

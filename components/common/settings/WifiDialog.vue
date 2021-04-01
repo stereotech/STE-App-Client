@@ -1,8 +1,10 @@
 <template>
   <SettingsDialog v-model="isOpen" @input="closeDialog">
-    <template slot="title">{{$t("Wi-Fi")}}</template>
+    <template slot="title">{{ $t("Wi-Fi") }}</template>
     <v-list>
-      <v-subheader v-if="address !== ''">{{$t("Current Address")}}</v-subheader>
+      <v-subheader v-if="address !== ''">{{
+        $t("Current Address")
+      }}</v-subheader>
       <v-list-item>
         <v-list-item-action>
           <v-icon>mdi-ip-network-outline</v-icon>
@@ -15,15 +17,19 @@
       <v-list-item>
         <v-list-item-action>
           <v-switch
-            false-value="WIRELESS"
+            false-value="AUTO"
             true-value="HOTSPOT"
             v-model="currentMethod"
             @change="setConnectedMethod"
           ></v-switch>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title v-if="currentMethod === 'HOTSPOT'">{{ $t("Disable Wi-Fi hotspot") }}</v-list-item-title>
-          <v-list-item-title v-else>{{ $t("Enable Wi-Fi hotspot") }}</v-list-item-title>
+          <v-list-item-title v-if="currentMethod === 'HOTSPOT'">{{
+            $t("Disable Wi-Fi hotspot")
+          }}</v-list-item-title>
+          <v-list-item-title v-else>{{
+            $t("Enable Wi-Fi hotspot")
+          }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item @click="refreshNetworks">
@@ -35,7 +41,9 @@
         </v-list-item-content>
       </v-list-item>
       <template v-if="currentMethod !== 'HOTSPOT'">
-        <v-subheader v-if="currentNetwork.length > 0">{{$t("Current Network")}}</v-subheader>
+        <v-subheader v-if="currentNetwork.length > 0">{{
+          $t("Current Network")
+        }}</v-subheader>
         <template v-for="(network, index) in currentNetwork">
           <v-list-item :key="index" @click="forgetConfirmation = true">
             <v-list-item-action v-if="currentNetwork[index].strength > 81">
@@ -61,18 +69,30 @@
             </v-list-item-action>
             <v-dialog v-model="forgetConfirmation" max-width="425">
               <v-card>
-                <v-card-title class="headline">{{$t("Forget {0}?", [currentNetwork[index].name])}}</v-card-title>
+                <v-card-title class="headline">{{
+                  $t("Forget {0}?", [currentNetwork[index].name])
+                }}</v-card-title>
                 <v-card-actions>
                   <v-card-actions>
-                    <v-btn color="primary" text @click="forgetConfirmation = false">{{$t("Cancel")}}</v-btn>
-                    <v-btn color="primary" text @click="startForgetting(index)">{{$t("Forget")}}</v-btn>
+                    <v-btn
+                      color="primary"
+                      text
+                      @click="forgetConfirmation = false"
+                      >{{ $t("Cancel") }}</v-btn
+                    >
+                    <v-btn
+                      color="primary"
+                      text
+                      @click="startForgetting(index)"
+                      >{{ $t("Forget") }}</v-btn
+                    >
                   </v-card-actions>
                 </v-card-actions>
               </v-card>
             </v-dialog>
           </v-list-item>
         </template>
-        <v-subheader>{{$t("Available networks")}}</v-subheader>
+        <v-subheader>{{ $t("Available networks") }}</v-subheader>
         <template v-for="(network, index) in avaliableNetworks">
           <v-list-item :key="network.id" @click="startConnection(network)">
             <v-list-item-action v-if="network.strength > 81">
@@ -101,18 +121,19 @@
         </template>
         <v-dialog v-model="confirmation" max-width="425">
           <v-card>
-            <v-card-title
-              v-if="setupNetwork.security"
-              class="headline"
-            >{{$t("Enter Wi-Fi password for {0}", [setupNetwork.name])}}</v-card-title>
-            <v-card-title v-else class="headline">{{$t("Connect to network?")}}</v-card-title>
+            <v-card-title v-if="setupNetwork.security" class="headline">{{
+              $t("Enter Wi-Fi password for {0}", [setupNetwork.name])
+            }}</v-card-title>
+            <v-card-title v-else class="headline">{{
+              $t("Connect to network?")
+            }}</v-card-title>
             <v-container v-if="setupNetwork.security">
               <BottomInput v-model="keyboard" :input.sync="password">
                 <v-text-field
                   v-model="password"
                   filled
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[ rules.required, rules.min ]"
+                  :rules="[rules.required, rules.min]"
                   :type="showPassword ? 'text' : 'password'"
                   name="input-10-2"
                   :label="$tc('Wi-Fi password')"
@@ -124,13 +145,16 @@
             </v-container>
 
             <v-card-actions>
-              <v-btn color="primary" text @click="confirmation = false">{{$t("Cancel")}}</v-btn>
+              <v-btn color="primary" text @click="confirmation = false">{{
+                $t("Cancel")
+              }}</v-btn>
               <v-btn
                 color="primary"
                 text
                 :disabled="isMin"
                 @click="startConnecting"
-              >{{$t("Connect")}}</v-btn>
+                >{{ $t("Connect") }}</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -204,7 +228,7 @@ export default class extends Vue {
   @settings.Action getCurrentAddress: any
   @settings.Action setConnectedMethod: any
 
-  private currentMethod: string = 'WIRELESS'
+  private currentMethod: string = 'AUTO'
 
   private startConnection (network: Network) {
     if (network) {
