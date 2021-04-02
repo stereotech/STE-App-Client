@@ -14,3 +14,7 @@ export interface StatisticsResponse {
         TimeDataset?: StatisticsData[],
     }
 }
+
+export enum StatisticsFilter {
+
+}

@@ -234,5 +234,13 @@
   "Download STE App log": "Скачать лог STE App",
   "Download Octoprint log": "Скачать лог Octoprint",
   "Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website": "Выберите необходимую температуру нагрева, ее можно найти на упаковке с материалом, либо на сайте производителя",
-  "Statistics": "Статистика"
+  "Statistics": "Статистика",
+  "DONE": "Заввершено",
+  "FAILED": "Неудачно",
+  "ERROR": "Ошибка",
+  "IDLE": "Ожидание",
+  "MAINTENANCE": "Обслуживание",
+  "PAUSED": "Пауза",
+  "PRINTING": "Печать",
+  "OFFLINE": "Выключен"
 }

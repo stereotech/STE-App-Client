@@ -234,5 +234,13 @@
   "Download STE App log": "Download STE App log",
   "Download Octoprint log": "Download Octoprint log",
   "Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website": "Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website",
-  "Statistics": "Statistics"
+  "Statistics": "Statistics",
+  "DONE": "Done",
+  "FAILED": "Failed",
+  "ERROR": "Error",
+  "IDLE": "Idle",
+  "MAINTENANCE": "Maintenance",
+  "PAUSED": "Paused",
+  "PRINTING": "Printing",
+  "OFFLINE": "Offline"
 }
