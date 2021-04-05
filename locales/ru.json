@@ -235,12 +235,18 @@
   "Download Octoprint log": "Скачать лог Octoprint",
   "Select the needed temperature of the material, which could be found on the filament package or on the manufacturer's website": "Выберите необходимую температуру нагрева, ее можно найти на упаковке с материалом, либо на сайте производителя",
   "Statistics": "Статистика",
-  "DONE": "Заввершено",
+  "DONE": "Завершено",
   "FAILED": "Неудачно",
   "ERROR": "Ошибка",
   "IDLE": "Ожидание",
   "MAINTENANCE": "Обслуживание",
   "PAUSED": "Пауза",
   "PRINTING": "Печать",
-  "OFFLINE": "Выключен"
+  "OFFLINE": "Выключен",
+  "Statistics by times in state": "Статистика по времени в статусе",
+  "Statistics by hour": "Статистика по часам",
+  "Statistics by day": "Статистика по дням месяца",
+  "Full statistics": "Полная статистика",
+  "Statistics by times in printing state": "Статистика по времени в статусе печати",
+  "Statistics by printing state": "Статистика по статусам печати"
 }

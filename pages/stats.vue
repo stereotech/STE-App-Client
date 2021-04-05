@@ -2,11 +2,35 @@
   <v-card>
     <v-container fluid>
       <v-row>
-        <v-col cols="12" md="6"><StatsItem :data="data.FullDataset" /> </v-col>
-        <v-col cols="12" md="6"><StatsItem :data="data.DayDataset" /> </v-col>
-        <v-col cols="12" md="6"><StatsItem :data="data.HourDataset" /> </v-col>
+        <v-col cols="12"
+          ><StatsItem :data="data.FullDataset" :title="$t('Full statistics')" />
+        </v-col>
         <v-col cols="12" md="6"
-          ><StatsItem :data="data.TimeDataset" type="donut" timed />
+          ><StatsItem
+            :data="data.DayDataset"
+            :title="$t('Statistics by day')"
+          />
+        </v-col>
+        <v-col cols="12" md="6"
+          ><StatsItem
+            :data="data.HourDataset"
+            :title="$t('Statistics by hour')"
+          />
+        </v-col>
+        <v-col cols="12" md="6"
+          ><StatsItem
+            :data="data.TimeDataset"
+            type="donut"
+            timed
+            :title="$t('Statistics by times in state')"
+          />
+        </v-col>
+        <v-col cols="12" md="6"
+          ><StatsItem
+            :data="data.PrintDataset"
+            type="radialBar"
+            :title="$t('Statistics by printing state')"
+          />
         </v-col>
       </v-row>
     </v-container>

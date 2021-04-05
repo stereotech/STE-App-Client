@@ -1,12 +1,15 @@
 <template>
   <v-card outlined>
-    <apexchart
-      height="350"
-      :type="type"
-      :series="series"
-      :options="options"
-    ></apexchart
-  ></v-card>
+    <v-card-title>{{ title }}</v-card-title>
+    <v-card-text>
+      <apexchart
+        height="350"
+        :type="type"
+        :series="series"
+        :options="options"
+      ></apexchart>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -17,24 +20,21 @@ import { StatisticsData } from '~/types/stats'
 export default class StatsItem extends Vue {
   @Prop({ type: Array, default: () => [] }) data!: StatisticsData[]
   @Prop({ type: String, default: 'bar' }) type!: string
+  @Prop({ type: String, default: '' }) title!: string
   @Prop({ type: Boolean, default: false }) timed!: boolean
 
   get series () {
     if (this.timed) {
-      return this.sortedData.map(i => {
-        return {
-          label: this.$tc(i.eventName),
-          color: this.colorByEventName(i.eventName),
-          data: i.timeSum
-        }
-      })
+      return this.sortedData.map(i => i.timeSum)
+    } else if (this.type === 'radialBar') {
+      const printingCount = this.sortedData.find(i => i.eventName === 'PRINTING')?.count || 1;
+      return this.sortedData.filter(i => i.eventName !== 'PRINTING').map(i => Math.round(100 * i.count / printingCount))
     } else {
       const names = this.sortedData.map(i => i.eventName).filter((i, idx, self) => self.indexOf(i) === idx)
       return names.map(name => {
         return {
           name: this.$tc(name),
-          data: this.sortedData.filter(i => i.eventName === name).map(i => i.count),
-          color: this.colorByEventName(name)
+          data: this.sortedData.filter(i => i.eventName === name).map(i => i.count)
         }
       })
     }
@@ -74,7 +74,25 @@ export default class StatsItem extends Vue {
           show: false
         }
       },
-      colors: ['#0277bd', '#191b38', '#FF5252', '#9C27B0', '#4CAF50', '#FFC107'],
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name: {
+              fontSize: '22px',
+            },
+            value: {
+              fontSize: '16px',
+            },
+            total: {
+              show: true,
+              label: this.$tc('PRINTING'),
+              formatter: () => this.sortedData.find(i => i.eventName === 'PRINTING')?.count || 0
+            }
+          }
+        }
+      },
+      labels: this.sortedData.map(i => this.$tc(i.eventName)),
+      colors: this.sortedData.map(i => this.colorByEventName(i.eventName)),
       legend: {
         position: 'top'
       },

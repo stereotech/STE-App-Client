@@ -242,5 +242,11 @@
   "MAINTENANCE": "Maintenance",
   "PAUSED": "Paused",
   "PRINTING": "Printing",
-  "OFFLINE": "Offline"
+  "OFFLINE": "Offline",
+  "Statistics by times in state": "Statistics by times in state",
+  "Statistics by hour": "Statistics by hour",
+  "Statistics by day": "Statistics by day",
+  "Full statistics": "Full statistics",
+  "Statistics by times in printing state": "Statistics by times in printing state",
+  "Statistics by printing state": "Statistics by printing state"
 }
