@@ -1,5 +1,6 @@
 <template>
-  <v-card outlined>
+  <v-skeleton-loader v-if="loading" type="card"></v-skeleton-loader>
+  <v-card outlined v-else>
     <v-card-title>{{ title }}</v-card-title>
     <v-card-text>
       <apexchart
@@ -22,24 +23,116 @@ export default class StatsItem extends Vue {
   @Prop({ type: String, default: 'bar' }) type!: string
   @Prop({ type: String, default: '' }) title!: string
   @Prop({ type: Boolean, default: false }) timed!: boolean
+  @Prop({ type: Boolean, default: false }) loading!: boolean
 
   get series () {
+    if (this.type === 'bar') {
+      return this.barSeries
+    }
+    if (this.type === 'pie' || this.type === 'donut') {
+      return this.pieSeries
+    }
+    if (this.type === 'radialBar') {
+      return this.radialSeries
+    }
+  }
+
+  get barSeries () {
+    const names = this.sortedData.map(i => i.eventName).filter((i, idx, self) => self.indexOf(i) === idx)
+    return names.map(name => {
+      return {
+        name: this.$tc(name),
+        data: this.sortedData.filter(i => i.eventName === name).map(i => i.count),
+        color: this.colorByEventName(name)
+      }
+    })
+  }
+
+  get pieSeries () {
     if (this.timed) {
       return this.sortedData.map(i => i.timeSum)
-    } else if (this.type === 'radialBar') {
-      const printingCount = this.sortedData.find(i => i.eventName === 'PRINTING')?.count || 1;
-      return this.sortedData.filter(i => i.eventName !== 'PRINTING').map(i => Math.round(100 * i.count / printingCount))
     } else {
-      const names = this.sortedData.map(i => i.eventName).filter((i, idx, self) => self.indexOf(i) === idx)
-      return names.map(name => {
-        return {
-          name: this.$tc(name),
-          data: this.sortedData.filter(i => i.eventName === name).map(i => i.count)
-        }
-      })
+      return this.sortedData.map(i => i.count)
     }
+  }
 
+  get radialSeries () {
+    const printingCount = this.sortedData.find(i => i.eventName === 'PRINTING')?.count || 1;
+    return this.sortedData.filter(i => i.eventName !== 'PRINTING').map(i => Math.round(100 * i.count / printingCount))
+  }
 
+  get barOptions () {
+    return {
+      chart: {
+        toolbar: {
+          show: false
+        }
+      },
+      legend: {
+        position: 'top'
+      },
+      xaxis: {
+        categories: this.categories
+      },
+      stroke: {
+        lineCap: 'round'
+      }
+    }
+  }
+
+  get pieOptions () {
+    return {
+      labels: this.sortedData.map(i => this.$tc(i.eventName)),
+      colors: this.sortedData.map(i => this.colorByEventName(i.eventName)),
+      legend: {
+        position: 'top'
+      },
+    }
+  }
+
+  get radialOptions () {
+    return {
+      chart: {
+        toolbar: {
+          show: false
+        }
+      },
+      plotOptions: {
+        radialBar: {
+          dataLabels: {
+            name: {
+              fontSize: '22px',
+            },
+            value: {
+              fontSize: '16px',
+            },
+            total: {
+              show: true,
+              label: this.$tc('PRINTING'),
+              formatter: () => this.sortedData.find(i => i.eventName === 'PRINTING')?.count || 0
+            }
+          }
+        }
+      },
+      labels: this.sortedData.filter(i => i.eventName !== 'PRINTING').map(i => this.$tc(i.eventName)),
+      colors: this.sortedData.map(i => this.colorByEventName(i.eventName)),
+      legend: {
+        show: true,
+        position: 'top'
+      },
+    }
+  }
+
+  get options () {
+    if (this.type === 'bar') {
+      return this.barOptions
+    }
+    if (this.type === 'pie' || this.type === 'donut') {
+      return this.pieOptions
+    }
+    if (this.type === 'radialBar') {
+      return this.radialOptions
+    }
   }
 
   colorByEventName (name: string) {
@@ -65,41 +158,6 @@ export default class StatsItem extends Vue {
 
   get categories () {
     return this.sortedData.map(i => i.date).filter((i, idx, self) => self.indexOf(i) === idx).sort()
-  }
-
-  get options () {
-    return {
-      chart: {
-        toolbar: {
-          show: false
-        }
-      },
-      plotOptions: {
-        radialBar: {
-          dataLabels: {
-            name: {
-              fontSize: '22px',
-            },
-            value: {
-              fontSize: '16px',
-            },
-            total: {
-              show: true,
-              label: this.$tc('PRINTING'),
-              formatter: () => this.sortedData.find(i => i.eventName === 'PRINTING')?.count || 0
-            }
-          }
-        }
-      },
-      labels: this.sortedData.map(i => this.$tc(i.eventName)),
-      colors: this.sortedData.map(i => this.colorByEventName(i.eventName)),
-      legend: {
-        position: 'top'
-      },
-      xaxis: {
-        categories: this.categories
-      }
-    }
   }
 
   get sortedData () {

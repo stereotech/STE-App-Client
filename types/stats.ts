@@ -16,5 +16,13 @@ export interface StatisticsResponse {
 }
 
 export enum StatisticsFilter {
-
+    Today = 'today',
+    CurrentWeek = 'current_week',
+    CurrentMonth = 'current_month',
+    CurrentYear = 'current_year',
+    LastWeek = 'last_week',
+    LastMonth = 'last_month',
+    Last3Month = 'last3_month',
+    Last6Month = 'last6_month',
+    LastYear = 'last_year'
 }

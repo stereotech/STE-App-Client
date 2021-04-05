@@ -248,5 +248,17 @@
   "Statistics by day": "Статистика по дням месяца",
   "Full statistics": "Полная статистика",
   "Statistics by times in printing state": "Статистика по времени в статусе печати",
-  "Statistics by printing state": "Статистика по статусам печати"
+  "Statistics by printing state": "Статистика по статусам печати",
+  "Printer utilization": "Загрузка принтера",
+  "Print success": "Успешная печать",
+  "Today": "Сегодня",
+  "Filter": "Фильтрация",
+  "Current week": "Текущая неделя",
+  "Last year": "Прошлый год",
+  "Last 6 months": "Последние 6 месяцев",
+  "Last 3 months": "Последние 3 месяца",
+  "Last month": "Прошлый месяц",
+  "Last week": "Прошлая неделя",
+  "Current year": "Текущий год",
+  "Current month": "Текущий месяц"
 }
