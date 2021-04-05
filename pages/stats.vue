@@ -2,7 +2,7 @@
   <v-card>
     <v-container fluid>
       <v-row>
-        <v-col cols="10">
+        <v-col cols="12" sm="10">
           <v-select
             :label="$t('Filter')"
             :items="filterItems"
@@ -11,9 +11,14 @@
             @change="update"
           ></v-select>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" sm="1">
           <v-btn icon @click="update" color="primary" large>
             <v-icon>mdi-refresh</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="2" sm="1">
+          <v-btn icon @click="confirmation = true" color="primary" large>
+            <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -73,6 +78,19 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="confirmation" max-width="425">
+      <v-card>
+        <v-card-title class="headline">{{
+          $t("Are you sure want to clear statistics?")
+        }}</v-card-title>
+        <v-card-actions>
+          <v-btn color="primary" text @click="confirmation = false">{{
+            $t("No")
+          }}</v-btn>
+          <v-btn color="error" text @click="clear">{{ $t("Yes") }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -102,6 +120,13 @@ export default class StatsPage extends Vue {
     await this.update()
   }
 
+  async clear () {
+    this.loading = true
+    this.confirmation = false
+    await this.clearData()
+    this.loading = false
+  }
+
   async update (filter: StatisticsFilter = StatisticsFilter.CurrentYear) {
     this.loading = true
     await this.fetchData(filter)
@@ -109,6 +134,7 @@ export default class StatsPage extends Vue {
   }
 
   loading: boolean = false
+  confirmation: boolean = false
 
   get filterItems () {
     return [
