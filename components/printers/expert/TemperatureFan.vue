@@ -181,6 +181,7 @@ export default class TemperatureFanCard extends Vue {
   }
 
   offCoolingFan () {
+    this.coolingFanTarget = 0
     this.fanCommand({ id: this.id, fanId: 0, fanValue: 0 })
   }
 
