@@ -63,6 +63,9 @@ export default class StatsItem extends Vue {
 
   get barOptions () {
     return {
+      theme: {
+        mode: this.$vuetify.theme.dark ? 'dark' : 'light',
+      },
       chart: {
         toolbar: {
           show: false
@@ -82,6 +85,9 @@ export default class StatsItem extends Vue {
 
   get pieOptions () {
     return {
+      theme: {
+        mode: this.$vuetify.theme.dark ? 'dark' : 'light',
+      },
       labels: this.sortedData.map(i => this.$tc(i.eventName)),
       colors: this.sortedData.map(i => this.colorByEventName(i.eventName)),
       legend: {
@@ -92,6 +98,9 @@ export default class StatsItem extends Vue {
 
   get radialOptions () {
     return {
+      theme: {
+        mode: this.$vuetify.theme.dark ? 'dark' : 'light',
+      },
       chart: {
         toolbar: {
           show: false

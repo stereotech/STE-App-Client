@@ -23,14 +23,14 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12" sm="6">
           <GaugeItem
             :data="utilizationData"
             :title="$t('Printer utilization')"
             :loading="loading"
           />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" sm="6">
           <GaugeItem
             :data="successPrints"
             :colors="['#FF5252', '#FFC107', '#4CAF50']"
