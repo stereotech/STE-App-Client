@@ -82,7 +82,10 @@ export const mutations: MutationTree<SettingsState> = {
   },
 
   setNetworks (state: SettingsState, networks: Network[]) {
-    state.networking.networks = networks
+    if (networks) {
+      state.networking.networks = networks.filter(n => n !== null || n !== undefined)
+    }
+
   }
 }
 
@@ -159,6 +162,10 @@ export const actions: ActionTree<SettingsState, RootState> = {
 
   async sendFactoryReset ({ commit }, force: boolean) {
     await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'reset', removeStorageFiles: force })
+  },
+
+  async sendCleanStorage ({ commit }) {
+    await this.$axios.post(this.state.apiUrl + systemEndpoint, { command: 'cleanup' })
   },
 
   async sendFinishSetup ({ commit }) {

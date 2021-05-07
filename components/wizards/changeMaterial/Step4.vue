@@ -22,6 +22,21 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="loadMaterial">{{
+            $t("Load")
+          }}</v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="repeat">{{
+            $t("Unload")
+          }}</v-btn>
+        </v-col>
+        <v-col v-if="additionalData.action === 0" cols="12">
+          <v-btn block x-large depressed color="accent" nuxt to="/printers">{{
+            $t("Finish")
+          }}</v-btn>
+        </v-col>
+        <v-col v-else cols="12">
           <v-btn block x-large depressed color="accent" @click="next(4)">{{
             $t("Next")
           }}</v-btn>
@@ -60,6 +75,11 @@ export default class extends Vue {
   private step?: number = 3
   private curStep?: number = this.currentStep
 
+  private image: string = 'wizards/change_material/change_material03.jpg'
+  private description: string = ''
+
+  @printers.Action retractCommand: any
+  @printers.Action extrudeCommand: any
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
@@ -74,14 +94,14 @@ export default class extends Vue {
           if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
             const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
             const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-            deviation = Math.abs(target - actual)
+            deviation = target - actual
           }
         } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
           const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
           const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-          deviation = Math.abs(target - actual)
+          deviation = target - actual
         }
-        return deviation > 10
+        return deviation > 20
       }
     }
     return true
@@ -104,20 +124,24 @@ export default class extends Vue {
     return 0
   }
 
-  private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = ''
+  private async repeat () {
+    await this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
+  }
+
+  private async loadMaterial () {
+    await this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 20 })
+  }
 
   private next (step: number) {
     this.$emit('change', step)
     this.curStep = step
   }
-
   mounted () {
-    this.description = this.$tc('Load new spool, insert material into bowden tube and press Next button')
+    this.description = this.$tc('Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading')
   }
 
   updated () {
-    this.description = this.$tc('Load new spool, insert material into bowden tube and press Next button')
+    this.description = this.$tc('Click Unload button and wait for material unloading and remove the spool. If it is needed, you could press Unload button to repeat unloading')
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
-    <v-container>
-      <v-row dense align="center" justify="space-around">
+    <v-container fluid>
+      <v-row align="center" justify="space-around">
         <v-col cols="12">
           <JogCard dense isFiveAxis :id="settings.systemId" />
         </v-col>

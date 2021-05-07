@@ -55,7 +55,7 @@ export default class extends Vue {
     }
   }
 
-  private async finish () {
+  async finish () {
     const large = this.additionalData.size === PrinterSize.Large
     await this.customCommand({ id: this.settings.systemId, command: `G54 G0 Z${large ? '150' : '100'}` })
     await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
@@ -63,7 +63,7 @@ export default class extends Vue {
   }
 
   async restart () {
-    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0 Z0' })
     this.next(0)
   }
 

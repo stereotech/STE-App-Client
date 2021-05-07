@@ -47,11 +47,11 @@ export default class extends Vue {
 
   async performStep () {
     const large = this.additionalData.size === PrinterSize.Large
-    await this.customCommand({ id: this.settings.systemId, command: 'G54\nG28' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G28' })
     if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      await this.customCommand({ id: this.settings.systemId, command: `G0 Z${large ? '150' : '100'} A60` })
+      await this.customCommand({ id: this.settings.systemId, command: `G54 G0 Z${large ? '150' : '100'} A60` })
     } else {
-      await this.customCommand({ id: this.settings.systemId, command: `G0 Z150 A60` })
+      await this.customCommand({ id: this.settings.systemId, command: `G54 G0 Z150 A60` })
     }
   }
 

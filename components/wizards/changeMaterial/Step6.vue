@@ -1,29 +1,20 @@
 <template>
-  <WizardStep v-if="heating" :step="step">
-    <v-container>
-      <v-row dense align="center" justify="space-around">
-        <v-col cols="4">
-          <v-progress-circular
-            :size="70"
-            :width="7"
-            rotate="-90"
-            color="secondary"
-            :value="heatingValue / 2.4"
-            >{{ heatingValue | currency("", 0) }}</v-progress-circular
-          >
-        </v-col>
-        <v-col cols="4">
-          <p>{{ $t("Heating...") }}</p>
-        </v-col>
-      </v-row>
-    </v-container>
-  </WizardStep>
-  <WizardStep v-else :step="step" :image="image" :description="description">
+  <WizardStep :step="step" :image="image" :description="description">
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <v-btn block x-large depressed color="accent" @click="next(5)">{{
-            $t("Next")
+          <v-btn block x-large depressed color="accent" @click="repeat">{{
+            $t("Unload")
+          }}</v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="load">{{
+            $t("Load")
+          }}</v-btn>
+        </v-col>
+        <v-col cols="12">
+          <v-btn block x-large depressed color="accent" @click="finish">{{
+            $t("Finish")
           }}</v-btn>
         </v-col>
       </v-row>
@@ -57,9 +48,15 @@ export default class extends Vue {
   @Watch('additionalData') onAdditionalDataChanged () {
     this.$emit('dataChanged', this.additionalData)
   }
-  private step?: number = 4
+  private step?: number = 5
   private curStep?: number = this.currentStep
 
+  private image: string = 'wizards/change_material/change_material04.jpg'
+  private description: string = ''
+
+  @printers.Action retractCommand: any
+  @printers.Action extrudeCommand: any
+  @printers.Action toolTempCommand: any
   @printers.Getter status!: (id: string) => CurrentState | undefined
 
   get computedStatus () {
@@ -74,12 +71,12 @@ export default class extends Vue {
           if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
             const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.target
             const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-            deviation = target - actual
+            deviation = Math.abs(target - actual)
           }
         } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
           const target = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.target
           const actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-          deviation = target - actual
+          deviation = Math.abs(target - actual)
         }
         return deviation > 10
       }
@@ -87,25 +84,18 @@ export default class extends Vue {
     return true
   }
 
-  get heatingValue (): number {
-    if (this.computedStatus) {
-      if (this.computedStatus.temps[this.computedStatus.temps.length - 1]) {
-        let actual = 0
-        if (this.additionalData.tool === 0) {
-          if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0) {
-            actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool0.actual
-          }
-        } else if (this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1) {
-          actual = this.computedStatus.temps[this.computedStatus.temps.length - 1].tool1.actual
-        }
-        return actual
-      }
-    }
-    return 0
+  private async repeat () {
+    await this.retractCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 10 })
   }
 
-  private image: string = 'wizards/change_material/change_material.jpg'
-  private description: string = ''
+  private async load () {
+    await this.extrudeCommand({ id: this.settings.systemId, toolId: this.additionalData.tool, amount: 120 })
+  }
+
+  private finish () {
+    this.toolTempCommand({ id: this.settings.systemId, tool0Temp: 0, tool1Temp: 0 })
+    this.$router.push('/printers')
+  }
 
   private next (step: number) {
     this.$emit('change', step)
@@ -113,11 +103,11 @@ export default class extends Vue {
   }
 
   mounted () {
-    this.description = this.$tc('Load new spool, insert material into bowden tube and press Next button')
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
   }
 
   updated () {
-    this.description = this.$tc('Load new spool, insert material into bowden tube and press Next button')
+    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
   }
 }
 </script>

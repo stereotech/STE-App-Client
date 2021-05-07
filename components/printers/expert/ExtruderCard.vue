@@ -7,7 +7,6 @@
           <v-btn
             x-large
             outlined
-            text
             icon
             :color="controlColor"
             :disabled="printing"
@@ -20,7 +19,6 @@
           <v-btn
             x-large
             outlined
-            text
             icon
             :color="controlColor"
             :disabled="printing"
@@ -95,7 +93,6 @@
           <v-btn
             x-large
             outlined
-            text
             icon
             :color="controlColor"
             :disabled="printing"
@@ -113,7 +110,6 @@
           <v-btn
             x-large
             outlined
-            text
             icon
             :color="controlColor"
             :disabled="printing"

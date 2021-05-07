@@ -3,42 +3,77 @@
     <v-container fluid>
       <v-row dense>
         <v-col cols="4">
-          <v-img class="elevation-1" :src="'/printers/'+ model +'.png'" alt="Avatar">
+          <v-img
+            class="elevation-1"
+            :src="'/printers/' + model + '.png'"
+            alt="Avatar"
+          >
             <div v-if="printing" class="fill-height repeating-gradient-white" />
-            <div v-else-if="paused || maintenance" class="fill-height repeating-gradient-warning" />
-            <div v-else-if="done" class="fill-height repeating-gradient-success" />
-            <div v-else-if="offline" class="fill-height repeating-gradient-error" />
+            <div
+              v-else-if="paused || maintenance"
+              class="fill-height repeating-gradient-warning"
+            />
+            <div
+              v-else-if="done"
+              class="fill-height repeating-gradient-success"
+            />
+            <div
+              v-else-if="offline"
+              class="fill-height repeating-gradient-error"
+            />
             <div v-else />
           </v-img>
         </v-col>
         <v-col cols="8">
           <div class="title">
             {{ name }}
-            <v-chip color="primary" v-if="local" outlined label>{{$t("Host")}}</v-chip>
-            <v-chip color="info" v-if="isFiveAxis" outlined label>{{$t("5D")}}</v-chip>
-            <v-chip color="brown" v-if="isGlaze" outlined label>{{$t("Glaze")}}</v-chip>
-            <v-chip color="gray" v-if="isFiber" outlined label>{{$t("Fiber")}}</v-chip>
+            <v-chip color="info" v-if="isFiveAxis" outlined label>{{
+              $t("5D")
+            }}</v-chip>
+            <v-chip color="brown" v-if="isGlaze" outlined label>{{
+              $t("Glaze")
+            }}</v-chip>
+            <v-chip color="gray" v-if="isFiber" outlined label>{{
+              $t("Fiber")
+            }}</v-chip>
           </div>
 
           <div class="caption">{{ model }}</div>
           <div v-if="printing || paused" class="caption">
-            <span>{{$t("Spent ")}} {{ $moment.duration(printTime, 'seconds').humanize() }}</span>
             <span
-              v-if="printTimeLeft"
-            >, {{ $moment.duration(printTimeLeft, 'seconds').humanize() }} {{$t("Left")}}</span>
+              >{{ $t("Spent ") }}
+              {{ $moment.duration(printTime, "seconds").humanize() }}</span
+            >
+            <span v-if="printTimeLeft"
+              >, {{ $moment.duration(printTimeLeft, "seconds").humanize() }}
+              {{ $t("Left") }}</span
+            >
           </div>
-          <div v-if="printing" class="title">{{$t("Printing...")}}{{ progress | currency('', 1) }}%</div>
-          <div
-            v-if="paused"
-            class="warning--text title"
-          >{{$t("Paused at")}}{{ progress | currency('', 1) }}%</div>
-          <div v-else-if="idle" class="title">{{$t("Idle")}}</div>
-          <div class="warning--text title" v-else-if="maintenance">{{$t("Maintenance")}}</div>
-          <div class="success--text title" v-else-if="done">{{$t("Printing Done!")}}</div>
-          <div class="error--text title" v-else-if="failed">{{$t("Printing Failed")}}</div>
-          <div class="error--text title" v-else-if="offline">{{$t("Offline")}}</div>
-          <div class="primary--text title" v-else-if="loading">{{$t("Loading...")}}</div>
-          <div class="error--text title" v-else-if="notAvaliable">{{$t("Not Available")}}</div>
+          <div v-if="printing" class="title">
+            {{ $t("Printing...") }}{{ progress | currency("", 1) }}%
+          </div>
+          <div v-if="paused" class="warning--text title">
+            {{ $t("Paused at") }}{{ progress | currency("", 1) }}%
+          </div>
+          <div v-else-if="idle" class="title">{{ $t("Idle") }}</div>
+          <div class="warning--text title" v-else-if="maintenance">
+            {{ $t("Maintenance") }}
+          </div>
+          <div class="success--text title" v-else-if="done">
+            {{ $t("Printing Done!") }}
+          </div>
+          <div class="error--text title" v-else-if="failed">
+            {{ $t("Printing Failed") }}
+          </div>
+          <div class="error--text title" v-else-if="offline">
+            {{ $t("Offline") }}
+          </div>
+          <div class="primary--text title" v-else-if="loading">
+            {{ $t("Loading...") }}
+          </div>
+          <div class="error--text title" v-else-if="notAvaliable">
+            {{ $t("Not Available") }}
+          </div>
           <v-progress-linear v-if="printing" :value="progress" />
           <v-progress-linear v-if="paused" :value="progress" color="warning" />
           <v-progress-linear v-if="loading" indeterminate />

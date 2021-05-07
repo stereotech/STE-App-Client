@@ -22,7 +22,8 @@
     <PrioritySettingsDialog v-model="settings[5].page" />
     <StorageDialog v-model="settings[6].page" />
     <ResetDialog v-model="settings[7].page" />
-    <UpdateDialog v-model="settings[8].page" />
+    <FeedbackDialog v-model="settings[8].page" />
+    <UpdateDialog v-model="settings[9].page" />
   </SettingsDialog>
 </template>
 
@@ -38,6 +39,7 @@ import ResetDialog from '~/components/common/settings/ResetDialog.vue'
 import UpdateDialog from '~/components/common/settings/UpdateDialog.vue'
 import AppearanceDialog from '~/components/common/settings/AppearanceDialog.vue'
 import CloudDialog from '~/components/common/settings/CloudDialog.vue'
+import FeedbackDialog from '~/components/common/settings/FeedbackDialog.vue'
 
 @Component({
   components: {
@@ -50,7 +52,8 @@ import CloudDialog from '~/components/common/settings/CloudDialog.vue'
     ResetDialog,
     UpdateDialog,
     AppearanceDialog,
-    CloudDialog
+    CloudDialog,
+    FeedbackDialog
   }
 })
 export default class extends Vue {
@@ -113,6 +116,12 @@ export default class extends Vue {
       icon: 'mdi-backup-restore',
       title: 'Reset and Restore',
       translatedTitle: 'Reset and Restore',
+      page: false
+    },
+    {
+      icon: 'mdi-message-alert',
+      title: 'Feedback',
+      translatedTitle: 'Feedback',
       page: false
     },
     {

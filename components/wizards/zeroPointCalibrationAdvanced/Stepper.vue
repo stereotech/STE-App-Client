@@ -51,8 +51,9 @@ export default class ZeroPointCalibrationAdvancedStepper extends Vue {
 
   @settings.Getter settings!: Settings
   @printers.Action customCommand: any
-  closeWizard () {
-    this.customCommand('G54 G28 X0 Y0 Z0')
+  async closeWizard () {
+    await this.customCommand('G54')
+    await this.customCommand('G28 X0 Y0 Z0')
     this.$router.push('/printers')
   }
 }

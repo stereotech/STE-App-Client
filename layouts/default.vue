@@ -210,7 +210,7 @@ export default class extends Vue {
   }
 
   head () {
-    return { titleTemplate: `STE App - %s - ${this.settings.systemId.toUpperCase()}` }
+    return { titleTemplate: `${this.settings.systemId.toUpperCase()} - STE App - %s` }
   }
 
   get isMobile (): boolean {
@@ -229,6 +229,12 @@ export default class extends Vue {
       title: 'Printer',
       translatedTitle: 'Printer',
       link: '/printers'
+    },
+    {
+      icon: 'mdi-finance',
+      title: 'Statistics',
+      translatedTitle: 'Statistics',
+      link: '/stats'
     }
   ]
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly

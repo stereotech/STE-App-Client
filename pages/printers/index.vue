@@ -3,11 +3,7 @@
     <PrinterCard :id="settings.systemId" toolbar />
     <v-col cols="12">
       <v-expansion-panels v-model="panel" multiple>
-        <WizardsPanel
-          :id="settings.systemId"
-          v-if="isMaintenance || isPaused || isDone || isFailed"
-          :printerType="printerType"
-        />
+        <WizardsPanel :id="settings.systemId" :printerType="printerType" />
         <!--<WizardsPanel :id="settings.systemId" :printerType="printerType" />-->
         <ManualControlPanel
           :printing="isPrinting"
