@@ -20,7 +20,7 @@
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
     "@nuxt/typescript-runtime": "^0.4.10",
-    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/axios": "^5.13.5",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "apexcharts": "^3.26.0",
     "cordova-set-version": "^11.0.1",
