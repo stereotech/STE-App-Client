@@ -1,7 +1,7 @@
 <template>
   <WizardStep :step="step" :image="image" :description="description">
     <v-container>
-      <v-row dense align="center" justify="space-around">
+      <v-row align="center" justify="space-around">
         <v-col cols="12">
           <v-slider
             v-model="diameter"
@@ -25,6 +25,8 @@
             </template>
           </v-slider>
         </v-col>
+        <v-col cols="12"></v-col>
+        <v-col cols="12"></v-col>
         <v-col cols="12">
           <v-btn block x-large depressed color="accent" @click="nextStep">{{
             $t("Next")
