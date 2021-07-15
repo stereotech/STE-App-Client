@@ -3,7 +3,7 @@
     <v-container>
       <v-row dense align="center" justify="space-around">
         <v-col cols="12">
-          <JogCard dense isFiveAxis :id="settings.systemId" />
+          <JogCard dense :id="settings.systemId" />
         </v-col>
         <v-col cols="12">
           <v-btn block x-large depressed color="accent" @click="nextStep">{{
