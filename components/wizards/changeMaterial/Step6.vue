@@ -103,11 +103,11 @@ export default class extends Vue {
   }
 
   mounted () {
-    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
+    this.description = this.$tc('Press Load, and gently feed the filament into the Teflon tube by hand. Feed the filament by hand until you feel the extruder pull on the filament by itself. Press Load until you see material coming out of the nozzle')
   }
 
   updated () {
-    this.description = this.$tc('Use Load and Unload buttons to load material untill it comes from nozzle')
+    this.description = this.$tc('Press Load, and gently feed the filament into the Teflon tube by hand. Feed the filament by hand until you feel the extruder pull on the filament by itself. Press Load until you see material coming out of the nozzle')
   }
 }
 </script>
