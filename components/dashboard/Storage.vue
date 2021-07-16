@@ -137,81 +137,85 @@
                 </v-menu>
               </v-list-item-action>
             </v-list-item>
-            <v-list-item v-else :key="index">
-              <v-btn
-                color="primary"
-                :ripple="false"
-                class="mr-2"
-                icon
-                outlined
-                v-if="settings.queueIgnoreAnalysis"
-              ></v-btn>
-              <v-btn
-                icon
-                outlined
-                color="info"
-                :ripple="false"
-                class="mr-2"
-                v-else-if="item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis"
-                >5D</v-btn
-              >
-              <v-btn
-                icon
-                outlined
-                color="primary"
-                :ripple="false"
-                class="mr-2"
-                v-else-if="item.gcodeAnalysis && !item.gcodeAnalysis.isFiveAxis"
-                >3D</v-btn
-              >
+            <v-menu v-else :key="index">
+              <template v-slot:activator="{ on }">
+                <v-list-item v-on="on">
+                  <v-btn
+                    color="primary"
+                    :ripple="false"
+                    class="mr-2"
+                    icon
+                    outlined
+                    v-if="settings.queueIgnoreAnalysis"
+                  ></v-btn>
+                  <v-btn
+                    icon
+                    outlined
+                    color="info"
+                    :ripple="false"
+                    class="mr-2"
+                    v-else-if="
+                      item.gcodeAnalysis && item.gcodeAnalysis.isFiveAxis
+                    "
+                    >5D</v-btn
+                  >
+                  <v-btn
+                    icon
+                    outlined
+                    color="primary"
+                    :ripple="false"
+                    class="mr-2"
+                    v-else-if="
+                      item.gcodeAnalysis && !item.gcodeAnalysis.isFiveAxis
+                    "
+                    >3D</v-btn
+                  >
 
-              <v-btn
-                icon
-                outlined
-                loading
-                color="primary"
-                :ripple="false"
-                class="mr-2"
-                v-else
-              ></v-btn>
-              <v-list-item-content>
-                <v-list-item-title class="subheading">{{
-                  item.display
-                }}</v-list-item-title>
+                  <v-btn
+                    icon
+                    outlined
+                    loading
+                    color="primary"
+                    :ripple="false"
+                    class="mr-2"
+                    v-else
+                  ></v-btn>
+                  <v-list-item-content>
+                    <v-list-item-title class="subheading">{{
+                      item.display
+                    }}</v-list-item-title>
 
-                <v-list-item-subtitle class="body-1"
-                  >{{ $t("Uploaded ")
-                  }}{{
-                    $moment.unix(item.date).fromNow()
-                  }}</v-list-item-subtitle
-                >
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-menu>
-                  <template v-slot:activator="{ on }">
+                    <v-list-item-subtitle class="body-1"
+                      >{{ $t("Uploaded ")
+                      }}{{
+                        $moment.unix(item.date).fromNow()
+                      }}</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+                  <v-list-item-action>
                     <v-btn icon v-on="on">
                       <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item @click="createPrintJob(item)">
-                      <v-list-item-action>
-                        <v-icon color="primary">mdi-plus-circle</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title>{{
-                        $t("Create printjob")
-                      }}</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="deleteFile(item)">
-                      <v-list-item-action>
-                        <v-icon>mdi-delete</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-list-item-action>
-            </v-list-item>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+              <v-list>
+                <v-list-item @click="createPrintJob(item)">
+                  <v-list-item-action>
+                    <v-icon color="primary">mdi-plus-circle</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-title>{{
+                    $t("Create printjob")
+                  }}</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="deleteFile(item)">
+                  <v-list-item-action>
+                    <v-icon>mdi-delete</v-icon>
+                  </v-list-item-action>
+                  <v-list-item-title>{{ $t("Remove") }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </template>
         </v-virtual-scroll>
 
