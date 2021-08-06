@@ -48,12 +48,14 @@ function createWindow() {
         mainWindow.webContents.send('window-id', mainWindow.id);
     });
 
-    mainWindow.webContents.setZoomFactor(2);
+
 
     // Open the DevTools.
     if (cdvElectronSettings.browserWindow.webPreferences.devTools) {
         mainWindow.webContents.openDevTools();
     }
+
+    mainWindow.webContents.setZoomFactor(2);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
