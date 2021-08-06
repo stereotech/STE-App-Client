@@ -3,7 +3,7 @@
         "width": 960,
         "height": 544,
         "webPreferences": {
-            "zoomFactor": 0
+            "zoomFactor": 1
         },
         "kiosk": true,
         "autoHideMenuBar": true,
