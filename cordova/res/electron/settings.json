@@ -2,10 +2,9 @@
     "browserWindow": {
         "width": 960,
         "height": 544,
-        "webContents": {
-            "zoomLevel": 6
+        "webPreferences": {
+            "zoomFactor": 3
         },
-        "zoomLevel": 6,
         "kiosk": true,
         "autoHideMenuBar": true,
         "alwaysOnTop": true,
