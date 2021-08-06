@@ -3,8 +3,9 @@
         "width": 960,
         "height": 544,
         "webContents": {
-            "zoomFactor": 3.0
+            "zoomLevel": 6
         },
+        "zoomLevel": 6,
         "kiosk": true,
         "autoHideMenuBar": true,
         "alwaysOnTop": true,
