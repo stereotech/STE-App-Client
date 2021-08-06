@@ -48,7 +48,7 @@ function createWindow() {
         mainWindow.webContents.send('window-id', mainWindow.id);
     });
 
-    mainWindow.webContents.setZoomFactor(2)
+    mainWindow.webContents.setZoomFactor(2);
 
     // Open the DevTools.
     if (cdvElectronSettings.browserWindow.webPreferences.devTools) {
