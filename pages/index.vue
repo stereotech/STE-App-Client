@@ -1,6 +1,10 @@
 <template>
   <v-row dense>
-    <PrinterCard v-for="(printer, index) in printers" :id="printer.id" :key="index" />
+    <PrinterCard
+      v-for="(printer, index) in printers"
+      :id="printer.id"
+      :key="index"
+    />
     <DoneJobs />
     <Queue />
     <Storage local />
@@ -45,6 +49,7 @@ export default class Dashboard extends Vue {
   @Getter isApiAbsolute!: boolean
 
   text: string = ''
+
 
   head () {
     return { title: this.$t('Dashboard') }
