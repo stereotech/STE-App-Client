@@ -50,7 +50,6 @@ export default class Dashboard extends Vue {
 
   text: string = ''
 
-
   head () {
     return { title: this.$t('Dashboard') }
   }
