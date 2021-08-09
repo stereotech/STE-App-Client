@@ -1,10 +1,5 @@
 {
     "browserWindow": {
-        "width": 960,
-        "height": 544,
-        "webPreferences": {
-            "zoomFactor": 1.5
-        },
         "kiosk": true,
         "autoHideMenuBar": true,
         "alwaysOnTop": true,
