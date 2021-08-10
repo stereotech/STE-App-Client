@@ -52,7 +52,7 @@ jobs:
           
       - name: Set release type
         run: echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/master-v5'
         
       - name: Set STE App Version
         run: echo "STEAPP_VERSION=steapp_v5" >> $GITHUB_ENV
