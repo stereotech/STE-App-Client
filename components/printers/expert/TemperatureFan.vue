@@ -92,7 +92,6 @@
         <v-col cols="10">
           <v-slider
             v-model="coolingFanTarget"
-            prepend-icon="mdi-fan"
             thumb-label="always"
             min="0"
             max="100"
@@ -100,6 +99,11 @@
             @change="setCoolingFan"
           >
             <template v-slot:thumb-label="{ value }">{{ value }}%</template>
+            <template v-slot:prepend>
+              <v-icon :class="coolingFanTarget > 0 ? 'icon-rotate' : ''"
+                >mdi-fan</v-icon
+              >
+            </template>
           </v-slider>
         </v-col>
       </v-row>
@@ -243,5 +247,20 @@ export default class TemperatureFanCard extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
+.icon-rotate {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
 </style>
