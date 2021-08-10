@@ -3,5 +3,34 @@
     "/node_modules": true
 },
 "i18n-ally.localesPaths": "locales",
-"i18n-ally.keystyle": "nested"
+"i18n-ally.keystyle": "nested",
+"yaml.customTags": [
+  "!And",
+  "!And sequence",
+  "!If",
+  "!If sequence",
+  "!Not",
+  "!Not sequence",
+  "!Equals",
+  "!Equals sequence",
+  "!Or",
+  "!Or sequence",
+  "!FindInMap",
+  "!FindInMap sequence",
+  "!Base64",
+  "!Join",
+  "!Join sequence",
+  "!Cidr",
+  "!Ref",
+  "!Sub",
+  "!Sub sequence",
+  "!GetAtt",
+  "!GetAZs",
+  "!ImportValue",
+  "!ImportValue sequence",
+  "!Select",
+  "!Select sequence",
+  "!Split",
+  "!Split sequence"
+]
 }

@@ -231,6 +231,12 @@ export default class extends Vue {
       link: '/printers'
     },
     {
+      icon: 'mdi-webcam',
+      title: 'Camera',
+      translatedTitle: 'Camera',
+      link: '/webcam'
+    },
+    {
       icon: 'mdi-finance',
       title: 'Statistics',
       translatedTitle: 'Statistics',
