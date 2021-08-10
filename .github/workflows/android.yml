@@ -2,9 +2,9 @@ name: Android App CI
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master-v5, develop-v5 ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master-v5, develop-v5 ]
   schedule:
     - cron: '0 2 * * 1'
 
