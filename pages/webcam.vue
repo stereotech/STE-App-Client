@@ -17,18 +17,21 @@ export default class WebcamPage extends Vue {
   @Getter isApiAbsolute!: boolean
 
   get webcamUrl () {
-    if (this.isApiAbsolute) {
-      let addressItems = this.api.split('/')
-      addressItems.pop()
-      addressItems.pop()
-      return `${addressItems.join('/')}:8080/?action=stream`
-    }
+    //if (this.isApiAbsolute) {
+    //  let addressItems = this.api.split('/')
+    //  addressItems.pop()
+    //  addressItems.pop()
+    //  return `${addressItems.join('/')}:8080/?action=stream`
+    //}
     let link = window.location.origin
+    console.log(link)
     if (link.endsWith('/')) {
       link = link.substring(0, link.length - 1)
     }
+    console.log(link)
     let linkParts = link.split(':')
     linkParts.pop()
+    console.log(linkParts)
     return `${linkParts.join(':')}:8080/?action=stream`
   }
 }
