@@ -24,6 +24,9 @@ export default class WebcamPage extends Vue {
       return `${addressItems.join('/')}:8080/?action=stream`
     }
     let link = window.location.origin
+    if (link.endsWith('/')) {
+      link = link.substring(0, link.length - 1)
+    }
     let linkParts = link.split(':')
     linkParts.pop()
     return `${linkParts.join(':')}:8080/?action=stream`
