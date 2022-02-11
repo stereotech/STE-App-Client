@@ -170,7 +170,7 @@
   "5D Discrete": "5D Discrete",
   "Spiral 5D": "5D Spiral",
   "This wizard helps you to setup zero point for proper 3D/5D printing. Please select Printing mode, wich you want to use": "Этот мастер поможет вам настроить нулевую точку для правильной 3D/5D печати Пожалуйста, выберите режим печати, который вы хотите использовать",
-  "This wizard helps you to setup zero point for proper 3D/5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 3D/5D печати",
+  "This wizard helps you to setup zero point for proper 3D/5D printing": "Этот мастер поможет вам настроить нулевую точку для правильной 5D печати",
   "Please place needed base in the 5D Module and press Next": "Пожалуйста, поместите необходимое основание в модуль 5D и нажмите Далее",
   "Move nozzle to the center of the base and press Next": "Переместите сопло к центру основания и нажмите кнопку Далее",
   "Name is required": "Имя обязательно",
