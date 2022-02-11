@@ -57,7 +57,7 @@ export default class extends Vue {
 
   async finish () {
     const large = this.additionalData.size === PrinterSize.Large
-    await this.customCommand({ id: this.settings.systemId, command: `G54 G0 Z${large ? '150' : '100'}` })
+    await this.customCommand({ id: this.settings.systemId, command: `G54 G0 Z${large ? '150' : '100'}\nM370\nG91\nG0 Z-0.1\nG90` })
     await this.customCommand({ id: this.settings.systemId, command: 'G28 X0 Y0' })
     this.$router.push('/printers')
   }

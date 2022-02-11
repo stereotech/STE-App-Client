@@ -6,7 +6,7 @@
           <JogCard dense :id="settings.systemId" />
         </v-col>
         <v-col cols="12">
-          <v-btn x-large block depressed color="accent" @click="next(8)">
+          <v-btn x-large block depressed color="accent" @click="next(11)">
             {{ $t("Next") }}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>

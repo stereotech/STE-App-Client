@@ -51,10 +51,10 @@ export default class extends Vue {
 
   async performStep () {
     if (this.additionalData.printingMode == PrintingMode.Spiral5D) {
-      await this.customCommand({ id: this.settings.systemId, command: 'G56 G0 X0 Y0' })
+      await this.customCommand({ id: this.settings.systemId, command: 'G56 G0 X0 Y0\nM375\nG91\nG0 Z-0.1\nG90' })
     } else {
       await this.customCommand({ id: this.settings.systemId, command: 'G0 A0' })
-      await this.customCommand({ id: this.settings.systemId, command: 'G55 G0 X0 Y0' })
+      await this.customCommand({ id: this.settings.systemId, command: 'G55 G0 X0 Y0\nM375\nG91\nG0 Z-0.1\nG90' })
     }
   }
 
