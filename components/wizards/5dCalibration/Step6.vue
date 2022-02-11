@@ -6,7 +6,7 @@
           <JogCard dense :id="settings.systemId" />
         </v-col>
         <v-col cols="12">
-          <v-btn x-large block depressed color="accent" @click="next(6)">
+          <v-btn x-large block depressed color="accent" @click="next(11)">
             {{ $t("Next") }}
             <v-icon right dark>mdi-chevron-right</v-icon>
           </v-btn>
@@ -49,7 +49,7 @@ export default class extends Vue {
   private step?: number = 5
   private curStep?: number = this.currentStep
 
-  private image: string = 'wizards/5d_calibration/5d_calibration2.jpg'
+  private image: string = 'wizards/5d_calibration/5d_calibration5.jpg'
   private description: string = ''
 
 

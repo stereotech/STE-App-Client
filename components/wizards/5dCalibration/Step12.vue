@@ -36,6 +36,7 @@ export default class extends Vue {
     }
   }
   async performStep () {
+    await this.customCommand({ id: this.settings.systemId, command: 'M1005 S5' })
     //await this.customCommand({ id: this.settings.systemId, command: 'M1005 S10' })
     await this.customCommand({ id: this.settings.systemId, command: 'M500' })
     await this.customCommand({ id: this.settings.systemId, command: 'M374' })
