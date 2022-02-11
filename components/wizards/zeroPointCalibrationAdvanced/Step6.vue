@@ -66,8 +66,8 @@ export default class extends Vue {
 
   async performStep () {
     await this.customCommand({ id: this.settings.systemId, command: `G10 L20 P3 X0 Y0 Z${this.additionalData.offsetZ}` })
-    await this.customCommand({ id: this.settings.systemId, command: 'G54 G0 Z150\nG28' })
-    await this.customCommand({ id: this.settings.systemId, command: 'M500\nM370\nG91\nG0 Z-0.1\nG90' })
+    await this.customCommand({ id: this.settings.systemId, command: 'G54 G0 Z150' })
+    await this.customCommand({ id: this.settings.systemId, command: 'M500\nM370\nG91\nG0 Z-0.1\nG90\nG28' })
   }
 
   private step?: number = 5
