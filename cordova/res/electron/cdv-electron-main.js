@@ -19,7 +19,7 @@
 
 const fs = require('fs');
 // Module to control application life, browser window and tray.
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, webFrame } = require('electron');
 // Electron settings from .json file.
 const cdvElectronSettings = require('./cdv-electron-settings.json');
 
@@ -47,6 +47,8 @@ function createWindow() {
     mainWindow.webContents.on('did-finish-load', function () {
         mainWindow.webContents.send('window-id', mainWindow.id);
     });
+
+
 
     // Open the DevTools.
     if (cdvElectronSettings.browserWindow.webPreferences.devTools) {
